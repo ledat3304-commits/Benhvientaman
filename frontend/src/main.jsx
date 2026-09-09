@@ -60,6 +60,13 @@ function getSessionHeaders(session = readStoredSession()) {
   return headers;
 }
 
+function getDashboardTheme(apiPath) {
+  if (String(apiPath || '').includes('/admin/')) return 'theme-admin';
+  if (String(apiPath || '').includes('/doctor/')) return 'theme-doctor';
+  if (String(apiPath || '').includes('/patient/')) return 'theme-patient';
+  return 'theme-admin';
+}
+
 function RoleDashboardPage({ title, subtitle, apiPath, renderData, emptyMessage }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -110,7 +117,7 @@ function RoleDashboardPage({ title, subtitle, apiPath, renderData, emptyMessage 
   }
 
   return (
-    <main className="page-shell">
+    <main className={`page-shell ${getDashboardTheme(apiPath)}`}>
       <div className="section-header">
         <h2>{title}</h2>
         <p>{subtitle}</p>
