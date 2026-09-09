@@ -22,13 +22,219 @@ function saveSession(session) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
 }
 
+function normalizeRole(role) {
+  return String(role || '').trim().toLowerCase();
+}
+
+function getSessionUserId(session = readStoredSession()) {
+  return session?.user?.UserID ?? session?.user?.userid ?? session?.user?.id ?? null;
+}
+
+function getRoleDashboardPath(user) {
+  const role = normalizeRole(user?.VaiTro || user?.vaitro || '');
+
+  if (role.includes('quantri') || role.includes('admin') || role.includes('quanly')) {
+    return '/admin';
+  }
+
+  if (role.includes('bacsi') || role.includes('doctor')) {
+    return '/doctor';
+  }
+
+  if (role.includes('benhnhan') || role.includes('patient')) {
+    return '/patient';
+  }
+
+  return '/';
+}
+
+function getSessionHeaders(session = readStoredSession()) {
+  const headers = { 'Content-Type': 'application/json' };
+  const userId = getSessionUserId(session);
+
+  if (userId !== null) {
+    headers['x-user-id'] = String(userId);
+  }
+
+  return headers;
+}
+
+function RoleDashboardPage({ title, subtitle, apiPath, renderData, emptyMessage }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const session = readStoredSession();
+
+  useEffect(() => {
+    if (!session?.token) {
+      setLoading(false);
+      return;
+    }
+
+    fetch(`${API_BASE}${apiPath}`, {
+      method: 'GET',
+      headers: getSessionHeaders(session)
+    })
+      .then(async (res) => {
+        const payload = await res.json();
+
+        if (!res.ok) {
+          throw new Error(payload.message || 'Không thể tải dữ liệu.');
+        }
+
+        return payload;
+      })
+      .then((payload) => {
+        setData(payload);
+        setError('');
+      })
+      .catch((fetchError) => {
+        setError(fetchError.message || 'Không thể tải dữ liệu.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [apiPath, session?.token]);
+
+  if (!session?.token) {
+    return (
+      <main className="page-shell centered">
+        <div className="panel">
+          <h2>{title}</h2>
+          <p>Bạn cần đăng nhập để xem trang này.</p>
+          <Link to="/login" className="btn btn-primary">Đăng nhập</Link>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="page-shell">
+      <div className="section-header">
+        <h2>{title}</h2>
+        <p>{subtitle}</p>
+      </div>
+
+      {loading ? (
+        <p>Đang tải dữ liệu...</p>
+      ) : error ? (
+        <div className="panel">
+          <p className="form-message">{error}</p>
+        </div>
+      ) : (
+        renderData(data || {})
+      )}
+    </main>
+  );
+}
+
+function AdminDashboardPage() {
+  return (
+    <RoleDashboardPage
+      title="Trang quản trị"
+      subtitle="Theo dõi tổng quan hệ thống bệnh viện"
+      apiPath="/api/admin/dashboard"
+      renderData={(data) => (
+        <div className="list-grid">
+          <div className="panel">
+            <h3>Thông tin quản trị</h3>
+            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
+            <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || '---'}</p>
+            <p><strong>Vai trò:</strong> {data?.user?.VaiTro || data?.user?.vaitro || '---'}</p>
+          </div>
+
+          <div className="panel">
+            <h3>Thống kê</h3>
+            <p><strong>Tổng người dùng:</strong> {data?.stats?.totalUsers ?? 0}</p>
+            <p><strong>Tổng bác sĩ:</strong> {data?.stats?.totalDoctors ?? 0}</p>
+            <p><strong>Tổng bệnh nhân:</strong> {data?.stats?.totalPatients ?? 0}</p>
+            <p><strong>Tổng lịch khám:</strong> {data?.stats?.totalAppointments ?? 0}</p>
+          </div>
+        </div>
+      )}
+    />
+  );
+}
+
+function DoctorDashboardPage() {
+  return (
+    <RoleDashboardPage
+      title="Trang bác sĩ"
+      subtitle="Xem thông tin và lịch khám của bạn"
+      apiPath="/api/doctor/dashboard"
+      renderData={(data) => (
+        <div className="list-grid">
+          <div className="panel">
+            <h3>Thông tin bác sĩ</h3>
+            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
+            <p><strong>Chuyên khoa:</strong> {data?.doctor?.TenChuyenKhoa || data?.doctor?.tenchuyenkhoa || '---'}</p>
+            <p><strong>Kinh nghiệm:</strong> {data?.doctor?.KinhNghiem || data?.doctor?.kinhnghiem || '---'}</p>
+          </div>
+
+          <div className="panel">
+            <h3>Lịch khám gần đây</h3>
+            {(data?.appointments || []).length === 0 ? (
+              <p>Chưa có lịch khám nào.</p>
+            ) : (
+              <ul>
+                {(data?.appointments || []).map((item, index) => (
+                  <li key={item.LichKhamID ?? item.lichkhamid ?? index}>
+                    {item.ThoiGianKham || item.thoigiankham || '---'} - {item.TrangThai || item.trangthai || '---'}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
+    />
+  );
+}
+
+function PatientDashboardPage() {
+  return (
+    <RoleDashboardPage
+      title="Trang bệnh nhân"
+      subtitle="Theo dõi hồ sơ và lịch khám của bạn"
+      apiPath="/api/patient/profile"
+      renderData={(data) => (
+        <div className="list-grid">
+          <div className="panel">
+            <h3>Thông tin bệnh nhân</h3>
+            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
+            <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || '---'}</p>
+            <p><strong>Giới tính:</strong> {data?.patient?.GioiTinh || data?.patient?.gioitinh || '---'}</p>
+            <p><strong>Ngày sinh:</strong> {data?.patient?.NgaySinh || data?.patient?.ngaysinh || '---'}</p>
+          </div>
+
+          <div className="panel">
+            <h3>Lịch khám của bạn</h3>
+            {(data?.appointments || []).length === 0 ? (
+              <p>Chưa có lịch khám nào.</p>
+            ) : (
+              <ul>
+                {(data?.appointments || []).map((item, index) => (
+                  <li key={item.LichKhamID ?? item.lichkhamid ?? index}>
+                    {item.ThoiGianKham || item.thoigiankham || '---'} - {item.TrangThai || item.trangthai || '---'}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
+    />
+  );
+}
+
 function HomePage() {
   const session = readStoredSession();
-  const role = String(session?.user?.VaiTro || session?.user?.vaitro || '').trim().toLowerCase();
+  const role = normalizeRole(session?.user?.VaiTro || session?.user?.vaitro || '');
   const isLoggedIn = Boolean(session?.token);
   const primaryActionText = isLoggedIn
     ? (role.includes('quantri') ? 'Vào quản trị' : role.includes('bacsi') ? 'Xem lịch khám' : 'Đặt lịch khám ngay')
     : 'Đặt lịch khám ngay';
+  const primaryActionPath = isLoggedIn ? getRoleDashboardPath(session?.user) : '/login';
 
   return (
     <main className="page-shell">
@@ -41,7 +247,7 @@ function HomePage() {
             trang thiết bị hiện đại và dịch vụ hỗ trợ bệnh nhân tận tâm.
           </p>
           <div className="cta-row">
-            <Link to={isLoggedIn ? '/services' : '/login'} className="btn btn-primary">{primaryActionText}</Link>
+            <Link to={primaryActionPath} className="btn btn-primary">{primaryActionText}</Link>
             <Link to="/services" className="btn btn-secondary">Xem dịch vụ</Link>
           </div>
         </div>
@@ -106,7 +312,7 @@ function LoginPage() {
 
       saveSession({ token: data.token, user: data.user });
       setMessage('Đăng nhập thành công!');
-      window.location.href = '/';
+      window.location.href = getRoleDashboardPath(data.user);
     } catch (error) {
       setMessage(error.message || 'Đăng nhập thất bại.');
     } finally {
@@ -176,7 +382,7 @@ function DoctorsPage() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const session = readStoredSession();
-  const role = String(session?.user?.VaiTro || session?.user?.vaitro || '').trim().toLowerCase();
+  const role = normalizeRole(session?.user?.VaiTro || session?.user?.vaitro || '');
   const isLoggedIn = Boolean(session?.token);
 
   useEffect(() => {
@@ -216,7 +422,7 @@ function DoctorsPage() {
               </div>
               <div className="doctor-footer">
                 <Link
-                  to={isLoggedIn ? '/services' : '/login'}
+                  to={isLoggedIn ? getRoleDashboardPath(session?.user) : '/login'}
                   className="btn btn-secondary"
                 >
                   {isLoggedIn ? (role.includes('quantri') ? 'Vào quản trị' : role.includes('bacsi') ? 'Xem lịch khám' : 'Đặt lịch khám') : 'Đặt lịch khám'}
@@ -234,7 +440,7 @@ function ServicesPage() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const session = readStoredSession();
-  const role = String(session?.user?.VaiTro || session?.user?.vaitro || '').trim().toLowerCase();
+  const role = normalizeRole(session?.user?.VaiTro || session?.user?.vaitro || '');
   const isLoggedIn = Boolean(session?.token);
 
   useEffect(() => {
@@ -271,7 +477,7 @@ function ServicesPage() {
               <div className="service-footer">
                 <span>{service.price.toLocaleString('vi-VN')} VNĐ</span>
                 <Link
-                  to={isLoggedIn ? '/contact' : '/login'}
+                  to={isLoggedIn ? getRoleDashboardPath(session?.user) : '/login'}
                   className="btn btn-secondary small-btn"
                 >
                   {isLoggedIn ? (role.includes('quantri') ? 'Quản lý dịch vụ' : role.includes('bacsi') ? 'Xem dịch vụ' : 'Đăng ký ngay') : 'Đăng ký ngay'}
@@ -466,6 +672,9 @@ function App() {
         <Route path="/doctors" element={<DoctorsPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/doctor" element={<DoctorDashboardPage />} />
+        <Route path="/patient" element={<PatientDashboardPage />} />
       </Routes>
     </BrowserRouter>
   );
