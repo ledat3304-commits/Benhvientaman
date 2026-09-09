@@ -438,6 +438,89 @@ function PatientDashboardPage() {
   );
 }
 
+const hospitalLocations = [
+  {
+    name: 'Bệnh viện Tâm An - Chuyên khoa Trĩ Hậu môn Trực tràng',
+    address: '257 Nguyễn Trãi, P. Hạc Thành, tỉnh Thanh Hóa'
+  },
+  {
+    name: 'Phòng khám Đa khoa Tâm An',
+    address: '04 Phan Huy Ích, P. Hạc Thành, tỉnh Thanh Hóa'
+  },
+  {
+    name: 'Bệnh viện Đa khoa Tâm An Cơ sở 2',
+    address: '05, 06 đường Trịnh Kiểm, P. Quảng Phú, tỉnh Thanh Hóa'
+  }
+];
+
+const hospitalHotlines = ['0982 499 515', '0919 864 929', '0977 33 55 99'];
+
+function HospitalHomePage() {
+  const session = readStoredSession();
+  const isLoggedIn = Boolean(session?.token);
+
+  return (
+    <main className="page-shell">
+      <section className="hospital-hero">
+        <div className="hospital-hero-copy">
+          <p className="eyebrow">HỆ THỐNG Y TẾ TÂM AN</p>
+          <h1>Chăm sóc sức khỏe tận tâm, chuyên nghiệp</h1>
+          <p>Đồng hành cùng người bệnh bằng đội ngũ y bác sĩ giàu kinh nghiệm, dịch vụ chất lượng và môi trường khám chữa bệnh an toàn.</p>
+          <div className="cta-row">
+            <Link to={isLoggedIn ? getRoleDashboardPath(session?.user) : '/login'} className="btn btn-primary">Đặt lịch khám</Link>
+            <Link to="/contact" className="btn btn-outline-brand">Xem địa chỉ và hotline</Link>
+          </div>
+        </div>
+        <img className="hero-logo" src="/logo.jpg" alt="Logo Bệnh viện Tâm An" />
+      </section>
+
+      <section className="hospital-section">
+        <div className="section-header">
+          <h2>Hệ thống cơ sở Tâm An</h2>
+          <p>Thông tin địa chỉ để người bệnh thuận tiện lựa chọn cơ sở khám.</p>
+        </div>
+        <div className="location-grid">
+          {hospitalLocations.map((location) => (
+            <article className="location-card" key={location.name}>
+              <span className="location-icon">+</span>
+              <h3>{location.name}</h3>
+              <p>{location.address}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="hotline-banner">
+        <div><span className="eyebrow">HOTLINE TƯ VẤN</span><h2>Liên hệ Tâm An khi bạn cần hỗ trợ</h2></div>
+        <div className="hotline-list">{hospitalHotlines.map((phone) => <a key={phone} href={`tel:${phone.replaceAll(' ', '')}`}>{phone}</a>)}</div>
+      </section>
+    </main>
+  );
+}
+
+function HospitalContactPage() {
+  return (
+    <main className="page-shell">
+      <div className="section-header">
+        <h2>Liên hệ Hệ thống Y tế Tâm An</h2>
+        <p>Địa chỉ và hotline tư vấn chính thức của bệnh viện.</p>
+      </div>
+      <div className="location-grid contact-locations">
+        {hospitalLocations.map((location) => (
+          <article className="location-card" key={location.name}>
+            <h3>{location.name}</h3>
+            <p>{location.address}</p>
+          </article>
+        ))}
+      </div>
+      <div className="panel contact-box hotline-contact">
+        <h3>Hotline tư vấn</h3>
+        <div className="hotline-list">{hospitalHotlines.map((phone) => <a key={phone} href={`tel:${phone.replaceAll(' ', '')}`}>{phone}</a>)}</div>
+      </div>
+    </main>
+  );
+}
+
 function HomePage() {
   const session = readStoredSession();
   const role = normalizeRole(session?.user?.VaiTro || session?.user?.vaitro || '');
@@ -877,7 +960,11 @@ function App() {
         v7_relativeSplatPath: true,
       }}
     >
-      <header className="topbar">
+        <header className="topbar">
+          <Link to="/" className="brand-logo">
+            <img src="/logo.jpg" alt="Logo Bệnh viện Tâm An" />
+            <span>HỆ THỐNG Y TẾ TÂM AN</span>
+          </Link>
         <div className="brand">Bệnh viện Tâm An</div>
         <nav>
           <Link to="/">Trang chủ</Link>
@@ -908,12 +995,12 @@ function App() {
       </header>
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HospitalHomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/doctors" element={<DoctorsPage />} />
         <Route path="/services" element={<ServicesPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/contact" element={<HospitalContactPage />} />
         <Route path="/admin" element={<RoleRoute role="admin"><AdminControlPanel /></RoleRoute>} />
         <Route path="/doctor" element={<RoleRoute role="doctor"><DoctorDashboardPage /></RoleRoute>} />
         <Route path="/patient" element={<RoleRoute role="patient"><PatientDashboardPage /></RoleRoute>} />
