@@ -3,7 +3,24 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './styles.css';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE = (
+  import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '')
+).replace(/\/$/, '');
+
+const STORAGE_KEY = 'bta_session';
+
+function readStoredSession() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveSession(session) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+}
 
 function HomePage() {
   return (
@@ -50,6 +67,46 @@ function HomePage() {
 }
 
 function LoginPage() {
+  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const response = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Đăng nhập thất bại.');
+      }
+
+      saveSession({ token: data.token, user: data.user });
+      setMessage('Đăng nhập thành công!');
+      window.location.href = '/';
+    } catch (error) {
+      setMessage(error.message || 'Đăng nhập thất bại.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="page-shell centered">
       <div className="panel login-panel">
@@ -60,15 +117,27 @@ function LoginPage() {
         </div>
 
         <div className="login-body">
-          <form>
+          <form onSubmit={handleSubmit}>
             <label>
               Email hoặc Số điện thoại
-              <input type="text" placeholder="nhap@email.com hoặc 090..." />
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                placeholder="nhap@email.com hoặc 090..."
+              />
             </label>
 
             <label>
               Mật khẩu
-              <input type="password" placeholder="••••••••" />
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="••••••••"
+              />
             </label>
 
             <div className="row-between">
@@ -79,7 +148,11 @@ function LoginPage() {
               <Link to="/contact" className="text-link small">Quên mật khẩu?</Link>
             </div>
 
-            <button type="submit" className="btn btn-primary full-width">Đăng Nhập</button>
+            {message && <p className="form-message">{message}</p>}
+
+            <button type="submit" className="btn btn-primary full-width" disabled={loading}>
+              {loading ? 'Đang đăng nhập...' : 'Đăng Nhập'}
+            </button>
 
             <div className="signup-row">
               <span>Chưa có tài khoản?</span>
@@ -210,24 +283,123 @@ function ContactPage() {
 }
 
 function RegisterPage() {
+  const [formData, setFormData] = useState({
+    HoTen: '',
+    Email: '',
+    SoDienThoai: '',
+    MatKhau: '',
+    confirm_password: '',
+    GioiTinh: 'Nam'
+  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const response = await fetch(`${API_BASE}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Đăng ký thất bại.');
+      }
+
+      setMessage('Đăng ký thành công! Bạn có thể đăng nhập ngay.');
+      setFormData({
+        HoTen: '',
+        Email: '',
+        SoDienThoai: '',
+        MatKhau: '',
+        confirm_password: '',
+        GioiTinh: 'Nam'
+      });
+    } catch (error) {
+      setMessage(error.message || 'Đăng ký thất bại.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="page-shell centered">
       <div className="panel">
         <h2>Đăng ký tài khoản</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>
             Họ và tên
-            <input type="text" placeholder="Nhập họ tên" />
+            <input
+              type="text"
+              name="HoTen"
+              value={formData.HoTen}
+              onChange={handleChange}
+              placeholder="Nhập họ tên"
+            />
           </label>
           <label>
             Email
-            <input type="email" placeholder="Nhập email" />
+            <input
+              type="email"
+              name="Email"
+              value={formData.Email}
+              onChange={handleChange}
+              placeholder="Nhập email"
+            />
+          </label>
+          <label>
+            Số điện thoại
+            <input
+              type="text"
+              name="SoDienThoai"
+              value={formData.SoDienThoai}
+              onChange={handleChange}
+              placeholder="Nhập số điện thoại"
+            />
+          </label>
+          <label>
+            Giới tính
+            <select name="GioiTinh" value={formData.GioiTinh} onChange={handleChange}>
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              <option value="Khác">Khác</option>
+            </select>
           </label>
           <label>
             Mật khẩu
-            <input type="password" placeholder="Nhập mật khẩu" />
+            <input
+              type="password"
+              name="MatKhau"
+              value={formData.MatKhau}
+              onChange={handleChange}
+              placeholder="Nhập mật khẩu"
+            />
           </label>
-          <button type="submit" className="btn btn-primary full-width">Đăng ký</button>
+          <label>
+            Xác nhận mật khẩu
+            <input
+              type="password"
+              name="confirm_password"
+              value={formData.confirm_password}
+              onChange={handleChange}
+              placeholder="Nhập lại mật khẩu"
+            />
+          </label>
+          {message && <p className="form-message">{message}</p>}
+          <button type="submit" className="btn btn-primary full-width" disabled={loading}>
+            {loading ? 'Đang đăng ký...' : 'Đăng ký'}
+          </button>
         </form>
       </div>
     </main>
@@ -235,6 +407,16 @@ function RegisterPage() {
 }
 
 function App() {
+  const [session, setSession] = useState(() => readStoredSession());
+  const isLoggedIn = Boolean(session?.token);
+  const userName = session?.user?.HoTen || session?.user?.hoten || 'Tài khoản';
+
+  const handleLogout = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setSession(null);
+    window.location.href = '/';
+  };
+
   return (
     <BrowserRouter>
       <header className="topbar">
@@ -244,7 +426,17 @@ function App() {
           <Link to="/doctors">Bác sĩ</Link>
           <Link to="/services">Dịch vụ</Link>
           <Link to="/contact">Liên hệ</Link>
-          <Link to="/login">Đăng nhập</Link>
+
+          {isLoggedIn ? (
+            <>
+              <span className="user-badge">Xin chào, {userName}</span>
+              <button type="button" className="btn btn-secondary small-btn" onClick={handleLogout}>
+                Đăng xuất
+              </button>
+            </>
+          ) : (
+            <Link to="/login">Đăng nhập</Link>
+          )}
         </nav>
       </header>
 
