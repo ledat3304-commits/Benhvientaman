@@ -135,24 +135,124 @@ function AdminDashboardPage() {
       title="Trang quản trị"
       subtitle="Theo dõi tổng quan hệ thống bệnh viện"
       apiPath="/api/admin/dashboard"
-      renderData={(data) => (
-        <div className="list-grid">
-          <div className="panel">
-            <h3>Thông tin quản trị</h3>
-            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
-            <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || '---'}</p>
-            <p><strong>Vai trò:</strong> {data?.user?.VaiTro || data?.user?.vaitro || '---'}</p>
-          </div>
+      renderData={(data) => {
+        const stats = [
+          { label: 'Tổng người dùng', value: data?.stats?.totalUsers ?? 0, icon: '👥', tone: 'blue', trend: '+8%' },
+          { label: 'Tổng bác sĩ', value: data?.stats?.totalDoctors ?? 0, icon: '🩺', tone: 'green', trend: '+3%' },
+          { label: 'Tổng bệnh nhân', value: data?.stats?.totalPatients ?? 0, icon: '🧑‍⚕️', tone: 'gold', trend: '+12%' },
+          { label: 'Tổng lịch khám', value: data?.stats?.totalAppointments ?? 0, icon: '📅', tone: 'purple', trend: '+5%' }
+        ];
 
-          <div className="panel">
-            <h3>Thống kê</h3>
-            <p><strong>Tổng người dùng:</strong> {data?.stats?.totalUsers ?? 0}</p>
-            <p><strong>Tổng bác sĩ:</strong> {data?.stats?.totalDoctors ?? 0}</p>
-            <p><strong>Tổng bệnh nhân:</strong> {data?.stats?.totalPatients ?? 0}</p>
-            <p><strong>Tổng lịch khám:</strong> {data?.stats?.totalAppointments ?? 0}</p>
+        const quickActions = [
+          'Quản lý bác sĩ',
+          'Quản lý bệnh nhân',
+          'Sửa danh mục dịch vụ',
+          'Xuất báo cáo nhanh'
+        ];
+
+        const alerts = [
+          { title: 'Lịch khám hôm nay', text: 'Có 12 lịch khám cần xác nhận.' },
+          { title: 'Hệ thống', text: 'Phần mềm đang hoạt động ổn định.' },
+          { title: 'Dịch vụ', text: '2 danh mục đang cần cập nhật giá mới.' }
+        ];
+
+        return (
+          <div className="dashboard-shell">
+            <div className="dashboard-header panel">
+              <div className="heading-block">
+                <span className="eyebrow dark">Tổng quan hệ thống</span>
+                <h2>Chào mừng trở lại, {data?.user?.HoTen || data?.user?.hoten || 'Quản trị viên'}</h2>
+                <p>Hiện tại hệ thống đang theo dõi tình trạng hoạt động và lịch khám trong ngày.</p>
+              </div>
+
+              <div className="header-actions">
+                <button className="btn btn-primary small-btn">Thêm bác sĩ</button>
+                <button className="btn btn-secondary small-btn">Xuất báo cáo</button>
+              </div>
+            </div>
+
+            <div className="stats-grid">
+              {stats.map((item) => (
+                <div className={`stat-card ${item.tone}`} key={item.label}>
+                  <div className="stat-top">
+                    <div className="stat-icon">{item.icon}</div>
+                    <span className="stat-trend">{item.trend}</span>
+                  </div>
+                  <div className="stat-label">{item.label}</div>
+                  <div className="stat-value">{item.value}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="content-grid">
+              <div className="panel">
+                <div className="panel-header">
+                  <h3>Hoạt động gần đây</h3>
+                  <span className="chip success">Đang hoạt động</span>
+                </div>
+
+                <div className="activity-list">
+                  <div className="activity-item">
+                    <div className="activity-dot blue" />
+                    <div>
+                      <strong>Người dùng mới</strong>
+                      <p>6 bệnh nhân đã đăng ký tài khoản trong 24 giờ qua.</p>
+                    </div>
+                  </div>
+
+                  <div className="activity-item">
+                    <div className="activity-dot green" />
+                    <div>
+                      <strong>Lịch khám xác nhận</strong>
+                      <p>12 lịch khám đã được bác sĩ xác nhận và gửi SMS cho bệnh nhân.</p>
+                    </div>
+                  </div>
+
+                  <div className="activity-item">
+                    <div className="activity-dot gold" />
+                    <div>
+                      <strong>Cập nhật dịch vụ</strong>
+                      <p>2 dịch vụ y tế đã được chỉnh sửa đơn giá theo quy định mới.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="side-stack">
+                <div className="panel">
+                  <div className="panel-header">
+                    <h3>Hành động nhanh</h3>
+                  </div>
+
+                  <div className="action-list">
+                    {quickActions.map((action, index) => (
+                      <button key={action} className="action-item" type="button">
+                        <span className="action-order">0{index + 1}</span>
+                        <span>{action}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="panel">
+                  <div className="panel-header">
+                    <h3>Cảnh báo hệ thống</h3>
+                  </div>
+
+                  <div className="alert-list">
+                    {alerts.map((item) => (
+                      <div className="alert-item" key={item.title}>
+                        <strong>{item.title}</strong>
+                        <p>{item.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      }}
     />
   );
 }
