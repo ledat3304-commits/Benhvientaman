@@ -13,7 +13,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: FRONTEND_URL
-        sync: false
+        value: https://frontend-benhvientaman.vercel.app
       - key: DATABASE_URL
         sync: false
       - key: DB_SSL

@@ -25,8 +25,14 @@ function saveSession(session: { token: string; user: any }) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
 }
 
-function normalizeRole(role: string) {
-  return String(role || '').trim().toLowerCase();
+function normalizeRole(role: unknown) {
+  return String(role || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[đĐ]/g, 'd')
+    .replace(/[\u0111\u0110]/g, 'd')
+    .replace(/[^a-zA-Z0-9]/g, '')
+    .toLowerCase();
 }
 
 function getSessionUserId(session = readStoredSession()) {

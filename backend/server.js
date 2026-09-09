@@ -65,21 +65,53 @@ function getUserIdFromRequest(req) {
   return Number.isFinite(fromQuery) && fromQuery > 0 ? fromQuery : Number.isFinite(fromHeader) && fromHeader > 0 ? fromHeader : null;
 }
 
+function getAccessToken(req) {
+  const authorization = String(req.headers.authorization || '');
+  if (authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.slice(7).trim();
+  }
+
+  return String(req.headers['x-auth-token'] || '').trim() || null;
+}
+
 function normalizeRole(role) {
-  return String(role || '').trim().toLowerCase();
+  return String(role || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[đĐ]/g, 'd')
+    .replace(/[\u0111\u0110]/g, 'd')
+    .replace(/[^a-zA-Z0-9]/g, '')
+    .toLowerCase();
+}
+
+function getRoleKey(role) {
+  const normalized = normalizeRole(role);
+
+  if (['quanly', 'quantri', 'quantrivien', 'admin', 'administrator'].includes(normalized)) {
+    return 'admin';
+  }
+
+  if (['bacsi', 'doctor'].includes(normalized)) {
+    return 'doctor';
+  }
+
+  if (['benhnhan', 'patient'].includes(normalized)) {
+    return 'patient';
+  }
+
+  return '';
 }
 
 function isAdminRole(role) {
-  const r = normalizeRole(role);
-  return ['quanly', 'quantri', 'quantrivien', 'admin', 'administrator'].includes(r);
+  return getRoleKey(role) === 'admin';
 }
 
 function isDoctorRole(role) {
-  return normalizeRole(role) === 'bacsi';
+  return getRoleKey(role) === 'doctor';
 }
 
 function isPatientRole(role) {
-  return normalizeRole(role) === 'benhnhan';
+  return getRoleKey(role) === 'patient';
 }
 
 function normalizeDbRow(row) {
@@ -114,12 +146,94 @@ function normalizeDbRow(row) {
 }
 
 function sanitizeUser(row) {
-  return normalizeDbRow(row);
+  const normalized = normalizeDbRow(row);
+  if (!normalized) return null;
+
+  const { MatKhau, matkhau, ...safeUser } = normalized;
+  return safeUser;
 }
 
-function createToken(userId) {
-  return `bta_${userId}_${Date.now()}_${crypto.randomBytes(16).toString('hex')}`;
+async function createToken(userId) {
+  const selector = crypto.randomBytes(16).toString('hex');
+  const validator = crypto.randomBytes(32).toString('hex');
+  const validatorHash = crypto.createHash('sha256').update(validator).digest('hex');
+
+  await pool.query(
+    `INSERT INTO auth_tokens (userid, selector, validatorhash, expiresat)
+     VALUES ($1, $2, $3, NOW() + INTERVAL '30 days')`,
+    [userId, selector, validatorHash]
+  );
+
+  return `${selector}.${validator}`;
 }
+
+async function getAuthenticatedUser(req) {
+  const accessToken = getAccessToken(req);
+
+  if (accessToken) {
+    const [selector, validator] = accessToken.split('.');
+    if (!selector || !validator) return null;
+
+    const validatorHash = crypto.createHash('sha256').update(validator).digest('hex');
+    const result = await pool.query(
+      `SELECT u.*
+       FROM auth_tokens t
+       JOIN nguoidung u ON u.userid = t.userid
+       WHERE t.selector = $1
+         AND t.validatorhash = $2
+         AND t.expiresat > NOW()
+         AND COALESCE(u.hoatdong, true) = true
+       LIMIT 1`,
+      [selector, validatorHash]
+    );
+
+    return normalizeDbRow(result.rows[0] || null);
+  }
+
+  // Keep local development compatible with the old client. Production must use Bearer tokens.
+  if (String(process.env.NODE_ENV || '').toLowerCase() !== 'production') {
+    const legacyUserId = getUserIdFromRequest(req);
+    return legacyUserId ? findUserById(legacyUserId) : null;
+  }
+
+  return null;
+}
+
+async function requireRole(req, res, role) {
+  const user = await getAuthenticatedUser(req);
+
+  if (!user) {
+    res.status(401).json({ success: false, message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn.' });
+    return null;
+  }
+
+  if (role && getRoleKey(user.VaiTro) !== role) {
+    res.status(403).json({ success: false, message: 'Bạn không có quyền thực hiện thao tác này.' });
+    return null;
+  }
+
+  return user;
+}
+
+// Verify Bearer sessions before legacy handlers read x-user-id. This keeps the
+// existing API contract working while preventing user-id spoofing in production.
+app.use(async (req, res, next) => {
+  if (!getAccessToken(req)) return next();
+
+  try {
+    const user = await getAuthenticatedUser(req);
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn.' });
+    }
+
+    req.headers['x-user-id'] = String(user.UserID || user.userid);
+    req.authenticatedUser = user;
+    return next();
+  } catch (error) {
+    console.error('Authentication middleware error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể xác thực phiên đăng nhập.' });
+  }
+});
 
 function passwordMatches(inputPassword, storedPassword) {
   if (!storedPassword) return false;
@@ -254,6 +368,14 @@ app.post('/api/auth/login', async (req, res) => {
       return res.status(403).json({ success: false, message: 'Tài khoản của bạn đã bị khóa.' });
     }
 
+    const role = getRoleKey(user.VaiTro);
+    if (!role) {
+      return res.status(403).json({
+        success: false,
+        message: 'Tai khoan chua duoc gan vai tro hop le.'
+      });
+    }
+
     const storedPassword = user.MatKhau || user.matkhau || '';
 
     if (!passwordMatches(password, storedPassword)) {
@@ -270,7 +392,8 @@ app.post('/api/auth/login', async (req, res) => {
 
     return res.json({
       success: true,
-      token: createToken(user.UserID),
+      token: await createToken(user.UserID),
+      role,
       user: sanitizeUser(user)
     });
   } catch (error) {
@@ -474,6 +597,312 @@ app.get('/api/admin/patients', async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: 'Lỗi server khi tải danh sách bệnh nhân.' });
+  }
+});
+
+// Admin management APIs. These use the existing database tables and never delete
+// users as part of normal administration; accounts are disabled instead.
+app.get('/api/admin/appointments', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+
+    const result = await pool.query(`
+      SELECT l.lichkhamid, l.thoigiankham, l.trangthai, l.lydokham,
+             l.ngaydatlich, d.bacsiid, du.hoten AS tenbacsi,
+             bn.benhnhanid, pu.hoten AS tenbenhnhan
+      FROM lichkham l
+      JOIN bacsi d ON d.bacsiid = l.bacsiid
+      JOIN nguoidung du ON du.userid = d.userid
+      JOIN benhnhan bn ON bn.benhnhanid = l.benhnhanid
+      LEFT JOIN nguoidung pu ON pu.userid = bn.userid
+      ORDER BY l.thoigiankham DESC
+      LIMIT 200
+    `);
+
+    return res.json({ success: true, appointments: result.rows });
+  } catch (error) {
+    console.error('Admin appointments error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể tải danh sách lịch khám.' });
+  }
+});
+
+app.get('/api/admin/specialties', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const result = await pool.query('SELECT * FROM chuyenkhoa ORDER BY tenchuyenkhoa ASC');
+    return res.json({ success: true, specialties: result.rows });
+  } catch (error) {
+    console.error('Admin specialties error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể tải chuyên khoa.' });
+  }
+});
+
+app.get('/api/admin/services', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const result = await pool.query('SELECT * FROM danhmucdichvu ORDER BY dichvuid DESC');
+    return res.json({ success: true, services: result.rows });
+  } catch (error) {
+    console.error('Admin services error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể tải dịch vụ.' });
+  }
+});
+
+app.get('/api/admin/medicines', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const result = await pool.query('SELECT * FROM danhmucthuoc ORDER BY tenthuoc ASC');
+    return res.json({ success: true, medicines: result.rows });
+  } catch (error) {
+    console.error('Admin medicines error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể tải danh mục thuốc.' });
+  }
+});
+
+app.patch('/api/admin/users/:userId/status', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+
+    const userId = Number(req.params.userId);
+    const active = req.body?.active === true || String(req.body?.active).toLowerCase() === 'true';
+    if (!Number.isInteger(userId) || userId < 1) {
+      return res.status(400).json({ success: false, message: 'UserID không hợp lệ.' });
+    }
+    if (userId === Number(admin.UserID || admin.userid) && !active) {
+      return res.status(400).json({ success: false, message: 'Không thể tự khóa tài khoản admin hiện tại.' });
+    }
+
+    const result = await pool.query(
+      'UPDATE nguoidung SET hoatdong = $1 WHERE userid = $2 RETURNING *',
+      [active, userId]
+    );
+    if (!result.rows[0]) return res.status(404).json({ success: false, message: 'Không tìm thấy người dùng.' });
+    return res.json({ success: true, user: sanitizeUser(result.rows[0]) });
+  } catch (error) {
+    console.error('Admin user status error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể cập nhật trạng thái tài khoản.' });
+  }
+});
+
+app.patch('/api/admin/users/:userId/role', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+
+    const userId = Number(req.params.userId);
+    const requestedRole = getRoleKey(req.body?.role || req.body?.vaitro);
+    const dbRole = { admin: 'QuanTri', doctor: 'BacSi', patient: 'BenhNhan' }[requestedRole];
+    if (!Number.isInteger(userId) || !dbRole) {
+      return res.status(400).json({ success: false, message: 'UserID hoặc role không hợp lệ.' });
+    }
+
+    await client.query('BEGIN');
+    const userResult = await client.query('SELECT * FROM nguoidung WHERE userid = $1 FOR UPDATE', [userId]);
+    const user = userResult.rows[0];
+    if (!user) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ success: false, message: 'Không tìm thấy người dùng.' });
+    }
+
+    if (requestedRole === 'doctor') {
+      const specialtyId = req.body?.specialtyId ? Number(req.body.specialtyId) : null;
+      await client.query(
+        `INSERT INTO bacsi (userid, chuyenkhoaid, mota, kinhnghiem)
+         VALUES ($1, $2, $3, $4)
+         ON CONFLICT (userid) DO UPDATE SET
+           chuyenkhoaid = COALESCE(EXCLUDED.chuyenkhoaid, bacsi.chuyenkhoaid),
+           mota = COALESCE(EXCLUDED.mota, bacsi.mota),
+           kinhnghiem = COALESCE(EXCLUDED.kinhnghiem, bacsi.kinhnghiem)`,
+        [userId, Number.isInteger(specialtyId) ? specialtyId : null, req.body?.description || null, req.body?.experience || null]
+      );
+    }
+
+    if (requestedRole === 'patient') {
+      const phone = String(req.body?.phone || user.sodienthoai || '').trim();
+      if (!phone) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ success: false, message: 'Bệnh nhân cần có số điện thoại.' });
+      }
+      await client.query(
+        `INSERT INTO benhnhan (userid, hoten, sodienthoai)
+         VALUES ($1, $2, $3)
+         ON CONFLICT (userid) DO UPDATE SET hoten = EXCLUDED.hoten, sodienthoai = EXCLUDED.sodienthoai`,
+        [userId, user.hoten, phone]
+      );
+    }
+
+    const updated = await client.query(
+      'UPDATE nguoidung SET vaitro = $1 WHERE userid = $2 RETURNING *',
+      [dbRole, userId]
+    );
+    await client.query('COMMIT');
+    return res.json({ success: true, user: sanitizeUser(updated.rows[0]), role: requestedRole });
+  } catch (error) {
+    await client.query('ROLLBACK').catch(() => {});
+    console.error('Admin role update error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể cập nhật role.' });
+  } finally {
+    client.release();
+  }
+});
+
+app.post('/api/admin/doctors', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+
+    const name = String(req.body?.name || req.body?.hoten || '').trim();
+    const email = String(req.body?.email || '').trim().toLowerCase();
+    const phone = String(req.body?.phone || '').trim() || null;
+    const password = String(req.body?.password || '').trim();
+    const specialtyId = req.body?.specialtyId ? Number(req.body.specialtyId) : null;
+    if (!name || !email || password.length < 6) {
+      return res.status(400).json({ success: false, message: 'Cần họ tên, email và mật khẩu tối thiểu 6 ký tự.' });
+    }
+
+    await client.query('BEGIN');
+    const duplicate = await client.query('SELECT userid FROM nguoidung WHERE lower(email) = lower($1)', [email]);
+    if (duplicate.rows.length) {
+      await client.query('ROLLBACK');
+      return res.status(409).json({ success: false, message: 'Email đã tồn tại.' });
+    }
+
+    const userResult = await client.query(
+      `INSERT INTO nguoidung (hoten, email, sodienthoai, matkhau, vaitro, hoatdong)
+       VALUES ($1, $2, $3, $4, 'BacSi', true) RETURNING *`,
+      [name, email, phone, bcrypt.hashSync(password, 10)]
+    );
+    const userId = userResult.rows[0].userid;
+    await client.query(
+      `INSERT INTO bacsi (userid, chuyenkhoaid, mota, kinhnghiem)
+       VALUES ($1, $2, $3, $4)`,
+      [userId, Number.isInteger(specialtyId) ? specialtyId : null, req.body?.description || null, req.body?.experience || null]
+    );
+    await client.query('COMMIT');
+    return res.status(201).json({ success: true, user: sanitizeUser(userResult.rows[0]) });
+  } catch (error) {
+    await client.query('ROLLBACK').catch(() => {});
+    console.error('Admin create doctor error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể tạo tài khoản bác sĩ.' });
+  } finally {
+    client.release();
+  }
+});
+
+app.patch('/api/admin/doctors/:doctorId', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const doctorId = Number(req.params.doctorId);
+    if (!Number.isInteger(doctorId) || doctorId < 1) {
+      return res.status(400).json({ success: false, message: 'BacSiID không hợp lệ.' });
+    }
+
+    await client.query('BEGIN');
+    const doctorResult = await client.query('SELECT userid FROM bacsi WHERE bacsiid = $1 FOR UPDATE', [doctorId]);
+    if (!doctorResult.rows[0]) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ success: false, message: 'Không tìm thấy bác sĩ.' });
+    }
+    const userId = doctorResult.rows[0].userid;
+    await client.query(
+      `UPDATE nguoidung SET hoten = COALESCE($1, hoten), email = COALESCE($2, email),
+       sodienthoai = COALESCE($3, sodienthoai) WHERE userid = $4`,
+      [req.body?.name || null, req.body?.email || null, req.body?.phone || null, userId]
+    );
+    await client.query(
+      `UPDATE bacsi SET chuyenkhoaid = COALESCE($1, chuyenkhoaid), mota = COALESCE($2, mota),
+       kinhnghiem = COALESCE($3, kinhnghiem) WHERE bacsiid = $4`,
+      [req.body?.specialtyId ? Number(req.body.specialtyId) : null, req.body?.description || null, req.body?.experience || null, doctorId]
+    );
+    await client.query('COMMIT');
+    return res.json({ success: true, message: 'Đã cập nhật bác sĩ.' });
+  } catch (error) {
+    await client.query('ROLLBACK').catch(() => {});
+    console.error('Admin update doctor error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể cập nhật bác sĩ.' });
+  } finally {
+    client.release();
+  }
+});
+
+app.patch('/api/admin/appointments/:appointmentId/status', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const appointmentId = Number(req.params.appointmentId);
+    const status = String(req.body?.status || '').trim();
+    const validStatuses = ['ChoXacNhan', 'DaXacNhan', 'DangKham', 'HoanThanh', 'DaHuy', 'VangMat'];
+    if (!Number.isInteger(appointmentId) || !validStatuses.includes(status)) {
+      return res.status(400).json({ success: false, message: 'Lịch khám hoặc trạng thái không hợp lệ.' });
+    }
+    const result = await pool.query(
+      'UPDATE lichkham SET trangthai = $1 WHERE lichkhamid = $2 RETURNING *',
+      [status, appointmentId]
+    );
+    if (!result.rows[0]) return res.status(404).json({ success: false, message: 'Không tìm thấy lịch khám.' });
+    return res.json({ success: true, appointment: result.rows[0] });
+  } catch (error) {
+    console.error('Admin appointment status error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể cập nhật lịch khám.' });
+  }
+});
+
+app.post('/api/admin/specialties', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const name = String(req.body?.name || '').trim();
+    if (!name) return res.status(400).json({ success: false, message: 'Tên chuyên khoa là bắt buộc.' });
+    const result = await pool.query('INSERT INTO chuyenkhoa (tenchuyenkhoa, mota) VALUES ($1, $2) RETURNING *', [name, req.body?.description || null]);
+    return res.status(201).json({ success: true, specialty: result.rows[0] });
+  } catch (error) {
+    console.error('Admin create specialty error:', error);
+    return res.status(error.code === '23505' ? 409 : 500).json({ success: false, message: 'Không thể tạo chuyên khoa.' });
+  }
+});
+
+app.post('/api/admin/services', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const name = String(req.body?.name || '').trim();
+    const price = Number(req.body?.price || 0);
+    if (!name || !Number.isFinite(price) || price < 0) return res.status(400).json({ success: false, message: 'Tên và giá dịch vụ không hợp lệ.' });
+    const result = await pool.query(
+      'INSERT INTO danhmucdichvu (tendichvu, mota, dongia, hoatdong) VALUES ($1, $2, $3, true) RETURNING *',
+      [name, req.body?.description || null, price]
+    );
+    return res.status(201).json({ success: true, service: result.rows[0] });
+  } catch (error) {
+    console.error('Admin create service error:', error);
+    return res.status(error.code === '23505' ? 409 : 500).json({ success: false, message: 'Không thể tạo dịch vụ.' });
+  }
+});
+
+app.post('/api/admin/medicines', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const name = String(req.body?.name || '').trim();
+    const unit = String(req.body?.unit || '').trim();
+    if (!name || !unit) return res.status(400).json({ success: false, message: 'Tên thuốc và đơn vị tính là bắt buộc.' });
+    const result = await pool.query(
+      'INSERT INTO danhmucthuoc (tenthuoc, hoatchat, donvitinh) VALUES ($1, $2, $3) RETURNING *',
+      [name, req.body?.activeIngredient || null, unit]
+    );
+    return res.status(201).json({ success: true, medicine: result.rows[0] });
+  } catch (error) {
+    console.error('Admin create medicine error:', error);
+    return res.status(error.code === '23505' ? 409 : 500).json({ success: false, message: 'Không thể tạo thuốc.' });
   }
 });
 

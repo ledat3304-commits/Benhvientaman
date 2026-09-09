@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import './styles.css';
 
 const API_BASE = (
@@ -25,36 +25,71 @@ function saveSession(session: { token: string; user: any }) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
 }
 
-function normalizeRole(role: string) {
-  return String(role || '').trim().toLowerCase();
+function normalizeRole(role: unknown) {
+  return String(role || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[đĐ]/g, 'd')
+    .replace(/[\u0111\u0110]/g, 'd')
+    .replace(/[^a-zA-Z0-9]/g, '')
+    .toLowerCase();
 }
 
 function getSessionUserId(session = readStoredSession()) {
   return session?.user?.UserID ?? session?.user?.userid ?? session?.user?.id ?? null;
 }
 
-function getRoleDashboardPath(user: any) {
+type AppRole = 'admin' | 'doctor' | 'patient' | '';
+
+function getUserRole(user: any): AppRole {
   const role = normalizeRole(user?.VaiTro || user?.vaitro || '');
 
-  if (role.includes('quantri') || role.includes('admin') || role.includes('quanly')) {
-    return '/admin';
+  if (['quantri', 'quantrivien', 'quanly', 'admin', 'administrator'].includes(role)) {
+    return 'admin';
   }
 
-  if (role.includes('bacsi') || role.includes('doctor')) {
-    return '/doctor';
+  if (['bacsi', 'doctor'].includes(role)) {
+    return 'doctor';
   }
 
-  if (role.includes('benhnhan') || role.includes('patient')) {
-    return '/patient';
+  if (['benhnhan', 'patient'].includes(role)) {
+    return 'patient';
   }
 
-  return '/';
+  return '';
+}
+
+function getRoleDashboardPath(user: any) {
+  const rolePaths: Record<Exclude<AppRole, ''>, string> = {
+    admin: '/admin',
+    doctor: '/doctor',
+    patient: '/patient'
+  };
+  const role = getUserRole(user);
+  return role ? rolePaths[role] : '/';
+}
+
+function RoleRoute({ role, children }: { role: Exclude<AppRole, ''>; children: React.ReactElement }) {
+  const session = readStoredSession();
+
+  if (!session?.token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (getUserRole(session.user) !== role) {
+    return <Navigate to={getRoleDashboardPath(session.user)} replace />;
+  }
+
+  return children;
 }
 
 function getSessionHeaders(session = readStoredSession()) {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-  const userId = getSessionUserId(session);
+  if (session?.token) {
+    headers.Authorization = `Bearer ${session.token}`;
+  }
 
+  const userId = getSessionUserId(session);
   if (userId !== null) {
     headers['x-user-id'] = String(userId);
   }
@@ -176,6 +211,159 @@ function AdminDashboardPage() {
         </div>
       )}
     />
+  );
+}
+
+function AdminControlPanel() {
+  const session = readStoredSession();
+  const [section, setSection] = useState('overview');
+  const [dashboard, setDashboard] = useState<any>(null);
+  const [users, setUsers] = useState<any[]>([]);
+  const [doctors, setDoctors] = useState<any[]>([]);
+  const [patients, setPatients] = useState<any[]>([]);
+  const [appointments, setAppointments] = useState<any[]>([]);
+  const [specialties, setSpecialties] = useState<any[]>([]);
+  const [services, setServices] = useState<any[]>([]);
+  const [medicines, setMedicines] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
+  const [doctorForm, setDoctorForm] = useState({ name: '', email: '', phone: '', password: '', specialtyId: '', experience: '', description: '' });
+
+  const adminFetch = async (path: string, options: RequestInit = {}) => {
+    const response = await fetch(`${API_BASE}${path}`, {
+      ...options,
+      headers: { ...getSessionHeaders(session), ...(options.headers || {}) }
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.message || 'Thao tác không thành công.');
+    return payload;
+  };
+
+  const loadAdminData = async () => {
+    setLoading(true);
+    try {
+      const [overview, userData, doctorData, patientData, appointmentData, specialtyData, serviceData, medicineData] = await Promise.all([
+        adminFetch('/api/admin/dashboard'),
+        adminFetch('/api/admin/users'),
+        adminFetch('/api/admin/doctors'),
+        adminFetch('/api/admin/patients'),
+        adminFetch('/api/admin/appointments'),
+        adminFetch('/api/admin/specialties'),
+        adminFetch('/api/admin/services'),
+        adminFetch('/api/admin/medicines')
+      ]);
+      setDashboard(overview);
+      setUsers(userData.users || []);
+      setDoctors(doctorData.doctors || []);
+      setPatients(patientData.patients || []);
+      setAppointments(appointmentData.appointments || []);
+      setSpecialties(specialtyData.specialties || []);
+      setServices(serviceData.services || []);
+      setMedicines(medicineData.medicines || []);
+      setMessage('');
+    } catch (error: any) {
+      setMessage(error.message || 'Không thể tải dữ liệu quản trị.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (session?.token) loadAdminData();
+  }, [session?.token]);
+
+  const updateRole = async (user: any, role: string) => {
+    try {
+      await adminFetch(`/api/admin/users/${user.userid || user.UserID}/role`, {
+        method: 'PATCH',
+        body: JSON.stringify({ role })
+      });
+      await loadAdminData();
+      setMessage('Đã cập nhật role tài khoản.');
+    } catch (error: any) {
+      setMessage(error.message);
+    }
+  };
+
+  const toggleUser = async (user: any) => {
+    try {
+      await adminFetch(`/api/admin/users/${user.userid || user.UserID}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ active: !(user.hoatdong ?? user.HoatDong) })
+      });
+      await loadAdminData();
+    } catch (error: any) {
+      setMessage(error.message);
+    }
+  };
+
+  const createDoctor = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      await adminFetch('/api/admin/doctors', { method: 'POST', body: JSON.stringify(doctorForm) });
+      setDoctorForm({ name: '', email: '', phone: '', password: '', specialtyId: '', experience: '', description: '' });
+      await loadAdminData();
+      setMessage('Đã tạo tài khoản bác sĩ.');
+    } catch (error: any) {
+      setMessage(error.message);
+    }
+  };
+
+  const createCatalogItem = async (path: string, body: Record<string, unknown>) => {
+    try {
+      await adminFetch(path, { method: 'POST', body: JSON.stringify(body) });
+      await loadAdminData();
+      setMessage('Đã thêm dữ liệu mới.');
+    } catch (error: any) {
+      setMessage(error.message);
+    }
+  };
+
+  if (!session?.token) return <Navigate to="/login" replace />;
+
+  return (
+    <main className="page-shell admin-shell">
+      <div className="section-header">
+        <h2>Trung tâm quản trị hệ thống</h2>
+        <p>Admin có toàn quyền quản lý tài khoản, bác sĩ, bệnh nhân, lịch khám và danh mục bệnh viện.</p>
+      </div>
+
+      {message && <div className="admin-alert">{message}</div>}
+      {loading && !dashboard ? <p>Đang tải dữ liệu quản trị...</p> : (
+        <>
+          <div className="admin-stat-grid">
+            <div className="admin-stat"><span>Người dùng</span><strong>{dashboard?.stats?.totalUsers ?? 0}</strong></div>
+            <div className="admin-stat"><span>Bác sĩ</span><strong>{dashboard?.stats?.totalDoctors ?? 0}</strong></div>
+            <div className="admin-stat"><span>Bệnh nhân</span><strong>{dashboard?.stats?.totalPatients ?? 0}</strong></div>
+            <div className="admin-stat"><span>Lịch khám</span><strong>{dashboard?.stats?.totalAppointments ?? 0}</strong></div>
+          </div>
+
+          <div className="admin-tabs">
+            {[
+              ['overview', 'Tổng quan'], ['users', 'Tài khoản'], ['doctors', 'Bác sĩ'],
+              ['patients', 'Bệnh nhân'], ['appointments', 'Lịch khám'], ['catalog', 'Danh mục']
+            ].map(([key, label]) => (
+              <button key={key} type="button" className={section === key ? 'active' : ''} onClick={() => setSection(key)}>{label}</button>
+            ))}
+          </div>
+
+          {section === 'overview' && <div className="list-grid">
+            <div className="panel"><h3>Vai trò hệ thống</h3><p><strong>QuanTri:</strong> quản lý toàn bộ hệ thống.</p><p><strong>BacSi:</strong> xem và xử lý lịch khám được phân công.</p><p><strong>BenhNhan:</strong> quản lý hồ sơ và lịch khám cá nhân.</p></div>
+            <div className="panel"><h3>Tài khoản quản trị</h3><p>{dashboard?.user?.hoten || dashboard?.user?.HoTen}</p><p>{dashboard?.user?.email || dashboard?.user?.Email}</p><span className="badge">QuanTri</span></div>
+          </div>}
+
+          {section === 'users' && <div className="panel admin-panel-wide"><h3>Quản lý tài khoản và role</h3><div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Họ tên</th><th>Email</th><th>Role</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>{users.map((user) => <tr key={user.userid || user.UserID}><td>{user.hoten || user.HoTen}</td><td>{user.email || user.Email}</td><td><select value={getUserRole(user)} onChange={(event) => updateRole(user, event.target.value)}><option value="admin">Admin</option><option value="doctor">Bác sĩ</option><option value="patient">Bệnh nhân</option></select></td><td>{(user.hoatdong ?? user.HoatDong) ? 'Đang hoạt động' : 'Đã khóa'}</td><td><button type="button" className="btn btn-small" onClick={() => toggleUser(user)}>{(user.hoatdong ?? user.HoatDong) ? 'Khóa' : 'Mở khóa'}</button></td></tr>)}</tbody></table></div></div>}
+
+          {section === 'doctors' && <div className="admin-two-column"><div className="panel"><h3>Tạo tài khoản bác sĩ</h3><form onSubmit={createDoctor}><input placeholder="Họ tên" value={doctorForm.name} onChange={(e) => setDoctorForm({ ...doctorForm, name: e.target.value })} required /><input type="email" placeholder="Email" value={doctorForm.email} onChange={(e) => setDoctorForm({ ...doctorForm, email: e.target.value })} required /><input placeholder="Số điện thoại" value={doctorForm.phone} onChange={(e) => setDoctorForm({ ...doctorForm, phone: e.target.value })} /><input type="password" placeholder="Mật khẩu" value={doctorForm.password} onChange={(e) => setDoctorForm({ ...doctorForm, password: e.target.value })} minLength={6} required /><select value={doctorForm.specialtyId} onChange={(e) => setDoctorForm({ ...doctorForm, specialtyId: e.target.value })}><option value="">Chọn chuyên khoa</option>{specialties.map((item) => <option key={item.chuyenkhoaid} value={item.chuyenkhoaid}>{item.tenchuyenkhoa}</option>)}</select><input placeholder="Kinh nghiệm" value={doctorForm.experience} onChange={(e) => setDoctorForm({ ...doctorForm, experience: e.target.value })} /><textarea placeholder="Mô tả" value={doctorForm.description} onChange={(e) => setDoctorForm({ ...doctorForm, description: e.target.value })} /><button className="btn btn-primary" type="submit">Tạo bác sĩ</button></form></div><div className="panel admin-panel-wide"><h3>Danh sách bác sĩ</h3><div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Họ tên</th><th>Email</th><th>Chuyên khoa</th><th>Kinh nghiệm</th></tr></thead><tbody>{doctors.map((doctor) => <tr key={doctor.bacsiid}><td>{doctor.hoten}</td><td>{doctor.email}</td><td>{doctor.tenchuyenkhoa || 'Chưa cập nhật'}</td><td>{doctor.kinhnghiem || 'Chưa cập nhật'}</td></tr>)}</tbody></table></div></div></div>}
+
+          {section === 'patients' && <div className="panel admin-panel-wide"><h3>Danh sách bệnh nhân</h3><div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Họ tên</th><th>Email</th><th>Số điện thoại</th><th>Ngày sinh</th><th>Địa chỉ</th></tr></thead><tbody>{patients.map((patient) => <tr key={patient.benhnhanid}><td>{patient.hoten || '---'}</td><td>{patient.email || '---'}</td><td>{patient.sodienthoai || '---'}</td><td>{patient.ngaysinh || '---'}</td><td>{patient.diachi || '---'}</td></tr>)}</tbody></table></div></div>}
+
+          {section === 'appointments' && <div className="panel admin-panel-wide"><h3>Quản lý lịch khám</h3><div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Thời gian</th><th>Bác sĩ</th><th>Bệnh nhân</th><th>Lý do</th><th>Trạng thái</th></tr></thead><tbody>{appointments.map((item) => <tr key={item.lichkhamid}><td>{item.thoigiankham}</td><td>{item.tenbacsi}</td><td>{item.tenbenhnhan || '---'}</td><td>{item.lydokham || '---'}</td><td><select value={item.trangthai} onChange={async (e) => { await adminFetch(`/api/admin/appointments/${item.lichkhamid}/status`, { method: 'PATCH', body: JSON.stringify({ status: e.target.value }) }); await loadAdminData(); }}><option value="ChoXacNhan">Chờ xác nhận</option><option value="DaXacNhan">Đã xác nhận</option><option value="DangKham">Đang khám</option><option value="HoanThanh">Hoàn thành</option><option value="DaHuy">Đã hủy</option><option value="VangMat">Vắng mặt</option></select></td></tr>)}</tbody></table></div></div>}
+
+          {section === 'catalog' && <div className="admin-two-column"><div className="panel"><h3>Thêm chuyên khoa</h3><form onSubmit={(e) => { e.preventDefault(); const form = new FormData(e.currentTarget); createCatalogItem('/api/admin/specialties', { name: form.get('name'), description: form.get('description') }); e.currentTarget.reset(); }}><input name="name" placeholder="Tên chuyên khoa" required /><textarea name="description" placeholder="Mô tả" /><button className="btn btn-primary">Thêm chuyên khoa</button></form><h3>Chuyên khoa hiện có</h3>{specialties.map((item) => <p key={item.chuyenkhoaid}>{item.tenchuyenkhoa}</p>)}</div><div className="panel"><h3>Thêm dịch vụ</h3><form onSubmit={(e) => { e.preventDefault(); const form = new FormData(e.currentTarget); createCatalogItem('/api/admin/services', { name: form.get('name'), description: form.get('description'), price: Number(form.get('price') || 0) }); e.currentTarget.reset(); }}><input name="name" placeholder="Tên dịch vụ" required /><input name="price" type="number" min="0" placeholder="Đơn giá" /><textarea name="description" placeholder="Mô tả" /><button className="btn btn-primary">Thêm dịch vụ</button></form><h3>Thêm thuốc</h3><form onSubmit={(e) => { e.preventDefault(); const form = new FormData(e.currentTarget); createCatalogItem('/api/admin/medicines', { name: form.get('name'), activeIngredient: form.get('activeIngredient'), unit: form.get('unit') }); e.currentTarget.reset(); }}><input name="name" placeholder="Tên thuốc" required /><input name="activeIngredient" placeholder="Hoạt chất" /><input name="unit" placeholder="Đơn vị tính" required /><button className="btn btn-primary">Thêm thuốc</button></form><p>Đang có {services.length} dịch vụ và {medicines.length} thuốc.</p></div></div>}
+        </>
+      )}
+    </main>
   );
 }
 
@@ -726,9 +914,9 @@ function App() {
         <Route path="/doctors" element={<DoctorsPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/admin" element={<AdminDashboardPage />} />
-        <Route path="/doctor" element={<DoctorDashboardPage />} />
-        <Route path="/patient" element={<PatientDashboardPage />} />
+        <Route path="/admin" element={<RoleRoute role="admin"><AdminControlPanel /></RoleRoute>} />
+        <Route path="/doctor" element={<RoleRoute role="doctor"><DoctorDashboardPage /></RoleRoute>} />
+        <Route path="/patient" element={<RoleRoute role="patient"><PatientDashboardPage /></RoleRoute>} />
       </Routes>
     </BrowserRouter>
   );
