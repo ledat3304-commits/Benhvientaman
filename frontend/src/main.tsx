@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './styles.css';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost/BenhvienTamAn/backend/public';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 type Doctor = {
   id?: number;
