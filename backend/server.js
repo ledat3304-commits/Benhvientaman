@@ -138,8 +138,23 @@ async function loadDoctorProfile(userId) {
   return normalizeDbRow(doctorResult.rows[0] || null);
 }
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get('/api/health', async (req, res) => {
+  try {
+    await pool.query('SELECT 1');
+    return res.json({
+      status: 'ok',
+      database: 'connected',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Health check failed:', error);
+    return res.status(500).json({
+      status: 'error',
+      database: 'disconnected',
+      message: 'Database connection failed or schema is missing.',
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 app.get('/api/doctors', async (req, res) => {
@@ -221,8 +236,11 @@ app.post('/api/auth/login', async (req, res) => {
       user: sanitizeUser(user)
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ success: false, message: 'Lỗi server khi đăng nhập.' });
+    console.error('Login error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Lỗi server khi đăng nhập. Vui lòng kiểm tra kết nối Supabase và schema bảng nguoidung.'
+    });
   }
 });
 

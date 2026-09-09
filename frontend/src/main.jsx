@@ -163,6 +163,16 @@ function AdminDashboardPage() {
           { title: 'Dịch vụ', text: '2 danh mục đang cần cập nhật giá mới.' }
         ];
 
+        const chartData = [
+          { label: 'T1', value: 35 },
+          { label: 'T2', value: 50 },
+          { label: 'T3', value: 44 },
+          { label: 'T4', value: 70 },
+          { label: 'T5', value: 64 },
+          { label: 'T6', value: 82 },
+          { label: 'T7', value: 78 }
+        ];
+
         return (
           <div className="dashboard-shell">
             <div className="dashboard-header panel">
@@ -189,6 +199,54 @@ function AdminDashboardPage() {
                   <div className="stat-value">{item.value}</div>
                 </div>
               ))}
+            </div>
+
+            <div className="chart-grid">
+              <div className="panel chart-panel">
+                <div className="panel-header">
+                  <h3>Xu hướng lịch khám</h3>
+                  <span className="chip success">+18%</span>
+                </div>
+
+                <div className="chart-bars">
+                  {chartData.map((item) => (
+                    <div className="chart-column" key={item.label}>
+                      <span className="chart-value">{item.value}</span>
+                      <div className="chart-bar" style={{ height: `${item.value}%` }} />
+                      <span className="chart-label">{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="panel summary-panel">
+                <div className="panel-header">
+                  <h3>Phân bố hoạt động</h3>
+                </div>
+
+                <div className="legend-list">
+                  <div className="legend-item">
+                    <span className="legend-swatch blue" />
+                    <span>Khám bệnh</span>
+                    <strong>42%</strong>
+                  </div>
+                  <div className="legend-item">
+                    <span className="legend-swatch green" />
+                    <span>Điều trị</span>
+                    <strong>31%</strong>
+                  </div>
+                  <div className="legend-item">
+                    <span className="legend-swatch orange" />
+                    <span>Chăm sóc</span>
+                    <strong>17%</strong>
+                  </div>
+                  <div className="legend-item">
+                    <span className="legend-swatch purple" />
+                    <span>Khác</span>
+                    <strong>10%</strong>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="content-grid">
@@ -270,31 +328,111 @@ function DoctorDashboardPage() {
       title="Trang bác sĩ"
       subtitle="Xem thông tin và lịch khám của bạn"
       apiPath="/api/doctor/dashboard"
-      renderData={(data) => (
-        <div className="list-grid">
-          <div className="panel">
-            <h3>Thông tin bác sĩ</h3>
-            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
-            <p><strong>Chuyên khoa:</strong> {data?.doctor?.TenChuyenKhoa || data?.doctor?.tenchuyenkhoa || '---'}</p>
-            <p><strong>Kinh nghiệm:</strong> {data?.doctor?.KinhNghiem || data?.doctor?.kinhnghiem || '---'}</p>
-          </div>
+      renderData={(data) => {
+        const appointments = data?.appointments || [];
+        const stats = [
+          { label: 'Lịch trong tuần', value: appointments.length || 0, tone: 'blue', icon: '📅' },
+          { label: 'Đã xác nhận', value: appointments.filter((item) => (item.TrangThai || item.trangthai || '').toLowerCase().includes('xacnhan')).length || 0, tone: 'green', icon: '✅' },
+          { label: 'Chờ phản hồi', value: appointments.filter((item) => (item.TrangThai || item.trangthai || '').toLowerCase().includes('cho')).length || 0, tone: 'gold', icon: '⏳' }
+        ];
 
-          <div className="panel">
-            <h3>Lịch khám gần đây</h3>
-            {(data?.appointments || []).length === 0 ? (
-              <p>Chưa có lịch khám nào.</p>
-            ) : (
-              <ul>
-                {(data?.appointments || []).map((item, index) => (
-                  <li key={item.LichKhamID ?? item.lichkhamid ?? index}>
-                    {item.ThoiGianKham || item.thoigiankham || '---'} - {item.TrangThai || item.trangthai || '---'}
-                  </li>
-                ))}
-              </ul>
-            )}
+        return (
+          <div className="dashboard-shell">
+            <div className="dashboard-header panel">
+              <div className="heading-block">
+                <span className="eyebrow dark">Bác sĩ</span>
+                <h2>{data?.user?.HoTen || data?.user?.hoten || 'Bác sĩ'}</h2>
+                <p>Quản lý lịch khám, theo dõi bệnh nhân và cập nhật hồ sơ điều trị.</p>
+              </div>
+
+              <div className="header-actions">
+                <button className="btn btn-primary small-btn">+ Tạo lịch làm việc</button>
+              </div>
+            </div>
+
+            <div className="stats-grid compact-grid">
+              {stats.map((item) => (
+                <div className={`stat-card ${item.tone}`} key={item.label}>
+                  <div className="stat-top">
+                    <div className="stat-icon">{item.icon}</div>
+                  </div>
+                  <div className="stat-label">{item.label}</div>
+                  <div className="stat-value">{item.value}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="content-grid">
+              <div className="panel">
+                <div className="panel-header">
+                  <h3>Thông tin bác sĩ</h3>
+                  <span className="chip success">Đang làm việc</span>
+                </div>
+
+                <div className="profile-grid">
+                  <div className="info-tile">
+                    <span className="info-label">Họ tên</span>
+                    <strong>{data?.user?.HoTen || data?.user?.hoten || '---'}</strong>
+                  </div>
+                  <div className="info-tile">
+                    <span className="info-label">Chuyên khoa</span>
+                    <strong>{data?.doctor?.TenChuyenKhoa || data?.doctor?.tenchuyenkhoa || '---'}</strong>
+                  </div>
+                  <div className="info-tile">
+                    <span className="info-label">Kinh nghiệm</span>
+                    <strong>{data?.doctor?.KinhNghiem || data?.doctor?.kinhnghiem || '---'}</strong>
+                  </div>
+                  <div className="info-tile">
+                    <span className="info-label">Email</span>
+                    <strong>{data?.user?.Email || data?.user?.email || '---'}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div className="panel">
+                <div className="panel-header">
+                  <h3>Nhắc nhở</h3>
+                </div>
+
+                <div className="alert-list">
+                  <div className="alert-item">
+                    <strong>Buổi sáng</strong>
+                    <p>3 bệnh nhân cần xác nhận lịch khám trước 9:00.</p>
+                  </div>
+                  <div className="alert-item">
+                    <strong>Hồ sơ</strong>
+                    <p>2 hồ sơ bệnh án chưa được cập nhật kết quả.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="panel">
+              <div className="panel-header">
+                <h3>Lịch khám gần đây</h3>
+              </div>
+
+              <div className="appointment-list">
+                {appointments.length === 0 ? (
+                  <p>Chưa có lịch khám nào.</p>
+                ) : (
+                  appointments.map((item, index) => (
+                    <div className="appointment-item" key={item.LichKhamID ?? item.lichkhamid ?? index}>
+                      <div>
+                        <strong>{item.ThoiGianKham || item.thoigiankham || '---'}</strong>
+                        <p>{item.LyDoKham || item.lydokham || 'Không có lý do khám'}</p>
+                      </div>
+                      <span className="chip status-chip">
+                        {item.TrangThai || item.trangthai || '---'}
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      }}
     />
   );
 }
@@ -305,32 +443,111 @@ function PatientDashboardPage() {
       title="Trang bệnh nhân"
       subtitle="Theo dõi hồ sơ và lịch khám của bạn"
       apiPath="/api/patient/profile"
-      renderData={(data) => (
-        <div className="list-grid">
-          <div className="panel">
-            <h3>Thông tin bệnh nhân</h3>
-            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
-            <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || '---'}</p>
-            <p><strong>Giới tính:</strong> {data?.patient?.GioiTinh || data?.patient?.gioitinh || '---'}</p>
-            <p><strong>Ngày sinh:</strong> {data?.patient?.NgaySinh || data?.patient?.ngaysinh || '---'}</p>
-          </div>
+      renderData={(data) => {
+        const appointments = data?.appointments || [];
+        const stats = [
+          { label: 'Lịch đã đặt', value: appointments.length || 0, tone: 'blue', icon: '📋' },
+          { label: 'Đã hoàn tất', value: appointments.filter((item) => (item.TrangThai || item.trangthai || '').toLowerCase().includes('hoanthanh')).length || 0, tone: 'green', icon: '✅' },
+          { label: 'Đang chờ', value: appointments.filter((item) => (item.TrangThai || item.trangthai || '').toLowerCase().includes('xacnhan')).length || 0, tone: 'gold', icon: '🕒' }
+        ];
 
-          <div className="panel">
-            <h3>Lịch khám của bạn</h3>
-            {(data?.appointments || []).length === 0 ? (
-              <p>Chưa có lịch khám nào.</p>
-            ) : (
-              <ul>
-                {(data?.appointments || []).map((item, index) => (
-                  <li key={item.LichKhamID ?? item.lichkhamid ?? index}>
-                    {item.ThoiGianKham || item.thoigiankham || '---'} - {item.TrangThai || item.trangthai || '---'}
-                  </li>
-                ))}
-              </ul>
-            )}
+        return (
+          <div className="dashboard-shell">
+            <div className="dashboard-header panel">
+              <div className="heading-block">
+                <span className="eyebrow dark">Bệnh nhân</span>
+                <h2>{data?.user?.HoTen || data?.user?.hoten || 'Bệnh nhân'}</h2>
+                <p>Theo dõi hồ sơ sức khỏe, lịch khám và nhận thông báo từ bác sĩ.</p>
+              </div>
+
+              <div className="header-actions">
+                <button className="btn btn-primary small-btn">Đặt lịch mới</button>
+              </div>
+            </div>
+
+            <div className="stats-grid compact-grid">
+              {stats.map((item) => (
+                <div className={`stat-card ${item.tone}`} key={item.label}>
+                  <div className="stat-top">
+                    <div className="stat-icon">{item.icon}</div>
+                  </div>
+                  <div className="stat-label">{item.label}</div>
+                  <div className="stat-value">{item.value}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="content-grid">
+              <div className="panel">
+                <div className="panel-header">
+                  <h3>Thông tin bệnh nhân</h3>
+                  <span className="chip success">Tài khoản đang hoạt động</span>
+                </div>
+
+                <div className="profile-grid">
+                  <div className="info-tile">
+                    <span className="info-label">Họ tên</span>
+                    <strong>{data?.user?.HoTen || data?.user?.hoten || '---'}</strong>
+                  </div>
+                  <div className="info-tile">
+                    <span className="info-label">Email</span>
+                    <strong>{data?.user?.Email || data?.user?.email || '---'}</strong>
+                  </div>
+                  <div className="info-tile">
+                    <span className="info-label">Giới tính</span>
+                    <strong>{data?.patient?.GioiTinh || data?.patient?.gioitinh || '---'}</strong>
+                  </div>
+                  <div className="info-tile">
+                    <span className="info-label">Ngày sinh</span>
+                    <strong>{data?.patient?.NgaySinh || data?.patient?.ngaysinh || '---'}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div className="panel">
+                <div className="panel-header">
+                  <h3>Sức khỏe</h3>
+                </div>
+
+                <div className="alert-list">
+                  <div className="alert-item">
+                    <strong>Tiền sử</strong>
+                    <p>{data?.profile?.ThongTin || 'Không có thông tin y tế đáng chú ý.'}</p>
+                  </div>
+                  <div className="alert-item">
+                    <strong>Hướng dẫn</strong>
+                    <p>Nhắc nhở uống thuốc đúng giờ và theo dõi các triệu chứng mới.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="panel">
+              <div className="panel-header">
+                <h3>Lịch khám của bạn</h3>
+              </div>
+
+              <div className="appointment-list">
+                {appointments.length === 0 ? (
+                  <p>Chưa có lịch khám nào.</p>
+                ) : (
+                  appointments.map((item, index) => (
+                    <div className="appointment-item" key={item.LichKhamID ?? item.lichkhamid ?? index}>
+                      <div>
+                        <strong>{item.ThoiGianKham || item.thoigiankham || '---'}</strong>
+                        <p>{item.LyDoKham || item.lydokham || 'Chưa có thông tin'}</p>
+                      </div>
+                      <span className="chip status-chip">
+                        {item.TrangThai || item.trangthai || '---'}
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      }}
     />
   );
 }
@@ -750,40 +967,77 @@ function App() {
     window.location.href = '/';
   };
 
+  const dashboardPath = isLoggedIn ? getRoleDashboardPath(session?.user) : '/login';
+  const navItems = [
+    { to: '/', label: 'Trang chủ', icon: '🏠' },
+    { to: '/doctors', label: 'Bác sĩ', icon: '👨‍⚕️' },
+    { to: '/services', label: 'Dịch vụ', icon: '🩺' },
+    { to: '/contact', label: 'Liên hệ', icon: '📞' },
+  ];
+
   return (
     <BrowserRouter>
-      <header className="topbar">
-        <div className="brand">Bệnh viện Tâm An</div>
-        <nav>
-          <Link to="/">Trang chủ</Link>
-          <Link to="/doctors">Bác sĩ</Link>
-          <Link to="/services">Dịch vụ</Link>
-          <Link to="/contact">Liên hệ</Link>
+      <div className="app-shell">
+        <aside className="sidebar">
+          <div className="sidebar-brand">
+            <span className="brand-mark">+</span>
+            <span>Bệnh viện Tâm An</span>
+          </div>
 
-          {isLoggedIn ? (
-            <>
-              <span className="user-badge">Xin chào, {userName}</span>
-              <button type="button" className="btn btn-secondary small-btn" onClick={handleLogout}>
-                Đăng xuất
-              </button>
-            </>
-          ) : (
-            <Link to="/login">Đăng nhập</Link>
-          )}
-        </nav>
-      </header>
+          <nav className="sidebar-nav">
+            {navItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="nav-item"
+              >
+                <span className="nav-icon">{item.icon}</span>
+                <span>{item.label}</span>
+              </Link>
+            ))}
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/doctors" element={<DoctorsPage />} />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/admin" element={<AdminDashboardPage />} />
-        <Route path="/doctor" element={<DoctorDashboardPage />} />
-        <Route path="/patient" element={<PatientDashboardPage />} />
-      </Routes>
+            {isLoggedIn && (
+              <Link to={dashboardPath} className="nav-item active">
+                <span className="nav-icon">📊</span>
+                <span>Dashboard</span>
+              </Link>
+            )}
+          </nav>
+
+          <div className="sidebar-footer">
+            {isLoggedIn ? (
+              <>
+                <div className="user-card">
+                  <div className="user-avatar">{userName?.charAt(0)?.toUpperCase() || 'U'}</div>
+                  <div>
+                    <strong>{userName}</strong>
+                    <span>{session?.user?.VaiTro || session?.user?.vaitro || 'Người dùng'}</span>
+                  </div>
+                </div>
+                <button type="button" className="btn btn-secondary full-width" onClick={handleLogout}>
+                  Đăng xuất
+                </button>
+              </>
+            ) : (
+              <Link to="/login" className="btn btn-primary full-width">Đăng nhập</Link>
+            )}
+          </div>
+        </aside>
+
+        <div className="content-shell">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/doctors" element={<DoctorsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/admin" element={<AdminDashboardPage />} />
+            <Route path="/doctor" element={<DoctorDashboardPage />} />
+            <Route path="/patient" element={<PatientDashboardPage />} />
+          </Routes>
+        </div>
+      </div>
     </BrowserRouter>
   );
 }

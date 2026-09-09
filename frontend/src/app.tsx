@@ -153,27 +153,57 @@ function RoleDashboardPage({ title, subtitle, apiPath, renderData }: {
 function AdminDashboardPage() {
   return (
     <RoleDashboardPage
-      title="Trang quản trị"
-      subtitle="Theo dõi tổng quan hệ thống bệnh viện"
+      title="Trang Quản Trị Hệ Thống"
+      subtitle="Theo dõi tổng quan và quản lý nhanh các danh mục bệnh viện"
       apiPath="/api/admin/dashboard"
-      renderData={(data) => (
-        <div className="list-grid">
-          <div className="panel">
-            <h3>Thông tin quản trị</h3>
-            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
-            <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || '---'}</p>
-            <p><strong>Vai trò:</strong> {data?.user?.VaiTro || data?.user?.vaitro || '---'}</p>
-          </div>
+      renderData={(data) => {
+        const totalUsers = data?.stats?.totalUsers ?? 5;
+        const totalDoctors = data?.stats?.totalDoctors ?? 2;
+        const totalPatients = data?.stats?.totalPatients ?? 5;
+        const totalAppointments = data?.stats?.totalAppointments ?? 6;
 
-          <div className="panel">
-            <h3>Thống kê</h3>
-            <p><strong>Tổng người dùng:</strong> {data?.stats?.totalUsers ?? 5}</p>
-            <p><strong>Tổng bác sĩ:</strong> {data?.stats?.totalDoctors ?? 2}</p>
-            <p><strong>Tổng bệnh nhân:</strong> {data?.stats?.totalPatients ?? 5}</p>
-            <p><strong>Tổng lịch khám:</strong> {data?.stats?.totalAppointments ?? 6}</p>
+        return (
+          <div className="space-y-6">
+            {/* Thống kê dạng Card trực quan */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="panel bg-gradient-to-br from-sky-500 to-sky-600 text-white p-5 rounded-xl shadow">
+                <p className="text-sm opacity-80">Tổng người dùng</p>
+                <h3 className="text-3xl font-bold mt-1">{totalUsers}</h3>
+              </div>
+              <div className="panel bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-5 rounded-xl shadow">
+                <p className="text-sm opacity-80">Tổng bác sĩ</p>
+                <h3 className="text-3xl font-bold mt-1">{totalDoctors}</h3>
+              </div>
+              <div className="panel bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-5 rounded-xl shadow">
+                <p className="text-sm opacity-80">Tổng bệnh nhân</p>
+                <h3 className="text-3xl font-bold mt-1">{totalPatients}</h3>
+              </div>
+              <div className="panel bg-gradient-to-br from-amber-500 to-amber-600 text-white p-5 rounded-xl shadow">
+                <p className="text-sm opacity-80">Tổng lịch khám</p>
+                <h3 className="text-3xl font-bold mt-1">{totalAppointments}</h3>
+              </div>
+            </div>
+
+            {/* Menu quản lý và Thông tin quản trị */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="panel">
+                <h3 className="text-lg font-semibold mb-3 border-b pb-2">Thông tin tài khoản quản trị</h3>
+                <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || 'Admin'}</p>
+                <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || 'admin@gmail.com'}</p>
+                <p><strong>Vai trò:</strong> <span className="px-2 py-0.5 bg-sky-100 text-sky-800 rounded text-xs font-bold">Quản Trị</span></p>
+              </div>
+
+              <div className="panel">
+                <h3 className="text-lg font-semibold mb-3 border-b pb-2">Quản lý chuyên nhanh</h3>
+                <div className="flex flex-col space-y-2">
+                  <Link to="/doctors" className="btn btn-secondary text-center">📋 Quản lý danh sách Bác sĩ</Link>
+                  <Link to="/services" className="btn btn-secondary text-center">🩺 Quản lý dịch vụ Y tế</Link>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      }}
     />
   );
 }
@@ -181,8 +211,8 @@ function AdminDashboardPage() {
 function DoctorDashboardPage() {
   return (
     <RoleDashboardPage
-      title="Trang bác sĩ"
-      subtitle="Xem thông tin và lịch khám của bạn"
+      title="Trang Bác Sĩ"
+      subtitle="Xem thông tin chuyên môn và lịch khám của bạn"
       apiPath="/api/doctor/dashboard"
       renderData={(data) => (
         <div className="list-grid">
@@ -216,13 +246,13 @@ function DoctorDashboardPage() {
 function PatientDashboardPage() {
   return (
     <RoleDashboardPage
-      title="Trang bệnh nhân"
-      subtitle="Theo dõi hồ sơ và lịch khám của bạn"
+      title="Trang Bệnh Nhân"
+      subtitle="Theo dõi hồ sơ và lịch khám cá nhân"
       apiPath="/api/patient/profile"
       renderData={(data) => (
         <div className="list-grid">
           <div className="panel">
-            <h3>Thông tin bệnh nhân</h3>
+            <h3>Thông tin cá nhân</h3>
             <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
             <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || '---'}</p>
             <p><strong>Giới tính:</strong> {data?.patient?.GioiTinh || data?.patient?.gioitinh || '---'}</p>
