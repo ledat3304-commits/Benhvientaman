@@ -10,15 +10,17 @@ services:
     envVars:
       - key: PORT
         value: 8000
-      - key: DB_HOST
-        value: db.fwvbcppbfojsutnbdxor.supabase.co
-      - key: DB_PORT
-        value: 5432
-      - key: DB_NAME
-        value: postgres
-      - key: DB_USER
-        value: postgres
-      - key: DB_PASSWORD
-        value: matkhaumoi3@3
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
       - key: DB_SSL
         value: true
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false

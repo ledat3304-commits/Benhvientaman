@@ -1,145 +1,9 @@
-<!DOCTYPE html>
-<html lang="vi" class="light">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Trị - Bệnh viện Tâm An</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0ea5e9',
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+/* Base styles for the legacy frontend pages. */
+* {
+  box-sizing: border-box;
+}
 
-    <!-- Header Navigation -->
-    <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-slate-200 dark:border-slate-700">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-8">
-                <span class="text-xl font-bold text-primary">Bệnh viện Tâm An</span>
-                <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                    <a href="http://localhost:4173/admin" class="hover:text-primary">Trang chủ</a>
-                    <a href="#" class="hover:text-primary">Bác sĩ</a>
-                    <a href="#" class="hover:text-primary">Dịch vụ</a>
-                    <a href="#" class="hover:text-primary">Liên hệ</a>
-                </nav>
-            </div>
-            <div class="flex items-center space-x-4">
-                <!-- Nút đổi Theme -->
-                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition">
-                    🌙
-                </button>
-                <span class="text-sm font-medium">Xin chào, Admin</span>
-                <button class="text-sm text-red-500 hover:underline">Đăng xuất</button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Dashboard Content -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
-        <div class="mb-8 flex justify-between items-center">
-            <div>
-                <h1 class="text-2xl font-bold">TRANG QUẢN TRỊ</h1>
-                <p class="text-sm text-slate-500 dark:text-slate-400">Theo dõi tổng quan hệ thống bệnh viện</p>
-            </div>
-            <button onclick="refreshData()" class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-sky-600 transition shadow">
-                Làm mới dữ liệu
-            </button>
-        </div>
-
-        <!-- Grid Dashboard Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Thông tin quản trị -->
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                <h2 class="text-lg font-semibold mb-4 border-b pb-2 dark:border-slate-700">Thông tin quản trị</h2>
-                <div class="space-y-3 text-sm">
-                    <p><strong>Họ tên:</strong> <span id="admin-name">Admin</span></p>
-                    <p><strong>Email:</strong> <span id="admin-email">admin@gmail.com</span></p>
-                    <p><strong>Vai trò:</strong> <span id="admin-role" class="px-2 py-1 bg-sky-100 text-sky-700 dark:bg-sky-900 dark:text-sky-300 rounded text-xs font-semibold">QuanTri</span></p>
-                </div>
-            </div>
-
-            <!-- Thống kê hệ thống -->
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                <h2 class="text-lg font-semibold mb-4 border-b pb-2 dark:border-slate-700">Thống kê</h2>
-                <div class="grid grid-cols-2 gap-4 text-sm">
-                    <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
-                        <p class="text-slate-500 dark:text-slate-400">Tổng người dùng</p>
-                        <p id="stat-users" class="text-xl font-bold text-primary mt-1">5</p>
-                    </div>
-                    <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
-                        <p class="text-slate-500 dark:text-slate-400">Tổng bác sĩ</p>
-                        <p id="stat-doctors" class="text-xl font-bold text-primary mt-1">2</p>
-                    </div>
-                    <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
-                        <p class="text-slate-500 dark:text-slate-400">Tổng bệnh nhân</p>
-                        <p id="stat-patients" class="text-xl font-bold text-primary mt-1">5</p>
-                    </div>
-                    <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
-                        <p class="text-slate-500 dark:text-slate-400">Tổng lịch khám</p>
-                        <p id="stat-appointments" class="text-xl font-bold text-primary mt-1">6</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- JavaScript xử lý giao diện & Đổi Theme -->
-    <script>
-        // Xử lý chuyển đổi Dark / Light Theme
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-
-        // Khởi tạo kiểm tra local storage hoặc mặc định sáng
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            htmlElement.classList.add('dark');
-            themeToggleBtn.textContent = '☀️';
-        } else {
-            htmlElement.classList.remove('dark');
-            themeToggleBtn.textContent = '🌙';
-        }
-
-        themeToggleBtn.addEventListener('click', () => {
-            if (htmlElement.classList.contains('dark')) {
-                htmlElement.classList.remove('dark');
-                localStorage.theme = 'light';
-                themeToggleBtn.textContent = '🌙';
-            } else {
-                htmlElement.classList.add('dark');
-                localStorage.theme = 'dark';
-                themeToggleBtn.textContent = '☀️';
-            }
-        });
-
-        // Hàm giả lập gọi API cập nhật lại dữ liệu Dashboard động
-        function refreshData() {
-            // Có thể thay thế bằng fetch('/api/admin/stats') thực tế
-            const btn = document.querySelector('button[onclick="refreshData()"]');
-            btn.textContent = 'Đang tải...';
-            
-            setTimeout(() => {
-                // Ví dụ cập nhật lại số liệu thống kê ngẫu nhiên hoặc từ dữ liệu thực tế
-                document.getElementById('stat-users').textContent = '5';
-                document.getElementById('stat-doctors').textContent = '2';
-                document.getElementById('stat-patients').textContent = '5';
-                document.getElementById('stat-appointments').textContent = '6';
-                
-                btn.textContent = 'Làm mới dữ liệu';
-                alert('Đã đồng bộ hóa dữ liệu mới nhất từ hệ thống!');
-            }, 600);
-        }
-    </script>
-</body>
-</html>body {
+body {
   margin: 0;
   background: #f8fafc;
   color: #1f2937;
@@ -147,16 +11,17 @@
 }
 
 main {
-  background: white;
+  background: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 h1 {
   color: #0f172a;
 }
 
-p, li {
+p,
+li {
   line-height: 1.6;
 }
 

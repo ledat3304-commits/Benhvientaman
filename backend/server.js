@@ -8,17 +8,55 @@ const { Pool } = require('pg');
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-app.use(cors());
+const allowedOrigins = String(process.env.FRONTEND_URLS || process.env.FRONTEND_URL || '')
+  .split(',')
+  .map((origin) => origin.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Requests without an Origin header include local health checks and server-to-server calls.
+    if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin.replace(/\/$/, ''))) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Origin is not allowed by FRONTEND_URL'));
+  }
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+function envBoolean(value, fallback = false) {
+  if (value === undefined || value === null || value === '') return fallback;
+  return ['1', 'true', 'yes', 'on'].includes(String(value).trim().toLowerCase());
+}
+
+const databaseUrl = process.env.DATABASE_URL || process.env.SUPABASE_DB_URL;
+const sslEnabled = envBoolean(process.env.DB_SSL, Boolean(databaseUrl));
+
+const poolConfig = databaseUrl
+  ? {
+      connectionString: databaseUrl,
+      ssl: sslEnabled ? { rejectUnauthorized: false } : false
+    }
+  : {
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT || 5432),
+      database: process.env.DB_NAME || 'postgres',
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      ssl: sslEnabled ? { rejectUnauthorized: false } : false
+    };
+
 const pool = new Pool({
-  host: process.env.DB_HOST || 'db.fwvbcppbfojsutnbdxor.supabase.co',
-  port: Number(process.env.DB_PORT || 5432),
-  database: process.env.DB_NAME || 'postgres',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'matkhaumoi3@3',
-  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
+  ...poolConfig,
+  max: Number(process.env.DB_POOL_MAX || 5),
+  connectionTimeoutMillis: Number(process.env.DB_CONNECTION_TIMEOUT_MS || 10000),
+  idleTimeoutMillis: Number(process.env.DB_IDLE_TIMEOUT_MS || 30000)
+});
+
+pool.on('error', (error) => {
+  console.error('Unexpected PostgreSQL pool error:', error.message);
 });
 
 function getUserIdFromRequest(req) {
