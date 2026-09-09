@@ -23,6 +23,13 @@ function saveSession(session) {
 }
 
 function HomePage() {
+  const session = readStoredSession();
+  const role = String(session?.user?.VaiTro || session?.user?.vaitro || '').trim().toLowerCase();
+  const isLoggedIn = Boolean(session?.token);
+  const primaryActionText = isLoggedIn
+    ? (role.includes('quantri') ? 'Vào quản trị' : role.includes('bacsi') ? 'Xem lịch khám' : 'Đặt lịch khám ngay')
+    : 'Đặt lịch khám ngay';
+
   return (
     <main className="page-shell">
       <section className="hero">
@@ -34,7 +41,7 @@ function HomePage() {
             trang thiết bị hiện đại và dịch vụ hỗ trợ bệnh nhân tận tâm.
           </p>
           <div className="cta-row">
-            <Link to="/login" className="btn btn-primary">Đặt lịch khám ngay</Link>
+            <Link to={isLoggedIn ? '/services' : '/login'} className="btn btn-primary">{primaryActionText}</Link>
             <Link to="/services" className="btn btn-secondary">Xem dịch vụ</Link>
           </div>
         </div>
@@ -168,6 +175,9 @@ function LoginPage() {
 function DoctorsPage() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const session = readStoredSession();
+  const role = String(session?.user?.VaiTro || session?.user?.vaitro || '').trim().toLowerCase();
+  const isLoggedIn = Boolean(session?.token);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/doctors`)
@@ -205,8 +215,11 @@ function DoctorsPage() {
                 <p>{doctor.description}</p>
               </div>
               <div className="doctor-footer">
-                <Link to="/login" className="btn btn-secondary">
-                  Đặt lịch khám
+                <Link
+                  to={isLoggedIn ? '/services' : '/login'}
+                  className="btn btn-secondary"
+                >
+                  {isLoggedIn ? (role.includes('quantri') ? 'Vào quản trị' : role.includes('bacsi') ? 'Xem lịch khám' : 'Đặt lịch khám') : 'Đặt lịch khám'}
                 </Link>
               </div>
             </div>
@@ -220,6 +233,9 @@ function DoctorsPage() {
 function ServicesPage() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const session = readStoredSession();
+  const role = String(session?.user?.VaiTro || session?.user?.vaitro || '').trim().toLowerCase();
+  const isLoggedIn = Boolean(session?.token);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/services`)
@@ -254,8 +270,11 @@ function ServicesPage() {
               <p>{service.description}</p>
               <div className="service-footer">
                 <span>{service.price.toLocaleString('vi-VN')} VNĐ</span>
-                <Link to="/login" className="btn btn-secondary small-btn">
-                  Đăng ký ngay
+                <Link
+                  to={isLoggedIn ? '/contact' : '/login'}
+                  className="btn btn-secondary small-btn"
+                >
+                  {isLoggedIn ? (role.includes('quantri') ? 'Quản lý dịch vụ' : role.includes('bacsi') ? 'Xem dịch vụ' : 'Đăng ký ngay') : 'Đăng ký ngay'}
                 </Link>
               </div>
             </div>
@@ -452,7 +471,15 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error('Không tìm thấy phần tử #root để render ứng dụng.');
+}
+
+const appRoot = rootElement.__bta_root || (rootElement.__bta_root = ReactDOM.createRoot(rootElement));
+
+appRoot.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
