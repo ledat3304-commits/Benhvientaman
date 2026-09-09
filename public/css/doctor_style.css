@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+
+:root {
+    --primary: #2C3E50;
+    --accent1: #3498DB;
+    --accent2: #5DADE2;
+    --background: #F4F6F7;
+    --error: #E74C3C;
+    --text-light: #ECF0F1;
+    --text-dark: #34495E;
+}
+
+/* --- THIẾT LẬP CƠ BẢN --- */
+body {
+    overflow-x: hidden;
+    background-color: var(--background);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+#wrapper {
+    display: flex;
+    position: relative;
+}
+
+/* --- LAYOUT CHÍNH (SIDEBAR & NỘI DUNG) --- */
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: 250px;
+    background-color: var(--primary);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    overflow-x: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: width 0.25s ease-out;
+}
+
+#page-content-wrapper {
+    flex-grow: 1;
+    width: calc(100% - 250px);
+    padding: 2rem;
+    margin-left: 250px;
+    transition: margin-left 0.25s ease-out;
+}
+
+/* --- NỘI DUNG SIDEBAR (TRẠNG THÁI MỞ RỘNG) --- */
+#sidebar-wrapper .sidebar-heading {
+    padding: 1.25rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: padding 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading a {
+    color: var(--accent2);
+    text-decoration: none;
+}
+
+#sidebar-wrapper .list-group-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: transparent;
+    border: none;
+    color: rgba(236, 240, 241, 0.7);
+    font-weight: 500;
+    padding: 1rem 1.5rem;
+    border-radius: 5px;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+#sidebar-wrapper .list-group-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--accent2);
+    border-left-color: var(--accent2);
+}
+
+#sidebar-wrapper .list-group-item.active {
+    background-color: var(--accent1);
+    color: var(--text-light);
+    font-weight: 700;
+    border-left-color: var(--accent2);
+    border-radius: 18px;
+}
+
+/* --- CÁC THÀNH PHẦN PHỤ TRỢ --- */
+.sidebar-text {
+    display: inline-block;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s ease, visibility 0.2s ease, display 0.2s;
+}
+
+.toggle-button {
+    background-color: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    border: none;
+    color: #FFFFFF;
+    transition: background-color 0.2s;
+}
+
+.toggle-button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- TRẠNG THÁI THU GỌN (GHI ĐÈ CÁC QUY TẮC TRÊN) --- */
+body.sb-sidenav-toggled #sidebar-wrapper {
+    width: 80px;
+}
+
+body.sb-sidenav-toggled #page-content-wrapper {
+    margin-left: 80px;
+}
+
+body.sb-sidenav-toggled #sidebar-wrapper .sidebar-heading {
+    padding: 1.25rem 0;
+    text-align: center;
+}
+
+/* Ghi đè style chung của các mục menu khi thu gọn */
+body.sb-sidenav-toggled #sidebar-wrapper .list-group-item {
+    justify-content: center;
+    padding: 1rem 0;
+    gap: 0;
+    border-radius: 0;
+}
+
+/* Ghi đè hiệu ứng hover khi thu gọn */
+body.sb-sidenav-toggled #sidebar-wrapper .list-group-item:hover {
+    background-color: transparent;
+    color: var(--text-light);
+    border-left-color: var(--accent2);
+}
+
+/* Ghi đè hiệu ứng active khi thu gọn */
+body.sb-sidenav-toggled #sidebar-wrapper .list-group-item.active {
+    background-color: transparent;
+    border-radius: 0;
+    color: var(--text-light);
+    border-left-color: var(--accent2);
+}
+
+/* Ẩn văn bản */
+body.sb-sidenav-toggled #sidebar-wrapper .sidebar-text {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+}
+
+/* Căn lề lại cho icon */
+body.sb-sidenav-toggled #sidebar-wrapper .fa-fw {
+    margin-right: 0 !important;
+}
+
+/* --- FONT CHỮ CHO PHẦN NỘI DUNG CHÍNH --- */
+#page-content-wrapper h1,
+#page-content-wrapper h2,
+#page-content-wrapper h3 {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+#page-content-wrapper h1 {
+    font-size: 36px;
+}
+
+#page-content-wrapper h2 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+#page-content-wrapper p,
+#page-content-wrapper div,
+#page-content-wrapper span,
+#page-content-wrapper td,
+#page-content-wrapper li {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.caption {
+    font-size: 14px;
+    font-weight: 300;
+    color: #6c757d;
+}

@@ -1,0 +1,69 @@
+/* === CSS cho Footer === */
+footer a.text-white:hover {
+    text-decoration: underline !important;
+    color: #ffc107 !important;
+}
+
+footer .list-inline-item a i {
+    transition: transform 0.2s ease-in-out;
+}
+
+footer .list-inline-item a:hover i {
+    transform: scale(1.2);
+}
+
+
+/* === CSS cho Header === */
+
+.navbar .nav-link {
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    border-radius: 0.25rem;
+    margin: 0 0.25rem;
+}
+
+.navbar .nav-link:not(.active):hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar .nav-link.active {
+    font-weight: 600;
+    color: #fff !important;
+}
+
+.dropdown-menu {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* === CSS cho Trang Đăng nhập === */
+
+.card {
+    border: none;
+}
+
+.card-header h3 {
+    font-weight: 600;
+}
+
+.btn-primary {
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body a {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.card-body a:hover {
+    text-decoration: underline;
+}
