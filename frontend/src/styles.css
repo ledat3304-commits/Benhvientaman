@@ -2243,3 +2243,111 @@ textarea {
     height: 112px;
   }
 }
+
+/* Hospital brand palette: blue, green and white */
+:root {
+  --hospital-blue: #0f5f8d;
+  --hospital-blue-dark: #174773;
+  --hospital-blue-soft: #eaf5fa;
+  --hospital-green: #b7e61b;
+  --hospital-green-dark: #4d7c0f;
+  --hospital-border: #d6e8ef;
+}
+
+.btn-primary {
+  color: #123653;
+  background: linear-gradient(135deg, #c8ef29 0%, #a8dc0b 100%);
+  box-shadow: 0 8px 16px rgba(132, 176, 13, 0.2);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 11px 20px rgba(132, 176, 13, 0.3);
+}
+
+.hospital-section {
+  padding-top: 58px;
+}
+
+.hospital-section-layout {
+  gap: 28px;
+}
+
+.location-card {
+  border-color: var(--hospital-border);
+  box-shadow: 0 12px 28px rgba(15, 95, 141, 0.08);
+  transition: 0.2s ease;
+}
+
+.location-card:last-child {
+  grid-column: 1 / -1;
+}
+
+.location-card:hover {
+  border-color: #a8d3df;
+  box-shadow: 0 16px 30px rgba(15, 95, 141, 0.13);
+  transform: translateY(-3px);
+}
+
+.location-card h3 {
+  color: var(--hospital-blue);
+}
+
+.location-card p {
+  color: #536b7b;
+}
+
+.location-icon {
+  color: var(--hospital-blue-dark);
+  background: var(--hospital-green);
+}
+
+.sidebar-card-accent {
+  background: linear-gradient(145deg, #155a83 0%, #0b829d 100%);
+  box-shadow: 0 16px 30px rgba(15, 95, 141, 0.2);
+}
+
+.sidebar-card-accent h3 {
+  color: white;
+}
+
+.sidebar-card-accent .sidebar-card-label,
+.sidebar-card-link {
+  color: var(--hospital-green);
+}
+
+.sidebar-card-plain {
+  border-color: var(--hospital-border);
+  box-shadow: 0 12px 28px rgba(15, 95, 141, 0.08);
+}
+
+.sidebar-card-plain .sidebar-card-label,
+.sidebar-card-plain h3 {
+  color: var(--hospital-blue-dark);
+}
+
+.hotline-banner {
+  background: linear-gradient(135deg, #174773 0%, #0f6e95 100%);
+  box-shadow: 0 16px 30px rgba(15, 95, 141, 0.16);
+}
+
+.hotline-banner h2 {
+  color: white;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+  line-height: 1.15;
+}
+
+.hotline-banner .eyebrow {
+  color: var(--hospital-green);
+}
+
+.hotline-list a {
+  color: var(--hospital-blue-dark);
+  background: var(--hospital-green);
+  box-shadow: 0 5px 12px rgba(39, 86, 15, 0.16);
+}
+
+@media (max-width: 900px) {
+  .location-card:last-child {
+    grid-column: auto;
+  }
+}
