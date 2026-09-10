@@ -112,11 +112,12 @@ type Service = {
   price: number;
 };
 
-function RoleDashboardPage({ title, subtitle, apiPath, renderData }: {
+function RoleDashboardPage({ title, subtitle, apiPath, renderData, showHeader = true }: {
   title: string;
   subtitle: string;
   apiPath: string;
   renderData: (data: any) => React.ReactNode;
+  showHeader?: boolean;
 }) {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -168,10 +169,12 @@ function RoleDashboardPage({ title, subtitle, apiPath, renderData }: {
 
   return (
     <main className="page-shell">
-      <div className="section-header">
-        <h2>{title}</h2>
-        <p>{subtitle}</p>
-      </div>
+      {showHeader && (
+        <div className="section-header">
+          <h2>{title}</h2>
+          <p>{subtitle}</p>
+        </div>
+      )}
 
       {loading ? (
         <p>Đang tải dữ liệu...</p>
@@ -192,22 +195,137 @@ function AdminDashboardPage() {
       title="Trang quản trị"
       subtitle="Theo dõi tổng quan hệ thống bệnh viện"
       apiPath="/api/admin/dashboard"
+      showHeader={false}
       renderData={(data) => (
-        <div className="list-grid">
-          <div className="panel">
-            <h3>Thông tin quản trị</h3>
-            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
-            <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || '---'}</p>
-            <p><strong>Vai trò:</strong> {data?.user?.VaiTro || data?.user?.vaitro || '---'}</p>
-          </div>
+        <div className="dashboard-shell admin-dashboard">
+          <section className="dashboard-header">
+            <div className="heading-block">
+              <p className="eyebrow dark">Tổng quan hệ thống</p>
+              <h2>Trung tâm quản trị</h2>
+              <p>Quản lý và theo dõi hoạt động của Hệ thống Y tế Tâm An.</p>
+            </div>
+            <div className="header-actions">
+              <Link to="/doctors" className="btn btn-outline-brand">Xem bác sĩ</Link>
+              <Link to="/services" className="btn btn-outline-brand">Xem dịch vụ</Link>
+            </div>
+          </section>
 
-          <div className="panel">
-            <h3>Thống kê</h3>
-            <p><strong>Tổng người dùng:</strong> {data?.stats?.totalUsers ?? 0}</p>
-            <p><strong>Tổng bác sĩ:</strong> {data?.stats?.totalDoctors ?? 0}</p>
-            <p><strong>Tổng bệnh nhân:</strong> {data?.stats?.totalPatients ?? 0}</p>
-            <p><strong>Tổng lịch khám:</strong> {data?.stats?.totalAppointments ?? 0}</p>
-          </div>
+          <section className="stats-grid" aria-label="Thống kê hệ thống">
+            <div className="stat-card blue">
+              <div className="stat-top">
+                <span className="stat-icon" aria-hidden="true">👥</span>
+                <span className="stat-trend">Toàn hệ thống</span>
+              </div>
+              <p className="stat-label">Tổng người dùng</p>
+              <strong className="stat-value">{data?.stats?.totalUsers ?? 0}</strong>
+            </div>
+
+            <div className="stat-card green">
+              <div className="stat-top">
+                <span className="stat-icon" aria-hidden="true">🩺</span>
+                <span className="stat-trend">Đội ngũ</span>
+              </div>
+              <p className="stat-label">Tổng bác sĩ</p>
+              <strong className="stat-value">{data?.stats?.totalDoctors ?? 0}</strong>
+            </div>
+
+            <div className="stat-card gold">
+              <div className="stat-top">
+                <span className="stat-icon" aria-hidden="true">🧑‍🤝‍🧑</span>
+                <span className="stat-trend">Hồ sơ</span>
+              </div>
+              <p className="stat-label">Tổng bệnh nhân</p>
+              <strong className="stat-value">{data?.stats?.totalPatients ?? 0}</strong>
+            </div>
+
+            <div className="stat-card purple">
+              <div className="stat-top">
+                <span className="stat-icon" aria-hidden="true">📅</span>
+                <span className="stat-trend">Lịch hẹn</span>
+              </div>
+              <p className="stat-label">Tổng lịch khám</p>
+              <strong className="stat-value">{data?.stats?.totalAppointments ?? 0}</strong>
+            </div>
+          </section>
+
+          <section className="content-grid">
+            <div className="panel">
+              <div className="panel-header">
+                <div>
+                  <h3>Hoạt động tổng quan</h3>
+                  <p className="panel-caption">Tình hình dữ liệu hiện tại của hệ thống</p>
+                </div>
+                <span className="chip success">Đang hoạt động</span>
+              </div>
+
+              <div className="activity-list">
+                <div className="activity-item">
+                  <span className="activity-dot blue" aria-hidden="true" />
+                  <div>
+                    <strong>Hệ thống người dùng</strong>
+                    <p>Đang quản lý {data?.stats?.totalUsers ?? 0} tài khoản trong hệ thống.</p>
+                  </div>
+                </div>
+                <div className="activity-item">
+                  <span className="activity-dot green" aria-hidden="true" />
+                  <div>
+                    <strong>Đội ngũ chuyên môn</strong>
+                    <p>Có {data?.stats?.totalDoctors ?? 0} bác sĩ đang được quản lý.</p>
+                  </div>
+                </div>
+                <div className="activity-item">
+                  <span className="activity-dot gold" aria-hidden="true" />
+                  <div>
+                    <strong>Lịch khám</strong>
+                    <p>Hệ thống đang lưu trữ {data?.stats?.totalAppointments ?? 0} lịch khám.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="side-stack">
+              <div className="panel admin-profile-card">
+                <div className="panel-header">
+                  <h3>Thông tin quản trị</h3>
+                  <span className="profile-status">● Online</span>
+                </div>
+                <div className="profile-summary">
+                  <div className="profile-avatar" aria-hidden="true">A</div>
+                  <div>
+                    <strong>{data?.user?.HoTen || data?.user?.hoten || 'Quản trị viên'}</strong>
+                    <span>{data?.user?.VaiTro || data?.user?.vaitro || 'Quản trị hệ thống'}</span>
+                  </div>
+                </div>
+                <div className="profile-details">
+                  <p><span>Email</span><strong>{data?.user?.Email || data?.user?.email || '---'}</strong></p>
+                  <p><span>Quyền truy cập</span><strong>Toàn hệ thống</strong></p>
+                </div>
+              </div>
+
+              <div className="panel">
+                <div className="panel-header">
+                  <h3>Thao tác nhanh</h3>
+                </div>
+                <div className="action-list">
+                  <Link to="/doctors" className="action-item">
+                    <span className="action-order">01</span>
+                    <span><strong>Quản lý bác sĩ</strong><small>Xem đội ngũ chuyên môn</small></span>
+                    <span className="action-arrow" aria-hidden="true">→</span>
+                  </Link>
+                  <Link to="/services" className="action-item">
+                    <span className="action-order">02</span>
+                    <span><strong>Quản lý dịch vụ</strong><small>Danh mục dịch vụ y tế</small></span>
+                    <span className="action-arrow" aria-hidden="true">→</span>
+                  </Link>
+                  <Link to="/contact" className="action-item">
+                    <span className="action-order">03</span>
+                    <span><strong>Thông tin liên hệ</strong><small>Địa chỉ và hotline</small></span>
+                    <span className="action-arrow" aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       )}
     />
