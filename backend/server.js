@@ -283,7 +283,11 @@ async function loadPatientProfile(userId) {
 
 async function loadDoctorProfile(userId) {
   const doctorResult = await pool.query(
-    'SELECT * FROM bacsi WHERE userid = $1 LIMIT 1',
+    `SELECT b.*, c.tenchuyenkhoa
+     FROM bacsi b
+     LEFT JOIN chuyenkhoa c ON c.chuyenkhoaid = b.chuyenkhoaid
+     WHERE b.userid = $1
+     LIMIT 1`,
     [userId]
   );
 

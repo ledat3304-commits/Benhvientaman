@@ -332,37 +332,157 @@ function AdminDashboardPage() {
   );
 }
 
+function getAppointmentValue(item: any, ...keys: string[]) {
+  for (const key of keys) {
+    if (item?.[key] !== undefined && item?.[key] !== null) {
+      return item[key];
+    }
+  }
+
+  return '';
+}
+
+function formatDateTime(value: unknown) {
+  if (!value) return 'Chưa cập nhật';
+
+  const rawValue = String(value);
+  const databaseDate = rawValue.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/);
+
+  if (databaseDate) {
+    return `${databaseDate[3]}/${databaseDate[2]}/${databaseDate[1]} • ${databaseDate[4]}:${databaseDate[5]}`;
+  }
+
+  const date = new Date(rawValue);
+  if (Number.isNaN(date.getTime())) return rawValue;
+
+  return new Intl.DateTimeFormat('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(date).replace(',', ' •');
+}
+
+function formatDateOnly(value: unknown) {
+  if (!value) return 'Chưa cập nhật';
+
+  const rawValue = String(value);
+  const dateOnly = rawValue.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (dateOnly) return `${dateOnly[3]}/${dateOnly[2]}/${dateOnly[1]}`;
+
+  return formatDateTime(value);
+}
+
+function getAppointmentStatus(value: unknown) {
+  const key = normalizeRole(value);
+  const statuses: Record<string, { label: string; className: string }> = {
+    choxacnhan: { label: 'Chờ xác nhận', className: 'pending' },
+    daxacnhan: { label: 'Đã xác nhận', className: 'confirmed' },
+    dahoanthanh: { label: 'Đã hoàn thành', className: 'completed' },
+    dahuy: { label: 'Đã hủy', className: 'cancelled' }
+  };
+
+  return statuses[key] || { label: String(value || 'Chưa cập nhật'), className: 'pending' };
+}
+
+function countAppointmentsByStatus(appointments: any[], status: string) {
+  return appointments.filter((item) => normalizeRole(getAppointmentValue(item, 'TrangThai', 'trangthai')) === status).length;
+}
+
+function AppointmentList({ appointments, role }: { appointments: any[]; role: 'doctor' | 'patient' }) {
+  if (appointments.length === 0) {
+    return (
+      <div className="empty-state">
+        <span className="empty-state-icon" aria-hidden="true">📅</span>
+        <strong>Chưa có lịch khám</strong>
+        <p>{role === 'doctor' ? 'Lịch khám mới sẽ hiển thị tại đây.' : 'Bạn chưa có lịch khám nào trong hệ thống.'}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="appointments-list">
+      {appointments.map((item, index) => {
+        const appointmentId = getAppointmentValue(item, 'LichKhamID', 'lichkhamid') || index + 1;
+        const status = getAppointmentStatus(getAppointmentValue(item, 'TrangThai', 'trangthai'));
+        const reason = getAppointmentValue(item, 'LyDoKham', 'lydokham') || 'Khám và tư vấn sức khỏe';
+        const patientId = getAppointmentValue(item, 'BenhNhanID', 'benhnhanid');
+
+        return (
+          <article className="appointment-item" key={appointmentId}>
+            <div className="appointment-date">
+              <span className="appointment-date-icon" aria-hidden="true">◷</span>
+              <strong>{formatDateTime(getAppointmentValue(item, 'ThoiGianKham', 'thoigiankham'))}</strong>
+            </div>
+            <div className="appointment-main">
+              <div>
+                <h4>{role === 'doctor' && patientId ? `Bệnh nhân #${patientId}` : `Lịch khám #${appointmentId}`}</h4>
+                <p>{reason}</p>
+              </div>
+              <span className={`appointment-status ${status.className}`}>{status.label}</span>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
 function DoctorDashboardPage() {
   return (
     <RoleDashboardPage
       title="Trang bác sĩ"
       subtitle="Xem thông tin và lịch khám của bạn"
       apiPath="/api/doctor/dashboard"
-      renderData={(data) => (
-        <div className="list-grid">
-          <div className="panel">
-            <h3>Thông tin bác sĩ</h3>
-            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
-            <p><strong>Chuyên khoa:</strong> {data?.doctor?.TenChuyenKhoa || data?.doctor?.tenchuyenkhoa || '---'}</p>
-            <p><strong>Kinh nghiệm:</strong> {data?.doctor?.KinhNghiem || data?.doctor?.kinhnghiem || '---'}</p>
-          </div>
+      showHeader={false}
+      renderData={(data) => {
+        const appointments = Array.isArray(data?.appointments) ? data.appointments : [];
+        const completedAppointments = countAppointmentsByStatus(appointments, 'dahoanthanh');
+        const pendingAppointments = countAppointmentsByStatus(appointments, 'choxacnhan');
+        const doctorName = data?.user?.HoTen || data?.user?.hoten || 'Bác sĩ';
 
-          <div className="panel">
-            <h3>Lịch khám gần đây</h3>
-            {(data?.appointments || []).length === 0 ? (
-              <p>Chưa có lịch khám nào.</p>
-            ) : (
-              <ul>
-                {(data?.appointments || []).map((item: any, index: number) => (
-                  <li key={item.LichKhamID ?? item.lichkhamid ?? index}>
-                    {item.ThoiGianKham || item.thoigiankham || '---'} - {item.TrangThai || item.trangthai || '---'}
-                  </li>
-                ))}
-              </ul>
-            )}
+        return (
+          <div className="dashboard-shell role-dashboard doctor-dashboard">
+            <section className="dashboard-header">
+              <div className="heading-block">
+                <p className="eyebrow dark">Không gian làm việc</p>
+                <h2>Xin chào, {doctorName}</h2>
+                <p>Theo dõi lịch khám và thông tin chuyên môn của bạn tại Tâm An.</p>
+              </div>
+              <span className="role-badge">Bác sĩ</span>
+            </section>
+
+            <section className="stats-grid role-stats" aria-label="Thống kê lịch khám bác sĩ">
+              <div className="stat-card blue"><span className="stat-icon" aria-hidden="true">📅</span><p className="stat-label">Tổng lịch khám</p><strong className="stat-value">{appointments.length}</strong></div>
+              <div className="stat-card green"><span className="stat-icon" aria-hidden="true">✓</span><p className="stat-label">Đã hoàn thành</p><strong className="stat-value">{completedAppointments}</strong></div>
+              <div className="stat-card gold"><span className="stat-icon" aria-hidden="true">◷</span><p className="stat-label">Chờ xác nhận</p><strong className="stat-value">{pendingAppointments}</strong></div>
+            </section>
+
+            <section className="content-grid">
+              <div className="panel appointment-panel">
+                <div className="panel-header">
+                  <div><h3>Lịch khám gần đây</h3><p className="panel-caption">Danh sách lịch khám mới nhất của bạn</p></div>
+                  <span className="chip success">{appointments.length} lịch</span>
+                </div>
+                <AppointmentList appointments={appointments} role="doctor" />
+              </div>
+
+              <div className="side-stack">
+                <div className="panel role-profile-card">
+                  <div className="panel-header"><h3>Hồ sơ chuyên môn</h3><span className="profile-status">● Đang hoạt động</span></div>
+                  <div className="profile-summary"><div className="profile-avatar role-avatar" aria-hidden="true">BS</div><div><strong>{doctorName}</strong><span>{data?.doctor?.TenChuyenKhoa || data?.doctor?.tenchuyenkhoa || 'Chuyên khoa đang cập nhật'}</span></div></div>
+                  <div className="profile-details">
+                    <p><span>Kinh nghiệm</span><strong>{data?.doctor?.KinhNghiem || data?.doctor?.kinhnghiem || 'Chưa cập nhật'}</strong></p>
+                    <p><span>Trạng thái</span><strong className="text-success">Đang công tác</strong></p>
+                  </div>
+                </div>
+                <div className="panel role-tip-card"><span className="sidebar-card-icon" aria-hidden="true">✦</span><h3>Lời nhắc hôm nay</h3><p>Kiểm tra lịch khám thường xuyên để chuẩn bị tốt nhất cho người bệnh.</p></div>
+              </div>
+            </section>
           </div>
-        </div>
-      )}
+        );
+      }}
     />
   );
 }
@@ -373,32 +493,54 @@ function PatientDashboardPage() {
       title="Trang bệnh nhân"
       subtitle="Theo dõi hồ sơ và lịch khám của bạn"
       apiPath="/api/patient/profile"
-      renderData={(data) => (
-        <div className="list-grid">
-          <div className="panel">
-            <h3>Thông tin bệnh nhân</h3>
-            <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || '---'}</p>
-            <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || '---'}</p>
-            <p><strong>Giới tính:</strong> {data?.patient?.GioiTinh || data?.patient?.gioitinh || '---'}</p>
-            <p><strong>Ngày sinh:</strong> {data?.patient?.NgaySinh || data?.patient?.ngaysinh || '---'}</p>
-          </div>
+      showHeader={false}
+      renderData={(data) => {
+        const appointments = Array.isArray(data?.appointments) ? data.appointments : [];
+        const completedAppointments = countAppointmentsByStatus(appointments, 'dahoanthanh');
+        const pendingAppointments = countAppointmentsByStatus(appointments, 'choxacnhan');
+        const patientName = data?.user?.HoTen || data?.user?.hoten || 'Bệnh nhân';
 
-          <div className="panel">
-            <h3>Lịch khám của bạn</h3>
-            {(data?.appointments || []).length === 0 ? (
-              <p>Chưa có lịch khám nào.</p>
-            ) : (
-              <ul>
-                {(data?.appointments || []).map((item: any, index: number) => (
-                  <li key={item.LichKhamID ?? item.lichkhamid ?? index}>
-                    {item.ThoiGianKham || item.thoigiankham || '---'} - {item.TrangThai || item.trangthai || '---'}
-                  </li>
-                ))}
-              </ul>
-            )}
+        return (
+          <div className="dashboard-shell role-dashboard patient-dashboard">
+            <section className="dashboard-header">
+              <div className="heading-block">
+                <p className="eyebrow dark">Không gian sức khỏe</p>
+                <h2>Xin chào, {patientName}</h2>
+                <p>Theo dõi hồ sơ, lịch khám và hành trình chăm sóc sức khỏe của bạn.</p>
+              </div>
+              <Link to="/contact" className="btn btn-outline-brand">Liên hệ Tâm An</Link>
+            </section>
+
+            <section className="stats-grid role-stats" aria-label="Thống kê lịch khám bệnh nhân">
+              <div className="stat-card blue"><span className="stat-icon" aria-hidden="true">📅</span><p className="stat-label">Tổng lịch khám</p><strong className="stat-value">{appointments.length}</strong></div>
+              <div className="stat-card green"><span className="stat-icon" aria-hidden="true">✓</span><p className="stat-label">Đã hoàn thành</p><strong className="stat-value">{completedAppointments}</strong></div>
+              <div className="stat-card purple"><span className="stat-icon" aria-hidden="true">◷</span><p className="stat-label">Chờ xác nhận</p><strong className="stat-value">{pendingAppointments}</strong></div>
+            </section>
+
+            <section className="content-grid">
+              <div className="panel appointment-panel">
+                <div className="panel-header">
+                  <div><h3>Lịch khám của bạn</h3><p className="panel-caption">Theo dõi các lịch hẹn gần đây</p></div>
+                  <span className="chip success">{appointments.length} lịch</span>
+                </div>
+                <AppointmentList appointments={appointments} role="patient" />
+              </div>
+
+              <div className="side-stack">
+                <div className="panel role-profile-card">
+                  <div className="panel-header"><h3>Hồ sơ cá nhân</h3><span className="profile-status">● Đã cập nhật</span></div>
+                  <div className="profile-summary"><div className="profile-avatar role-avatar" aria-hidden="true">BN</div><div><strong>{patientName}</strong><span>{data?.user?.Email || data?.user?.email || 'Email đang cập nhật'}</span></div></div>
+                  <div className="profile-details">
+                    <p><span>Giới tính</span><strong>{data?.patient?.GioiTinh || data?.patient?.gioitinh || 'Chưa cập nhật'}</strong></p>
+                    <p><span>Ngày sinh</span><strong>{formatDateOnly(data?.patient?.NgaySinh || data?.patient?.ngaysinh)}</strong></p>
+                  </div>
+                </div>
+                <div className="panel role-tip-card"><span className="sidebar-card-icon" aria-hidden="true">☎</span><h3>Cần hỗ trợ?</h3><p>Liên hệ hotline Tâm An để được tư vấn và hướng dẫn đặt lịch.</p><Link to="/contact" className="sidebar-card-link">Xem hotline <span aria-hidden="true">→</span></Link></div>
+              </div>
+            </section>
           </div>
-        </div>
-      )}
+        );
+      }}
     />
   );
 }
