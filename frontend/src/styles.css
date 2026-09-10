@@ -364,16 +364,32 @@ body {
 
 .topbar nav {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .topbar nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 11px;
+  border: 1px solid transparent;
+  border-radius: 8px;
   color: white;
   text-decoration: none;
-  font-size: 0.92rem;
+  font-size: 0.86rem;
   font-weight: 600;
+  line-height: 1.2;
   opacity: 0.9;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.topbar nav a:hover {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.08);
+  opacity: 1;
 }
 
 .page-shell {
@@ -1386,6 +1402,16 @@ textarea {
     flex-direction: column;
     gap: 16px;
     padding: 16px 24px;
+  }
+
+  .topbar nav {
+    width: 100%;
+    gap: 4px;
+  }
+
+  .topbar nav a {
+    padding-inline: 9px;
+    font-size: 0.82rem;
   }
 
   .hospital-hero {

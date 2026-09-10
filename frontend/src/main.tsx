@@ -1101,8 +1101,8 @@ function App() {
         </Link>
         <nav>
           <Link to="/">Trang chủ</Link>
-          <Link to="/doctors">Bác sĩ</Link>
-          <Link to="/services">Dịch vụ</Link>
+          <Link to="/doctors">Đội ngũ chuyên gia</Link>
+          <Link to="/services">Dịch vụ y tế</Link>
           <Link to="/contact">Liên hệ</Link>
 
           <button
