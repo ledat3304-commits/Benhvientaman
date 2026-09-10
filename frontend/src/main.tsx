@@ -603,21 +603,53 @@ function HomePage() {
         </aside>
       </section>
 
-      <section className="cards">
-        <div className="card">
-          <div className="icon-circle primary">👨‍⚕️</div>
-          <h3>Đội Ngũ Chuyên Gia</h3>
-          <p>Các bác sĩ đầu ngành tận tâm và giàu kinh nghiệm.</p>
+      <section className="why-choose-section" aria-labelledby="why-choose-title">
+        <div className="section-header why-choose-header">
+          <p className="eyebrow">Giá trị tạo nên Tâm An</p>
+          <h2 id="why-choose-title">Vì sao nên chọn Hệ thống Y tế Tâm An?</h2>
+          <p>Chất lượng chuyên môn là nền tảng để Tâm An mang đến hành trình chăm sóc sức khỏe an toàn, tận tâm và minh bạch.</p>
         </div>
-        <div className="card">
-          <div className="icon-circle blue">🩺</div>
-          <h3>Dịch Vụ Hiện Đại</h3>
-          <p>Trang thiết bị y tế tiên tiến, quy trình chuẩn hóa.</p>
-        </div>
-        <div className="card">
-          <div className="icon-circle gold">📞</div>
-          <h3>Hỗ Trợ 24/7</h3>
-          <p>Luôn sẵn sàng giải đáp thắc mắc và chăm sóc người bệnh.</p>
+
+        <div className="why-choose-layout">
+          <div className="why-choose-column why-choose-left">
+            <article className="why-card why-card-red">
+              <div className="why-card-copy"><h3>Đội ngũ chuyên gia</h3><p>Bác sĩ giàu kinh nghiệm, luôn lắng nghe và đồng hành cùng người bệnh.</p></div>
+              <span className="why-card-icon" aria-hidden="true">✦</span>
+            </article>
+            <article className="why-card why-card-orange">
+              <div className="why-card-copy"><h3>Cơ sở vật chất hiện đại</h3><p>Không gian khám chữa bệnh tiện nghi, sạch sẽ và được đầu tư bài bản.</p></div>
+              <span className="why-card-icon" aria-hidden="true">⌂</span>
+            </article>
+            <article className="why-card why-card-green">
+              <div className="why-card-copy"><h3>Quy trình an toàn</h3><p>Quy trình thăm khám rõ ràng, chuyên nghiệp và đặt sự an toàn lên hàng đầu.</p></div>
+              <span className="why-card-icon" aria-hidden="true">✓</span>
+            </article>
+          </div>
+
+          <div className="why-choose-center" aria-label="Hình ảnh nhận diện Hệ thống Y tế Tâm An">
+            <div className="why-center-ring">
+              <div className="why-center-orbit why-center-orbit-one" />
+              <div className="why-center-orbit why-center-orbit-two" />
+              <div className="why-center-logo"><img src="/logo.jpg" alt="Logo Hệ thống Y tế Tâm An" /></div>
+              <span className="why-center-cross" aria-hidden="true">+</span>
+            </div>
+            <p>Chăm sóc sức khỏe<br /><strong>tận tâm mỗi ngày</strong></p>
+          </div>
+
+          <div className="why-choose-column why-choose-right">
+            <article className="why-card why-card-coral">
+              <span className="why-card-icon" aria-hidden="true">◇</span>
+              <div className="why-card-copy"><h3>Chi phí minh bạch</h3><p>Tư vấn rõ ràng, công khai chi phí để bạn chủ động lựa chọn dịch vụ.</p></div>
+            </article>
+            <article className="why-card why-card-yellow">
+              <span className="why-card-icon" aria-hidden="true">♡</span>
+              <div className="why-card-copy"><h3>Hỗ trợ 24/7</h3><p>Luôn sẵn sàng giải đáp thắc mắc và hỗ trợ người bệnh khi cần.</p></div>
+            </article>
+            <article className="why-card why-card-teal">
+              <span className="why-card-icon" aria-hidden="true">▣</span>
+              <div className="why-card-copy"><h3>Bảo mật thông tin</h3><p>Hồ sơ và thông tin sức khỏe được bảo vệ với sự tôn trọng tuyệt đối.</p></div>
+            </article>
+          </div>
         </div>
       </section>
 
