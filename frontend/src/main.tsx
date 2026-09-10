@@ -292,7 +292,7 @@ const hospitalLocations = [
   },
   {
     name: 'Phòng khám Đa khoa Tâm An',
-    address: '04 Phan Huy Ích, P. Hạc Thành, tỉnh Thanh Hóa'
+    address: '04 Phan Huy Ích, P.Hạc Thành, tỉnh Thanh Hóa'
   },
   {
     name: 'Bệnh viện Đa khoa Tâm An Cơ sở 2',
@@ -326,6 +326,21 @@ function HomePage() {
             <Link to="/services" className="btn btn-secondary">Xem dịch vụ</Link>
           </div>
         </div>
+
+        <aside className="hero-sidebar" aria-label="Thông tin hỗ trợ nhanh">
+          <div className="hero-sidebar-icon" aria-hidden="true">☎</div>
+          <p className="hero-sidebar-label">Hỗ trợ nhanh</p>
+          <h2>Tư vấn sức khỏe cùng Tâm An</h2>
+          <p className="hero-sidebar-text">Đội ngũ tư vấn luôn sẵn sàng hỗ trợ bạn chọn cơ sở và dịch vụ phù hợp.</p>
+          <a className="hero-call-link" href={`tel:${hospitalHotlines[0].replace(/\s/g, '')}`}>
+            <span>
+              <small>Hotline tư vấn</small>
+              <strong>{hospitalHotlines[0]}</strong>
+            </span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <Link className="hero-sidebar-link" to="/contact">Xem thông tin liên hệ <span aria-hidden="true">↗</span></Link>
+        </aside>
       </section>
 
       <section className="cards">
@@ -345,31 +360,126 @@ function HomePage() {
           <p>Luôn sẵn sàng giải đáp thắc mắc và chăm sóc người bệnh.</p>
         </div>
       </section>
+
+      <section className="hospital-section" aria-labelledby="hospital-system-title">
+        <div className="section-header">
+          <p className="eyebrow">Hệ thống Y tế Tâm An</p>
+          <h2 id="hospital-system-title">Địa chỉ các cơ sở</h2>
+          <p>Thăm khám tại cơ sở thuận tiện nhất cho bạn.</p>
+        </div>
+
+        <div className="hospital-section-layout">
+          <div className="location-grid">
+            {hospitalLocations.map((location, index) => (
+              <article className="location-card" key={location.name}>
+                <div className="location-card-topline">
+                  <div className="location-icon" aria-hidden="true">{index + 1}</div>
+                  <span>Cơ sở {index + 1}</span>
+                </div>
+                <h3>{location.name}</h3>
+                <p>{location.address}</p>
+              </article>
+            ))}
+          </div>
+
+          <aside className="home-sidebar" aria-label="Thông tin nhanh">
+            <div className="sidebar-card sidebar-card-accent">
+              <span className="sidebar-card-icon" aria-hidden="true">✦</span>
+              <p className="sidebar-card-label">Đồng hành cùng bạn</p>
+              <h3>Chăm sóc tận tâm, phục vụ chuyên nghiệp</h3>
+              <p>Liên hệ với Tâm An để được hướng dẫn trước khi đến khám.</p>
+              <Link to="/contact" className="sidebar-card-link">Xem địa chỉ <span aria-hidden="true">→</span></Link>
+            </div>
+
+            <div className="sidebar-card sidebar-card-plain">
+              <p className="sidebar-card-label">Bạn cần đặt lịch?</p>
+              <h3>Đặt lịch khám ngay</h3>
+              <p>Chủ động chọn lịch phù hợp với nhu cầu của bạn.</p>
+              <Link to={primaryActionPath} className="btn btn-primary full-width">{primaryActionText}</Link>
+            </div>
+          </aside>
+        </div>
+
+        <div className="hotline-banner">
+          <div>
+            <p className="eyebrow">Tư vấn và hỗ trợ</p>
+            <h2>Hotline tư vấn</h2>
+          </div>
+          <div className="hotline-list">
+            {hospitalHotlines.map((phone) => (
+              <a key={phone} href={`tel:${phone.replace(/\s/g, '')}`}>{phone}</a>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
 
 function HospitalContactPage() {
+  const session = readStoredSession();
+  const contactActionPath = session?.token ? getRoleDashboardPath(session.user) : '/login';
+  const contactActionText = session?.token ? 'Đến trang của bạn' : 'Đặt lịch khám';
+
   return (
     <main className="page-shell">
       <div className="section-header">
-        <h2>Liên hệ Hệ thống Y tế Tâm An</h2>
-        <p>Địa chỉ và hotline tư vấn chính thức của bệnh viện.</p>
+        <p className="eyebrow contact-eyebrow">Hệ thống Y tế Tâm An</p>
+        <h2>Liên hệ với chúng tôi</h2>
+        <p>Địa chỉ các cơ sở và hotline tư vấn chính thức của bệnh viện.</p>
       </div>
-      
-      <div className="contact-grid">
-        {hospitalLocations.map((location) => (
-          <div className="contact-item" key={location.name}>
-            <div className="contact-icon">📍</div>
-            <h3>{location.name}</h3>
-            <p>{location.address}</p>
+
+      <div className="contact-page-grid">
+        <section className="contact-main" aria-labelledby="locations-title">
+          <div className="contact-section-heading">
+            <div>
+              <p className="eyebrow contact-eyebrow">Địa điểm thăm khám</p>
+              <h3 id="locations-title">Các cơ sở của Tâm An</h3>
+            </div>
+            <span className="contact-count">{hospitalLocations.length} cơ sở</span>
           </div>
-        ))}
-      </div>
-      
-      <div className="panel contact-box hotline-contact" style={{ marginTop: '32px' }}>
-        <h3>Hotline tư vấn</h3>
-        <div className="hotline-list">{hospitalHotlines.map((phone) => <a key={phone} href={`tel:${phone.replace(/\s/g, '')}`}>{phone}</a>)}</div>
+
+          <div className="contact-grid">
+            {hospitalLocations.map((location, index) => (
+              <article className="contact-item" key={location.name}>
+                <div className="contact-item-number">0{index + 1}</div>
+                <div className="contact-icon" aria-hidden="true">⌖</div>
+                <div>
+                  <h3>{location.name}</h3>
+                  <p>{location.address}</p>
+                </div>
+                <a className="contact-map-link" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${location.name}, ${location.address}`)}`} target="_blank" rel="noreferrer">
+                  Xem trên bản đồ <span aria-hidden="true">↗</span>
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <aside className="contact-sidebar" aria-label="Thông tin hỗ trợ liên hệ">
+          <div className="contact-sidebar-card contact-hotline-card">
+            <div className="contact-sidebar-icon" aria-hidden="true">☎</div>
+            <p className="sidebar-card-label">Tư vấn miễn phí</p>
+            <h3>Hotline tư vấn</h3>
+            <p>Gọi ngay để được hỗ trợ nhanh chóng.</p>
+            <div className="hotline-list">
+              {hospitalHotlines.map((phone) => (
+                <a key={phone} href={`tel:${phone.replace(/\s/g, '')}`}>{phone}</a>
+              ))}
+            </div>
+          </div>
+
+          <div className="contact-sidebar-card contact-support-card">
+            <p className="sidebar-card-label">Tâm An luôn đồng hành</p>
+            <h3>Sẵn sàng hỗ trợ bạn</h3>
+            <ul className="contact-support-list">
+              <li><span aria-hidden="true">✓</span> Tư vấn trước khi đến khám</li>
+              <li><span aria-hidden="true">✓</span> Hướng dẫn chọn cơ sở phù hợp</li>
+              <li><span aria-hidden="true">✓</span> Hỗ trợ đặt lịch trực tuyến</li>
+            </ul>
+            <Link to={contactActionPath} className="btn btn-primary full-width">{contactActionText}</Link>
+          </div>
+        </aside>
       </div>
     </main>
   );
