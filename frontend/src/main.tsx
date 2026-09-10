@@ -369,7 +369,7 @@ function HospitalContactPage() {
       
       <div className="panel contact-box hotline-contact" style={{ marginTop: '32px' }}>
         <h3>Hotline tư vấn</h3>
-        <div className="hotline-list">{hospitalHotlines.map((phone) => <a key={phone} href={`tel:${phone.replaceAll(' ', '')}`}>{phone}</a>)}</div>
+        <div className="hotline-list">{hospitalHotlines.map((phone) => <a key={phone} href={`tel:${phone.replace(/\s/g, '')}`}>{phone}</a>)}</div>
       </div>
     </main>
   );
