@@ -96,6 +96,12 @@ p,li,button,input,select,textarea{line-height:1.55}
 .methods-overview h4{margin:0 0 6px;color:var(--navy);font-size:16px}
 .methods-overview p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}.methods-overview p+p{margin-top:7px}
 .methods-overview .text-link{white-space:nowrap}
+.insurance-copy{min-width:0}
+.insurance-banner{display:block;width:100%;max-width:100%;aspect-ratio:1/1;object-fit:contain;border:1px solid var(--line);border-radius:15px;background:#eef8fb;box-shadow:0 12px 30px rgba(19,74,87,.08)}
+.insurance-copy>.eyebrow{margin-top:26px}
+.insurance-highlight{padding:14px 16px;border-left:4px solid var(--lime);border-radius:8px;color:#456a70;background:#f1f8f4;font-size:13px;line-height:1.6}
+.insurance-highlight strong{color:var(--navy)}
+.insurance-footnote{margin-top:18px;color:#728b90;font-size:12px;line-height:1.6}
 @media(max-width:650px){.equipment-showcase-heading,.complications-heading{margin-bottom:28px}.complications-heading h3{font-size:clamp(1.9rem,8vw,2.35rem)}.complications-heading p{font-size:14px}.methods-overview{grid-template-columns:auto minmax(0,1fr);padding:18px}.methods-overview .text-link{grid-column:2}}
 @media(max-width:900px){.expert-corner-heading{align-items:flex-start;flex-direction:column}.expert-corner-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.expert-corner-grid{grid-template-columns:1fr}.expert-corner-card p{min-height:0}}
