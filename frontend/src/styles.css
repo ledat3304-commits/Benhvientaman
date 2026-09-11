@@ -79,6 +79,8 @@ p,li,button,input,select,textarea{line-height:1.55}
 .expert-corner-card h3{margin:13px 0 10px;color:var(--navy);font-size:20px}
 .expert-corner-card p{min-height:86px;margin:0 0 20px;color:var(--muted);font-size:13px}
 .expert-corner-card b{color:var(--teal);font-size:12px}.expert-corner-card i{margin-left:6px;font-size:17px;font-style:normal}
+.expert-corner-card p{min-height:0;white-space:pre-line;line-height:1.65}
+.expert-corner-card{height:100%;box-sizing:border-box}
 @media(max-width:900px){.expert-corner-heading{align-items:flex-start;flex-direction:column}.expert-corner-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.expert-corner-grid{grid-template-columns:1fr}.expert-corner-card p{min-height:0}}
 /* Floating support chat widget */
