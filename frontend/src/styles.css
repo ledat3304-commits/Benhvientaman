@@ -50,6 +50,9 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
 .equipment-showcase-heading h2{margin:5px 0 15px;color:var(--navy);font-family:'Playfair Display',Georgia,serif;font-size:clamp(2rem,3.5vw,3.25rem);font-weight:700;letter-spacing:-.03em;line-height:1.1}
 .equipment-showcase-heading h2 em{display:inline;color:var(--teal);font-style:normal}
 .equipment-showcase-heading p{margin:0;color:var(--muted);font-size:15px;line-height:1.6}
+.equipment-showcase-heading h2{font-size:0}
+.equipment-showcase-heading h2::before{content:'Một số thiết bị y tế nổi bật';display:block;color:var(--navy);font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:clamp(2rem,3.5vw,3.25rem);font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.equipment-showcase-heading h2 em{display:none}
 .equipment-board-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .equipment-board{overflow:hidden;margin:0;border:1px solid #e4ecee;border-radius:18px;background:#fff;box-shadow:0 12px 30px rgba(19,74,87,.08)}
 .equipment-board img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;object-position:center top}
