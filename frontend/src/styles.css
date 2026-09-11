@@ -66,3 +66,18 @@ h3,h4,h5,h6{font-family:'Be Vietnam Pro','Segoe UI',Arial,sans-serif;font-weight
 p,li,button,input,select,textarea{line-height:1.55}
 .main-nav,.button,.eyebrow,.hero-tag,.evidence-kicker,.method-card-body>span{letter-spacing:.01em}
 .eyebrow,.hero-tag,.evidence-kicker,.method-card-body>span{font-weight:700}
+/* Expert corner on homepage */
+.expert-corner{background:var(--soft)}
+.expert-corner-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:38px}
+.expert-corner-heading h2{margin:5px 0 13px;color:var(--navy)}
+.expert-corner-heading p{max-width:610px;margin:0;color:var(--muted);font-size:14px}
+.expert-corner-heading .button{flex:0 0 auto}
+.expert-corner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.expert-corner-card{padding:27px 25px;border:1px solid var(--line);border-radius:15px;background:#fff;transition:transform .2s,box-shadow .2s,border-color .2s}
+.expert-corner-card:hover{border-color:#9bd1cd;box-shadow:var(--shadow);transform:translateY(-4px)}
+.expert-corner-card>span{color:#b3d4ca;font-family:Georgia,serif;font-size:34px}
+.expert-corner-card h3{margin:13px 0 10px;color:var(--navy);font-size:20px}
+.expert-corner-card p{min-height:86px;margin:0 0 20px;color:var(--muted);font-size:13px}
+.expert-corner-card b{color:var(--teal);font-size:12px}.expert-corner-card i{margin-left:6px;font-size:17px;font-style:normal}
+@media(max-width:900px){.expert-corner-heading{align-items:flex-start;flex-direction:column}.expert-corner-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.expert-corner-grid{grid-template-columns:1fr}.expert-corner-card p{min-height:0}}
