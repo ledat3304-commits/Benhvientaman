@@ -4,7 +4,10 @@ import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate,
 import './styles.css';
 
 const API_BASE = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
-const STORAGE_KEY = 'bta_session';
+const STORAGE_KEY = 'bta_session';const CHAT_LINKS = {
+  zalo: import.meta.env.VITE_ZALO_OA_URL || 'https://zalo.me/0982499515',
+  messenger: import.meta.env.VITE_FACEBOOK_PAGE_URL || 'https://www.facebook.com/benh.tri.9/'
+};
 const specialties = [
   { name: 'Hậu môn – Trực tràng', icon: '◈', description: 'Khám và điều trị bệnh trĩ, rò hậu môn, áp xe hậu môn.' },
   { name: 'Tiêu hóa', icon: '✦', description: 'Tầm soát và điều trị bệnh lý dạ dày, đại tràng, gan mật.' },
@@ -24,10 +27,23 @@ const locations = [
 function readSession() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; } }
 function Icon({ children }: { children: React.ReactNode }) { return <span className="ui-icon" aria-hidden="true">{children}</span>; }
 
+function ChatWidget() {
+  const [open, setOpen] = useState(false);
+  return <div className={open ? 'chat-widget is-open' : 'chat-widget'}>
+    {open && <div className="chat-panel" role="dialog" aria-label="Chọn kênh liên hệ">
+      <div className="chat-panel-header"><div><strong>Trung tâm hỗ trợ</strong><span>Chọn kênh để trò chuyện với CSKH</span></div><button className="chat-close" onClick={() => setOpen(false)} aria-label="Đóng hộp chat">×</button></div>
+      <p className="chat-greeting">Xin chào! Tâm An sẵn sàng hỗ trợ bạn.</p>
+      <a className="chat-channel chat-channel--zalo" href={CHAT_LINKS.zalo} target="_blank" rel="noreferrer"><span className="chat-channel-icon">Z</span><span><strong>Chat qua Zalo</strong><small>Liên hệ Zalo OA Tâm An</small></span><b>→</b></a>
+      <a className="chat-channel chat-channel--messenger" href={CHAT_LINKS.messenger} target="_blank" rel="noreferrer"><span className="chat-channel-icon">f</span><span><strong>Chat qua Facebook Messenger</strong><small>Nhắn tin tới Fanpage Tâm An</small></span><b>→</b></a>
+    </div>}
+    <button className="chat-launcher" onClick={() => setOpen(!open)} aria-label={open ? 'Đóng hỗ trợ trực tuyến' : 'Mở hỗ trợ trực tuyến'} aria-expanded={open}><span className="chat-launcher-icon">{open ? '×' : '✦'}</span><span className="chat-launcher-label">Hỗ trợ</span></button>
+  </div>;
+}
+
 function Layout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false); const location = useLocation(); const session = readSession();
   useEffect(() => { setOpen(false); window.setTimeout(() => { if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' }); else window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }); }, 0); }, [location.pathname, location.hash]);
-  return <div className="site-shell"><div className="utility-bar"><div className="container utility-inner"><span>Chăm sóc sức khỏe tận tâm mỗi ngày</span><div><a href="tel:0982499515">Hotline: <strong>0982 499 515</strong></a><i>|</i><span>7:00 – 19:00 hằng ngày</span></div></div></div><header className="site-header"><div className="container header-inner"><Link to="/" className="brand"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><button className="menu-toggle" onClick={() => setOpen(!open)} aria-label="Mở menu">☰</button><nav className={open ? 'main-nav is-open' : 'main-nav'}><Link className={location.pathname === '/' ? 'active' : ''} to="/">Trang chủ</Link><Link to="/cam-nang">Cẩm nang</Link><Link to="/cham-soc-hau-phau">Hậu phẫu</Link><Link to="/faq">FAQ & Bảo hiểm</Link><Link to="/lien-he">Liên hệ</Link>{session ? <Link to="/patient" className="nav-account">Tài khoản</Link> : <Link to="/login" className="nav-login">Đăng nhập</Link>}<Link to="/dat-lich" className="button button-primary nav-cta">Đặt lịch khám</Link></nav></div></header>{children}<Footer /></div>;
+  return <div className="site-shell"><div className="utility-bar"><div className="container utility-inner"><span>Chăm sóc sức khỏe tận tâm mỗi ngày</span><div><a href="tel:0982499515">Hotline: <strong>0982 499 515</strong></a><i>|</i><span>7:00 – 19:00 hằng ngày</span></div></div></div><header className="site-header"><div className="container header-inner"><Link to="/" className="brand"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><button className="menu-toggle" onClick={() => setOpen(!open)} aria-label="Mở menu">☰</button><nav className={open ? 'main-nav is-open' : 'main-nav'}><Link className={location.pathname === '/' ? 'active' : ''} to="/">Trang chủ</Link><Link to="/cam-nang">Cẩm nang</Link><Link to="/cham-soc-hau-phau">Hậu phẫu</Link><Link to="/faq">FAQ & Bảo hiểm</Link><Link to="/lien-he">Liên hệ</Link>{session ? <Link to="/patient" className="nav-account">Tài khoản</Link> : <Link to="/login" className="nav-login">Đăng nhập</Link>}<Link to="/dat-lich" className="button button-primary nav-cta">Đặt lịch khám</Link></nav></div></header>{children}<ChatWidget /><Footer /></div>;
 }
 function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link to="/" className="brand brand-light"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><p className="footer-intro">Đồng hành cùng bạn trên hành trình chăm sóc sức khỏe an toàn, chuyên nghiệp và nhân văn.</p><div className="social-row"><span>f</span><span>in</span><span>▶</span></div></div><div><h3>Khám phá</h3><Link to="/gioi-thieu">Về Tâm An</Link><Link to="/dat-lich">Đặt lịch trực tuyến</Link><Link to="/benh-ly">Chuyên mục bệnh lý</Link><Link to="/cam-nang">Cẩm nang người bệnh</Link></div><div><h3>Hỗ trợ người bệnh</h3><Link to="/faq">Câu hỏi thường gặp</Link><Link to="/faq#bao-hiem">Bảo hiểm y tế</Link><Link to="/faq#bao-lanh">Bảo lãnh viện phí</Link><Link to="/lien-he">Liên hệ & cơ sở</Link></div><div><h3>Liên hệ</h3><a href="tel:0982499515" className="footer-hotline">0982 499 515</a><p>Hotline 24/7</p><a href="mailto:contact@benhvientaman.vn">contact@benhvientaman.vn</a><p>257 Nguyễn Trãi, Thanh Hóa</p></div></div><div className="container footer-bottom"><span>© 2025 Bệnh viện Tâm An</span><span>Chính sách bảo mật · Điều khoản sử dụng</span></div></footer>; }
 function SectionHeading({ eyebrow, title, text, light = false }: { eyebrow?: string; title: string; text?: string; light?: boolean }) { return <div className={light ? 'section-heading light' : 'section-heading'}>{eyebrow && <span className="eyebrow">{eyebrow}</span>}<h2>{title}</h2>{text && <p>{text}</p>}</div>; }
