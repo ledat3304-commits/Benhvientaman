@@ -18,3 +18,21 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
 .phone-screen .phone-logo{display:block;width:44px;height:44px;padding:3px;object-fit:contain;border-radius:10px;background:#fff}
 .evidence-image img,.complication-card img,.method-card img,.qr-card img{max-width:100%;height:auto}
 @media(max-width:650px){.hero-circle .hero-logo{width:135px;height:135px;padding:9px;border-radius:19px}.brand-logo{width:100px;height:56px}.brand-light .brand-logo{width:125px;height:68px}}
+/* Leadership layout */
+.leadership-section{padding-top:72px;background:#f7fbfc}
+.leadership-board{position:relative;overflow:hidden;padding:42px 42px 54px;border:1px solid #e3eef0;border-radius:22px;background:linear-gradient(135deg,#fff 0%,#f2f9fb 70%,#eaf5f1 100%);box-shadow:0 18px 45px rgba(19,74,87,.08)}
+.leadership-board:before{content:'';position:absolute;right:-110px;top:-150px;width:440px;height:440px;border:1px solid rgba(20,137,150,.12);border-radius:50%;box-shadow:0 0 0 18px rgba(20,137,150,.04),0 0 0 38px rgba(20,137,150,.035),0 0 0 58px rgba(20,137,150,.025);pointer-events:none}
+.leadership-heading{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:25px;margin-bottom:42px}
+.leadership-heading h2{max-width:720px;margin:5px 0 0;color:#164c8b;font-family:'DM Sans',Arial,sans-serif;font-size:clamp(1.55rem,3.2vw,2.8rem);font-weight:800;letter-spacing:.01em;line-height:1.16}
+.leadership-logo{width:78px;height:78px;object-fit:contain;border-radius:12px;background:#fff}
+.leadership-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:930px;margin:0 auto}
+.leader-card{display:flex;align-items:center;gap:22px;min-height:124px;padding:20px 28px;border:1px solid #e2ebee;border-top:8px solid var(--teal);border-radius:12px;background:rgba(255,255,255,.94);box-shadow:0 8px 18px rgba(19,74,87,.08)}
+.leader-card--director{grid-column:1/-1;width:min(520px,100%);justify-self:center;border-top-color:#0e9b9b}
+.leader-card--orange{border-top-color:#f6a21a}.leader-card--green{border-top-color:#79bd4f}
+.leader-avatar{position:relative;display:block;flex:0 0 72px;width:72px;height:72px;border:1px solid rgba(20,137,150,.25);border-radius:50%;background:#e9f8f6}
+.leader-avatar:before{content:'';position:absolute;top:16px;left:28px;width:15px;height:15px;border:2px solid var(--teal);border-radius:50%}
+.leader-avatar:after{content:'';position:absolute;left:21px;bottom:14px;width:29px;height:25px;border:2px solid var(--teal);border-radius:16px 16px 10px 10px}
+.leader-card--orange .leader-avatar{background:#fff3df}.leader-card--orange .leader-avatar:before,.leader-card--orange .leader-avatar:after{border-color:#eb9a19}
+.leader-card--green .leader-avatar{background:#eef8e8}.leader-card--green .leader-avatar:before,.leader-card--green .leader-avatar:after{border-color:#76b94e}
+.leader-info{min-width:0}.leader-info>span{display:block;color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.02em;line-height:1.35;text-transform:uppercase}.leader-card--orange .leader-info>span{color:#ee9412}.leader-card--green .leader-info>span{color:#70ae45}.leader-info i{display:block;width:20px;height:3px;margin:11px 0;border-radius:99px;background:var(--teal)}.leader-card--orange .leader-info i{background:#ee9412}.leader-card--green .leader-info i{background:#70ae45}.leader-info h3{margin:0;color:#303238;font-family:'DM Sans',Arial,sans-serif;font-size:clamp(1.05rem,2vw,1.35rem);font-weight:800;line-height:1.25}
+@media(max-width:650px){.leadership-section{padding-top:55px}.leadership-board{padding:28px 16px 32px;border-radius:16px}.leadership-heading{align-items:center;margin-bottom:28px}.leadership-heading h2{font-size:1.25rem}.leadership-logo{width:56px;height:56px}.leadership-grid{grid-template-columns:1fr;gap:14px}.leader-card--director{grid-column:auto;width:100%}.leader-card{gap:15px;min-height:108px;padding:16px}.leader-avatar{flex-basis:58px;width:58px;height:58px}.leader-avatar:before{top:12px;left:22px;width:12px;height:12px}.leader-avatar:after{left:16px;bottom:10px;width:24px;height:21px}.leader-info>span{font-size:10px}.leader-info h3{font-size:1rem}}
