@@ -45,3 +45,17 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
   .hero-copy{max-width:760px}
 }
 .hero-visual{display:none}
+/* Medical equipment showcase */
+.equipment-showcase{overflow:hidden;background:#fff}
+.equipment-showcase-heading{max-width:760px;margin:0 auto 38px;text-align:center}
+.equipment-showcase-heading h2{margin:6px 0 13px;color:#164c8b;font-family:'DM Sans',Arial,sans-serif;font-size:clamp(1.8rem,3.5vw,3.1rem);font-weight:800;letter-spacing:.01em;line-height:1.12}
+.equipment-showcase-heading h2 em{display:block;color:#9bc51e;font-style:normal}
+.equipment-showcase-heading p{margin:0;color:var(--muted);font-size:14px}
+.equipment-board-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.equipment-board{overflow:hidden;margin:0;border:1px solid #e4ecee;border-radius:18px;background:#fff;box-shadow:0 12px 30px rgba(19,74,87,.08)}
+.equipment-board img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;object-position:center top}
+.equipment-board figcaption{padding:14px 18px;color:var(--navy);font-size:13px;font-weight:700;text-align:center;background:#f7fbfa}
+.equipment-name-list{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:24px}
+.equipment-name-list span{padding:12px 10px;border-radius:9px;color:#164c8b;background:#f1f8f5;font-size:11px;font-weight:700;line-height:1.35;text-align:center}
+@media(max-width:900px){.equipment-board-grid{grid-template-columns:1fr}.equipment-name-list{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.equipment-showcase-heading{margin-bottom:26px}.equipment-board{border-radius:13px}.equipment-board img{aspect-ratio:4/3}.equipment-name-list{grid-template-columns:repeat(2,1fr);gap:8px}.equipment-name-list span{font-size:10px;padding:10px 7px}}
