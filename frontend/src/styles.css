@@ -91,7 +91,12 @@ p,li,button,input,select,textarea{line-height:1.55}
 .complication-card{height:100%;border-radius:15px}
 .complication-card h4{font-family:'Be Vietnam Pro','Segoe UI',Arial,sans-serif;font-weight:700}
 .complication-card p{font-size:12px;line-height:1.6}
-@media(max-width:650px){.equipment-showcase-heading,.complications-heading{margin-bottom:28px}.complications-heading h3{font-size:clamp(1.9rem,8vw,2.35rem)}.complications-heading p{font-size:14px}}
+.methods-overview{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;margin:0 0 28px;padding:21px 24px;border:1px solid #dcebe7;border-radius:15px;background:linear-gradient(120deg,#f2faf4,#fff)}
+.methods-overview-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;color:var(--navy);background:var(--lime);font-size:22px}
+.methods-overview h4{margin:0 0 6px;color:var(--navy);font-size:16px}
+.methods-overview p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}.methods-overview p+p{margin-top:7px}
+.methods-overview .text-link{white-space:nowrap}
+@media(max-width:650px){.equipment-showcase-heading,.complications-heading{margin-bottom:28px}.complications-heading h3{font-size:clamp(1.9rem,8vw,2.35rem)}.complications-heading p{font-size:14px}.methods-overview{grid-template-columns:auto minmax(0,1fr);padding:18px}.methods-overview .text-link{grid-column:2}}
 @media(max-width:900px){.expert-corner-heading{align-items:flex-start;flex-direction:column}.expert-corner-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.expert-corner-grid{grid-template-columns:1fr}.expert-corner-card p{min-height:0}}
 /* Floating support chat widget */
