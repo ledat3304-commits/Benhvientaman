@@ -230,3 +230,8 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .medical-image-credits{margin-top:15px;color:#789096;font-size:11px;line-height:1.6}
 .medical-image-credits a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
 @media(max-width:650px){.disease-card-image{height:185px}}
+
+.expert-corner-card{overflow:hidden;padding-top:0}
+.expert-card-image{height:150px;margin:0 -25px 24px;background:#edf7f5}
+.expert-card-image img{display:block;width:100%;height:100%;object-fit:cover}
+@media(max-width:650px){.expert-card-image{height:175px}}
