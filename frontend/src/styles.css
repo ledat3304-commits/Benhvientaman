@@ -215,5 +215,11 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 @media(max-width:650px){.page-back-button{width:100%;margin-top:20px}}
 
 /* Dropdown menus use a vertical list layout. */
-.nav-dropdown-menu{flex-direction:column;align-items:stretch}
+.nav-dropdown-menu{flex-direction:column;align-items:stretch;width:250px}
+.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:flex}
 .nav-dropdown-menu a{display:flex;width:100%;white-space:nowrap}
+@media(max-width:900px){
+  .nav-dropdown-menu{width:auto}
+  .nav-dropdown:hover .nav-dropdown-menu{display:none}
+  .nav-dropdown:focus-within .nav-dropdown-menu{display:flex}
+}
