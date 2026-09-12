@@ -91,6 +91,25 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
 .site-header .menu-toggle{color:#41636b}
 @media(max-width:900px){.site-header .main-nav{background:#fff}.site-header .main-nav>a,.site-header .nav-dropdown>a{color:#41636b}.site-header .main-nav>a:hover,.site-header .main-nav>a.active,.site-header .nav-dropdown>a:hover,.site-header .nav-dropdown>a.active{color:var(--teal);background:#f3faf9}.site-header .nav-dropdown-menu{background:#f6fbfa}.site-header .nav-dropdown-menu a{color:#41636b}.site-header .menu-toggle{color:#41636b}}
 
+.about-story{max-width:930px}
+.about-story>h2{margin-bottom:28px;color:var(--navy);font-size:clamp(1.7rem,3vw,2.8rem);line-height:1.2}
+.about-story p,.about-story li{color:#527079;font-size:14px;line-height:1.75}
+.about-story-lead{font-size:17px!important;line-height:1.8!important}
+.about-story h3{margin:45px 0 14px;color:var(--navy);font-size:clamp(1.35rem,2.2vw,2rem);line-height:1.3}
+.about-story h4{margin:0 0 10px;color:var(--teal);font-size:16px;line-height:1.4}
+.about-story h4 span{font-size:.85em;font-weight:500}
+.about-facility-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0 12px}
+.about-facility-grid article{padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--soft);box-shadow:0 8px 22px rgba(19,74,87,.05)}
+.about-facility-grid p{margin:0;font-size:13px}
+.about-story ul{display:grid;gap:13px;padding-left:20px;margin:18px 0}
+.about-story li::marker{color:var(--teal)}
+.about-contact{padding:22px 24px;border-left:4px solid var(--teal);border-radius:8px;background:var(--soft)}
+.about-contact p{margin:7px 0}
+.about-contact a{color:var(--teal);font-weight:700}
+.about-story-slogan{margin-top:30px!important;color:var(--teal)!important;font-size:16px!important;font-weight:700}
+@media(max-width:900px){.about-facility-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.about-story>h2{font-size:1.55rem}.about-story-lead{font-size:15px!important}.about-story p,.about-story li{font-size:13px}.about-facility-grid{grid-template-columns:1fr}.about-story h3{margin-top:34px}}
+
 .slide-five{background:linear-gradient(110deg,#245b67,#15949a)}
 .slide-six{background:linear-gradient(110deg,#164d62,#138d99)}
 .hero-slider.slide-six .hero-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:32px;align-items:center}
