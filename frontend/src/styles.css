@@ -43,6 +43,42 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
   .hero-content{justify-content:flex-start}
   .hero-copy{max-width:760px}
 }
+
+/* Main navigation matching the reference layout */
+.utility-bar{display:none}
+.site-header{position:sticky;top:0;z-index:20;background:#29a5a5;border-bottom:0;backdrop-filter:none}
+.site-header .header-inner{width:100%;max-width:none;min-height:48px;margin:0;padding:0 22px 0 clamp(22px,22.3vw,343px);display:flex;gap:0}
+.site-header .brand{display:none}
+.site-header .main-nav{flex:1;min-width:0;display:flex;align-items:stretch;justify-content:space-between;gap:0;color:#fff;font-size:14px;font-weight:700;white-space:nowrap}
+.site-header .main-nav>a,.site-header .nav-dropdown>a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 16px;color:#fff;line-height:1;text-transform:uppercase}
+.site-header .main-nav>a:hover,.site-header .main-nav>a.active,.site-header .nav-dropdown>a:hover,.site-header .nav-dropdown>a.active{color:#fff;background:rgba(0,72,78,.28)}
+.nav-dropdown{position:relative;display:flex;align-items:stretch}
+.nav-chevron{margin-left:5px;font-size:9px;line-height:1}
+.nav-dropdown-menu{position:absolute;top:48px;left:0;display:none;min-width:190px;padding:7px 0;border-radius:0 0 5px 5px;background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.14)}
+.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:block}
+.nav-dropdown-menu a{display:block;padding:11px 15px;color:#41636b;font-size:12px;font-weight:600;text-transform:none}
+.nav-dropdown-menu a:hover{color:var(--teal);background:#eef8f6}
+.nav-menu-button{display:inline-flex;align-items:center;justify-content:center;width:48px;min-height:48px;padding:0;border:0;color:#fff;background:transparent;font-size:21px;line-height:1}
+.nav-menu-button:hover{background:rgba(0,72,78,.28)}
+.nav-search{display:flex;align-items:center;width:140px;height:36px;margin:auto 0 auto 14px;padding-left:13px;border-radius:20px;background:#fff;overflow:hidden}
+.nav-search input{min-width:0;flex:1;height:100%;padding:0;border:0;outline:0;color:#42636a;background:transparent;font-size:12px}
+.nav-search input::placeholder{color:#557077;opacity:1}
+.nav-search button{display:grid;place-items:center;width:32px;height:32px;margin-right:2px;padding:0;border:0;border-radius:50%;color:#fff;background:#299e9e;font-size:22px;line-height:1}
+@media(max-width:900px){
+  .site-header .header-inner{padding:0 16px}
+  .site-header .main-nav{display:none;position:absolute;top:48px;right:0;left:0;flex-direction:column;align-items:stretch;padding:8px 16px;background:#168f91;box-shadow:0 15px 25px rgba(0,0,0,.16);white-space:normal}
+  .site-header .main-nav.is-open{display:flex}
+  .site-header .main-nav>a,.site-header .nav-dropdown>a{justify-content:flex-start;min-height:44px;padding:0 10px;font-size:13px}
+  .site-header .nav-dropdown{display:block}
+  .nav-dropdown-menu{position:static;min-width:0;padding:0 0 5px;background:rgba(0,0,0,.08);box-shadow:none}
+  .nav-dropdown:hover .nav-dropdown-menu{display:none}
+  .nav-dropdown:focus-within .nav-dropdown-menu{display:block}
+  .nav-dropdown-menu a{padding:9px 25px;color:#eaffff}
+  .nav-menu-button{display:none}
+  .site-header .menu-toggle{display:inline-flex;margin-left:auto;color:#fff}
+  .nav-search{width:100%;height:38px;margin:8px 0 4px}
+}
+@media(min-width:901px){.site-header .menu-toggle{display:none}}
 .hero-visual{display:none}
 /* Medical equipment showcase */
 .equipment-showcase{overflow:hidden;background:#fff}
@@ -130,3 +166,10 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .equipment-showcase-heading>.eyebrow{display:block;width:max-content;max-width:100%;margin:0 0 12px;color:var(--teal);font-size:clamp(.65rem,1vw,.75rem);line-height:1.3;letter-spacing:.1em;white-space:normal}
 .equipment-showcase-heading h2{max-width:100%;margin-top:0}
 @media(max-width:650px){.equipment-showcase-heading>.eyebrow{margin-bottom:9px;font-size:.65rem;letter-spacing:.07em}}
+
+.aftercare-preview{background:var(--soft)}
+.aftercare-preview-grid{display:flex;align-items:center;justify-content:space-between;gap:35px}
+.aftercare-preview-grid>div{max-width:680px}
+.aftercare-preview h2{margin:5px 0 12px;color:var(--navy)}
+.aftercare-preview p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:650px){.aftercare-preview-grid{display:block}.aftercare-preview-grid .button{margin-top:22px}}
