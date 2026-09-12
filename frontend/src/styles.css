@@ -223,3 +223,10 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
   .nav-dropdown:hover .nav-dropdown-menu{display:none}
   .nav-dropdown:focus-within .nav-dropdown-menu{display:flex}
 }
+
+.disease-card{overflow:hidden}
+.disease-card-image{height:170px;margin:-32px -32px 25px;background:#edf7f5}
+.disease-card-image img{display:block;width:100%;height:100%;object-fit:cover}
+.medical-image-credits{margin-top:15px;color:#789096;font-size:11px;line-height:1.6}
+.medical-image-credits a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
+@media(max-width:650px){.disease-card-image{height:185px}}
