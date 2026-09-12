@@ -90,6 +90,8 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
 .site-header .nav-search{border:1px solid #d6e3e5;background:#f8fbfb}
 .site-header .menu-toggle{color:#41636b}
 @media(max-width:900px){.site-header .main-nav{background:#fff}.site-header .main-nav>a,.site-header .nav-dropdown>a{color:#41636b}.site-header .main-nav>a:hover,.site-header .main-nav>a.active,.site-header .nav-dropdown>a:hover,.site-header .nav-dropdown>a.active{color:var(--teal);background:#f3faf9}.site-header .nav-dropdown-menu{background:#f6fbfa}.site-header .nav-dropdown-menu a{color:#41636b}.site-header .menu-toggle{color:#41636b}}
+
+.slide-five{background:linear-gradient(110deg,#245b67,#15949a)}
 .hero-visual{display:none}
 /* Medical equipment showcase */
 .equipment-showcase{overflow:hidden;background:#fff}
