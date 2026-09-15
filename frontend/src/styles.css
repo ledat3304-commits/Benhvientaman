@@ -29,6 +29,7 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
 .leader-card--director{grid-column:1/-1;width:min(520px,100%);justify-self:center;border-top-color:#0e9b9b}
 .leader-card--orange{border-top-color:#f6a21a}.leader-card--green{border-top-color:#79bd4f}
 .leader-avatar{position:relative;display:block;flex:0 0 72px;width:72px;height:72px;border:1px solid rgba(20,137,150,.25);border-radius:50%;background:#e9f8f6}
+.leader-avatar--photo{object-fit:cover;object-position:center;background:#e9f8f6}
 .leader-avatar:before{content:'';position:absolute;top:16px;left:28px;width:15px;height:15px;border:2px solid var(--teal);border-radius:50%}
 .leader-avatar:after{content:'';position:absolute;left:21px;bottom:14px;width:29px;height:25px;border:2px solid var(--teal);border-radius:16px 16px 10px 10px}
 .leader-card--orange .leader-avatar{background:#fff3df}.leader-card--orange .leader-avatar:before,.leader-card--orange .leader-avatar:after{border-color:#eb9a19}
