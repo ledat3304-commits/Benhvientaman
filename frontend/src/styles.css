@@ -224,6 +224,18 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
   .nav-dropdown:focus-within .nav-dropdown-menu{display:flex}
 }
 
+/* Expanded service menu */
+.nav-dropdown--services .nav-dropdown-menu{width:min(390px,calc(100vw - 32px));max-height:calc(100vh - 64px);overflow-y:auto}
+.nav-dropdown--services .nav-dropdown-menu a{white-space:normal;line-height:1.4}
+.nav-menu-group{width:100%}
+.nav-menu-group+.nav-menu-group{border-top:1px solid var(--line)}
+.nav-menu-group-title{display:block;padding:9px 15px 5px;color:var(--teal);font-size:10px;font-weight:800;letter-spacing:.04em;line-height:1.35;text-transform:uppercase}
+.nav-menu-group--support{padding-top:5px;border-top:1px solid var(--line)}
+@media(max-width:900px){
+  .nav-dropdown--services .nav-dropdown-menu{width:auto;max-height:none;overflow:visible}
+  .nav-menu-group-title{padding:8px 25px 4px}
+}
+
 .disease-card{overflow:hidden}
 .disease-card-image{height:170px;margin:-32px -32px 25px;background:#edf7f5}
 .disease-card-image img{display:block;width:100%;height:100%;object-fit:cover}
