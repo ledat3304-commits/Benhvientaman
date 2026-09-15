@@ -97,7 +97,7 @@ function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
             <div className="nav-dropdown nav-dropdown--services"><Link to="/dat-lich">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></Link><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group nav-menu-group--support"><Link to="/dat-lich">Đặt lịch khám</Link><Link to="/bao-hiem">BHYT & bảo hiểm</Link></div></div></div>
-            <Link to="/benh-ly">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
+            <Link className={location.pathname === '/bao-hiem' ? 'active' : ''} to="/bao-hiem">BHYT</Link><Link to="/benh-ly">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
             <div className="nav-dropdown"><Link to="/cam-nang">TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></Link><div className="nav-dropdown-menu"><Link to="/cam-nang">Cẩm nang người bệnh</Link><Link to="/faq">Câu hỏi thường gặp</Link></div></div>
             <Link to="/lien-he">TUYỂN DỤNG</Link><button type="button" className="nav-menu-button" onClick={() => setOpen(!open)} aria-label="Mở menu">☰</button><div className="nav-search"><input type="search" aria-label="Tìm kiếm" placeholder="Tìm kiếm" /><button type="button" aria-label="Thực hiện tìm kiếm">⌕</button></div>
           </nav>
