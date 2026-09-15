@@ -61,7 +61,7 @@ function readSession() { try { return JSON.parse(localStorage.getItem(STORAGE_KE
 function Icon({ children }: { children: React.ReactNode }) { return <span className="ui-icon" aria-hidden="true">{children}</span>; }
 
 function ChatWidget() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return <div className={open ? 'chat-widget is-open' : 'chat-widget'}>
     {open && <div className="chat-panel" role="dialog" aria-label="Chọn kênh liên hệ">
       <div className="chat-panel-header"><div><strong>Trung tâm hỗ trợ</strong><span>Chọn kênh để trò chuyện với CSKH</span></div><button className="chat-close" onClick={() => setOpen(false)} aria-label="Đóng hộp chat">×</button></div>
