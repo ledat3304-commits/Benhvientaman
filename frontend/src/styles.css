@@ -240,6 +240,9 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .nav-dropdown--about .nav-dropdown-menu{width:min(360px,calc(100vw - 32px));max-height:calc(100vh - 64px);overflow-y:auto}
 .nav-dropdown--about .nav-dropdown-menu a{white-space:normal;line-height:1.4}
 .nav-menu-subtitle{display:block;padding:9px 15px 4px;border-top:1px solid var(--line);color:var(--teal);font-size:9px;font-weight:800;letter-spacing:.04em;line-height:1.35;white-space:normal}
+.hero-slider.slide-banner-image{min-height:0;aspect-ratio:1677 / 938;background:#004f51 url('/hospital/banner-tam-an.png') center / 100% 100% no-repeat}
+.hero-slider.slide-banner-image .hero-content{display:none}
+.hero-slider.slide-banner-image .slider-controls{position:absolute;right:0;bottom:0;left:0;padding-top:12px;padding-bottom:17px;color:#fff}
 .health-system-section{background:var(--soft)}
 .health-system-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .health-system-card{padding:24px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 8px 22px rgba(19,74,87,.05)}
