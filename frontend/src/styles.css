@@ -266,3 +266,22 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .expert-card-image{height:150px;margin:0 -25px 24px;background:#edf7f5}
 .expert-card-image img{display:block;width:100%;height:100%;object-fit:cover}
 @media(max-width:650px){.expert-card-image{height:175px}}
+
+/* Conference event in the news menu and patient guide */
+.nav-dropdown--news .nav-dropdown-menu{width:min(320px,calc(100vw - 32px))}
+.nav-dropdown--news .nav-news-menu-item{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.nav-dropdown--news .nav-news-menu-item:hover{background:#eef8f6}
+.nav-news-menu-item img{display:block;flex:0 0 72px;width:72px;height:48px;border-radius:4px;object-fit:cover}
+.nav-news-menu-item span{display:flex;min-width:0;flex-direction:column;gap:2px}
+.nav-news-menu-item strong{color:#41636b;font-size:11px;line-height:1.35}
+.nav-news-menu-item small{color:#789096;font-size:10px;font-weight:500;line-height:1.3}
+.event-feature-card{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);overflow:hidden;margin-top:45px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 12px 30px rgba(19,74,87,.08)}
+.event-feature-image{min-height:320px;background:#edf7f5}
+.event-feature-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.event-feature-content{display:flex;flex-direction:column;justify-content:center;padding:38px}
+.event-feature-content .eyebrow{margin-bottom:12px}
+.event-feature-content h2{margin:0 0 15px;color:var(--navy);font-size:clamp(1.7rem,3vw,2.55rem);line-height:1.15}
+.event-feature-content p{margin:0 0 18px;color:var(--muted);font-size:13px;line-height:1.65}
+.event-feature-content small{color:#789096;font-size:11px}
+@media(max-width:900px){.nav-dropdown--news .nav-news-menu-item{padding:10px 25px}.event-feature-card{grid-template-columns:1fr}.event-feature-image{min-height:0;aspect-ratio:4/3}.event-feature-content{padding:28px}}
+@media(max-width:650px){.event-feature-card{margin-top:32px;border-radius:14px}.event-feature-content{padding:24px}.event-feature-content h2{font-size:1.7rem}}
