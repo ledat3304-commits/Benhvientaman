@@ -283,3 +283,30 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .event-news-article h2{margin-bottom:18px;color:var(--navy);font-size:clamp(1.7rem,3vw,2.45rem)}
 .event-news-article p{color:#527079;font-size:14px;line-height:1.75}
 .source-link{display:inline-flex;margin-top:8px;color:var(--teal);font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
+  /* Keep the navigation evenly spaced after removing the search control. */
+  .site-header .main-nav{justify-content:space-between;gap:clamp(6px,.8vw,14px)}
+  .site-header .main-nav>a,.site-header .nav-dropdown>a{padding-inline:clamp(9px,1vw,16px)}
+  .site-header .nav-menu-button{flex:0 0 42px;width:42px;margin-left:2px}
+  @media(max-width:900px){
+    .site-header .header-inner{min-height:56px;padding-inline:16px}
+    .site-header .menu-toggle{width:42px;min-height:42px;margin-left:auto;padding:0;align-items:center;justify-content:center}
+  }
+
+  /* Hospital brand in the left side of the main navigation. */
+  .site-header .header-inner{min-height:72px;padding:0 clamp(16px,3vw,40px);gap:clamp(18px,2.5vw,34px)}
+  .site-header .brand{display:inline-flex;flex:0 0 auto;align-items:center;gap:9px;color:var(--navy)}
+  .site-header .brand-logo{width:46px;height:46px;padding:3px;object-fit:contain;border-radius:8px;background:#fff}
+  .site-header .brand strong{font-size:14px;letter-spacing:.04em;line-height:1.2}
+  .site-header .main-nav{gap:clamp(4px,.7vw,12px)}
+  .site-header .main-nav>a,.site-header .nav-dropdown>a{min-height:72px;padding-inline:clamp(7px,.8vw,14px)}
+  .site-header .nav-dropdown-menu{top:72px}
+  .site-header .nav-menu-button{min-height:72px}
+  @media(max-width:900px){
+    .site-header .header-inner{min-height:64px;padding-inline:16px;gap:12px}
+    .site-header .brand{min-width:0}
+    .site-header .brand-logo{width:42px;height:42px}
+    .site-header .brand strong{font-size:12px;letter-spacing:.02em}
+    .site-header .main-nav{top:64px}
+  }
+  @media(max-width:380px){.site-header .brand strong{font-size:11px}}
