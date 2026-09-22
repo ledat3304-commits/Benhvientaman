@@ -216,6 +216,13 @@ INSERT INTO danhmucdichvu (DichVuID, TenDichVu, MoTa, DonGia, HoatDong) VALUES
 (14, 'Phẫu Thuật Điều Trị Sa Niêm Mạc Trực Tràng Và Sa Trực Tràng', 'Tư vấn và phẫu thuật điều trị sa niêm mạc, sa trực tràng.', 0.00, true),
 (15, 'Phẫu Thuật Cắt Polyp Hậu Môn - Trực Tràng', 'Cắt và xử lý polyp hậu môn - trực tràng theo chỉ định.', 0.00, true);
 
+SELECT setval(
+    pg_get_serial_sequence('danhmucdichvu', 'dichvuid'),
+    COALESCE(MAX(dichvuid), 1),
+    MAX(dichvuid) IS NOT NULL
+)
+FROM danhmucdichvu;
+
 INSERT INTO danhmucthuoc (ThuocID, TenThuoc, HoatChat, DonViTinh) VALUES
 (1, 'Paracetamol 500mg', 'Paracetamol', 'Viên'),
 (2, 'Amoxicillin 500mg', 'Amoxicillin', 'Viên'),

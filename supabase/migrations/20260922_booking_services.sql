@@ -3,6 +3,14 @@
 
 BEGIN;
 
+-- Đồng bộ sequence sau khi dữ liệu dịch vụ đã được import thủ công.
+SELECT setval(
+    pg_get_serial_sequence('danhmucdichvu', 'dichvuid'),
+    COALESCE(MAX(dichvuid), 1),
+    MAX(dichvuid) IS NOT NULL
+)
+FROM danhmucdichvu;
+
 INSERT INTO danhmucdichvu (tendichvu, mota, dongia, hoatdong)
 VALUES
     ('Gói Tầm Soát Và Chẩn Đoán Sớm Ung Thư', 'Gói tầm soát và chẩn đoán sớm các nguy cơ ung thư.', 0, true),
