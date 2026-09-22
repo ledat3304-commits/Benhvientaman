@@ -449,7 +449,7 @@ app.post('/api/appointments', async (req, res) => {
 
     if (selectedService) {
       await client.query(
-        `INSERT INTO chitietdichvukham (lichkhamid, dichvuid, soluong, donggiataithoidiem)
+        `INSERT INTO chitietdichvukham (lichkhamid, dichvuid, soluong, dongiataithoidiem)
          VALUES ($1, $2, 1, $3)`,
         [appointmentResult.rows[0].lichkhamid, selectedService.dichvuid, selectedService.dongia]
       );
@@ -840,7 +840,7 @@ app.get('/api/admin/appointments', async (req, res) => {
              COALESCE(NULLIF(bn.email, ''), pu.email) AS emailbenhnhan,
              COALESCE(NULLIF(bn.sodienthoai, ''), pu.sodienthoai) AS sodienthoaibenhnhan,
              bn.ngaysinh, bn.gioitinh, bn.diachi,
-             dv.dichvuid, dv.tendichvu, ctd.donggiataithoidiem
+             dv.dichvuid, dv.tendichvu, ctd.dongiataithoidiem
       FROM lichkham l
       JOIN bacsi d ON d.bacsiid = l.bacsiid
       JOIN nguoidung du ON du.userid = d.userid
@@ -1073,7 +1073,7 @@ app.patch('/api/admin/appointments/:appointmentId/status', async (req, res) => {
     if (!admin) return;
     const appointmentId = Number(req.params.appointmentId);
     const status = String(req.body?.status || '').trim();
-    const validStatuses = ['ChoXacNhan', 'DaXacNhan', 'DangKham', 'HoanThanh', 'DaHuy', 'VangMat'];
+    const validStatuses = ['ChoXacNhan', 'DaXacNhan', 'DangKham', 'DaHoanThanh', 'HoanThanh', 'DaHuy', 'VangMat'];
     if (!Number.isInteger(appointmentId) || !validStatuses.includes(status)) {
       return res.status(400).json({ success: false, message: 'Lịch khám hoặc trạng thái không hợp lệ.' });
     }
