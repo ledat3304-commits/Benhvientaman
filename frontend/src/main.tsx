@@ -7,7 +7,8 @@ import { AdminDashboardPage, BookingPageApi } from './role-pages';
 const API_BASE = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
 const STORAGE_KEY = 'bta_session';const CHAT_LINKS = {
   zalo: import.meta.env.VITE_ZALO_OA_URL || 'https://zalo.me/0982499515',
-  messenger: import.meta.env.VITE_FACEBOOK_PAGE_URL || 'https://www.facebook.com/bvtrita'
+  messenger: import.meta.env.VITE_FACEBOOK_PAGE_URL || 'https://www.facebook.com/bvtrita',
+  email: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(import.meta.env.VITE_SUPPORT_EMAIL || 'admin@gmail.com')}`
 };
 const specialties = [
   { name: 'Hậu môn – Trực tràng', icon: '◈', description: 'Khám và điều trị bệnh trĩ, rò hậu môn, áp xe hậu môn.' },
@@ -69,6 +70,7 @@ function ChatWidget() {
       <p className="chat-greeting">Xin chào! Tâm An sẵn sàng hỗ trợ bạn.</p>
       <a className="chat-channel chat-channel--zalo" href={CHAT_LINKS.zalo} target="_blank" rel="noreferrer"><span className="chat-channel-icon">Z</span><span><strong>Chat qua Zalo</strong><small>Liên hệ Zalo OA Tâm An</small></span><b>→</b></a>
       <a className="chat-channel chat-channel--messenger" href={CHAT_LINKS.messenger} target="_blank" rel="noreferrer"><span className="chat-channel-icon">f</span><span><strong>Chat qua Facebook Messenger</strong><small>Nhắn tin tới Fanpage Tâm An</small></span><b>→</b></a>
+      <a className="chat-channel chat-channel--gmail" href={CHAT_LINKS.email} target="_blank" rel="noreferrer"><span className="chat-channel-icon">G</span><span><strong>Gửi email qua Gmail</strong><small>Liên hệ admin@gmail.com</small></span><b>→</b></a>
     </div>}
     <button className="chat-launcher" onClick={() => setOpen(!open)} aria-label={open ? 'Đóng hỗ trợ trực tuyến' : 'Mở hỗ trợ trực tuyến'} aria-expanded={open}><span className="chat-launcher-icon">{open ? '×' : '✦'}</span><span className="chat-launcher-label">Hỗ trợ</span></button>
   </div>;
