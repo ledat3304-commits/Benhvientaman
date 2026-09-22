@@ -52,12 +52,18 @@ AS $$
 DECLARE
     patient_name text;
     patient_email text;
+    patient_phone text;
+    doctor_name text;
 BEGIN
-    SELECT COALESCE(bn.hoten, pu.hoten, 'Khách hàng'),
-           COALESCE(bn.email, pu.email, 'không có email')
-      INTO patient_name, patient_email
+    SELECT COALESCE(NULLIF(bn.hoten, ''), NULLIF(pu.hoten, ''), 'Khách hàng'),
+           COALESCE(NULLIF(bn.email, ''), NULLIF(pu.email, ''), 'không có email'),
+           COALESCE(NULLIF(bn.sodienthoai, ''), NULLIF(pu.sodienthoai, ''), 'không có số điện thoại'),
+           COALESCE(NULLIF(du.hoten, ''), 'Chưa phân công')
+      INTO patient_name, patient_email, patient_phone, doctor_name
       FROM benhnhan bn
       LEFT JOIN nguoidung pu ON pu.userid = bn.userid
+      LEFT JOIN bacsi bs ON bs.bacsiid = NEW.bacsiid
+      LEFT JOIN nguoidung du ON du.userid = bs.userid
      WHERE bn.benhnhanid = NEW.benhnhanid;
 
     INSERT INTO thongbao (userid, lichkhamid, loai, tieude, noidung)
@@ -65,9 +71,11 @@ BEGIN
            NEW.lichkhamid,
            'NEW_APPOINTMENT',
            'Có lịch khám mới',
-           format('Người bệnh %s (%s) đã đặt lịch khám vào %s. Lý do: %s',
+           format('Người bệnh: %s | SĐT: %s | Email: %s | Bác sĩ: %s | Thời gian: %s | Lý do: %s',
                   patient_name,
+                  patient_phone,
                   patient_email,
+                  doctor_name,
                   to_char(NEW.thoigiankham, 'DD/MM/YYYY HH24:MI'),
                   COALESCE(NULLIF(NEW.lydokham, ''), 'Chưa cung cấp'))
     FROM nguoidung admin

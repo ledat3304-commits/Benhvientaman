@@ -755,7 +755,9 @@ app.get('/api/admin/users', async (req, res) => {
     }
 
     const result = await pool.query(
-      'SELECT * FROM nguoidung ORDER BY userid ASC'
+      `SELECT userid, hoten, email, sodienthoai, vaitro, hoatdong, ngaytao
+         FROM nguoidung
+        ORDER BY userid ASC`
     );
 
     return res.json({ success: true, users: result.rows.map(sanitizeUser) });
@@ -805,7 +807,11 @@ app.get('/api/admin/patients', async (req, res) => {
     }
 
     const result = await pool.query(`
-      SELECT bn.benhnhanid, u.userid, u.hoten, u.email, u.sodienthoai, bn.ngaysinh, bn.gioitinh, bn.diachi
+      SELECT bn.benhnhanid, bn.userid,
+             COALESCE(NULLIF(bn.hoten, ''), u.hoten) AS hoten,
+             COALESCE(NULLIF(bn.email, ''), u.email) AS email,
+             COALESCE(NULLIF(bn.sodienthoai, ''), u.sodienthoai) AS sodienthoai,
+             bn.ngaysinh, bn.gioitinh, bn.diachi
       FROM benhnhan bn
       LEFT JOIN nguoidung u ON u.userid = bn.userid
       ORDER BY bn.benhnhanid ASC
@@ -827,14 +833,20 @@ app.get('/api/admin/appointments', async (req, res) => {
 
     const result = await pool.query(`
       SELECT l.lichkhamid, l.thoigiankham, l.trangthai, l.lydokham,
-             l.ngaydatlich, d.bacsiid, du.hoten AS tenbacsi,
-             bn.benhnhanid, pu.hoten AS tenbenhnhan,
+             l.trieuchung, l.ngaydatlich, d.bacsiid, du.hoten AS tenbacsi,
+             c.tenchuyenkhoa,
+             bn.benhnhanid, bn.userid AS patientuserid,
+             COALESCE(NULLIF(bn.hoten, ''), pu.hoten) AS tenbenhnhan,
+             COALESCE(NULLIF(bn.email, ''), pu.email) AS emailbenhnhan,
+             COALESCE(NULLIF(bn.sodienthoai, ''), pu.sodienthoai) AS sodienthoaibenhnhan,
+             bn.ngaysinh, bn.gioitinh, bn.diachi,
              dv.dichvuid, dv.tendichvu, ctd.donggiataithoidiem
       FROM lichkham l
       JOIN bacsi d ON d.bacsiid = l.bacsiid
       JOIN nguoidung du ON du.userid = d.userid
       JOIN benhnhan bn ON bn.benhnhanid = l.benhnhanid
       LEFT JOIN nguoidung pu ON pu.userid = bn.userid
+      LEFT JOIN chuyenkhoa c ON c.chuyenkhoaid = d.chuyenkhoaid
       LEFT JOIN chitietdichvukham ctd ON ctd.lichkhamid = l.lichkhamid
       LEFT JOIN danhmucdichvu dv ON dv.dichvuid = ctd.dichvuid
       ORDER BY l.thoigiankham DESC
