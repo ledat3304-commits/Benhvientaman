@@ -151,20 +151,30 @@ export function AdminDashboardPage() {
 }
 
 type Doctor = { bacsiid?: number; id?: number; hoten?: string; name?: string; tenchuyenkhoa?: string; specialty?: string };
+type Service = { id?: number; dichvuid?: number; name?: string; tendichvu?: string; description?: string; price?: number | string; dongia?: number | string };
 
 export function BookingPageApi() {
   const session = readSession();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [form, setForm] = useState({ doctorId: '', date: '', time: '09:00', name: '', phone: '', email: '', reason: '' });
+  const [services, setServices] = useState<Service[]>([]);
+  const [form, setForm] = useState({ doctorId: '', serviceId: '', date: '', time: '09:00', name: '', phone: '', email: '', reason: '' });
   const [message, setMessage] = useState('');
   const [bookingCode, setBookingCode] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/doctors`)
-      .then((response) => response.json())
-      .then((data) => setDoctors(Array.isArray(data) ? data : []))
-      .catch(() => setDoctors([]));
+    Promise.all([
+      fetch(`${API_BASE}/api/doctors`).then((response) => response.json()),
+      fetch(`${API_BASE}/api/services`).then((response) => response.json())
+    ])
+      .then(([doctorData, serviceData]) => {
+        setDoctors(Array.isArray(doctorData) ? doctorData : []);
+        setServices(Array.isArray(serviceData) ? serviceData : []);
+      })
+      .catch(() => {
+        setDoctors([]);
+        setServices([]);
+      });
   }, []);
 
   useEffect(() => {
@@ -177,6 +187,7 @@ export function BookingPageApi() {
 
   const update = (key: string, value: string) => setForm((current) => ({ ...current, [key]: value }));
   const selectedDoctor = useMemo(() => doctors.find((doctor) => String(doctor.bacsiid ?? doctor.id) === form.doctorId), [doctors, form.doctorId]);
+  const selectedService = useMemo(() => services.find((service) => String(service.id ?? service.dichvuid) === form.serviceId), [services, form.serviceId]);
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
@@ -210,12 +221,14 @@ export function BookingPageApi() {
         <h1>Gửi thông tin lịch khám</h1>
         <p>Thông tin đăng ký sẽ được lưu vào hệ thống và báo ngay cho tài khoản admin.</p>
         <form onSubmit={submit} className="booking-api-form">
+          <label>Dịch vụ / gói khám<select required value={form.serviceId} onChange={(event) => update('serviceId', event.target.value)}><option value="">Chọn dịch vụ</option>{services.map((service) => <option key={service.id ?? service.dichvuid} value={service.id ?? service.dichvuid}>{service.name || service.tendichvu}{service.price !== undefined || service.dongia !== undefined ? ` · ${Number(service.price ?? service.dongia).toLocaleString('vi-VN')} đ` : ''}</option>)}</select></label>
           <label>Bác sĩ<select required value={form.doctorId} onChange={(event) => update('doctorId', event.target.value)}><option value="">Chọn bác sĩ</option>{doctors.map((doctor) => <option key={doctor.bacsiid ?? doctor.id} value={doctor.bacsiid ?? doctor.id}>{doctor.hoten || doctor.name}{doctor.tenchuyenkhoa || doctor.specialty ? ` · ${doctor.tenchuyenkhoa || doctor.specialty}` : ''}</option>)}</select></label>
           <div className="booking-api-row"><label>Ngày khám<input required type="date" min={new Date().toISOString().slice(0, 10)} value={form.date} onChange={(event) => update('date', event.target.value)} /></label><label>Giờ khám<select value={form.time} onChange={(event) => update('time', event.target.value)}>{['08:00', '09:00', '10:30', '14:00', '15:30', '16:30'].map((time) => <option key={time}>{time}</option>)}</select></label></div>
           <div className="booking-api-row"><label>Họ tên<input required value={form.name} onChange={(event) => update('name', event.target.value)} /></label><label>Số điện thoại<input required value={form.phone} onChange={(event) => update('phone', event.target.value)} /></label></div>
           <label>Email<input type="email" value={form.email} onChange={(event) => update('email', event.target.value)} /></label>
           <label>Lý do khám / triệu chứng<textarea value={form.reason} onChange={(event) => update('reason', event.target.value)} /></label>
           {selectedDoctor ? <p className="booking-api-doctor">Bác sĩ đã chọn: <strong>{selectedDoctor.hoten || selectedDoctor.name}</strong></p> : null}
+          {selectedService ? <p className="booking-api-doctor">Dịch vụ đã chọn: <strong>{selectedService.name || selectedService.tendichvu}</strong></p> : null}
           {message ? <p className={message.includes('ghi nhận') ? 'form-success' : 'form-error'}>{message}</p> : null}
           <button className="button button-primary" type="submit" disabled={submitting}>{submitting ? 'Đang gửi...' : 'Xác nhận đặt lịch'}</button>
         </form>

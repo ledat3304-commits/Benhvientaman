@@ -358,6 +358,7 @@ app.post('/api/appointments', async (req, res) => {
   try {
     const body = req.body || {};
     const doctorId = Number(body.doctorId || body.BacSiID || body.bacsiid);
+    const serviceId = Number(body.serviceId || body.DichVuID || body.dichvuid || 0);
     const date = String(body.date || body.apptDate || '').trim();
     const time = String(body.time || body.apptTime || '').trim();
     const name = String(body.name || body.HoTen || body.hoten || '').trim();
@@ -378,6 +379,21 @@ app.post('/api/appointments', async (req, res) => {
     if (!doctorResult.rows[0]) {
       await client.query('ROLLBACK');
       return res.status(404).json({ success: false, message: 'Không tìm thấy bác sĩ.' });
+    }
+
+    let selectedService = null;
+    if (serviceId > 0) {
+      const serviceResult = await client.query(
+        `SELECT dichvuid, dongia
+           FROM danhmucdichvu
+          WHERE dichvuid = $1 AND hoatdong = true`,
+        [serviceId]
+      );
+      selectedService = serviceResult.rows[0];
+      if (!selectedService) {
+        await client.query('ROLLBACK');
+        return res.status(404).json({ success: false, message: 'Không tìm thấy dịch vụ đang hoạt động.' });
+      }
     }
 
     const duplicate = await client.query(
@@ -430,6 +446,14 @@ app.post('/api/appointments', async (req, res) => {
        RETURNING *`,
       [doctorId, patientId, appointmentTime, reason, reason]
     );
+
+    if (selectedService) {
+      await client.query(
+        `INSERT INTO chitietdichvukham (lichkhamid, dichvuid, soluong, donggiataithoidiem)
+         VALUES ($1, $2, 1, $3)`,
+        [appointmentResult.rows[0].lichkhamid, selectedService.dichvuid, selectedService.dongia]
+      );
+    }
 
     await client.query('COMMIT');
     const appointment = normalizeDbRow(appointmentResult.rows[0]);
@@ -795,12 +819,15 @@ app.get('/api/admin/appointments', async (req, res) => {
     const result = await pool.query(`
       SELECT l.lichkhamid, l.thoigiankham, l.trangthai, l.lydokham,
              l.ngaydatlich, d.bacsiid, du.hoten AS tenbacsi,
-             bn.benhnhanid, pu.hoten AS tenbenhnhan
+             bn.benhnhanid, pu.hoten AS tenbenhnhan,
+             dv.dichvuid, dv.tendichvu, ctd.donggiataithoidiem
       FROM lichkham l
       JOIN bacsi d ON d.bacsiid = l.bacsiid
       JOIN nguoidung du ON du.userid = d.userid
       JOIN benhnhan bn ON bn.benhnhanid = l.benhnhanid
       LEFT JOIN nguoidung pu ON pu.userid = bn.userid
+      LEFT JOIN chitietdichvukham ctd ON ctd.lichkhamid = l.lichkhamid
+      LEFT JOIN danhmucdichvu dv ON dv.dichvuid = ctd.dichvuid
       ORDER BY l.thoigiankham DESC
       LIMIT 200
     `);
