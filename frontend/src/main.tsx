@@ -74,8 +74,10 @@ function ChatWidget() {
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false); const location = useLocation(); const session = readSession();
-  useEffect(() => { setOpen(false); window.setTimeout(() => { if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' }); else window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }); }, 0); }, [location.pathname, location.hash]);
+  const [open, setOpen] = useState(false); const [mobileDropdown, setMobileDropdown] = useState<string | null>(null); const location = useLocation(); const session = readSession();
+  const toggleMobileDropdown = (key: string) => (event: React.MouseEvent<HTMLAnchorElement>) => { if (window.matchMedia('(max-width: 900px)').matches) { event.preventDefault(); setMobileDropdown((current) => current === key ? null : key); } };
+  const dropdownClass = (key: string, modifier: string) => `nav-dropdown ${modifier}${mobileDropdown === key ? ' is-open' : ''}`;
+  useEffect(() => { setOpen(false); setMobileDropdown(null); window.setTimeout(() => { if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' }); else window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }); }, 0); }, [location.pathname, location.hash]);
   return (
     <div className="site-shell">
       <div className="utility-bar"><div className="container utility-inner"><span>Chăm sóc sức khỏe tận tâm mỗi ngày</span><div><a href="tel:0982499515">Hotline: <strong>0982 499 515</strong></a><i>|</i><span>7:00 – 19:00 hằng ngày</span></div></div></div>
@@ -84,8 +86,8 @@ function Layout({ children }: { children: React.ReactNode }) {
           <Link to="/" className="brand" aria-label="Bệnh viện Tâm An"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /><strong style={{ whiteSpace: 'nowrap' }}>BỆNH VIỆN TÂM AN</strong></Link>
           <button className="menu-toggle" onClick={() => setOpen(!open)} aria-label="Mở menu">☰</button>
           <nav className={open ? 'main-nav is-open' : 'main-nav'}>
-            <div className="nav-dropdown nav-dropdown--about">
-              <Link className={location.pathname === '/gioi-thieu' ? 'active' : ''} to="/gioi-thieu">GIỚI THIỆU <span className="nav-chevron">▼</span></Link>
+            <div className={dropdownClass('about', 'nav-dropdown--about')}>
+              <Link className={location.pathname === '/gioi-thieu' ? 'active' : ''} to="/gioi-thieu" onClick={toggleMobileDropdown('about')} aria-expanded={mobileDropdown === 'about'}>GIỚI THIỆU <span className="nav-chevron">▼</span></Link>
               <div className="nav-dropdown-menu">
                 <div className="nav-menu-group">
                   <span className="nav-menu-group-title">HỆ THỐNG Y TẾ TÂM AN</span>
@@ -96,9 +98,9 @@ function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
             </div>
-            <div className="nav-dropdown nav-dropdown--services"><Link to="/dat-lich">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></Link><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group nav-menu-group--support"><Link to="/dat-lich">Đặt lịch khám</Link><Link to="/bao-hiem">BHYT & bảo hiểm</Link></div></div></div>
+            <div className={dropdownClass('services', 'nav-dropdown--services')}><Link to="/dat-lich" onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'}>GÓI DỊCH VỤ <span className="nav-chevron">▼</span></Link><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group nav-menu-group--support"><Link to="/dat-lich">Đặt lịch khám</Link><Link to="/bao-hiem">BHYT & bảo hiểm</Link></div></div></div>
             <Link className={location.pathname === '/bao-hiem' ? 'active' : ''} to="/bao-hiem">BHYT</Link><Link to="/benh-ly">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
-            <div className="nav-dropdown nav-dropdown--news"><Link to="/cam-nang">TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></Link><div className="nav-dropdown-menu"><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link><Link to="/faq">Câu hỏi thường gặp</Link><Link className="nav-news-menu-item" to="/cam-nang#hoi-nghi"><img src="/news/hoi-nghi-khoa-hoc-2025.jpg" alt="" /><span><strong>Hội nghị khoa học Hậu môn – Trực tràng</strong><small>Xem hình ảnh sự kiện</small></span></Link></div></div>
+            <div className={dropdownClass('news', 'nav-dropdown--news')}><Link to="/cam-nang" onClick={toggleMobileDropdown('news')} aria-expanded={mobileDropdown === 'news'}>TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></Link><div className="nav-dropdown-menu"><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link><Link to="/faq">Câu hỏi thường gặp</Link><Link className="nav-news-menu-item" to="/cam-nang#hoi-nghi"><img src="/news/hoi-nghi-khoa-hoc-2025.jpg" alt="" /><span><strong>Hội nghị khoa học Hậu môn – Trực tràng</strong><small>Xem hình ảnh sự kiện</small></span></Link></div></div>
             <Link to="/lien-he">TUYỂN DỤNG</Link><button type="button" className="nav-menu-button" onClick={() => setOpen(!open)} aria-label="Mở menu">☰</button><div className="nav-search"><input type="search" aria-label="Tìm kiếm" placeholder="Tìm kiếm" /><button type="button" aria-label="Thực hiện tìm kiếm">⌕</button></div>
           </nav>
         </div>
