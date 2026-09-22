@@ -7,7 +7,7 @@ import { AdminDashboardPage, BookingPageApi } from './role-pages';
 const API_BASE = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
 const STORAGE_KEY = 'bta_session';const CHAT_LINKS = {
   zalo: import.meta.env.VITE_ZALO_OA_URL || 'https://zalo.me/0982499515',
-  messenger: import.meta.env.VITE_FACEBOOK_PAGE_URL || 'https://www.facebook.com/benh.tri.9/'
+  messenger: import.meta.env.VITE_FACEBOOK_PAGE_URL || 'https://www.facebook.com/bvtrita'
 };
 const specialties = [
   { name: 'Hậu môn – Trực tràng', icon: '◈', description: 'Khám và điều trị bệnh trĩ, rò hậu môn, áp xe hậu môn.' },
