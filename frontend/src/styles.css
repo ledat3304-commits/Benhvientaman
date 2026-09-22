@@ -316,3 +316,16 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 @media(max-width:380px){.site-header .brand strong{font-size:11px}}
 .site-header .nav-dropdown-toggle{min-height:72px;padding-inline:clamp(7px,.8vw,14px)}
 @media(max-width:900px){.site-header .nav-dropdown-toggle{min-height:44px;padding-inline:10px}}
+.admin-notification-page{min-height:70vh;padding:64px 20px;background:linear-gradient(135deg,#edf8f5,#fff)}
+.admin-notification-container,.booking-api-card{width:min(100%,1080px);margin:0 auto}
+.admin-notification-header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:28px}
+.admin-notification-header h1,.booking-api-card h1{margin:8px 0;color:var(--navy);font-size:clamp(28px,4vw,44px)}
+.admin-notification-header p,.booking-api-card>p{color:var(--muted)}
+.admin-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.admin-stat-grid>div{padding:22px;border-radius:14px;background:#fff;box-shadow:var(--shadow)}
+.admin-stat-grid span{display:block;color:var(--muted);font-size:12px}.admin-stat-grid strong{display:block;margin-top:10px;color:var(--teal);font-size:30px}
+.admin-notification-panel,.booking-api-card{padding:30px;border-radius:16px;background:#fff;box-shadow:var(--shadow)}
+.admin-notification-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.admin-notification-panel h2{margin:6px 0 0;color:var(--navy)}
+.admin-notification-list{display:grid;gap:10px}.admin-notification-item{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:17px;border:1px solid var(--line);border-radius:10px}.admin-notification-item.is-unread{border-color:#9bd7ca;background:#f2fbf8}.admin-notification-item strong{color:var(--navy)}.admin-notification-item p{margin:7px 0;color:#58747a;font-size:13px}.admin-notification-item small{color:#91a6a8;font-size:11px}.admin-notification-item button{border:0;color:var(--teal);background:transparent;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}.admin-notification-state{padding:18px;color:var(--muted);text-align:center}.admin-notification-error{padding:13px;border-radius:8px;color:#9b4141;background:#fff0f0}
+.booking-api-card{max-width:760px}.booking-api-card .success-check{display:grid;place-items:center;width:64px;height:64px;margin-bottom:18px;border-radius:50%;color:#fff;background:#48af86;font-size:34px}.booking-api-form{display:grid;gap:16px;margin-top:26px}.booking-api-form label{display:grid;gap:7px;color:#385b64;font-size:12px;font-weight:700}.booking-api-form input,.booking-api-form select,.booking-api-form textarea{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:7px;color:var(--ink);background:#fff;font:inherit;font-size:13px}.booking-api-form textarea{min-height:110px;resize:vertical}.booking-api-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}.booking-api-doctor{margin:0;color:var(--muted);font-size:13px}
+@media(max-width:700px){.admin-notification-header,.admin-notification-panel-heading{display:block}.admin-notification-header .button,.admin-notification-panel-heading .button{margin-top:16px}.admin-stat-grid{grid-template-columns:1fr 1fr}.admin-notification-item{display:block}.admin-notification-item button{margin-top:12px;padding:0}.booking-api-row{grid-template-columns:1fr}}
