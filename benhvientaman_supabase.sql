@@ -329,7 +329,7 @@ INSERT INTO nguoidung (UserID, HoTen, Email, MatKhau, SoDienThoai, VaiTro, NgayT
 (1, 'taman', 'taman@gmail.com', '12341234', '0346861038', 'BacSi', '2025-07-05 10:28:12', true),
 (2, 'Lê Đạt', 'ledat3@gmail.com', '12341234', '0333876785', 'BacSi', '2025-07-05 11:31:09', true),
 (4, 'benh nhan', 'benhnhan1@gmail.com', '12341234', '0123456789', 'BenhNhan', '2025-07-05 12:13:58', true),
-(5, 'Admin', 'admin@gmail.com', '$2y$10$uRsri5JFN.f2Z2zRrouLqeXFTTEsAlyQgqdTGuqmSuyutfWBmQvX2', '0346861035', 'QuanTri', '2025-07-06 14:04:13', true),
+(5, 'Admin', 'ledat3304@gmail.com', '$2y$10$uRsri5JFN.f2Z2zRrouLqeXFTTEsAlyQgqdTGuqmSuyutfWBmQvX2', '0346861035', 'QuanTri', '2025-07-06 14:04:13', true),
 (6, 'Nguyễn Văn A', 'nguyenvana@gmail.com', '12341234', '0346861036', 'BenhNhan', '2025-07-06 17:37:39', true);
 
 INSERT INTO bacsi (BacSiID, UserID, ChuyenKhoaID, MoTa, KinhNghiem) VALUES

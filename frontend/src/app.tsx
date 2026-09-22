@@ -196,7 +196,7 @@ function AdminDashboardPage() {
               <div className="panel">
                 <h3 className="text-lg font-semibold mb-3 border-b pb-2">Thông tin tài khoản quản trị</h3>
                 <p><strong>Họ tên:</strong> {data?.user?.HoTen || data?.user?.hoten || 'Admin'}</p>
-                <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || 'admin@gmail.com'}</p>
+                <p><strong>Email:</strong> {data?.user?.Email || data?.user?.email || 'ledat3304@gmail.com'}</p>
                 <p><strong>Vai trò:</strong> <span className="px-2 py-0.5 bg-sky-100 text-sky-800 rounded text-xs font-bold">Quản Trị</span></p>
               </div>
 
