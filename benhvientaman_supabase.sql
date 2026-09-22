@@ -206,7 +206,15 @@ INSERT INTO danhmucdichvu (DichVuID, TenDichVu, MoTa, DonGia, HoatDong) VALUES
 (4, 'Khám tiêu hóa', 'Khám bệnh đường tiêu hóa, đầy đủ triệu chứng và điều trị hỗ trợ.', 170000.00, true),
 (5, 'Khám mắt', 'Khám mắt tổng quát, đo thị lực và tư vấn điều trị.', 160000.00, true),
 (6, 'Xét nghiệm máu cơ bản', 'Xét nghiệm cơ bản để hỗ trợ chẩn đoán nhanh.', 250000.00, true),
-(7, 'Siêu âm', 'Siêu âm cơ bản cho các cơ quan nội tạng.', 300000.00, true);
+(7, 'Siêu âm', 'Siêu âm cơ bản cho các cơ quan nội tạng.', 300000.00, true),
+(8, 'Gói Tầm Soát Và Chẩn Đoán Sớm Ung Thư', 'Gói tầm soát và chẩn đoán sớm các nguy cơ ung thư.', 0.00, true),
+(9, 'Gói Nội Soi Tiêu Hóa Gây Mê (Dạ Dày, Đại Tràng) Kèm Tầm Soát Ung Thư', 'Nội soi tiêu hóa gây mê kết hợp tầm soát ung thư.', 0.00, true),
+(10, 'Chẩn Đoán Và Điều Trị Ung Thư Đại Trực Tràng - Hậu Môn', 'Tư vấn, chẩn đoán và điều trị bệnh lý ung thư đại trực tràng - hậu môn.', 0.00, true),
+(11, 'Phẫu Thuật Điều Trị Bệnh Trĩ Triệt Để (Các Phương Pháp)', 'Tư vấn và phẫu thuật điều trị bệnh trĩ theo chỉ định chuyên môn.', 0.00, true),
+(12, 'Phẫu Thuật Điều Trị Rò Hậu Môn Các Thể', 'Phẫu thuật điều trị các thể rò hậu môn.', 0.00, true),
+(13, 'Phẫu Thuật Điều Trị Áp Xe Hậu Môn', 'Điều trị ngoại khoa áp xe hậu môn theo tình trạng người bệnh.', 0.00, true),
+(14, 'Phẫu Thuật Điều Trị Sa Niêm Mạc Trực Tràng Và Sa Trực Tràng', 'Tư vấn và phẫu thuật điều trị sa niêm mạc, sa trực tràng.', 0.00, true),
+(15, 'Phẫu Thuật Cắt Polyp Hậu Môn - Trực Tràng', 'Cắt và xử lý polyp hậu môn - trực tràng theo chỉ định.', 0.00, true);
 
 INSERT INTO danhmucthuoc (ThuocID, TenThuoc, HoatChat, DonViTinh) VALUES
 (1, 'Paracetamol 500mg', 'Paracetamol', 'Viên'),
