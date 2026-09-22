@@ -453,6 +453,15 @@ app.post('/api/appointments', async (req, res) => {
          VALUES ($1, $2, 1, $3)`,
         [appointmentResult.rows[0].lichkhamid, selectedService.dichvuid, selectedService.dongia]
       );
+      await client.query(
+        `UPDATE thongbao
+            SET noidung = noidung || format(' Dịch vụ đã chọn: %s.', dv.tendichvu)
+           FROM danhmucdichvu dv
+          WHERE thongbao.lichkhamid = $1
+            AND thongbao.loai = 'NEW_APPOINTMENT'
+            AND dv.dichvuid = $2`,
+        [appointmentResult.rows[0].lichkhamid, selectedService.dichvuid]
+      );
     }
 
     await client.query('COMMIT');
