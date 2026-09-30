@@ -339,3 +339,10 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
   .site-header .nav-search input{font-size:13px}
   .site-header .nav-search button{flex-basis:42px;width:42px;font-size:18px}
 }
+
+/* Leadership section uses the supplied full-width banner. */
+.leadership-section{padding-top:72px;background:#f7fbfc}
+.leadership-board{padding:0;border:0;border-radius:22px;background:transparent;box-shadow:none}
+.leadership-board:before{display:none}
+.leadership-banner{display:block;width:100%;height:auto;border-radius:22px}
+@media(max-width:650px){.leadership-section{padding-top:55px}.leadership-board{padding:0;border-radius:16px}.leadership-banner{border-radius:16px}}
