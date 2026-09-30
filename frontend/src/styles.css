@@ -56,7 +56,7 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
 .nav-dropdown{position:relative;display:flex;align-items:stretch}
 .nav-chevron{margin-left:5px;font-size:9px;line-height:1}
 .nav-dropdown-menu{position:absolute;top:48px;left:0;display:none;min-width:190px;padding:7px 0;border-radius:0 0 5px 5px;background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.14)}
-.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:block}
+.nav-dropdown.is-open .nav-dropdown-menu{display:block}
 .nav-dropdown-menu a{display:block;padding:11px 15px;color:#41636b;font-size:12px;font-weight:600;text-transform:none}
 .nav-dropdown-menu a:hover{color:var(--teal);background:#eef8f6}
 @media(max-width:900px){
@@ -66,8 +66,7 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
   .site-header .main-nav>a,.site-header .nav-dropdown>a{justify-content:flex-start;min-height:44px;padding:0 10px;font-size:13px}
   .site-header .nav-dropdown{display:block}
   .nav-dropdown-menu{position:static;min-width:0;padding:0 0 5px;background:rgba(0,0,0,.08);box-shadow:none}
-  .nav-dropdown:hover .nav-dropdown-menu{display:none}
-  .nav-dropdown:focus-within .nav-dropdown-menu{display:block}
+  .nav-dropdown.is-open .nav-dropdown-menu{display:block}
   .nav-dropdown-menu a{padding:9px 25px;color:#eaffff}
   .site-header .menu-toggle{display:inline-flex;margin-left:auto;color:#fff}
 }
@@ -206,12 +205,11 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 
 /* Dropdown menus use a vertical list layout. */
 .nav-dropdown-menu{flex-direction:column;align-items:stretch;width:250px}
-.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:flex}
+.nav-dropdown.is-open .nav-dropdown-menu{display:flex}
 .nav-dropdown-menu a{display:flex;width:100%;white-space:nowrap}
 @media(max-width:900px){
   .nav-dropdown-menu{width:auto}
-  .nav-dropdown:hover .nav-dropdown-menu{display:none}
-  .nav-dropdown:focus-within .nav-dropdown-menu{display:flex}
+  .nav-dropdown.is-open .nav-dropdown-menu{display:flex}
 }
 
 /* Expanded service menu */
@@ -278,7 +276,7 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .event-news-article h2{margin-bottom:18px;color:var(--navy);font-size:clamp(1.7rem,3vw,2.45rem)}
 .event-news-article p{color:#527079;font-size:14px;line-height:1.75}
 .source-link{display:inline-flex;margin-top:8px;color:var(--teal);font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
-@media(max-width:900px){.site-header .nav-dropdown.is-open .nav-dropdown-menu{display:block}}
+@media(max-width:900px){.site-header .nav-dropdown.is-open .nav-dropdown-menu{display:flex}}
 .site-header .nav-dropdown-toggle{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 16px;border:0;color:#41636b;background:transparent;font:inherit;font-size:14px;font-weight:700;line-height:1;text-transform:uppercase;white-space:nowrap;cursor:pointer}
 .site-header .nav-dropdown-toggle:hover,.site-header .nav-dropdown-toggle.active{color:var(--teal);background:#fff;border-bottom:3px solid var(--teal)}
 @media(max-width:900px){.site-header .nav-dropdown-toggle{justify-content:flex-start;width:100%;min-height:44px;padding:0 10px;color:#41636b;font-size:13px}.site-header .nav-dropdown-toggle:hover,.site-header .nav-dropdown-toggle.active{color:var(--teal);background:#f3faf9;border-bottom:0}}
