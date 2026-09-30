@@ -353,6 +353,137 @@ app.get('/api/services', async (req, res) => {
   }
 });
 
+app.post('/api/appointments', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const body = req.body || {};
+    const doctorId = Number(body.doctorId || body.BacSiID || body.bacsiid);
+    const serviceId = Number(body.serviceId || body.DichVuID || body.dichvuid || 0);
+    const date = String(body.date || body.apptDate || '').trim();
+    const time = String(body.time || body.apptTime || '').trim();
+    const name = String(body.name || body.HoTen || body.hoten || '').trim();
+    const phone = String(body.phone || body.SoDienThoai || body.sodienthoai || '').trim();
+    const email = String(body.email || body.Email || '').trim() || null;
+    const reason = String(body.reason || body.Symptoms || body.LyDoKham || '').trim() || null;
+
+    if (!Number.isInteger(doctorId) || doctorId < 1 || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time) || !name || !phone) {
+      return res.status(400).json({ success: false, message: 'Vui lòng nhập đầy đủ bác sĩ, ngày giờ, họ tên và số điện thoại.' });
+    }
+
+    const appointmentTime = `${date} ${time}:00`;
+    const requester = await getAuthenticatedUser(req);
+    const requesterId = requester ? Number(requester.UserID || requester.userid) : null;
+
+    await client.query('BEGIN');
+    const doctorResult = await client.query('SELECT bacsiid FROM bacsi WHERE bacsiid = $1', [doctorId]);
+    if (!doctorResult.rows[0]) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ success: false, message: 'Không tìm thấy bác sĩ.' });
+    }
+
+    let selectedService = null;
+    if (serviceId > 0) {
+      const serviceResult = await client.query(
+        `SELECT dichvuid, dongia
+           FROM danhmucdichvu
+          WHERE dichvuid = $1 AND hoatdong = true`,
+        [serviceId]
+      );
+      selectedService = serviceResult.rows[0];
+      if (!selectedService) {
+        await client.query('ROLLBACK');
+        return res.status(404).json({ success: false, message: 'Không tìm thấy dịch vụ đang hoạt động.' });
+      }
+    }
+
+    const duplicate = await client.query(
+      `SELECT lichkhamid FROM lichkham
+       WHERE bacsiid = $1 AND thoigiankham = $2 AND COALESCE(trangthai, '') <> 'DaHuy'
+       LIMIT 1`,
+      [doctorId, appointmentTime]
+    );
+    if (duplicate.rows[0]) {
+      await client.query('ROLLBACK');
+      return res.status(409).json({ success: false, message: 'Khung giờ này đã có lịch. Vui lòng chọn giờ khác.' });
+    }
+
+    let patientResult;
+    if (requesterId) {
+      patientResult = await client.query('SELECT * FROM benhnhan WHERE userid = $1 LIMIT 1 FOR UPDATE', [requesterId]);
+    } else {
+      patientResult = { rows: [] };
+    }
+
+    let patientId;
+    if (patientResult.rows[0]) {
+      patientId = patientResult.rows[0].benhnhanid;
+      await client.query(
+        `UPDATE benhnhan
+            SET hoten = COALESCE(NULLIF($1, ''), hoten),
+                sodienthoai = COALESCE(NULLIF($2, ''), sodienthoai),
+                email = COALESCE($3, email)
+          WHERE benhnhanid = $4`,
+        [name, phone, email, patientId]
+      );
+    } else {
+      const newPatient = requesterId
+        ? await client.query(
+            `INSERT INTO benhnhan (userid, hoten, sodienthoai, email)
+             VALUES ($1, $2, $3, $4) RETURNING benhnhanid`,
+            [requesterId, name, phone, email]
+          )
+        : await client.query(
+            `INSERT INTO benhnhan (userid, hoten, sodienthoai, email)
+             VALUES (NULL, $1, $2, $3) RETURNING benhnhanid`,
+            [name, phone, email]
+          );
+      patientId = newPatient.rows[0].benhnhanid;
+    }
+
+    const appointmentResult = await client.query(
+      `INSERT INTO lichkham (bacsiid, benhnhanid, thoigiankham, trangthai, lydokham, ngaydatlich, trieuchung)
+       VALUES ($1, $2, $3, 'ChoXacNhan', $4, NOW(), $5)
+       RETURNING *`,
+      [doctorId, patientId, appointmentTime, reason, reason]
+    );
+
+    if (selectedService) {
+      await client.query(
+        `INSERT INTO chitietdichvukham (lichkhamid, dichvuid, soluong, dongiataithoidiem)
+         VALUES ($1, $2, 1, $3)`,
+        [appointmentResult.rows[0].lichkhamid, selectedService.dichvuid, selectedService.dongia]
+      );
+      await client.query(
+        `UPDATE thongbao
+            SET noidung = noidung || format(' Dịch vụ đã chọn: %s.', dv.tendichvu)
+           FROM danhmucdichvu dv
+          WHERE thongbao.lichkhamid = $1
+            AND thongbao.loai = 'NEW_APPOINTMENT'
+            AND dv.dichvuid = $2`,
+        [appointmentResult.rows[0].lichkhamid, selectedService.dichvuid]
+      );
+    }
+
+    await client.query('COMMIT');
+    const appointment = normalizeDbRow(appointmentResult.rows[0]);
+    return res.status(201).json({
+      success: true,
+      message: 'Đặt lịch thành công. Thông tin đã được báo về tài khoản admin.',
+      bookingCode: `TA${new Date().getFullYear()}${String(appointment.LichKhamID).padStart(6, '0')}`,
+      appointment
+    });
+  } catch (error) {
+    await client.query('ROLLBACK').catch(() => {});
+    console.error('Create appointment error:', error);
+    if (error.code === '42703') {
+      return res.status(500).json({ success: false, message: 'Schema chưa có cột email trong bảng benhnhan. Hãy chạy migration thông báo admin.' });
+    }
+    return res.status(500).json({ success: false, message: 'Không thể lưu lịch khám.' });
+  } finally {
+    client.release();
+  }
+});
+
 app.post('/api/auth/login', async (req, res) => {
   try {
     const identifier = String(req.body.username || req.body.identifier || req.body.email || req.body.phone || '').trim();
@@ -449,9 +580,9 @@ app.post('/api/auth/register', async (req, res) => {
     const createdUser = insertedUser.rows[0];
 
     await pool.query(
-      `INSERT INTO benhnhan (userid, hoten, ngaysinh, gioitinh, sodienthoai, diachi)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
-      [createdUser.userid || createdUser.UserID, HoTen, NgaySinh || null, GioiTinh || 'Nam', SoDienThoai || null, null]
+      `INSERT INTO benhnhan (userid, hoten, ngaysinh, gioitinh, sodienthoai, email, diachi)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [createdUser.userid || createdUser.UserID, HoTen, NgaySinh || null, GioiTinh || 'Nam', SoDienThoai || null, Email, null]
     );
 
     return res.status(201).json({
@@ -512,6 +643,18 @@ app.get('/api/admin/dashboard', async (req, res) => {
       pool.query('SELECT COUNT(*) AS total FROM lichkham')
     ]);
 
+    let unreadNotifications = 0;
+    try {
+      const notificationsCount = await pool.query(
+        'SELECT COUNT(*) AS total FROM thongbao WHERE userid = $1 AND dadoc = false',
+        [userId]
+      );
+      unreadNotifications = Number(notificationsCount.rows[0]?.total || 0);
+    } catch (notificationError) {
+      if (notificationError.code !== '42P01') throw notificationError;
+      console.warn('Notification table is not installed yet.');
+    }
+
     return res.json({
       success: true,
       user: sanitizeUser(currentUser),
@@ -519,12 +662,83 @@ app.get('/api/admin/dashboard', async (req, res) => {
         totalUsers: Number(usersRes.rows[0]?.total || 0),
         totalDoctors: Number(doctorsRes.rows[0]?.total || 0),
         totalPatients: Number(patientsRes.rows[0]?.total || 0),
-        totalAppointments: Number(appointmentsRes.rows[0]?.total || 0)
+        totalAppointments: Number(appointmentsRes.rows[0]?.total || 0),
+        unreadNotifications
       }
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: 'Lỗi server admin.' });
+  }
+});
+
+app.get('/api/admin/notifications', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+
+    const limit = Math.min(Math.max(Number(req.query.limit || 50), 1), 100);
+    const unreadOnly = String(req.query.unreadOnly || '').toLowerCase() === 'true';
+    const result = await pool.query(
+      `SELECT thongbaoid, userid, lichkhamid, loai, tieude, noidung, dadoc, ngaydoc, ngaytao
+         FROM thongbao
+        WHERE userid = $1
+          AND ($2 = false OR dadoc = false)
+        ORDER BY ngaytao DESC
+        LIMIT $3`,
+      [admin.UserID || admin.userid, unreadOnly, limit]
+    );
+
+    return res.json({ success: true, notifications: result.rows });
+  } catch (error) {
+    console.error('Admin notifications error:', error);
+    return res.status(error.code === '42P01' ? 503 : 500).json({
+      success: false,
+      message: error.code === '42P01'
+        ? 'Bảng thông báo chưa được cài đặt. Hãy chạy migration admin notifications.'
+        : 'Không thể tải thông báo admin.'
+    });
+  }
+});
+
+app.patch('/api/admin/notifications/:notificationId/read', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const notificationId = Number(req.params.notificationId);
+    if (!Number.isInteger(notificationId) || notificationId < 1) {
+      return res.status(400).json({ success: false, message: 'Mã thông báo không hợp lệ.' });
+    }
+
+    const result = await pool.query(
+      `UPDATE thongbao
+          SET dadoc = true, ngaydoc = CURRENT_TIMESTAMP
+        WHERE thongbaoid = $1 AND userid = $2
+        RETURNING *`,
+      [notificationId, admin.UserID || admin.userid]
+    );
+    if (!result.rows[0]) return res.status(404).json({ success: false, message: 'Không tìm thấy thông báo.' });
+    return res.json({ success: true, notification: result.rows[0] });
+  } catch (error) {
+    console.error('Mark notification read error:', error);
+    return res.status(error.code === '42P01' ? 503 : 500).json({ success: false, message: 'Không thể cập nhật thông báo.' });
+  }
+});
+
+app.patch('/api/admin/notifications/read-all', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const result = await pool.query(
+      `UPDATE thongbao
+          SET dadoc = true, ngaydoc = CURRENT_TIMESTAMP
+        WHERE userid = $1 AND dadoc = false`,
+      [admin.UserID || admin.userid]
+    );
+    return res.json({ success: true, updated: result.rowCount });
+  } catch (error) {
+    console.error('Mark all notifications read error:', error);
+    return res.status(error.code === '42P01' ? 503 : 500).json({ success: false, message: 'Không thể cập nhật thông báo.' });
   }
 });
 
@@ -541,7 +755,9 @@ app.get('/api/admin/users', async (req, res) => {
     }
 
     const result = await pool.query(
-      'SELECT * FROM nguoidung ORDER BY userid ASC'
+      `SELECT userid, hoten, email, sodienthoai, vaitro, hoatdong, ngaytao
+         FROM nguoidung
+        ORDER BY userid ASC`
     );
 
     return res.json({ success: true, users: result.rows.map(sanitizeUser) });
@@ -591,7 +807,11 @@ app.get('/api/admin/patients', async (req, res) => {
     }
 
     const result = await pool.query(`
-      SELECT bn.benhnhanid, u.userid, u.hoten, u.email, u.sodienthoai, bn.ngaysinh, bn.gioitinh, bn.diachi
+      SELECT bn.benhnhanid, bn.userid,
+             COALESCE(NULLIF(bn.hoten, ''), u.hoten) AS hoten,
+             COALESCE(NULLIF(bn.email, ''), u.email) AS email,
+             COALESCE(NULLIF(bn.sodienthoai, ''), u.sodienthoai) AS sodienthoai,
+             bn.ngaysinh, bn.gioitinh, bn.diachi
       FROM benhnhan bn
       LEFT JOIN nguoidung u ON u.userid = bn.userid
       ORDER BY bn.benhnhanid ASC
@@ -613,13 +833,22 @@ app.get('/api/admin/appointments', async (req, res) => {
 
     const result = await pool.query(`
       SELECT l.lichkhamid, l.thoigiankham, l.trangthai, l.lydokham,
-             l.ngaydatlich, d.bacsiid, du.hoten AS tenbacsi,
-             bn.benhnhanid, pu.hoten AS tenbenhnhan
+             l.trieuchung, l.ngaydatlich, d.bacsiid, du.hoten AS tenbacsi,
+             c.tenchuyenkhoa,
+             bn.benhnhanid, bn.userid AS patientuserid,
+             COALESCE(NULLIF(bn.hoten, ''), pu.hoten) AS tenbenhnhan,
+             COALESCE(NULLIF(bn.email, ''), pu.email) AS emailbenhnhan,
+             COALESCE(NULLIF(bn.sodienthoai, ''), pu.sodienthoai) AS sodienthoaibenhnhan,
+             bn.ngaysinh, bn.gioitinh, bn.diachi,
+             dv.dichvuid, dv.tendichvu, ctd.dongiataithoidiem
       FROM lichkham l
       JOIN bacsi d ON d.bacsiid = l.bacsiid
       JOIN nguoidung du ON du.userid = d.userid
       JOIN benhnhan bn ON bn.benhnhanid = l.benhnhanid
       LEFT JOIN nguoidung pu ON pu.userid = bn.userid
+      LEFT JOIN chuyenkhoa c ON c.chuyenkhoaid = d.chuyenkhoaid
+      LEFT JOIN chitietdichvukham ctd ON ctd.lichkhamid = l.lichkhamid
+      LEFT JOIN danhmucdichvu dv ON dv.dichvuid = ctd.dichvuid
       ORDER BY l.thoigiankham DESC
       LIMIT 200
     `);
@@ -844,7 +1073,7 @@ app.patch('/api/admin/appointments/:appointmentId/status', async (req, res) => {
     if (!admin) return;
     const appointmentId = Number(req.params.appointmentId);
     const status = String(req.body?.status || '').trim();
-    const validStatuses = ['ChoXacNhan', 'DaXacNhan', 'DangKham', 'HoanThanh', 'DaHuy', 'VangMat'];
+    const validStatuses = ['ChoXacNhan', 'DaXacNhan', 'DangKham', 'DaHoanThanh', 'HoanThanh', 'DaHuy', 'VangMat'];
     if (!Number.isInteger(appointmentId) || !validStatuses.includes(status)) {
       return res.status(400).json({ success: false, message: 'Lịch khám hoặc trạng thái không hợp lệ.' });
     }
