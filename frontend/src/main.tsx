@@ -106,8 +106,6 @@ const healthSystemFacilities = [
 
 const generalHospitalDepartments = [
 
-  { id: 'khoa-lao-khoa', title: 'Khoa Lão Khoa' },
-
   { id: 'khoa-noi-tong-hop', title: 'Khoa Nội tổng hợp - Thận lọc máu' },
 
   { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại' },
@@ -118,7 +116,6 @@ const generalHospitalDepartments = [
 
   { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y học cổ truyền - Phục hồi chức năng' },
 
-  { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu' },
   { id: 'khoa-kham-benh', title: 'Khoa Khám bệnh' },
   { id: 'khoa-can-lam-sang-chan-doan-hinh-anh', title: 'Khoa Cận lâm sàng - Chẩn đoán hình ảnh' },
 
@@ -135,6 +132,115 @@ const departmentDetails = [
   { id: 'khoa-can-lam-sang-chan-doan-hinh-anh', title: 'Khoa Cận lâm sàng – Chẩn đoán hình ảnh', intro: 'Thực hiện các kỹ thuật chẩn đoán hình ảnh, hỗ trợ bác sĩ phát hiện, đánh giá và theo dõi bệnh lý.', items: ['Siêu âm ổ bụng, tuyến giáp, tuyến vú, tim, Doppler mạch máu và siêu âm phần mềm.', 'X-quang kỹ thuật số và chụp cắt lớp vi tính (CT) theo chỉ định chuyên môn.', 'Chú trọng an toàn bức xạ, hướng dẫn người bệnh và bảo đảm chất lượng vận hành thiết bị.'] },
   { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y học cổ truyền – Phục hồi chức năng', intro: 'Kết hợp phương pháp y học cổ truyền với kỹ thuật phục hồi chức năng để chăm sóc người bệnh cơ xương khớp, thần kinh, đau mạn tính và phục hồi sau bệnh lý, chấn thương hoặc phẫu thuật.', items: ['Điện châm, thủy châm, xoa bóp – bấm huyệt, cấy chỉ theo chỉ định.', 'Vật lý trị liệu và phục hồi chức năng nhằm cải thiện vận động, sức mạnh cơ và sinh hoạt.', 'Cá thể hóa kế hoạch điều trị, hướng dẫn người bệnh và gia đình phối hợp trong quá trình phục hồi.'] },
   { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây mê Hồi sức', intro: 'Đảm nhiệm công tác gây mê, gây tê và hồi sức trước, trong và sau phẫu thuật, thủ thuật tại Bệnh viện Đa khoa Tâm An.', items: ['Đánh giá nguy cơ gây mê, lựa chọn phương pháp gây mê hoặc gây tê phù hợp.', 'Theo dõi chức năng sống trong phẫu thuật, hồi sức sau mổ và kiểm soát đau.', 'Phối hợp liên chuyên khoa, chuẩn bị thiết bị và cải tiến chất lượng an toàn người bệnh.'] },
+];
+
+const departmentPages = [
+  {
+    id: 'khoa-noi-tong-hop',
+    title: 'Khoa Nội tổng hợp – Thận lọc máu',
+    intro: 'Điều trị nội khoa, chăm sóc bệnh lý thận và triển khai chạy thận nhân tạo với quy trình chuyên môn, an toàn và tận tâm.',
+    sections: [
+      { heading: 'Triển khai chạy thận nhân tạo tại Tâm An', paragraphs: ['Khoa Nội tổng hợp – Thận lọc máu là đơn vị thực hiện điều trị các bệnh lý nội khoa và chăm sóc người bệnh cần lọc máu. Những ca chạy thận nhân tạo đầu tiên đã được triển khai tại Tâm An với sự chuẩn bị đồng bộ về nhân lực và thiết bị.'], bullets: ['Sử dụng hệ thống máy 4008S của Fresenius Medical Care (Đức).', 'Triển khai kỹ thuật HDF online và hệ thống xử lý nước RO.', 'Bảo đảm không gian phù hợp cho những buổi điều trị kéo dài.'] },
+      { heading: 'Hệ thống lọc máu được đầu tư đồng bộ', paragraphs: ['Hệ thống máy lọc máu, xử lý nước RO và các điều kiện hỗ trợ được kiểm soát trong quá trình vận hành, nhằm duy trì chất lượng điều trị ổn định và an toàn cho người bệnh.'] },
+      { heading: 'Theo dõi sát – chăm sóc tận tâm', paragraphs: ['Bác sĩ và điều dưỡng theo dõi sức khỏe, các chỉ số cần thiết và diễn biến của người bệnh trong suốt mỗi ca lọc máu. Người bệnh được hướng dẫn, hỗ trợ và giải thích rõ ràng trong quá trình điều trị.'] },
+      { heading: 'Không ngừng hoàn thiện chất lượng điều trị', paragraphs: ['Khoa tiếp tục cập nhật chuyên môn, hoàn thiện quy trình và phối hợp cùng các chuyên khoa để nâng cao hiệu quả điều trị, hướng đến sự an tâm lâu dài cho người bệnh lọc máu.'] },
+    ],
+  },
+  {
+    id: 'khoa-duoc',
+    title: 'Khoa Dược',
+    intro: 'Khoa Dược bảo đảm cung ứng, quản lý và sử dụng thuốc, hóa chất, vật tư y tế phục vụ hoạt động khám chữa bệnh toàn viện.',
+    sections: [
+      { heading: 'Cung ứng thuốc, hóa chất và vật tư y tế', paragraphs: ['Khoa xây dựng kế hoạch, tiếp nhận, bảo quản và cấp phát thuốc, hóa chất, vật tư y tế theo nhu cầu điều trị. Các sản phẩm được kiểm tra nguồn gốc, chất lượng và hạn dùng trước khi đưa vào sử dụng.'], bullets: ['Cấp phát thuốc cho người bệnh nội trú và ngoại trú.', 'Quản lý thuốc theo đúng điều kiện bảo quản và quy trình chuyên môn.', 'Kiểm soát việc cấp phát chính xác, đầy đủ và kịp thời.'] },
+      { heading: 'Hệ thống Khoa Dược được tổ chức chuyên nghiệp', bullets: ['Kho dược: tiếp nhận, bảo quản và cấp phát thuốc, hóa chất, vật tư y tế.', 'Nghiệp vụ dược: theo dõi, kiểm tra và thực hiện các quy trình dược.', 'Dược lâm sàng – thông tin thuốc: đồng hành cùng bác sĩ trong sử dụng thuốc hợp lý.', 'Thống kê dược và ứng dụng công nghệ thông tin trong quản lý.'] },
+      { heading: 'Kiểm soát chất lượng và an toàn trong sử dụng thuốc', paragraphs: ['Khoa kiểm soát toàn bộ quá trình từ tiếp nhận, bảo quản, cấp phát đến sử dụng thuốc. Dược sĩ phối hợp với bác sĩ để lựa chọn thuốc phù hợp với chẩn đoán, tuổi, cân nặng, bệnh kèm theo và tình trạng của từng người bệnh.'] },
+      { heading: 'Đồng hành cùng đội ngũ điều trị', paragraphs: ['Khoa Dược cung cấp thông tin thuốc, hỗ trợ giải đáp các vấn đề liên quan đến điều trị và thường xuyên cập nhật kiến thức chuyên môn cho đội ngũ dược sĩ.'] },
+      { heading: 'Khoa Dược – đồng hành vì an toàn người bệnh', paragraphs: ['Với định hướng “An toàn – Chính xác – Kịp thời”, Khoa Dược góp phần bảo đảm chất lượng điều trị và an toàn sử dụng thuốc tại Bệnh viện Đa khoa Tâm An.'] },
+    ],
+  },
+  {
+    id: 'khoa-xet-nghiem',
+    title: 'Khoa Xét nghiệm',
+    intro: 'Khoa Xét nghiệm hỗ trợ chẩn đoán, phát hiện nguyên nhân bệnh và theo dõi hiệu quả điều trị bằng các kỹ thuật xét nghiệm phù hợp.',
+    sections: [
+      { heading: 'Đa dạng kỹ thuật xét nghiệm', paragraphs: ['Khoa triển khai nhiều nhóm kỹ thuật, đáp ứng nhu cầu khám chữa bệnh và hỗ trợ bác sĩ đưa ra hướng chẩn đoán, điều trị phù hợp.'], bullets: ['Huyết học.', 'Sinh hóa.', 'Miễn dịch.', 'Vi sinh.', 'Ký sinh trùng.'] },
+      { heading: 'Chú trọng chất lượng và an toàn xét nghiệm', paragraphs: ['Quy trình được kiểm soát ở cả ba giai đoạn: trước xét nghiệm, trong xét nghiệm và sau xét nghiệm. Khoa chú trọng quản lý thiết bị, hóa chất, vật tư và thực hiện các tiêu chí chất lượng theo định hướng 2429 để cung cấp kết quả chính xác, kịp thời và an toàn.'] },
+      { heading: 'Đội ngũ chuyên môn tận tâm', paragraphs: ['Đội ngũ bác sĩ, kỹ thuật viên và nhân viên xét nghiệm được đào tạo, cập nhật kiến thức thường xuyên, đồng thời tham gia các hoạt động nghiên cứu và cải tiến chuyên môn.'] },
+      { heading: 'Đồng hành cùng người bệnh', paragraphs: ['Mỗi kết quả xét nghiệm được thực hiện với tinh thần Chính xác – Kịp thời – An toàn – Tận tâm, góp phần giúp người bệnh hiểu rõ tình trạng sức khỏe và chủ động điều trị.'] },
+    ],
+  },
+  {
+    id: 'khoa-phu-san-nhi',
+    title: 'Khoa Nhi',
+    intro: 'Khoa Nhi khám, tư vấn, chẩn đoán và điều trị bệnh lý ở trẻ em, đồng thời theo dõi sự tăng trưởng và phát triển của trẻ trong một môi trường thân thiện.',
+    sections: [
+      { heading: 'Khám và điều trị các bệnh lý nhi khoa', paragraphs: ['Khoa tiếp nhận khám và điều trị các bệnh lý thường gặp ở trẻ, kết hợp theo dõi toàn diện và phối hợp với cha mẹ trong từng giai đoạn chăm sóc.'], bullets: ['Bệnh lý hô hấp.', 'Bệnh lý tiêu hóa.', 'Sốt và các bệnh nhiễm trùng.', 'Dị ứng, miễn dịch và bệnh ngoài da.', 'Bệnh lý tiết niệu.', 'Dinh dưỡng, cân nặng và phát triển thể chất.'] },
+      { heading: 'Đội ngũ y bác sĩ tận tâm, đồng hành cùng phụ huynh', paragraphs: ['Bác sĩ và điều dưỡng kiên nhẫn lắng nghe, giải thích dễ hiểu, hướng dẫn cha mẹ cách chăm sóc, dùng thuốc và nhận biết các dấu hiệu cần đưa trẻ đi khám. Khi cần thiết, Khoa phối hợp với các chuyên khoa khác để bảo đảm trẻ được chăm sóc phù hợp.'] },
+      { heading: 'Không gian thân thiện, phù hợp với trẻ em', paragraphs: ['Không gian khám được tổ chức sạch sẽ, thân thiện và thuận tiện cho trẻ. Nhân viên hỗ trợ gia đình trong các bước đăng ký, thăm khám và chăm sóc để giảm bớt lo lắng cho trẻ và phụ huynh.'] },
+      { heading: 'Theo dõi sức khỏe và phát triển của trẻ', paragraphs: ['Khoa tư vấn theo dõi định kỳ cân nặng, chiều cao, dinh dưỡng, phát triển thể chất và các dấu hiệu sức khỏe. Phụ huynh được hướng dẫn về phòng bệnh, tiêm chủng và thời điểm cần đưa trẻ đi khám; không tự ý dùng thuốc khi chưa có chỉ định.'] },
+      { heading: 'Dịch vụ khám và chăm sóc sức khỏe nhi khoa', bullets: ['Tư vấn và khám bệnh nhi khoa.', 'Theo dõi bệnh hô hấp, tiêu hóa, nhiễm trùng và dị ứng.', 'Theo dõi tăng trưởng, dinh dưỡng và phát triển của trẻ.', 'Tư vấn chăm sóc, phòng bệnh và phối hợp chuyên khoa khi cần.'] },
+      { heading: 'Đồng hành cùng gia đình trong hành trình lớn khôn của trẻ', paragraphs: ['Khoa Nhi hướng đến việc chăm sóc an toàn, nhẹ nhàng và toàn diện, để mỗi gia đình có thêm kiến thức và sự an tâm trong việc bảo vệ sức khỏe cho trẻ.'] },
+    ],
+  },
+  {
+    id: 'khoa-ngoai-tong-hop',
+    title: 'Khoa Ngoại',
+    intro: 'Khoa Ngoại thăm khám, điều trị và chăm sóc người bệnh mắc các bệnh lý ngoại khoa, từ những bệnh thường gặp đến các trường hợp cần can thiệp.',
+    sections: [
+      { heading: 'Đội ngũ y bác sĩ tận tâm, chuyên nghiệp', paragraphs: ['Đội ngũ Khoa Ngoại phối hợp thăm khám, tư vấn và xây dựng kế hoạch điều trị dựa trên tình trạng cụ thể của từng người bệnh, chú trọng an toàn và hiệu quả.'] },
+      { heading: 'Khám và điều trị các bệnh lý ngoại khoa', bullets: ['Khám và điều trị ngoại trú, nội trú.', 'Thực hiện thủ thuật, can thiệp và phẫu thuật trong phạm vi chuyên môn.', 'Theo dõi và chăm sóc người bệnh trước, trong và sau phẫu thuật.', 'Hướng dẫn chăm sóc vết mổ, dinh dưỡng, vận động và tái khám.'] },
+      { heading: 'Ứng dụng phương pháp điều trị phù hợp', paragraphs: ['Người bệnh được đánh giá toàn diện để lựa chọn phương pháp phù hợp, hạn chế can thiệp không cần thiết, kiểm soát đau và hỗ trợ quá trình hồi phục.'] },
+      { heading: 'Chăm sóc toàn diện trước và sau phẫu thuật', paragraphs: ['Khoa hướng dẫn chuẩn bị trước mổ, theo dõi sau mổ, chăm sóc vết thương, dinh dưỡng, vận động và sử dụng thuốc. Người bệnh được nhắc các dấu hiệu bất thường cần liên hệ hoặc tái khám.'] },
+      { heading: 'Hướng đến chất lượng điều trị và trải nghiệm người bệnh', paragraphs: ['Khoa Ngoại không ngừng cải tiến quy trình, phối hợp liên chuyên khoa và đồng hành cùng người bệnh trong từng bước điều trị.'] },
+    ],
+  },
+  {
+    id: 'khoa-kham-benh',
+    title: 'Khoa Khám bệnh',
+    intro: 'Khoa Khám bệnh là nơi tiếp nhận, thăm khám, tư vấn, chẩn đoán và định hướng điều trị với quy trình rõ ràng, thuận tiện và chuyên nghiệp.',
+    sections: [
+      { heading: 'Khám chữa bệnh tất cả các ngày trong tuần', paragraphs: ['Khoa tiếp nhận người bệnh tất cả các ngày trong tuần, kể cả ngày lễ. Thời gian đăng ký khám bắt đầu từ 06h45; nhân viên hướng dẫn người bệnh thực hiện các bước phù hợp ngay từ khi đến viện.'] },
+      { heading: 'Khám chữa bệnh BHYT thuận tiện', paragraphs: ['Người bệnh khám BHYT vui lòng chuẩn bị thẻ BHYT hoặc ứng dụng VssID, giấy tờ tùy thân và giấy chuyển tuyến nếu thuộc trường hợp cần giấy chuyển tuyến. Bộ phận tiếp đón sẽ kiểm tra và hướng dẫn hồ sơ.'], bullets: ['Đăng ký và kiểm tra thông tin BHYT.', 'Khám bác sĩ và thực hiện cận lâm sàng khi có chỉ định.', 'Nhận kết quả, nghe tư vấn và nhận đơn thuốc hoặc hướng điều trị.', 'Thanh toán phần đồng chi trả và nhận thuốc theo quy định.'] },
+      { heading: 'Quy trình khám BHYT', bullets: ['Đăng ký khám tại quầy tiếp đón.', 'Kiểm tra thông tin thẻ BHYT và giấy tờ liên quan.', 'Khám bác sĩ.', 'Thực hiện xét nghiệm, chẩn đoán hình ảnh hoặc kỹ thuật khác khi được chỉ định.', 'Nhận kết quả và được tư vấn điều trị.', 'Thanh toán phần chi phí cần đồng chi trả, nhận thuốc hoặc tiếp tục điều trị.'] },
+      { heading: 'Quy trình khám thuận tiện – chăm sóc tận tâm', paragraphs: ['Khoa chú trọng hướng dẫn rõ ràng, giảm thời gian chờ không cần thiết và hỗ trợ người bệnh trong suốt quá trình khám. Quyền lợi BHYT thực tế phụ thuộc quy định hiện hành, mức hưởng và phạm vi chi phí được thanh toán.'] },
+      { heading: 'Chủ động chăm sóc sức khỏe', paragraphs: ['Người bệnh nên mang theo các kết quả khám trước đây, danh sách thuốc đang sử dụng và thông tin bệnh nền để bác sĩ có thêm cơ sở tư vấn phù hợp.'] },
+    ],
+  },
+  {
+    id: 'khoa-can-lam-sang-chan-doan-hinh-anh',
+    title: 'Khoa Cận lâm sàng – Chẩn đoán hình ảnh',
+    intro: 'Khoa thực hiện các kỹ thuật chẩn đoán hình ảnh, hỗ trợ bác sĩ phát hiện, đánh giá, theo dõi bệnh lý và lựa chọn hướng điều trị phù hợp.',
+    sections: [
+      { heading: 'Vai trò của chẩn đoán hình ảnh', paragraphs: ['Chẩn đoán hình ảnh giúp phát hiện tổn thương, đánh giá vị trí và mức độ bệnh, hỗ trợ định hướng chẩn đoán, theo dõi đáp ứng điều trị và phát hiện thay đổi trong quá trình chăm sóc.'] },
+      { heading: 'Các dịch vụ chẩn đoán hình ảnh', bullets: ['Siêu âm ổ bụng, tuyến giáp, tuyến vú, sản phụ khoa, tim, Doppler mạch máu và siêu âm phần mềm.', 'X-quang kỹ thuật số: ngực, xương, cột sống, xoang và ổ bụng.', 'Chụp cắt lớp vi tính (CT): sọ não, ngực, bụng, cột sống, xương và mạch máu; sử dụng thuốc cản quang khi có chỉ định.'] },
+      { heading: 'Trang thiết bị hỗ trợ chẩn đoán', paragraphs: ['Các thiết bị siêu âm, X-quang kỹ thuật số và CT được quản lý, kiểm tra và bảo trì theo quy trình, nhằm bảo đảm chất lượng hình ảnh và an toàn trong quá trình thực hiện.'] },
+      { heading: 'Đội ngũ bác sĩ, kỹ thuật viên chuyên môn', paragraphs: ['Bác sĩ và kỹ thuật viên thực hiện đúng quy trình, giải thích và hướng dẫn người bệnh trước khi chụp, đồng thời phối hợp với bác sĩ điều trị để cung cấp thông tin cần thiết.'] },
+      { heading: 'An toàn, chuyên nghiệp – đồng hành cùng người bệnh', paragraphs: ['Khoa chú trọng an toàn bức xạ, sàng lọc các trường hợp cần lưu ý khi sử dụng thuốc cản quang và hướng dẫn người bệnh chuẩn bị đúng trước mỗi kỹ thuật.'] },
+    ],
+  },
+  {
+    id: 'khoa-y-hoc-co-truyen',
+    title: 'Khoa Y học cổ truyền – Phục hồi chức năng',
+    intro: 'Khoa kết hợp phương pháp y học cổ truyền với kỹ thuật phục hồi chức năng để chăm sóc bệnh lý cơ xương khớp, thần kinh và phục hồi sau bệnh, chấn thương hoặc phẫu thuật.',
+    sections: [
+      { heading: 'Đội ngũ y tế tận tâm', paragraphs: ['Bác sĩ, điều dưỡng và kỹ thuật viên đánh giá tình trạng người bệnh trước khi điều trị, xây dựng kế hoạch phù hợp và hướng dẫn người bệnh phối hợp trong suốt quá trình phục hồi.'] },
+      { heading: 'Kết hợp y học cổ truyền và phục hồi chức năng', bullets: ['Điện châm, thủy châm.', 'Xoa bóp – bấm huyệt.', 'Cấy chỉ theo chỉ định.', 'Sử dụng thuốc y học cổ truyền.', 'Vật lý trị liệu và phục hồi chức năng.'] },
+      { heading: 'Các bệnh lý và nhóm đối tượng', bullets: ['Đau cơ xương khớp, đau cột sống cổ và thắt lưng.', 'Di chứng bệnh lý thần kinh, tai biến mạch máu não.', 'Liệt dây thần kinh VII ngoại biên.', 'Phục hồi sau chấn thương hoặc phẫu thuật.', 'Người bệnh hạn chế vận động cần cải thiện chức năng sinh hoạt.'] },
+      { heading: 'Chăm sóc và phục hồi lấy người bệnh làm trung tâm', paragraphs: ['Mục tiêu điều trị được trao đổi rõ ràng, kế hoạch được cá thể hóa theo khả năng và nhu cầu của từng người bệnh. Gia đình được hướng dẫn cách hỗ trợ an toàn tại nhà.'] },
+      { heading: 'Đồng hành trên hành trình hồi phục', paragraphs: ['Khoa hướng đến cải thiện vận động, giảm đau, nâng cao khả năng tự chăm sóc và giúp người bệnh trở lại sinh hoạt phù hợp.'] },
+    ],
+  },
+  {
+    id: 'khoa-gay-me-hoi-suc',
+    title: 'Khoa Gây mê Hồi sức',
+    intro: 'Khoa Gây mê Hồi sức đảm nhiệm công tác gây mê, gây tê và hồi sức trước, trong và sau phẫu thuật, thủ thuật tại Bệnh viện Đa khoa Tâm An.',
+    sections: [
+      { heading: 'Đồng hành trong toàn bộ hành trình phẫu thuật', paragraphs: ['Khoa thực hiện đánh giá trước gây mê, lựa chọn phương pháp vô cảm, theo dõi các chức năng sống trong phẫu thuật, hồi sức sau mổ và kiểm soát đau. Đồng thời, Khoa phối hợp với các chuyên khoa để bảo đảm an toàn cho người bệnh.'], bullets: ['Đánh giá nguy cơ và chuẩn bị người bệnh trước gây mê.', 'Gây mê toàn thân, gây tê vùng và các kỹ thuật vô cảm phù hợp.', 'Theo dõi, hồi sức và kiểm soát đau sau phẫu thuật.', 'Chuẩn bị, kiểm tra thiết bị và thuốc cấp cứu.'] },
+      { heading: 'Các kỹ thuật gây mê, gây tê', bullets: ['Đặt nội khí quản, sử dụng mặt nạ thanh quản.', 'Gây mê đường hô hấp hoặc gây mê tĩnh mạch.', 'Gây tê tủy sống, gây tê ngoài màng cứng và gây tê thần kinh.', 'Ứng dụng siêu âm hỗ trợ trong một số kỹ thuật gây tê khi phù hợp.'] },
+      { heading: 'Hồi sức sau mổ và kiểm soát đau', paragraphs: ['Sau phẫu thuật, người bệnh được theo dõi các dấu hiệu sinh tồn, mức độ tỉnh, hô hấp, tuần hoàn và mức độ đau. Khoa phối hợp điều chỉnh phương án giảm đau để người bệnh phục hồi thuận lợi.'] },
+      { heading: 'An toàn là ưu tiên hàng đầu', paragraphs: ['Khoa duy trì quy trình kiểm tra, theo dõi và xử trí kịp thời các tình huống có thể phát sinh, đồng thời thường xuyên đào tạo, cập nhật chuyên môn và cải tiến chất lượng.'] },
+    ],
+  },
 ];
 
 function LeadershipBannerSection() { return <section id="lanh-dao" className="section leadership-section"><div className="container leadership-board"><img className="leadership-banner" src="/hospital/leadership-banner.png" alt="Ban lãnh đạo Bệnh viện Đa khoa Tâm An" /></div></section>; }
@@ -219,7 +325,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             </div>
             <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group nav-menu-group--support"><Link to="/dat-lich">Đặt lịch khám</Link></div></div></div>
-            <Link className={location.pathname === '/bao-hiem' ? 'active' : ''} to="/bao-hiem">BHYT</Link><div className={dropdownClass('specialties', 'nav-dropdown--specialties')}><button type="button" className={`nav-dropdown-toggle${location.pathname === '/benh-ly' ? ' active' : ''}`} onClick={toggleMobileDropdown('specialties')} aria-expanded={mobileDropdown === 'specialties'} aria-haspopup="true">CHUYÊN KHOA <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu"><div className="nav-menu-group"><Link to="/benh-ly">Bệnh lý Hậu môn – Trực tràng</Link>{generalHospitalDepartments.map((department) => <Link to={`/benh-ly#${department.id}`} key={department.id}>{department.title}</Link>)}</div></div></div><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
+            <Link className={location.pathname === '/bao-hiem' ? 'active' : ''} to="/bao-hiem">BHYT</Link><div className={dropdownClass('specialties', 'nav-dropdown--specialties')}><button type="button" className={`nav-dropdown-toggle${location.pathname.startsWith('/chuyen-khoa') || location.pathname === '/benh-ly' ? ' active' : ''}`} onClick={toggleMobileDropdown('specialties')} aria-expanded={mobileDropdown === 'specialties'} aria-haspopup="true">CHUYÊN KHOA <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu"><div className="nav-menu-group"><Link to="/benh-ly">Bệnh lý Hậu môn – Trực tràng</Link>{generalHospitalDepartments.map((department) => <Link to={`/chuyen-khoa/${department.id}`} key={department.id}>{department.title}</Link>)}</div></div></div><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
 
             <div className={dropdownClass('news', 'nav-dropdown--news')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('news')} aria-expanded={mobileDropdown === 'news'} aria-haspopup="true">TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu"><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div></div>
 
@@ -289,7 +395,42 @@ function BookingPage() { return <BookingPageApi />; }
 
 const diseaseData: Record<string, { title: string; intro: string; signs: string[]; causes: string[]; consult: string; image: string; imageAlt: string }> = { 'benh-tri': { title: 'Bệnh trĩ', image: '/medical/benh-tri.png', imageAlt: 'Minh họa bệnh trĩ', intro: 'Bệnh trĩ là tình trạng các đám rối tĩnh mạch ở vùng hậu môn – trực tràng bị giãn, thường gây chảy máu hoặc khó chịu.\n\nPhân loại: Trĩ nội, trĩ ngoại và trĩ hỗn hợp.\n\nDấu hiệu nhận biết sớm: Đi tiêu ra máu tươi (dính trên giấy vệ sinh hoặc nhỏ giọt); búi trĩ sa khi rặn; cảm giác cộm vướng, ngứa ngáy hoặc đau rát vùng hậu môn.\n\nNguyên nhân phổ biến: Táo bón kinh niên, tiêu chảy kéo dài, ngồi lâu một chỗ, mang thai hoặc áp lực ổ bụng tăng.', signs: ['Đi tiêu ra máu tươi, có thể dính trên giấy vệ sinh hoặc nhỏ giọt', 'Búi trĩ sa ra khi rặn, cảm giác cộm hoặc vướng', 'Ngứa ngáy, đau rát quanh hậu môn'], causes: ['Táo bón kinh niên', 'Tiêu chảy kéo dài', 'Ngồi lâu một chỗ như dân văn phòng, tài xế', 'Mang thai hoặc áp lực ổ bụng lớn'], consult: 'Khi chảy máu tái diễn, đau nhiều hoặc búi trĩ sa không tự co lên, bạn nên đi khám chuyên khoa. Chảy máu trực tràng không nên tự mặc định là do bệnh trĩ.' }, 'ro-hau-mon': { title: 'Rò hậu môn', image: '/medical/ro-hau-mon.svg', imageAlt: 'Sơ đồ minh họa rò hậu môn', intro: 'Rò hậu môn là đường hầm bất thường nối từ ống hậu môn ra vùng da cạnh hậu môn, thường xuất hiện sau một ổ áp xe.\n\nBản chất: Đây thường là giai đoạn mạn tính của áp xe hậu môn khi không được điều trị dứt điểm hoặc tự vỡ, để lại đường rò xơ chai.\n\nDấu hiệu nhận biết: Lỗ rò cạnh hậu môn liên tục rỉ mủ hoặc dịch vàng có mùi hôi, gây ẩm ướt; vùng da quanh lỗ rò sưng đau từng đợt khi đường rò bị bít tắc.\n\nBiến chứng: Đường rò có thể phân nhánh phức tạp, nhiễm trùng lan rộng và ảnh hưởng khả năng kiểm soát đại tiện.', signs: ['Lỗ rò trên da cạnh hậu môn rỉ mủ hoặc dịch vàng có mùi hôi', 'Vùng da quanh lỗ rò ẩm ướt, khó chịu', 'Sưng đau từng đợt khi đường rò bị bít tắc'], causes: ['Áp xe hậu môn không được điều trị triệt để hoặc tự vỡ', 'Viêm nhiễm tuyến hậu môn', 'Một số bệnh viêm ruột hoặc suy giảm miễn dịch'], consult: 'Rò hậu môn thường không tự khỏi và có thể cần phẫu thuật. Hãy khám sớm khi có lỗ chảy dịch, sưng đau tái phát hoặc nghi ngờ đường rò phức tạp.' }, 'ap-xe-hau-mon': { title: 'Áp xe hậu môn', image: '/medical/ap-xe-hau-mon.svg', imageAlt: 'Sơ đồ minh họa áp xe hậu môn', intro: 'Áp xe hậu môn là ổ mủ hình thành ở mô quanh hậu môn, có thể tiến triển nhanh và cần được xử trí đúng lúc.\n\nBản chất: Đây là tình trạng nhiễm trùng cấp tính; tuyến hoặc hốc hậu môn bị tắc nghẽn, nhiễm khuẩn và tạo thành bọc mủ cục bộ.\n\nDấu hiệu nhận biết: Đau nhức dữ dội, liên tục, tăng khi ngồi, đi lại, ho hoặc rặn; vùng da xung quanh sưng đỏ, nóng rát, có thể kèm sốt cao và mệt mỏi.\n\nCách xử trí: Cần được bác sĩ thăm khám và rạch dẫn lưu mủ kịp thời khi có chỉ định. Thuốc, trong đó có kháng sinh, chỉ dùng theo hướng dẫn của bác sĩ.', signs: ['Đau nhức dữ dội, liên tục, tăng khi ngồi, đi lại, ho hoặc rặn', 'Vùng da quanh hậu môn sưng đỏ, nóng rát', 'Sốt cao, ớn lạnh hoặc mệt mỏi do nhiễm trùng'], causes: ['Tắc nghẽn hoặc nhiễm khuẩn tuyến/hốc hậu môn', 'Nhiễm khuẩn vùng hậu môn', 'Một số chấn thương hoặc bệnh lý nền'], consult: 'Đau sưng kèm sốt là dấu hiệu cần khám sớm. Bác sĩ có thể chỉ định rạch dẫn lưu mủ; không tự nặn hoặc chọc tháo ổ mủ tại nhà.' } };
 
-function DiseasesPage() { return <main><PageHero label="Góc chuyên gia" title="Hiểu đúng để chăm sóc đúng" text="Thông tin y khoa được trình bày dễ hiểu, giúp bạn nhận biết dấu hiệu và chủ động đi khám." /><section className="section"><div className="container"><div className="disease-grid">{Object.entries(diseaseData).map(([slug, item], i) => <Link className="disease-card" to={`/benh-ly/${slug}`} key={slug}><span className="disease-number">0{i + 1}</span><div className="disease-card-image"><img src={item.image} alt={item.imageAlt} loading="lazy" /></div><h2>{item.title}</h2><p>{item.intro}</p><span className="text-link">Xem thông tin <b>→</b></span></Link>)}</div><div className="medical-note">ⓘ Nội dung mang tính tham khảo, không thay thế chẩn đoán và điều trị trực tiếp của bác sĩ.</div><div className="medical-image-credits">Hình minh họa: <a href="https://commons.wikimedia.org/wiki/File:Hemorrhoids.png" target="_blank" rel="noreferrer">Bệnh trĩ</a> (BruceBlaus, CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Fistula_diag_01.svg" target="_blank" rel="noreferrer">rò hậu môn</a> (McortNGHH, CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Abscess_diag_02.svg" target="_blank" rel="noreferrer">áp-xe hậu môn</a> (McortNGHH, CC BY-SA 4.0).</div></div></section><DepartmentDetailsSection /><section className="section soft-section"><div className="container disease-cta"><div><span className="eyebrow">Điều trị chuyên sâu</span><h2>Khám phá các phương pháp phẫu thuật trĩ</h2><p>So sánh Longo, Laser, HCPT và mổ truyền thống để có thêm thông tin trước khi tư vấn.</p></div><div className="button-row"><Link to="/phuong-phap-phau-thuat-tri" className="button button-outline">Xem so sánh</Link><Link to="/dat-lich" className="button button-primary">Đặt lịch <span>→</span></Link></div></div></section></main>; }
+function DiseasesPage() { return <main><PageHero label="Góc chuyên gia" title="Hiểu đúng để chăm sóc đúng" text="Thông tin y khoa được trình bày dễ hiểu, giúp bạn nhận biết dấu hiệu và chủ động đi khám." /><section className="section"><div className="container"><div className="disease-grid">{Object.entries(diseaseData).map(([slug, item], i) => <Link className="disease-card" to={`/benh-ly/${slug}`} key={slug}><span className="disease-number">0{i + 1}</span><div className="disease-card-image"><img src={item.image} alt={item.imageAlt} loading="lazy" /></div><h2>{item.title}</h2><p>{item.intro}</p><span className="text-link">Xem thông tin <b>→</b></span></Link>)}</div><div className="medical-note">ⓘ Nội dung mang tính tham khảo, không thay thế chẩn đoán và điều trị trực tiếp của bác sĩ.</div><div className="medical-image-credits">Hình minh họa: <a href="https://commons.wikimedia.org/wiki/File:Hemorrhoids.png" target="_blank" rel="noreferrer">Bệnh trĩ</a> (BruceBlaus, CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Fistula_diag_01.svg" target="_blank" rel="noreferrer">rò hậu môn</a> (McortNGHH, CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Abscess_diag_02.svg" target="_blank" rel="noreferrer">áp-xe hậu môn</a> (McortNGHH, CC BY-SA 4.0).</div></div></section><section className="section soft-section"><div className="container disease-cta"><div><span className="eyebrow">Điều trị chuyên sâu</span><h2>Khám phá các phương pháp phẫu thuật trĩ</h2><p>So sánh Longo, Laser, HCPT và mổ truyền thống để có thêm thông tin trước khi tư vấn.</p></div><div className="button-row"><Link to="/phuong-phap-phau-thuat-tri" className="button button-outline">Xem so sánh</Link><Link to="/dat-lich" className="button button-primary">Đặt lịch <span>→</span></Link></div></div></section></main>; }
+
+function DepartmentDetailPage() {
+  const { departmentId } = useParams();
+  const page = departmentPages.find((item) => item.id === departmentId);
+
+  if (!page) return <Navigate to="/benh-ly" replace />;
+
+  return <main>
+    <PageHero label="Chuyên khoa" title={page.title} text={page.intro} />
+    <section className="section department-page-section">
+      <div className="container department-page-layout">
+        <article className="department-page-content">
+          {page.sections.map((section) => <section className="department-content-block" key={section.heading}>
+            <h2>{section.heading}</h2>
+            {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            {section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}
+          </section>)}
+          <div className="medical-note">Thông tin mang tính giới thiệu chuyên môn, không thay thế chẩn đoán và chỉ định điều trị trực tiếp của bác sĩ.</div>
+        </article>
+        <aside className="department-page-aside">
+          <div className="aside-card">
+            <span className="eyebrow">Đặt lịch thăm khám</span>
+            <h3>Cần được tư vấn chuyên khoa?</h3>
+            <p>Đội ngũ Tâm An sẵn sàng tiếp nhận thông tin và hướng dẫn lịch khám phù hợp.</p>
+            <Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link>
+          </div>
+          <div className="aside-card department-related-card">
+            <span className="eyebrow">Các chuyên khoa</span>
+            {generalHospitalDepartments.map((department) => <Link className={department.id === page.id ? 'is-current' : ''} to={`/chuyen-khoa/${department.id}`} key={department.id}>{department.title}</Link>)}
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>;
+}
 
 function DiseaseDetail() { const { slug } = useParams(); const item = diseaseData[slug || 'benh-tri'] || diseaseData['benh-tri']; return <main><PageHero label="Góc chuyên gia / Bệnh lý" title={item.title} text={item.intro} /><section className="section"><div className="container article-layout"><article className="medical-article"><p className="lead">{item.intro}</p><h2>Dấu hiệu nhận biết</h2><ul>{item.signs.map((x) => <li key={x}>{x}</li>)}</ul><h2>Nguyên nhân thường gặp</h2><ul>{item.causes.map((x) => <li key={x}>{x}</li>)}</ul><div className="warning-box"><strong>Khi nào nên đi khám?</strong><p>{item.consult}</p></div><p>Thông tin trên chỉ giúp bạn tham khảo ban đầu. Bác sĩ sẽ thăm khám trực tiếp và có thể chỉ định cận lâm sàng để đưa ra hướng điều trị phù hợp.</p><Link to="/dat-lich" className="button button-primary">Đặt lịch tư vấn <span>→</span></Link></article><aside className="article-aside"><div className="aside-card"><Icon>✚</Icon><h3>Chuyên khoa Hậu môn – Trực tràng</h3><p>Khám riêng tư, tư vấn rõ ràng, điều trị theo từng tình trạng.</p><Link to="/dat-lich" className="text-link">Đặt lịch ngay →</Link></div></aside></div></section></main>; }
 
@@ -315,7 +456,7 @@ function RegisterPage() { const [message, setMessage] = useState(''); const [for
 
 function PatientPage() { const session = readSession(); if (!session) return <Navigate to="/login" replace />; return <main><PageHero label="Khu vực cá nhân" title={`Xin chào, ${session.user?.HoTen || 'bạn'}`} text="Theo dõi lịch khám và thông tin sức khỏe của bạn tại Tâm An." /><section className="section"><div className="container dashboard-card"><h2>Lịch khám của bạn</h2><p>Bạn có thể đặt lịch mới hoặc liên hệ hotline để được hỗ trợ quản lý lịch hẹn.</p><Link to="/dat-lich" className="button button-primary">Đặt lịch mới <span>→</span></Link></div></section></main>; }
 
-function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<DiseasesPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/phuong-phap-phau-thuat-tri" element={<SurgeryPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
+function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<DiseasesPage />} /><Route path="/chuyen-khoa/:departmentId" element={<DepartmentDetailPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/phuong-phap-phau-thuat-tri" element={<SurgeryPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
 

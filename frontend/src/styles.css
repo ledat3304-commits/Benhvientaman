@@ -392,6 +392,30 @@ h1,h2{font-weight:800;letter-spacing:-.025em}
 .department-detail-card li::marker{color:var(--teal)}
 @media(max-width:650px){.department-details-grid{grid-template-columns:1fr}.department-detail-card{padding:22px}.department-detail-card h3{font-size:18px}}
 
+/* Dedicated pages for each hospital department. */
+.department-page-section{background:var(--soft)}
+.department-page-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start}
+.department-page-content{padding:34px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow)}
+.department-content-block{padding:24px 0;border-bottom:1px solid var(--line)}
+.department-content-block:first-child{padding-top:0}
+.department-content-block:last-of-type{padding-bottom:24px;border-bottom:0}
+.department-content-block h2{margin:0 0 13px;color:var(--navy);font-size:clamp(1.25rem,2vw,1.75rem);line-height:1.25}
+.department-content-block p{margin:0 0 11px;color:#527079;font-size:13px;line-height:1.8}
+.department-content-block p:last-child{margin-bottom:0}
+.department-content-block ul{display:grid;gap:7px;margin:0;padding-left:20px;color:#527079;font-size:13px;line-height:1.65}
+.department-content-block li::marker{color:var(--teal)}
+.department-page-content .medical-note{margin-top:24px}
+.department-page-aside{position:sticky;top:92px;display:grid;gap:16px}
+.department-page-aside .aside-card{margin:0}
+.department-page-aside .button{margin-top:8px}
+.department-related-card{display:grid;gap:3px}
+.department-related-card .eyebrow{margin-bottom:7px}
+.department-related-card a{padding:8px 0;border-bottom:1px solid #edf2f1;color:#527079;font-size:12px;font-weight:700;line-height:1.45}
+.department-related-card a:last-child{border-bottom:0}
+.department-related-card a:hover,.department-related-card a.is-current{color:var(--teal)}
+@media(max-width:900px){.department-page-layout{grid-template-columns:1fr}.department-page-aside{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.department-page-content{padding:23px 20px;border-radius:14px}.department-page-aside{grid-template-columns:1fr}.department-content-block{padding:20px 0}.department-content-block h2{font-size:1.2rem}.department-content-block p,.department-content-block ul{font-size:12px}}
+
 /* Department links live under the Chuyên khoa menu. */
 .nav-dropdown--specialties .nav-dropdown-menu{width:min(390px,calc(100vw - 32px));max-height:calc(100vh - 64px);overflow-y:auto}
 .nav-dropdown--specialties .nav-dropdown-menu a{white-space:normal;line-height:1.4}
