@@ -1,158 +1,319 @@
 import React, { FormEvent, useEffect, useState } from 'react';
+
 import ReactDOM from 'react-dom/client';
+
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
+
 import './styles.css';
+
 import { AdminDashboardPage, BookingPageApi } from './role-pages';
 
-const API_BASE = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
+
+
+const API_BASE = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/+$/, '');
+
 const STORAGE_KEY = 'bta_session';const CHAT_LINKS = {
+
   zalo: import.meta.env.VITE_ZALO_OA_URL || 'https://zalo.me/0982499515',
+
   messenger: import.meta.env.VITE_FACEBOOK_PAGE_URL || 'https://www.facebook.com/bvtrita',
+
   email: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(import.meta.env.VITE_SUPPORT_EMAIL || 'ledat3304@gmail.com')}`
+
 };
+
 const specialties = [
+
   { name: 'Hậu môn – Trực tràng', icon: '◈', description: 'Khám và điều trị bệnh trĩ, rò hậu môn, áp xe hậu môn.' },
+
   { name: 'Tiêu hóa', icon: '✦', description: 'Tầm soát và điều trị bệnh lý dạ dày, đại tràng, gan mật.' },
+
   { name: 'Tim mạch', icon: '♡', description: 'Theo dõi, chẩn đoán và điều trị bệnh lý tim mạch.' },
+
   { name: 'Nội tổng quát', icon: '✚', description: 'Chăm sóc sức khỏe toàn diện cho người trưởng thành.' },
+
 ];
+
 const doctors = [
+
   { name: 'BS.CKII Nguyễn Văn Minh', specialty: 'Hậu môn – Trực tràng', experience: '18 năm kinh nghiệm' },
+
   { name: 'PGS.TS Trần Thị Lan', specialty: 'Tiêu hóa', experience: '22 năm kinh nghiệm' },
+
   { name: 'BS.CKII Lê Hoàng Nam', specialty: 'Tim mạch', experience: '15 năm kinh nghiệm' },
+
 ];
+
 const locations = [
+
   { title: 'Cơ sở Nguyễn Trãi', address: '257 Nguyễn Trãi, P. Hạc Thành, tỉnh Thanh Hóa', phone: '0982 499 515' },
+
   { title: 'Phòng khám Đa khoa Tâm An', address: '04 Phan Huy Ích, P. Hạc Thành, tỉnh Thanh Hóa', phone: '0919 864 929' },
+
   { title: 'Cơ sở Trịnh Kiểm', address: '05–06 đường Trịnh Kiểm, P. Quảng Phú, tỉnh Thanh Hóa', phone: '0977 33 55 99' },
+
 ];
+
 const servicePackageGroups = [
+
   {
+
     title: 'SÀNG LỌC, CHẨN ĐOÁN VÀ THĂM DÒ CHỨC NĂNG',
+
     items: [
+
       'Gói Tầm Soát Và Chẩn Đoán Sớm Ung Thư',
+
       'Gói Nội Soi Tiêu Hóa Gây Mê (Dạ Dày, Đại Tràng) Kèm Tầm Soát Ung Thư',
+
     ],
+
   },
+
   {
+
     title: 'PHẪU THUẬT VÀ ĐIỀU TRỊ BỆNH LÝ',
+
     items: [
+
       'Chẩn Đoán Và Điều Trị Ung Thư Đại Trực Tràng - Hậu Môn',
+
       'Phẫu Thuật Điều Trị Bệnh Trĩ Triệt Để (Các Phương Pháp)',
+
       'Phẫu Thuật Điều Trị Rò Hậu Môn Các Thể',
+
       'Phẫu Thuật Điều Trị Áp Xe Hậu Môn',
+
       'Phẫu Thuật Điều Trị Sa Niêm Mạc Trực Tràng Và Sa Trực Tràng',
+
       'Phẫu Thuật Cắt Polyp Hậu Môn - Trực Tràng',
+
     ],
+
   },
+
 ];
+
 const healthSystemFacilities = [
+
   { id: 'phong-kham-da-khoa', number: '1.', title: 'Phòng Khám Đa Khoa Tâm An' },
+
   { id: 'benh-vien-chuyen-khoa', number: '2.', title: 'Bệnh Viện Chuyên Khoa Hậu Môn - Trực Tràng Tâm An' },
+
   { id: 'benh-vien-da-khoa', number: '3.', title: 'Bệnh Viện Đa Khoa Tâm An' },
+
 ];
+
 const generalHospitalDepartments = [
+
   { id: 'khoa-lao-khoa', title: 'Khoa Lão Khoa' },
+
   { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp' },
+
   { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp' },
+<<<<<<< HEAD
   { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây mê Hồi sức' },
   { id: 'khoa-xet-nghiem', title: 'Khoa Xét nghiệm' },
   { id: 'khoa-duoc', title: 'Khoa Dược' },
+=======
+
+>>>>>>> 79cc778ff7d56efe1199b98f611f4b13840868ca
   { id: 'khoa-phu-san-nhi', title: 'Khoa Phụ Sản - Nhi' },
+
   { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y Học Cổ Truyền Và Phục Hồi Chức Năng' },
+
   { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu' },
+
 ];
+
 function readSession() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; } }
+
 function Icon({ children }: { children: React.ReactNode }) { return <span className="ui-icon" aria-hidden="true">{children}</span>; }
 
+
+
 function ChatWidget() {
+
   const [open, setOpen] = useState(true);
+
   return <div className={open ? 'chat-widget is-open' : 'chat-widget'}>
+
     {open && <div className="chat-panel" role="dialog" aria-label="Chọn kênh liên hệ">
+
       <div className="chat-panel-header"><div><strong>Trung tâm hỗ trợ</strong><span>Chọn kênh để trò chuyện với CSKH</span></div><button className="chat-close" onClick={() => setOpen(false)} aria-label="Đóng hộp chat">×</button></div>
+
       <p className="chat-greeting">Xin chào! Tâm An sẵn sàng hỗ trợ bạn.</p>
+
       <a className="chat-channel chat-channel--zalo" href={CHAT_LINKS.zalo} target="_blank" rel="noreferrer"><span className="chat-channel-icon">Z</span><span><strong>Chat qua Zalo</strong><small>Liên hệ Zalo OA Tâm An</small></span><b>→</b></a>
+
       <a className="chat-channel chat-channel--messenger" href={CHAT_LINKS.messenger} target="_blank" rel="noreferrer"><span className="chat-channel-icon">f</span><span><strong>Chat qua Facebook Messenger</strong><small>Nhắn tin tới Fanpage Tâm An</small></span><b>→</b></a>
+
       <a className="chat-channel chat-channel--gmail" href={CHAT_LINKS.email} target="_blank" rel="noreferrer"><span className="chat-channel-icon">G</span><span><strong>Gửi email qua Gmail</strong><small>Liên hệ ledat3304@gmail.com</small></span><b>→</b></a>
+
     </div>}
+
     <button className="chat-launcher" onClick={() => setOpen(!open)} aria-label={open ? 'Đóng hỗ trợ trực tuyến' : 'Mở hỗ trợ trực tuyến'} aria-expanded={open}><span className="chat-launcher-icon">{open ? '×' : '✦'}</span><span className="chat-launcher-label">Hỗ trợ</span></button>
+
   </div>;
+
 }
+
+
 
 function Layout({ children }: { children: React.ReactNode }) {
+
   const [open, setOpen] = useState(false); const [mobileDropdown, setMobileDropdown] = useState<string | null>(null); const location = useLocation(); const session = readSession();
+
   const toggleMobileDropdown = (key: string) => () => setMobileDropdown((current) => current === key ? null : key);
+
   const dropdownClass = (key: string, modifier: string) => `nav-dropdown ${modifier}${mobileDropdown === key ? ' is-open' : ''}`;
+
   useEffect(() => { setOpen(false); setMobileDropdown(null); window.setTimeout(() => { if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' }); else window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }); }, 0); }, [location.pathname, location.hash]);
+
   return (
+
     <div className="site-shell">
+
       <div className="utility-bar"><div className="container utility-inner"><span>Chăm sóc sức khỏe tận tâm mỗi ngày</span><div><a href="tel:0982499515">Hotline: <strong>0982 499 515</strong></a><i>|</i><span>7:00 – 19:00 hằng ngày</span></div></div></div>
+
       <header className="site-header">
+
         <div className="container header-inner">
+
           <Link to="/" className="brand" aria-label="Bệnh viện Tâm An"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /><strong style={{ whiteSpace: 'nowrap' }}>BỆNH VIỆN TÂM AN</strong></Link>
-          <button className="menu-toggle" onClick={() => setOpen(!open)} aria-label="Mở menu">☰</button>
+
+          <button type="button" className="menu-toggle" onClick={() => setOpen(!open)} aria-label="Mở menu" aria-expanded={open}>☰</button>
+
           <nav className={open ? 'main-nav is-open' : 'main-nav'}>
+
             <div className={dropdownClass('about', 'nav-dropdown--about')}>
+
               <button type="button" className={`nav-dropdown-toggle${location.pathname === '/gioi-thieu' ? ' active' : ''}`} onClick={toggleMobileDropdown('about')} aria-expanded={mobileDropdown === 'about'} aria-haspopup="true">GIỚI THIỆU <span className="nav-chevron">▼</span></button>
+
               <div className="nav-dropdown-menu">
+
                 <div className="nav-menu-group">
+
                   <span className="nav-menu-group-title">HỆ THỐNG Y TẾ TÂM AN</span>
+
                   <Link to="/gioi-thieu">Về Tâm An</Link>
+
                   {healthSystemFacilities.map((facility) => <Link to={`/gioi-thieu#${facility.id}`} key={facility.id}>{facility.number} {facility.title}</Link>)}
+
                   <span className="nav-menu-subtitle">CÁC KHOA TẠI BỆNH VIỆN ĐA KHOA TÂM AN</span>
+
                   {generalHospitalDepartments.map((department) => <Link to={`/gioi-thieu#${department.id}`} key={department.id}>{department.title}</Link>)}
+
                 </div>
+
               </div>
+
             </div>
+<<<<<<< HEAD
             <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group nav-menu-group--support"><Link to="/dat-lich">Đặt lịch khám</Link></div></div></div>
+=======
+
+            <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group nav-menu-group--support"><Link to="/dat-lich">Đặt lịch khám</Link><Link to="/bao-hiem">BHYT & bảo hiểm</Link></div></div></div>
+
+>>>>>>> 79cc778ff7d56efe1199b98f611f4b13840868ca
             <Link className={location.pathname === '/bao-hiem' ? 'active' : ''} to="/bao-hiem">BHYT</Link><Link to="/benh-ly">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
+
             <div className={dropdownClass('news', 'nav-dropdown--news')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('news')} aria-expanded={mobileDropdown === 'news'} aria-haspopup="true">TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu"><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link><Link to="/faq">Câu hỏi thường gặp</Link><Link className="nav-news-menu-item" to="/cam-nang#hoi-nghi"><img src="/news/hoi-nghi-khoa-hoc-2025.jpg" alt="" /><span><strong>Hội nghị khoa học Hậu môn – Trực tràng</strong><small>Xem hình ảnh sự kiện</small></span></Link></div></div>
-            <Link to="/lien-he">TUYỂN DỤNG</Link><button type="button" className="nav-menu-button" onClick={() => setOpen(!open)} aria-label="Mở menu">☰</button><div className="nav-search"><input type="search" aria-label="Tìm kiếm" placeholder="Tìm kiếm" /><button type="button" aria-label="Thực hiện tìm kiếm">⌕</button></div>
+
+            <Link to="/lien-he">TUYỂN DỤNG</Link><div className="nav-search"><input type="search" aria-label="Tìm kiếm" placeholder="Tìm kiếm" /><button type="button" aria-label="Thực hiện tìm kiếm">⌕</button></div>
+
           </nav>
+
         </div>
+
       </header>
+
       {children}<ChatWidget /><Footer />
+
     </div>
+
   );
+
 }
+
 function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link to="/" className="brand brand-light"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><p className="footer-intro">Đồng hành cùng bạn trên hành trình chăm sóc sức khỏe an toàn, chuyên nghiệp và nhân văn.</p><div className="social-row"><span>f</span><span>in</span><span>▶</span></div></div><div><h3>Khám phá</h3><Link to="/gioi-thieu">Về Tâm An</Link><Link to="/dat-lich">Đặt lịch trực tuyến</Link><Link to="/benh-ly">Chuyên mục bệnh lý</Link><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div><div><h3>Hỗ trợ người bệnh</h3><Link to="/faq">Câu hỏi thường gặp</Link><Link to="/bao-hiem">Bảo hiểm y tế</Link><Link to="/bao-hiem#bao-lanh">Bảo lãnh viện phí</Link><Link to="/lien-he">Liên hệ & cơ sở</Link></div><div><h3>Liên hệ</h3><a href="tel:0982499515" className="footer-hotline">0982 499 515</a><p>Hotline 24/7</p><a href="mailto:contact@benhvientaman.vn">contact@benhvientaman.vn</a><p>257 Nguyễn Trãi, Thanh Hóa</p></div></div><div className="container footer-bottom"><span>© 2025 Bệnh viện Tâm An</span><span>Chính sách bảo mật · Điều khoản sử dụng</span></div></footer>; }
+
 function SectionHeading({ eyebrow, title, text, light = false }: { eyebrow?: string; title: string; text?: string; light?: boolean }) { return <div className={light ? 'section-heading light' : 'section-heading'}>{eyebrow && <span className="eyebrow">{eyebrow}</span>}<h2>{title}</h2>{text && <p>{text}</p>}</div>; }
 
+
+
 const slides = [
+
   { tag: 'Hệ thống Y tế Tâm An', title: '', text: '', cta: '', link: '/gioi-thieu', className: 'slide-banner-image' },
+
   { tag: 'Ưu đãi tháng 9', title: 'Chủ động chăm sóc\nsức khỏe hôm nay', text: 'Đặt lịch khám trực tuyến nhanh chóng, được ưu tiên tiếp đón tại Tâm An.', cta: 'Đặt lịch ngay', link: '/dat-lich', className: 'slide-one' },
+
   { tag: 'Chuyên khoa mũi nhọn', title: 'Tầm soát sớm –\nyên tâm điều trị', text: 'Đội ngũ chuyên gia Hậu môn – Trực tràng đồng hành cùng bạn.', cta: 'Tìm hiểu chuyên khoa', link: '/benh-ly', className: 'slide-two' },
+
   { tag: 'Dịch vụ tận tâm', title: 'Một hành trình\nkhỏe mạnh hơn', text: 'Không gian hiện đại, quy trình minh bạch, chăm sóc trọn vẹn.', cta: 'Về Tâm An', link: '/gioi-thieu', className: 'slide-three' },
+
   { tag: 'Tổ chức & chuyên môn', title: 'Ban lãnh đạo và\nphụ trách chuyên môn', text: 'Đội ngũ lãnh đạo và phụ trách chuyên môn đồng hành cùng định hướng chăm sóc chất lượng tại Tâm An.', cta: 'Xem đội ngũ', link: '#lanh-dao', className: 'slide-four' },
+
   { tag: 'Vị trí thuận tiện', title: 'Bản đồ cơ sở chính', text: 'Xem vị trí và hướng dẫn đường đến Bệnh viện Tâm An.', cta: 'Xem chi tiết', link: '/lien-he', className: 'slide-six' },
+
 ];
+
 function HomePage() { const [active, setActive] = useState(0); useEffect(() => { const t = window.setInterval(() => setActive((i) => (i + 1) % slides.length), 5500); return () => window.clearInterval(t); }, []); const slide = slides[active]; return <main><section className={`hero-slider ${slide.className}`}><div className="container hero-content"><div className="hero-copy"><span className="hero-tag">{slide.tag}</span><h1>{slide.title.split('\n').map((line, i) => <React.Fragment key={line}>{i > 0 && <br />}{line}</React.Fragment>)}</h1><p>{slide.text}</p><Link className="button button-primary" to={slide.link}>{slide.cta}<span>→</span></Link></div>{slide.className === 'slide-six' && <div className="hero-map"><iframe title="Bản đồ hướng dẫn đến Bệnh viện Tâm An" src="https://www.google.com/maps?q=257%20Nguyen%20Trai%20Thanh%20Hoa&output=embed" loading="lazy"></iframe></div>}</div><div className="container slider-controls"><div className="slider-dots">{slides.map((s, i) => <button key={s.tag} className={i === active ? 'active' : ''} onClick={() => setActive(i)} aria-label={`Slide ${i + 1}`} />)}</div><span>{String(active + 1).padStart(2, '0')} <i>/ {String(slides.length).padStart(2, '0')}</i></span></div></section><section className="quick-actions"><div className="container quick-grid"><Link to="/dat-lich"><Icon>▣</Icon><span><strong>Đặt lịch khám</strong><small>Chọn bác sĩ & giờ khám</small></span><b>→</b></Link><a href="tel:0982499515"><Icon>☎</Icon><span><strong>Hotline</strong><small>Hỗ trợ 24/7</small></span><b>→</b></a><Link to="/lien-he"><Icon>⌖</Icon><span><strong>Tìm cơ sở gần bạn</strong><small>Xem địa chỉ & bản đồ</small></span><b>→</b></Link><Link to="/faq"><Icon>?</Icon><span><strong>Hỏi đáp & bảo hiểm</strong><small>Giải đáp nhanh thắc mắc</small></span><b>→</b></Link></div></section><section id="ve-tam-an" className="section intro-section"><div className="container intro-grid"><div className="intro-visual"><div className="intro-image"></div><div className="experience-badge"><strong>15+</strong><span>Năm đồng hành<br />vì sức khỏe</span></div></div><div className="intro-copy"><SectionHeading eyebrow="Về bệnh viện Tâm An" title="CHỌN SỰ AN TÂM CHO MỖI LẦN THĂM KHÁM" text="Tâm An xây dựng một môi trường y tế hiện đại, nơi người bệnh được lắng nghe, tư vấn rõ ràng và chăm sóc bằng tất cả sự tận tâm." /><div className="check-list"><p><b>✓</b> Đội ngũ chuyên gia giàu kinh nghiệm</p><p><b>✓</b> Trang thiết bị chẩn đoán hiện đại</p><p><b>✓</b> Quy trình khám khoa học, minh bạch</p></div><Link to="/gioi-thieu#about-story" className="text-link">Tìm hiểu về Tâm An <span>→</span></Link></div></div></section><section className="section stats-section"><div className="container stats-grid"><div><strong>15<span>+</span></strong><p>Năm kinh nghiệm</p></div><div><strong>50<span>+</span></strong><p>Bác sĩ chuyên gia</p></div><div><strong>25<span>K</span></strong><p>Người bệnh tin chọn</p></div><div><strong>98<span>%</span></strong><p>Hài lòng dịch vụ</p></div></div></section><LeadershipSection /><HospitalEvidence /><EquipmentSection /><ExpertCorner /><AnalHealthSection /><PatientFeedbackSection /><AppPromo /><section className="section cta-section"><div className="container cta-box"><div><span className="eyebrow">Bạn cần tư vấn?</span><h2>Chúng tôi ở đây để<br />lắng nghe bạn.</h2></div><div><p>Gọi hotline hoặc đặt lịch trực tuyến để được hỗ trợ nhanh nhất.</p><Link to="/dat-lich" className="button button-light">Đặt lịch khám <span>→</span></Link></div></div></section></main>; }
+
 function EquipmentSection() { return <section className="section equipment-showcase"><div className="container"><div className="equipment-showcase-heading"><span className="eyebrow">CƠ SỞ VẬT CHẤT HIỆN ĐẠI</span><h2>MỘT SỐ THIẾT BỊ Y TẾ <em>NỔI BẬT</em></h2><p>Hệ thống thiết bị được đầu tư đồng bộ, hỗ trợ bác sĩ chẩn đoán và điều trị an toàn, chính xác.</p></div><div className="equipment-board-grid"><figure className="equipment-board"><img src="/hospital/devices-slide.png" alt="Các thiết bị y tế nổi bật tại Tâm An" /><figcaption>Thiết bị chẩn đoán hình ảnh và xét nghiệm</figcaption></figure><figure className="equipment-board"><img src="/hospital/devices-slide-2.png" alt="Các thiết bị điều trị và hồi sức tại Tâm An" /><figcaption>Thiết bị hồi sức, X-quang và điều trị chuyên sâu</figcaption></figure></div><div className="equipment-name-list"><span>CT 16 dãy</span><span>Siêu âm chuyên dụng</span><span>Máy phân tích sinh hóa</span><span>Máy miễn dịch</span><span>Nội soi tiêu hóa</span><span>X-quang kỹ thuật số</span><span>CPAP SleepOne</span><span>Máy thở chức năng cao</span><span>Máy chạy thận nhân tạo</span></div></div></section>; }function ExpertCorner() { return <section className="section expert-corner"><div className="container"><div className="expert-corner-heading"><div><span className="eyebrow">Góc chuyên gia</span><h2>HIỂU ĐÚNG ĐỂ CHĂM SÓC ĐÚNG</h2><p>Thông tin y khoa được trình bày dễ hiểu, giúp bạn nhận biết dấu hiệu và chủ động đi khám.</p></div><Link to="/benh-ly" className="button button-outline">Xem tất cả bệnh lý <span>→</span></Link></div><div className="expert-corner-grid">{Object.entries(diseaseData).map(([slug, item], index) => <Link className="expert-corner-card" to={`/benh-ly/${slug}`} key={slug}><div className="expert-card-image"><img src={item.image} alt={item.imageAlt} loading="lazy" /></div><span>0{index + 1}</span><h3>{item.title}</h3><p>{item.intro}</p><b>Xem thông tin <i>→</i></b></Link>)}</div></div></section>; }function LeadershipSection() { return <section id="lanh-dao" className="section leadership-section"><div className="container leadership-board"><div className="leadership-heading"><div><span className="eyebrow">TỔ CHỨC & CHUYÊN MÔN</span><h2>BAN LÃNH ĐẠO VÀ PHỤ TRÁCH CHUYÊN MÔN</h2></div><img className="leadership-logo" src="/logo.jpg" alt="Tâm An Hospital" /></div><div className="leadership-grid"><article className="leader-card leader-card--director"><img className="leader-avatar leader-avatar--photo" src="/hospital/leader-le-thai-co.jpg" alt="BS CKII. Lê Thái Cơ" /><div className="leader-info"><span>CHỦ TỊCH HĐQT / GIÁM ĐỐC<br />PHỤ TRÁCH CHUYÊN MÔN</span><i></i><h3>BS CKII. Lê Thái Cơ</h3></div></article><article className="leader-card leader-card--orange"><span className="leader-avatar" aria-hidden="true"></span><div className="leader-info"><span>PHÓ GIÁM ĐỐC<br />CHUYÊN MÔN</span><i></i><h3>TS. BS. Lê Xuân Huệ</h3></div></article><article className="leader-card leader-card--green"><span className="leader-avatar" aria-hidden="true"></span><div className="leader-info"><span>PHÓ GIÁM ĐỐC<br />TÀI CHÍNH – NHÂN SỰ</span><i></i><h3>CN. Mai Thị Hồng Hải</h3></div></article><article className="leader-card leader-card--orange"><span className="leader-avatar" aria-hidden="true"></span><div className="leader-info"><span>ĐỘI NGŨ<br />CHUYÊN MÔN</span><i></i><h3>PGS.TS Nguyễn Mạnh Nhâm</h3></div></article><article className="leader-card leader-card--green"><span className="leader-avatar" aria-hidden="true"></span><div className="leader-info"><span>ĐỘI NGŨ<br />CHUYÊN MÔN</span><i></i><h3>BS CKI Lê Thái Cương</h3></div></article></div></div></section>; }function AnalHealthSection() { const methods = [{ title: 'Cắt trĩ kinh điển', label: 'Milligan–Morgan / Ferguson', image: '/methods/milligan-morgan.jpg', text: 'Cắt từng búi trĩ riêng biệt và để lại cầu niêm mạc giữa các búi. Thường được cân nhắc ở trĩ độ III–IV, trĩ hỗn hợp hoặc sa nhiều. Ưu điểm là xử lý triệt để; hạn chế là đau sau mổ và cần thời gian chăm sóc lâu hơn.' }, { title: 'Phương pháp Longo', label: 'PPH – khâu treo niêm mạc', image: '/methods/longo.jpg', text: 'Dùng máy khâu vòng cắt một vòng niêm mạc phía trên đường lược rồi khâu treo niêm mạc, giúp kéo búi trĩ lên và giảm tưới máu. Thường ít đau và hồi phục nhanh hơn ở người bệnh phù hợp; không phải lựa chọn cho mọi trường hợp trĩ ngoại hoặc trĩ hỗn hợp.' }, { title: 'HCPT / Laser', label: 'Năng lượng cao tần hoặc tia laser', image: '/methods/laser.jpg', text: 'Dùng năng lượng cao tần hoặc laser để xử lý mạch máu và búi trĩ theo chỉ định. Có thể ít chảy máu, ít tổn thương mô hơn ở người bệnh phù hợp. Hiệu quả và nguy cơ tái phát phụ thuộc mức độ bệnh, kỹ thuật và chăm sóc sau mổ.' }, { title: 'Thủ thuật ít xâm lấn', label: 'Thắt vòng cao su, tiêm xơ, quang đông', image: '/medical/nghet-bui-tri.jpg', text: 'Bao gồm thắt vòng cao su, tiêm xơ hoặc quang đông hồng ngoại; chủ yếu cho trĩ độ I–II và một số trường hợp đầu độ III. Thường thực hiện nhanh, không cần mổ hở; có thể cần lặp lại và không phù hợp với búi trĩ lớn hoặc sa nặng.' }]; return <section className="section anal-health-section"><div className="container"><div className="complications-heading"><span className="eyebrow">Dấu hiệu cần lưu ý</span><h3>MỘT SỐ BIẾN CHỨNG BỆNH TRĨ THƯỜNG GẶP</h3><p>Nếu có các dấu hiệu dưới đây, người bệnh nên thăm khám sớm để được đánh giá và xử trí phù hợp.</p></div><div className="complication-grid">{[{ title: 'Nghẹt búi trĩ', image: '/medical/nghet-bui-tri.jpg', text: 'Búi trĩ sa ra ngoài và bị kẹt, có thể gây đau dữ dội, căng tức và hình thành cục máu đông.' }, { title: 'Thiếu máu do mất máu mạn tính', image: '/medical/thieu-mau.jpg', text: 'Chảy máu kéo dài có thể khiến cơ thể thiếu hồng cầu, gây mệt mỏi, chóng mặt hoặc da xanh xao.' }, { title: 'Viêm quanh hậu môn', image: '/medical/viem-quanh-hau-mon.jpg', text: 'Vùng da quanh hậu môn có thể viêm, rát, sưng đỏ do ẩm ướt, tiết dịch hoặc ma sát kéo dài.' }, { title: 'Tắc mạch trĩ', image: '/medical/tac-mach-tri.jpg', text: 'Cục máu đông trong mạch máu búi trĩ thường gây đau, sưng và cảm giác căng tức khó chịu.' }].map((item) => <article className="complication-card" key={item.title}><img src={item.image} alt={`Hình minh họa ${item.title}`} /><div><h4>{item.title}</h4><p>{item.text}</p></div></article>)}</div><div className="methods-heading"><SectionHeading eyebrow="Điều trị chuyên sâu" title="CÁC PHƯƠNG PHÁP PHẪU THUẬT TRĨ PHỔ BIẾN" text="Mỗi kỹ thuật có chỉ định, ưu điểm và giới hạn riêng. Bác sĩ sẽ lựa chọn phương án dựa trên mức độ bệnh và tình trạng cụ thể." /></div><div className="methods-overview"><span className="methods-overview-icon" aria-hidden="true">✦</span><div><h4>Khi nào cần cân nhắc can thiệp?</h4><p>Với bệnh nhẹ, bác sĩ thường ưu tiên điều chỉnh chế độ ăn, thói quen đi tiêu hoặc thủ thuật tại chỗ. Phẫu thuật có thể được cân nhắc khi búi trĩ lớn, sa nhiều, chảy máu hoặc đau kéo dài, hay khi điều trị bảo tồn không đạt hiệu quả.</p><p>Quyết định cần dựa trên mức độ bệnh, tình trạng trĩ nội – ngoại, bệnh nền và khả năng hồi phục của từng người. Không có một kỹ thuật phù hợp cho tất cả người bệnh.</p></div><Link to="/dat-lich" className="text-link">Đặt lịch tư vấn <b>→</b></Link></div><div className="method-card-grid">{methods.map((item) => <article className="method-card" key={item.title}><img src={item.image} alt={`Minh họa ${item.title}`} /><div className="method-card-body"><span>{item.label}</span><h3>{item.title}</h3><p>{item.text}</p></div></article>)}</div><div className="medical-note anal-note">ⓘ Nội dung chỉ có tính tham khảo, không thay thế thăm khám và tư vấn trực tiếp. Áp xe hoặc rò hậu môn có thể cần điều trị ngoại khoa; hãy đi khám sớm khi đau sưng, sốt hoặc chảy mủ kéo dài.</div></div></section>; }function HospitalEvidence() { return <section className="section hospital-evidence"><div className="container"><SectionHeading eyebrow="Thông tin từ hồ sơ thẩm định" title="MỘT HỆ THỐNG Y TẾ ĐƯỢC ĐẦU TƯ BÀI BẢN" text="Tâm An sở hữu cơ sở vật chất đồng bộ, các khoa phòng chuyên môn và hệ thống thiết bị phục vụ chẩn đoán, điều trị." /><div className="evidence-grid"><article className="evidence-card"><div className="evidence-image building-image"><img src="/hospital/floorplan-slide.png" alt="Hình ảnh cơ sở Bệnh viện Đa khoa Tâm An" /></div><span className="evidence-kicker">Cơ sở hạ tầng</span><h3>Không gian bệnh viện hiện đại</h3><p>Quy mô mặt bằng 15.766,6 m², bố trí khoa phòng theo từng tầng, thuận tiện cho người bệnh và vận hành chuyên môn.</p></article><article className="evidence-card"><div className="evidence-image surgery-image"><img src="/hospital/surgery-slide.png" alt="Đội ngũ phẫu thuật tại Bệnh viện Tâm An" /></div><span className="evidence-kicker">Đội ngũ chuyên môn</span><h3>Chăm sóc theo từng chuyên khoa</h3><p>Hệ thống gồm Khám bệnh, Ngoại, Nội, Nhi, Gây mê hồi sức, YHCT – PHCN, Xét nghiệm và Chẩn đoán hình ảnh.</p></article><article className="evidence-card"><div className="evidence-image devices-image"><img src="/hospital/devices-slide.png" alt="Các thiết bị y tế tại Bệnh viện Tâm An" /></div><span className="evidence-kicker">Trang thiết bị</span><h3>Công nghệ hỗ trợ chẩn đoán</h3><p>Danh mục nổi bật gồm CT, MRI, X-quang, siêu âm, nội soi tiêu hóa, máy xét nghiệm và thiết bị hồi sức.</p></article></div></div></section>; }function AppPromo() { return <section className="section app-section"><div className="container app-grid"><div><span className="eyebrow">Tâm An trên điện thoại</span><h2>QUẢN LÝ SỨC KHỎE<br /><em>NGAY TRONG TAY BẠN</em></h2><p>Đặt lịch, nhận nhắc hẹn và lưu trữ hồ sơ sức khỏe dễ dàng với ứng dụng Tâm An.</p><div className="store-links"><a href="#app-store" className="store-link"><span>●</span><small>Tải trên<br /><strong>App Store</strong></small></a><a href="#google-play" className="store-link"><span>▶</span><small>Tải trên<br /><strong>Google Play</strong></small></a></div></div><div className="qr-card"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fbenhvientaman.vn%2Fapp" alt="Mã QR tải ứng dụng Tâm An" /><strong>Quét mã để tải app</strong><span>iOS & Android</span></div><div className="phone-mockup"><div className="phone-screen"><img className="phone-logo" src="/logo.jpg" alt="Tâm An Hospital" /><strong>TÂM AN</strong><p>Lịch khám của bạn</p><div className="phone-card">✓ Đã xác nhận<br /><b>Khám chuyên khoa</b><br />09:00 · Hôm nay</div></div></div></div></section>; }
+
 function PatientFeedbackSection() { return <section className="section feedback-section" style={{ backgroundColor: '#f9fafb', padding: '4rem 0' }}><div className="container feedback-grid" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}><div className="feedback-heading"><SectionHeading eyebrow="Góc nhìn người bệnh" title="PHẢN HỒI SAU ĐIỀU TRỊ" text="Lắng nghe những chia sẻ thực tế từ người bệnh đã từng thăm khám và điều trị tại Tâm An." /></div><div className="feedback-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}><article className="feedback-card" style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}><p>"Bác sĩ tư vấn rất nhiệt tình, cặn kẽ. Bệnh viện sạch sẽ và hiện đại. Tôi cảm thấy rất yên tâm khi điều trị trĩ tại đây."</p><strong style={{ display: 'block', marginTop: '1rem' }}>Anh Nguyễn Văn T.</strong><span style={{ fontSize: '0.9rem', color: '#666' }}>Bệnh nhân điều trị trĩ</span></article><article className="feedback-card" style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}><p>"Quy trình nhanh gọn, nhân viên thân thiện hướng dẫn chi tiết. Rất hài lòng về dịch vụ của Tâm An."</p><strong style={{ display: 'block', marginTop: '1rem' }}>Chị Lê Thị H.</strong><span style={{ fontSize: '0.9rem', color: '#666' }}>Khám tổng quát</span></article><article className="feedback-card" style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}><p>"Tuyệt vời, cơ sở vật chất mới, bác sĩ giỏi. Sau phẫu thuật tôi được chăm sóc rất chu đáo."</p><strong style={{ display: 'block', marginTop: '1rem' }}>Cô Trần M.</strong><span style={{ fontSize: '0.9rem', color: '#666' }}>Phẫu thuật tiêu hóa</span></article></div><div className="feedback-action" style={{ textAlign: 'center', marginTop: '2rem' }}><a href="#" target="_blank" rel="noreferrer" className="button button-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>Xem thêm đánh giá & góp ý <span>→</span></a></div></div></section>; }
+
 function PageHero({ title, text, label, backHome = false }: { title: string; text: string; label: string; backHome?: boolean }) { return <section className="page-hero"><div className="container"><span className="eyebrow">{label}</span><h1>{title}</h1><p>{text}</p><div className="breadcrumbs"><Link to="/gioi-thieu">Giới thiệu</Link><span>/</span><span>{title}</span></div>{backHome && <Link to="/gioi-thieu" className="button button-primary page-back-button"><span>←</span> Về trang chủ</Link>}</div></section>; }
 
+
+
 function HealthSystemSection() {
+
   return <section id="he-thong-y-te" className="section health-system-section"><div className="container"><SectionHeading eyebrow="Hệ thống Y tế Tâm An" title="ĐỒNG HÀNH CHĂM SÓC SỨC KHỎE TOÀN DIỆN" text="Hệ thống Tâm An gồm các đơn vị khám chữa bệnh và các khoa chuyên môn phục vụ nhu cầu chăm sóc sức khỏe của người dân." /><div className="health-system-grid">{healthSystemFacilities.map((facility) => <article className="health-system-card" id={facility.id} key={facility.id}><span className="health-system-number">{facility.number}</span><h3>{facility.title}</h3>{facility.id === 'benh-vien-da-khoa' && <><h4>Các khoa</h4><ul>{generalHospitalDepartments.map((department) => <li id={department.id} key={department.id}>{department.title}</li>)}</ul></>}</article>)}</div></div></section>;
+
 }
+
 function AboutPage() { return <main><PageHero label="Về Tâm An" title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><HealthSystemSection /><AboutStorySection /></main>; }
+
+
 
 function BookingPage() { return <BookingPageApi />; }
 
+
+
 const diseaseData: Record<string, { title: string; intro: string; signs: string[]; causes: string[]; consult: string; image: string; imageAlt: string }> = { 'benh-tri': { title: 'Bệnh trĩ', image: '/medical/benh-tri.png', imageAlt: 'Minh họa bệnh trĩ', intro: 'Bệnh trĩ là tình trạng các đám rối tĩnh mạch ở vùng hậu môn – trực tràng bị giãn, thường gây chảy máu hoặc khó chịu.\n\nPhân loại: Trĩ nội, trĩ ngoại và trĩ hỗn hợp.\n\nDấu hiệu nhận biết sớm: Đi tiêu ra máu tươi (dính trên giấy vệ sinh hoặc nhỏ giọt); búi trĩ sa khi rặn; cảm giác cộm vướng, ngứa ngáy hoặc đau rát vùng hậu môn.\n\nNguyên nhân phổ biến: Táo bón kinh niên, tiêu chảy kéo dài, ngồi lâu một chỗ, mang thai hoặc áp lực ổ bụng tăng.', signs: ['Đi tiêu ra máu tươi, có thể dính trên giấy vệ sinh hoặc nhỏ giọt', 'Búi trĩ sa ra khi rặn, cảm giác cộm hoặc vướng', 'Ngứa ngáy, đau rát quanh hậu môn'], causes: ['Táo bón kinh niên', 'Tiêu chảy kéo dài', 'Ngồi lâu một chỗ như dân văn phòng, tài xế', 'Mang thai hoặc áp lực ổ bụng lớn'], consult: 'Khi chảy máu tái diễn, đau nhiều hoặc búi trĩ sa không tự co lên, bạn nên đi khám chuyên khoa. Chảy máu trực tràng không nên tự mặc định là do bệnh trĩ.' }, 'ro-hau-mon': { title: 'Rò hậu môn', image: '/medical/ro-hau-mon.svg', imageAlt: 'Sơ đồ minh họa rò hậu môn', intro: 'Rò hậu môn là đường hầm bất thường nối từ ống hậu môn ra vùng da cạnh hậu môn, thường xuất hiện sau một ổ áp xe.\n\nBản chất: Đây thường là giai đoạn mạn tính của áp xe hậu môn khi không được điều trị dứt điểm hoặc tự vỡ, để lại đường rò xơ chai.\n\nDấu hiệu nhận biết: Lỗ rò cạnh hậu môn liên tục rỉ mủ hoặc dịch vàng có mùi hôi, gây ẩm ướt; vùng da quanh lỗ rò sưng đau từng đợt khi đường rò bị bít tắc.\n\nBiến chứng: Đường rò có thể phân nhánh phức tạp, nhiễm trùng lan rộng và ảnh hưởng khả năng kiểm soát đại tiện.', signs: ['Lỗ rò trên da cạnh hậu môn rỉ mủ hoặc dịch vàng có mùi hôi', 'Vùng da quanh lỗ rò ẩm ướt, khó chịu', 'Sưng đau từng đợt khi đường rò bị bít tắc'], causes: ['Áp xe hậu môn không được điều trị triệt để hoặc tự vỡ', 'Viêm nhiễm tuyến hậu môn', 'Một số bệnh viêm ruột hoặc suy giảm miễn dịch'], consult: 'Rò hậu môn thường không tự khỏi và có thể cần phẫu thuật. Hãy khám sớm khi có lỗ chảy dịch, sưng đau tái phát hoặc nghi ngờ đường rò phức tạp.' }, 'ap-xe-hau-mon': { title: 'Áp xe hậu môn', image: '/medical/ap-xe-hau-mon.svg', imageAlt: 'Sơ đồ minh họa áp xe hậu môn', intro: 'Áp xe hậu môn là ổ mủ hình thành ở mô quanh hậu môn, có thể tiến triển nhanh và cần được xử trí đúng lúc.\n\nBản chất: Đây là tình trạng nhiễm trùng cấp tính; tuyến hoặc hốc hậu môn bị tắc nghẽn, nhiễm khuẩn và tạo thành bọc mủ cục bộ.\n\nDấu hiệu nhận biết: Đau nhức dữ dội, liên tục, tăng khi ngồi, đi lại, ho hoặc rặn; vùng da xung quanh sưng đỏ, nóng rát, có thể kèm sốt cao và mệt mỏi.\n\nCách xử trí: Cần được bác sĩ thăm khám và rạch dẫn lưu mủ kịp thời khi có chỉ định. Thuốc, trong đó có kháng sinh, chỉ dùng theo hướng dẫn của bác sĩ.', signs: ['Đau nhức dữ dội, liên tục, tăng khi ngồi, đi lại, ho hoặc rặn', 'Vùng da quanh hậu môn sưng đỏ, nóng rát', 'Sốt cao, ớn lạnh hoặc mệt mỏi do nhiễm trùng'], causes: ['Tắc nghẽn hoặc nhiễm khuẩn tuyến/hốc hậu môn', 'Nhiễm khuẩn vùng hậu môn', 'Một số chấn thương hoặc bệnh lý nền'], consult: 'Đau sưng kèm sốt là dấu hiệu cần khám sớm. Bác sĩ có thể chỉ định rạch dẫn lưu mủ; không tự nặn hoặc chọc tháo ổ mủ tại nhà.' } };
+
 function DiseasesPage() { return <main><PageHero label="Góc chuyên gia" title="Hiểu đúng để chăm sóc đúng" text="Thông tin y khoa được trình bày dễ hiểu, giúp bạn nhận biết dấu hiệu và chủ động đi khám." /><section className="section"><div className="container"><div className="disease-grid">{Object.entries(diseaseData).map(([slug, item], i) => <Link className="disease-card" to={`/benh-ly/${slug}`} key={slug}><span className="disease-number">0{i + 1}</span><div className="disease-card-image"><img src={item.image} alt={item.imageAlt} loading="lazy" /></div><h2>{item.title}</h2><p>{item.intro}</p><span className="text-link">Xem thông tin <b>→</b></span></Link>)}</div><div className="medical-note">ⓘ Nội dung mang tính tham khảo, không thay thế chẩn đoán và điều trị trực tiếp của bác sĩ.</div><div className="medical-image-credits">Hình minh họa: <a href="https://commons.wikimedia.org/wiki/File:Hemorrhoids.png" target="_blank" rel="noreferrer">Bệnh trĩ</a> (BruceBlaus, CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Fistula_diag_01.svg" target="_blank" rel="noreferrer">rò hậu môn</a> (McortNGHH, CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Abscess_diag_02.svg" target="_blank" rel="noreferrer">áp-xe hậu môn</a> (McortNGHH, CC BY-SA 4.0).</div></div></section><section className="section soft-section"><div className="container disease-cta"><div><span className="eyebrow">Điều trị chuyên sâu</span><h2>Khám phá các phương pháp phẫu thuật trĩ</h2><p>So sánh Longo, Laser, HCPT và mổ truyền thống để có thêm thông tin trước khi tư vấn.</p></div><div className="button-row"><Link to="/phuong-phap-phau-thuat-tri" className="button button-outline">Xem so sánh</Link><Link to="/dat-lich" className="button button-primary">Đặt lịch <span>→</span></Link></div></div></section></main>; }
+
 function DiseaseDetail() { const { slug } = useParams(); const item = diseaseData[slug || 'benh-tri'] || diseaseData['benh-tri']; return <main><PageHero label="Góc chuyên gia / Bệnh lý" title={item.title} text={item.intro} /><section className="section"><div className="container article-layout"><article className="medical-article"><p className="lead">{item.intro}</p><h2>Dấu hiệu nhận biết</h2><ul>{item.signs.map((x) => <li key={x}>{x}</li>)}</ul><h2>Nguyên nhân thường gặp</h2><ul>{item.causes.map((x) => <li key={x}>{x}</li>)}</ul><div className="warning-box"><strong>Khi nào nên đi khám?</strong><p>{item.consult}</p></div><p>Thông tin trên chỉ giúp bạn tham khảo ban đầu. Bác sĩ sẽ thăm khám trực tiếp và có thể chỉ định cận lâm sàng để đưa ra hướng điều trị phù hợp.</p><Link to="/dat-lich" className="button button-primary">Đặt lịch tư vấn <span>→</span></Link></article><aside className="article-aside"><div className="aside-card"><Icon>✚</Icon><h3>Chuyên khoa Hậu môn – Trực tràng</h3><p>Khám riêng tư, tư vấn rõ ràng, điều trị theo từng tình trạng.</p><Link to="/dat-lich" className="text-link">Đặt lịch ngay →</Link></div></aside></div></section></main>; }
+
 function SurgeryPage() { const methods = [{ name: 'Longo', desc: 'Cắt và treo búi trĩ bằng máy khâu vòng.', pros: 'Ít đau sau mổ, hồi phục nhanh.', cons: 'Chi phí cao hơn; phù hợp trĩ nội sa.', fit: 'Trĩ vòng độ III–IV, sa niêm mạc.' }, { name: 'Laser', desc: 'Dùng năng lượng laser làm co và xơ hóa búi trĩ.', pros: 'Ít chảy máu, thời gian thực hiện ngắn.', cons: 'Cần bác sĩ có kinh nghiệm; chỉ định chọn lọc.', fit: 'Trĩ nội độ II–III, búi trĩ khu trú.' }, { name: 'HCPT', desc: 'Sóng cao tần kiểm soát nhiệt để xử lý búi trĩ.', pros: 'Tổn thương mô lành tối thiểu.', cons: 'Hiệu quả phụ thuộc chỉ định và kỹ thuật.', fit: 'Một số trường hợp trĩ nội, trĩ ngoại.' }, { name: 'Mổ truyền thống', desc: 'Cắt bỏ búi trĩ bằng kỹ thuật kinh điển.', pros: 'Hiệu quả bền vững ở bệnh nặng, phức tạp.', cons: 'Đau và thời gian chăm sóc lâu hơn.', fit: 'Trĩ độ IV, trĩ hỗn hợp hoặc biến chứng.' }]; return <main><PageHero label="Điều trị chuyên sâu" title="Các phương pháp phẫu thuật trĩ" text="Mỗi phương pháp có chỉ định riêng. Bác sĩ sẽ tư vấn dựa trên mức độ bệnh và mong muốn của bạn." /><section className="section"><div className="container"><div className="comparison-table"><div className="comparison-head"><span>Phương pháp</span><span>Mô tả & ưu điểm</span><span>Cân nhắc</span><span>Phù hợp với</span></div>{methods.map((m) => <div className="comparison-row" key={m.name}><strong>{m.name}</strong><div><p>{m.desc}</p><span className="tag good">+ {m.pros}</span></div><p className="muted">{m.cons}</p><p className="muted">{m.fit}</p></div>)}</div><div className="medical-note">Phương pháp điều trị cần được quyết định sau khi bác sĩ thăm khám. Không tự lựa chọn kỹ thuật chỉ dựa trên thông tin trên mạng.</div></div></section><section className="section soft-section"><div className="container cta-inline"><div><h2>Cần biết phương pháp nào phù hợp?</h2><p>Đặt lịch để được bác sĩ đánh giá trực tiếp và tư vấn lộ trình.</p></div><Link to="/dat-lich" className="button button-primary">Tư vấn cùng bác sĩ <span>→</span></Link></div></section></main>; }
+
 function AfterCarePage() { return <main><PageHero label="Đồng hành sau điều trị" title="Chăm sóc tốt, hồi phục nhanh hơn" text="Hướng dẫn tham khảo sau phẫu thuật hậu môn – trực tràng và các gói tái khám của Tâm An." /><AfterCarePreview /><section id="aftercare-guide" className="section"><div className="container aftercare-grid"><div><SectionHeading eyebrow="Ba điều cần nhớ" title="Chăm sóc tại nhà sau phẫu thuật" /><div className="care-list"><article><b>01</b><div><h3>Dinh dưỡng & vận động</h3><p>Uống đủ nước, tăng rau xanh và chất xơ mềm. Đi lại nhẹ nhàng theo hướng dẫn, tránh ngồi lâu hoặc rặn khi đi tiêu.</p></div></article><article><b>02</b><div><h3>Vệ sinh vết thương</h3><p>Giữ vùng hậu môn sạch và khô, ngâm nước ấm nếu được bác sĩ hướng dẫn. Không tự bôi thuốc hoặc dùng dung dịch chưa được kê.</p></div></article><article><b>03</b><div><h3>Dấu hiệu cần liên hệ</h3><p>Gọi ngay cho bệnh viện khi sốt, đau tăng, chảy máu nhiều, bí tiểu hoặc vết thương sưng đỏ bất thường.</p></div></article></div></div><aside className="aftercare-highlight"><span className="eyebrow">Tái khám đúng hẹn</span><h3>Đừng bỏ qua lần kiểm tra sau mổ</h3><p>Bác sĩ cần đánh giá tiến triển lành thương và điều chỉnh hướng chăm sóc nếu cần.</p><a href="tel:0982499515" className="button button-light">Gọi tư vấn <span>→</span></a></aside></div></section><section className="section soft-section"><div className="container package-grid"><div><span className="eyebrow">Gói đồng hành hậu phẫu</span><h2>An tâm trong từng bước hồi phục</h2><p>Đăng ký gói tái khám giúp bạn được nhắc lịch, kiểm tra theo hẹn và tư vấn chăm sóc sau phẫu thuật.</p></div><div className="package-card"><span>GÓI TÁI KHÁM TÂM AN</span><strong>3 lần kiểm tra</strong><p>Nhắc lịch tự động · tư vấn hotline · ưu đãi 10% dịch vụ liên quan*</p><Link to="/dat-lich" className="text-link">Đăng ký tư vấn gói →</Link></div></div><div className="container medical-note">* Ưu đãi áp dụng theo từng chương trình và điều kiện thực tế. Vui lòng xác nhận với tư vấn viên trước khi sử dụng.</div></section></main>; }
+
 function GuidePage() { return <main><PageHero label="Tin tức sự kiện" title="Hội nghị Khoa học Hậu môn – Trực tràng toàn quốc lần thứ XIII" text="Những dấu ấn chuyên môn tại hội nghị do Hội Hậu môn – Trực tràng Việt Nam phối hợp tổ chức ở Thanh Hóa." /><section className="section"><div className="container"><article id="hoi-nghi" className="event-feature-card"><div className="event-feature-image"><img src="/news/hoi-nghi-khoa-hoc-2025.jpg" alt="Hình ảnh Hội nghị Khoa học Hậu môn – Trực tràng toàn quốc lần thứ XIII" /></div><div className="event-feature-content"><span className="eyebrow">Hoạt động của Hội</span><h2>Hội nghị Khoa học Hậu môn – Trực tràng toàn quốc lần thứ XIII, năm 2025</h2><p>Ngày 11/10/2025, Hội Hậu môn – Trực tràng Việt Nam phối hợp với Phân hiệu Trường Đại học Y Hà Nội tại Thanh Hóa và các đơn vị liên quan tổ chức hội nghị.</p><small>Thanh Hóa · 11 tháng 10 năm 2025</small></div></article><div className="value-grid event-details-grid"><article><span>01</span><h3>Chủ đề khoa học</h3><p>Hội nghị tập trung vào những tiến bộ trong chẩn đoán và điều trị bệnh lý Hậu môn – Trực tràng, kết hợp y học hiện đại với y học cổ truyền.</p></article><article><span>02</span><h3>Quy mô tham dự</h3><p>Khoảng 300 chuyên gia, nhà khoa học và bác sĩ trong và ngoài nước cùng trao đổi kinh nghiệm về phẫu thuật, nội soi, điều trị và chăm sóc người bệnh.</p></article><article><span>03</span><h3>Hoạt động nổi bật</h3><p>Các báo cáo chuyên đề, tham luận thực tiễn và hoạt động chia sẻ kỹ thuật góp phần cập nhật kiến thức, nâng cao năng lực chuyên môn và mở rộng hợp tác giữa các cơ sở y tế.</p></article></div><article className="event-news-article"><h2>Diễn đàn kết nối và phát triển chuyên ngành</h2><p>Hội nghị là diễn đàn để các chuyên gia giới thiệu kỹ thuật mới, trao đổi kinh nghiệm lâm sàng và thảo luận những hướng phát triển của chuyên ngành Hậu môn – Trực tràng tại Thanh Hóa cũng như trên cả nước.</p><p>Bên cạnh hoạt động khoa học, chương trình còn thúc đẩy hợp tác giữa bệnh viện, trường đại học và các hội chuyên ngành. Tại sự kiện, Ban tổ chức đã trao cờ đăng cai Hội nghị Khoa học Hậu môn – Trực tràng toàn quốc lần thứ XIV năm 2026 cho Bệnh viện Chợ Rẫy.</p><a className="source-link" href="https://baothanhhoa.vn/hoi-nghi-khoa-hoc-hau-mon-truc-trang-toan-quoc-lan-thu-xiii-nam-2025-264904.htm" target="_blank" rel="noreferrer">Xem bài viết nguồn trên Báo Thanh Hóa ↗</a></article></div></section><section className="section soft-section"><div className="container cta-inline"><div><span className="eyebrow">Đồng hành cùng sức khỏe</span><h2>Cần tư vấn về bệnh lý Hậu môn – Trực tràng?</h2><p>Đội ngũ Tâm An sẵn sàng lắng nghe và hỗ trợ bạn đặt lịch thăm khám phù hợp.</p></div><Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></div></section></main>; }
+
 const faqs = [{ q: 'Tôi có cần đăng ký tài khoản để đặt lịch không?', a: 'Không. Bạn có thể đặt lịch nhanh bằng số điện thoại và email. Tài khoản giúp bạn theo dõi lịch sử khám thuận tiện hơn.' }, { q: 'Sau khi đặt lịch, tôi nhận xác nhận bằng cách nào?', a: 'Mã xác nhận hiển thị ngay trên màn hình, đồng thời thông tin sẽ được gửi qua email và SMS theo thông tin bạn đã cung cấp.' }, { q: 'Tôi có thể đổi hoặc hủy lịch khám không?', a: 'Có. Vui lòng gọi hotline trước giờ hẹn tối thiểu 2 giờ để được hỗ trợ đổi lịch hoặc hủy lịch.' }, { q: 'BHYT được áp dụng tại Tâm An như thế nào?', a: 'Bệnh viện tiếp nhận BHYT theo phạm vi chuyên môn và quy định hiện hành. Vui lòng mang thẻ BHYT còn hạn cùng giấy tờ tùy thân khi đến khám.' }, { q: 'Bảo lãnh viện phí cần chuẩn bị gì?', a: 'Bạn cần cung cấp thẻ bảo hiểm hoặc thông tin hợp đồng, CCCD và giấy tờ liên quan. Bộ phận bảo hiểm sẽ kiểm tra quyền lợi trước khi thực hiện dịch vụ.' }];
+
 function FAQPage() { const [open, setOpen] = useState(0); return <main><PageHero label="Hỗ trợ người bệnh" title="Giải đáp điều bạn đang băn khoăn" text="Tổng hợp những câu hỏi thường gặp trước khi đến khám tại Tâm An." /><section className="section"><div className="container faq-layout"><div><SectionHeading eyebrow="Câu hỏi thường gặp" title="FAQ" />{faqs.slice(0, 3).map((item, i) => <div className="faq-item" key={item.q}><button onClick={() => setOpen(open === i ? -1 : i)}><span>{item.q}</span><b>{open === i ? '−' : '+'}</b></button>{open === i && <p>{item.a}</p>}</div>)}</div><aside className="faq-contact"><Icon>?</Icon><h3>Chưa tìm thấy câu trả lời?</h3><p>Nhân viên Tâm An sẵn sàng hỗ trợ bạn.</p><a className="button button-light" href="tel:0982499515">Gọi 0982 499 515</a></aside></div></section><section className="section"><div className="container"><SectionHeading eyebrow="Câu hỏi khác" title="Bạn có thể cần biết" />{faqs.slice(3).map((item, i) => <div className="faq-item" key={item.q}><button onClick={() => setOpen(open === i + 3 ? -1 : i + 3)}><span>{item.q}</span><b>{open === i + 3 ? '−' : '+'}</b></button>{open === i + 3 && <p>{item.a}</p>}</div>)}</div></section></main>; }
+
 function InsurancePage() { return <main><PageHero label="Hỗ trợ người bệnh" title="Bảo hiểm y tế & bảo lãnh viện phí" text="Thông tin quyền lợi BHYT, hồ sơ cần chuẩn bị và hướng dẫn liên hệ bộ phận bảo hiểm tại Tâm An." /><section className="section soft-section" id="bao-hiem"><div className="container insurance-grid"><div className="insurance-copy"><img className="insurance-banner" src="/hospital/bhyt-quyen-loi.jpg" alt="Thông tin mở rộng quyền lợi bảo hiểm y tế tại Bệnh viện Đa khoa Tâm An" /><span className="eyebrow">Thông tin thanh toán</span><h2>Bảo hiểm y tế</h2><p>BHYT được tiếp nhận theo đúng quy định. Người bệnh vui lòng mang thẻ BHYT bản chính hoặc ứng dụng VssID, CCCD và giấy chuyển tuyến nếu cần.</p><p className="insurance-highlight"><strong>Từ 01/07/2026:</strong> trong một số trường hợp khám ngoại trú trái tuyến, quỹ BHYT có thể thanh toán 50% mức hưởng đối với chi phí thuộc phạm vi được hưởng và đúng điều kiện áp dụng.</p><ul className="plain-list"><li>Kiểm tra thời hạn thẻ và nơi đăng ký khám chữa bệnh ban đầu</li><li>Mang CCCD/giấy tờ tùy thân, thẻ BHYT hoặc VssID</li><li>Chuẩn bị giấy chuyển tuyến nếu trường hợp khám yêu cầu</li><li>Hỏi trước chi phí dịch vụ ngoài phạm vi BHYT</li></ul><p className="insurance-footnote">Lưu ý: “50% mức hưởng” không đồng nghĩa quỹ thanh toán 50% toàn bộ hóa đơn. Mức thực tế phụ thuộc nhóm bệnh, cơ sở khám chữa bệnh, mức hưởng và phạm vi chi phí được BHYT thanh toán.</p></div><div id="bao-lanh" className="insurance-box"><span>✦</span><h3>Bảo hiểm bảo lãnh viện phí</h3><p>Tâm An hỗ trợ tiếp nhận hồ sơ bảo lãnh theo danh sách đối tác. Bộ phận bảo hiểm sẽ hướng dẫn thủ tục và xác nhận quyền lợi trước khi sử dụng dịch vụ.</p><a href="tel:0919864929" className="text-link">Liên hệ bộ phận bảo hiểm →</a></div></div></section></main>; }
+
 function ContactPage() { return <main><PageHero label="Liên hệ Tâm An" title="Chúng tôi luôn sẵn sàng hỗ trợ" text="Tìm cơ sở thuận tiện, xem giờ làm việc hoặc liên hệ nhanh với đội ngũ tư vấn." /><section className="section"><div className="container contact-layout"><div><SectionHeading eyebrow="Các cơ sở hoạt động" title="Địa chỉ & chỉ đường" />{locations.map((loc, i) => <article className="location-row" key={loc.title}><span className="location-index">0{i + 1}</span><div><h3>{loc.title}</h3><p>{loc.address}</p><a href={`tel:${loc.phone.replace(/ /g, '')}`}>{loc.phone}</a></div><a className="map-link" target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}`}>Mở bản đồ ↗</a></article>)}</div><div className="contact-side"><div className="contact-hotline"><span className="eyebrow">Hotline 24/7</span><a href="tel:0982499515">0982 499 515</a><p>Gọi ngay khi cần hỗ trợ y tế khẩn cấp.</p></div><div className="hours-card"><h3>Giờ làm việc</h3><p><span>Thứ 2 – Thứ 6</span><b>7:00 – 19:00</b></p><p><span>Thứ 7</span><b>7:00 – 17:00</b></p><p><span>Chủ nhật</span><b>8:00 – 12:00</b></p><small>Hotline hỗ trợ 24/7</small></div></div></div></section><section className="section map-section"><div className="container"><SectionHeading eyebrow="Vị trí thuận tiện" title="Bản đồ cơ sở chính" /><iframe title="Bản đồ Bệnh viện Tâm An" src="https://www.google.com/maps?q=257%20Nguyen%20Trai%20Thanh%20Hoa&output=embed" loading="lazy"></iframe></div></section></main>; }
 
+
+
 function LoginPage() { const navigate = useNavigate(); const [form, setForm] = useState({ username: '', password: '' }); const [message, setMessage] = useState(''); const submit = async (e: FormEvent) => { e.preventDefault(); setMessage(''); try { const r = await fetch(`${API_BASE}/api/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) }); const d = await r.json(); if (!r.ok || !d.success) throw new Error(d.message || 'Đăng nhập thất bại.'); localStorage.setItem(STORAGE_KEY, JSON.stringify({ token: d.token, user: d.user })); const role = String(d.role || d.user?.VaiTro || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); navigate(role.includes('quantri') || role.includes('admin') || role.includes('quanly') ? '/admin' : role.includes('bacsi') || role.includes('doctor') ? '/doctor' : '/patient'); } catch (err) { setMessage(err instanceof Error ? err.message : 'Không thể đăng nhập.'); } }; return <main className="auth-page"><div className="auth-card"><Link to="/" className="brand"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><SectionHeading title="Chào mừng trở lại" text="Đăng nhập để theo dõi lịch khám và hồ sơ sức khỏe." /><form onSubmit={submit}><label>Email hoặc số điện thoại<input required value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} /></label><label>Mật khẩu<input required type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} /></label>{message && <p className="form-error">{message}</p>}<button className="button button-primary full" type="submit">Đăng nhập <span>→</span></button></form><p className="auth-foot">Chưa có tài khoản? <Link to="/register">Đăng ký ngay</Link></p></div></main>; }
+
 function RegisterPage() { const [message, setMessage] = useState(''); const [form, setForm] = useState({ HoTen: '', Email: '', SoDienThoai: '', MatKhau: '', confirm_password: '' }); const submit = async (e: FormEvent) => { e.preventDefault(); try { const r = await fetch(`${API_BASE}/api/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...form, GioiTinh: 'Nam' }) }); const d = await r.json(); if (!r.ok || !d.success) throw new Error(d.message || 'Đăng ký thất bại.'); setMessage('Đăng ký thành công! Bạn có thể đăng nhập ngay.'); } catch (err) { setMessage(err instanceof Error ? err.message : 'Không thể đăng ký.'); } }; return <main className="auth-page"><div className="auth-card"><Link to="/" className="brand"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><SectionHeading title="Tạo tài khoản Tâm An" text="Theo dõi lịch khám và nhận thông tin chăm sóc sức khỏe." /><form onSubmit={submit}><label>Họ và tên<input required value={form.HoTen} onChange={(e) => setForm({ ...form, HoTen: e.target.value })} /></label><div className="form-row"><label>Email<input required type="email" value={form.Email} onChange={(e) => setForm({ ...form, Email: e.target.value })} /></label><label>Số điện thoại<input required value={form.SoDienThoai} onChange={(e) => setForm({ ...form, SoDienThoai: e.target.value })} /></label></div><div className="form-row"><label>Mật khẩu<input required minLength={6} type="password" value={form.MatKhau} onChange={(e) => setForm({ ...form, MatKhau: e.target.value })} /></label><label>Nhập lại mật khẩu<input required type="password" value={form.confirm_password} onChange={(e) => setForm({ ...form, confirm_password: e.target.value })} /></label></div>{message && <p className="form-success">{message}</p>}<button className="button button-primary full" type="submit">Đăng ký <span>→</span></button></form><p className="auth-foot">Đã có tài khoản? <Link to="/login">Đăng nhập</Link></p></div></main>; }
+
 function PatientPage() { const session = readSession(); if (!session) return <Navigate to="/login" replace />; return <main><PageHero label="Khu vực cá nhân" title={`Xin chào, ${session.user?.HoTen || 'bạn'}`} text="Theo dõi lịch khám và thông tin sức khỏe của bạn tại Tâm An." /><section className="section"><div className="container dashboard-card"><h2>Lịch khám của bạn</h2><p>Bạn có thể đặt lịch mới hoặc liên hệ hotline để được hỗ trợ quản lý lịch hẹn.</p><Link to="/dat-lich" className="button button-primary">Đặt lịch mới <span>→</span></Link></div></section></main>; }
+
 function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<DiseasesPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/phuong-phap-phau-thuat-tri" element={<SurgeryPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
+
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
+
 function AboutStorySection() { return <section id="about-story" className="section about-story-section"><div className="container about-story"><h2>HỆ THỐNG Y TẾ TÂM AN THANH HÓA: HÀNH TRÌNH 18 NĂM KHẲNG ĐỊNH VỊ THẾ CHUYÊN KHOA ĐẦU NGÀNH</h2><p className="about-story-lead">Trong bản đồ y tế miền Trung, <strong>Hệ thống Y tế Tâm An</strong> (Thanh Hóa) là một cái tên bảo chứng cho chất lượng, sự tận tâm và giải pháp điều trị chuyên sâu. Được thành lập từ <strong>năm 2008</strong>, trải qua gần hai thập kỷ hình thành và phát triển, Tâm An đã vươn mình mạnh mẽ, trở thành bệnh viện chuyên khoa đầu tiên và duy nhất tại Việt Nam tập trung sâu vào lĩnh vực khám, điều trị các bệnh lý vùng <strong>Hậu môn – Trực tràng và bệnh Trĩ</strong>.</p><p>Với triết lý hoạt động lấy người bệnh làm trung tâm, Hệ thống Y tế Tâm An không chỉ là nơi chữa lành bệnh tật mà còn là điểm tựa tinh thần an tâm cho hàng vạn bệnh nhân trên cả nước.</p><h3>1. Tầm nhìn chiến lược và hệ thống cơ sở hạ tầng vượt trội</h3><p>Nhằm đáp ứng nhu cầu khám chữa bệnh ngày càng cao của người dân, Hệ thống Y tế Tâm An đã và đang xây dựng một hệ sinh thái y tế toàn diện với 3 cơ sở mũi nhọn tại Thành phố Thanh Hóa:</p><div className="about-facility-grid"><article><h4>Bệnh viện Chuyên khoa Tâm An <span>(Trụ sở chính)</span></h4><p>Tọa lạc tại số <strong>257 Nguyễn Trãi, Phường Tân Sơn, TP. Thanh Hóa</strong> (nằm ngay cạnh Bến xe phía Tây). Đây là “trái tim” của hệ thống, hoạt động theo mô hình “Bệnh viện khách sạn” khép kín. Nơi đây sở hữu không gian xanh, sạch, đẹp, mang lại cảm giác thư thái và bảo mật sự riêng tư cho người bệnh.</p></article><article><h4>Phòng khám Đa khoa Tâm An</h4><p>Đặt tại số <strong>04 Phan Huy Ích, Phường Hạc Thành, TP. Thanh Hóa</strong>. Phòng khám giữ vai trò vệ tinh, đáp ứng nhu cầu khám đa khoa toàn diện từ Nội khoa, Nhi khoa, Sản phụ khoa cho đến Cơ xương khớp, Tai mũi họng.</p></article><article><h4>Bệnh viện Đa khoa Quốc tế Tâm An</h4><p>Đang được triển khai tại <strong>Lô 05-06-07 đường Trịnh Kiểm, Phường Quảng Phú, TP. Thanh Hóa</strong>. Với quy mô lên tới <strong>250 giường bệnh</strong> cùng trang thiết bị thế hệ mới, cơ sở này dự kiến đưa vào hoạt động năm 2026.</p></article></div><h3>2. Đội ngũ chuyên gia đầu ngành – nơi hội tụ của những người thầy thuốc ưu tú</h3><p>Yếu tố cốt lõi làm nên thương hiệu Tâm An chính là nguồn nhân lực chất lượng cao. Bệnh viện được chèo lái bởi <strong>BS. CKII Lê Văn Cơ</strong> (Chủ đầu tư kiêm Giám đốc bệnh viện) cùng Ban giám đốc gồm BS. Lê Văn Quỳnh và Bà Mai Thị Hồng Hải.</p><ul><li><strong>Tiến sĩ Lê Xuân Huệ</strong> – Cố vấn chuyên môn danh tiếng, trực tiếp định hướng các phác đồ điều trị tiên tiến.</li><li><strong>Giáo sư Nguyễn Mạnh Nhâm</strong> – Chủ tịch Hội Hậu môn Trực tràng Việt Nam, chuyên gia đầu ngành trực tiếp hợp tác và chuyển giao công nghệ.</li><li>Cùng các bác sĩ chủ chốt như <strong>BS. Bùi Duy Thành</strong> (Trưởng khoa Ngoại - Gây mê hồi sức) và <strong>BS. Mai Văn Chiến</strong> (Trưởng Phòng khám Đa khoa), cùng đội ngũ điều dưỡng tận tâm, chuyên nghiệp.</li></ul><h3>3. Dịch vụ y tế mũi nhọn và công nghệ điều trị tiên tiến</h3><ul><li><strong>Chuyên khoa sâu Hậu môn – Trực tràng:</strong> Điều trị các cấp độ bệnh trĩ, rò hậu môn, nứt kẽ hậu môn, áp-xe và hẹp hậu môn. Bệnh viện ứng dụng các phương pháp phẫu thuật hiện đại như <strong>phương pháp Longo</strong>, giúp bảo tồn cấu trúc hậu môn và rút ngắn thời gian nằm viện.</li><li><strong>Tầm soát và Nội soi tiêu hóa:</strong> Hệ thống máy nội soi mềm hiện đại giúp phát hiện sớm polyp, tổn thương niêm mạc và tầm soát nguy cơ ung thư đại trực tràng từ giai đoạn khởi phát.</li><li><strong>Khám Đa khoa tổng quát:</strong> Cung cấp dịch vụ xét nghiệm, siêu âm, điện tim và tầm soát sức khỏe toàn diện cho cá nhân, tổ chức, doanh nghiệp.</li></ul><h3>4. Dịch vụ tận tâm, thời gian linh hoạt</h3><ul><li><strong>Thời gian mở cửa:</strong> Từ <strong>07:00 – 17:00</strong> tất cả các ngày trong tuần.</li><li><strong>Dịch vụ khách hàng:</strong> Quy trình thủ tục tối giản, nhanh gọn, hạn chế thời gian chờ đợi. Đội ngũ hotline luôn hỗ trợ tư vấn trực tuyến và đặt lịch hẹn trước.</li></ul><h3>5. Thông tin liên hệ chính thức</h3><div className="about-contact"><p><strong>Hotline hỗ trợ 24/7:</strong> <a href="tel:0977335599">0977 33 55 99</a> · <a href="tel:0919864929">0919 864 929</a> · <a href="tel:0982499515">0982 499 515</a></p><p><strong>Fanpage chính thức:</strong> <a href="https://www.facebook.com/bvtrita/" target="_blank" rel="noreferrer">Facebook Bệnh viện Tâm An</a></p></div><p className="about-story-slogan"><em>Bệnh viện Tâm An Thanh Hóa – Trao tâm đức, nhận an vui!</em></p></div></section>; }
+
 function AfterCarePreview() { return <section className="section aftercare-preview soft-section"><div className="container aftercare-preview-grid"><div><span className="eyebrow">ĐỒNG HÀNH SAU ĐIỀU TRỊ</span><h2>CHĂM SÓC HẬU PHẪU</h2><p>Hướng dẫn chăm sóc tại nhà và những dấu hiệu cần liên hệ sau phẫu thuật.</p></div><Link to="/cham-soc-hau-phau#aftercare-guide" className="button button-primary">Xem hướng dẫn <span>→</span></Link></div></section>; }
