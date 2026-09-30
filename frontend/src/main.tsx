@@ -111,14 +111,10 @@ const generalHospitalDepartments = [
   { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp' },
 
   { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp' },
-<<<<<<< HEAD
   { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây mê Hồi sức' },
   { id: 'khoa-xet-nghiem', title: 'Khoa Xét nghiệm' },
   { id: 'khoa-duoc', title: 'Khoa Dược' },
-=======
-
->>>>>>> 79cc778ff7d56efe1199b98f611f4b13840868ca
-  { id: 'khoa-phu-san-nhi', title: 'Khoa Phụ Sản - Nhi' },
+  { id: 'khoa-phu-san-nhi', title: 'Khoa Nhi' },
 
   { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y Học Cổ Truyền Và Phục Hồi Chức Năng' },
 
@@ -209,13 +205,7 @@ function Layout({ children }: { children: React.ReactNode }) {
               </div>
 
             </div>
-<<<<<<< HEAD
             <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group nav-menu-group--support"><Link to="/dat-lich">Đặt lịch khám</Link></div></div></div>
-=======
-
-            <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group nav-menu-group--support"><Link to="/dat-lich">Đặt lịch khám</Link><Link to="/bao-hiem">BHYT & bảo hiểm</Link></div></div></div>
-
->>>>>>> 79cc778ff7d56efe1199b98f611f4b13840868ca
             <Link className={location.pathname === '/bao-hiem' ? 'active' : ''} to="/bao-hiem">BHYT</Link><Link to="/benh-ly">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
 
             <div className={dropdownClass('news', 'nav-dropdown--news')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('news')} aria-expanded={mobileDropdown === 'news'} aria-haspopup="true">TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu"><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link><Link to="/faq">Câu hỏi thường gặp</Link><Link className="nav-news-menu-item" to="/cam-nang#hoi-nghi"><img src="/news/hoi-nghi-khoa-hoc-2025.jpg" alt="" /><span><strong>Hội nghị khoa học Hậu môn – Trực tràng</strong><small>Xem hình ảnh sự kiện</small></span></Link></div></div>
