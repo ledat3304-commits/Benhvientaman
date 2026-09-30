@@ -108,18 +108,33 @@ const generalHospitalDepartments = [
 
   { id: 'khoa-lao-khoa', title: 'Khoa Lão Khoa' },
 
-  { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp' },
+  { id: 'khoa-noi-tong-hop', title: 'Khoa Nội tổng hợp - Thận lọc máu' },
 
-  { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp' },
+  { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại' },
   { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây mê Hồi sức' },
   { id: 'khoa-xet-nghiem', title: 'Khoa Xét nghiệm' },
   { id: 'khoa-duoc', title: 'Khoa Dược' },
   { id: 'khoa-phu-san-nhi', title: 'Khoa Nhi' },
 
-  { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y Học Cổ Truyền Và Phục Hồi Chức Năng' },
+  { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y học cổ truyền - Phục hồi chức năng' },
 
   { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu' },
+  { id: 'khoa-kham-benh', title: 'Khoa Khám bệnh' },
+  { id: 'khoa-can-lam-sang-chan-doan-hinh-anh', title: 'Khoa Cận lâm sàng - Chẩn đoán hình ảnh' },
 
+];
+
+const departmentDetails = [
+  { id: 'khoa-noi-tong-hop', title: 'Khoa Nội tổng hợp – Thận lọc máu', intro: 'Thăm khám, chẩn đoán và điều trị các bệnh lý nội khoa, đồng thời triển khai chăm sóc thận và lọc máu theo quy trình chuyên môn.', items: ['Chạy thận nhân tạo với hệ thống máy 4008S, HDF online và xử lý nước RO.', 'Theo dõi sát chỉ số sức khỏe và diễn biến của người bệnh trong mỗi ca lọc máu.', 'Phối hợp bác sĩ, điều dưỡng và các chuyên khoa để xây dựng kế hoạch điều trị an toàn.'] },
+  { id: 'khoa-than-loc-mau', title: 'Đơn nguyên Thận – Lọc máu', intro: 'Đơn nguyên được đầu tư đồng bộ để phục vụ người bệnh cần lọc máu, tạo không gian điều trị phù hợp với các ca kéo dài.', items: ['Hệ thống máy chạy thận 4008S của Fresenius Medical Care và HDF online.', 'Hệ thống xử lý nước RO được kiểm soát trong quá trình vận hành.', 'Đội ngũ y tế theo dõi, chăm sóc và hỗ trợ người bệnh trong suốt quá trình điều trị.'] },
+  { id: 'khoa-duoc', title: 'Khoa Dược', intro: 'Đảm nhiệm cung ứng, quản lý và sử dụng thuốc, hóa chất, vật tư y tế phục vụ hoạt động khám chữa bệnh toàn viện.', items: ['Lập kế hoạch, tiếp nhận, bảo quản và cấp phát thuốc cho người bệnh nội trú, ngoại trú.', 'Quản lý kho dược, nghiệp vụ dược, dược lâm sàng – thông tin thuốc và thống kê dược.', 'Kiểm soát nguồn gốc, hạn dùng, chất lượng và an toàn trong sử dụng thuốc.'] },
+  { id: 'khoa-xet-nghiem', title: 'Khoa Xét nghiệm', intro: 'Khoa cận lâm sàng hỗ trợ chẩn đoán, phát hiện nguyên nhân bệnh và theo dõi hiệu quả điều trị bằng các kỹ thuật xét nghiệm phù hợp.', items: ['Thực hiện các nhóm xét nghiệm huyết học, sinh hóa, miễn dịch, vi sinh và ký sinh trùng.', 'Kiểm soát quy trình trước xét nghiệm, trong xét nghiệm và sau xét nghiệm.', 'Cung cấp kết quả chính xác, kịp thời, an toàn; đội ngũ thường xuyên cập nhật chuyên môn.'] },
+  { id: 'khoa-phu-san-nhi', title: 'Khoa Nhi', intro: 'Khám, tư vấn, chẩn đoán và điều trị các bệnh lý thường gặp ở trẻ em, đồng thời theo dõi sức khỏe và sự phát triển của trẻ.', items: ['Khám các bệnh lý hô hấp, tiêu hóa, sốt – nhiễm trùng, dị ứng và bệnh ngoài da.', 'Theo dõi dinh dưỡng, cân nặng, chiều cao, phát triển thể chất và tư vấn chăm sóc trẻ.', 'Xây dựng môi trường thân thiện, phối hợp với phụ huynh và các chuyên khoa khi cần.'] },
+  { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại', intro: 'Thăm khám, điều trị và chăm sóc người bệnh mắc các bệnh lý ngoại khoa, từ bệnh thường gặp đến trường hợp cần can thiệp theo chỉ định.', items: ['Khám, điều trị nội trú, thực hiện thủ thuật, can thiệp và phẫu thuật trong phạm vi chuyên môn.', 'Theo dõi người bệnh trước, trong và sau phẫu thuật.', 'Tư vấn chăm sóc vết mổ, dinh dưỡng, vận động và các dấu hiệu cần tái khám.'] },
+  { id: 'khoa-kham-benh', title: 'Khoa Khám bệnh', intro: 'Là nơi tiếp nhận người bệnh đến khám, tư vấn, chẩn đoán và định hướng điều trị với quy trình thuận tiện, rõ ràng và chuyên nghiệp.', items: ['Tiếp nhận khám chữa bệnh tất cả các ngày trong tuần, kể cả ngày lễ; đăng ký khám từ 06h45.', 'Hỗ trợ quy trình khám BHYT: kiểm tra thông tin, khám bác sĩ, cận lâm sàng, nhận kết quả và tư vấn điều trị.', 'Hướng dẫn người bệnh chuẩn bị giấy tờ và thực hiện các bước tiếp theo phù hợp.'] },
+  { id: 'khoa-can-lam-sang-chan-doan-hinh-anh', title: 'Khoa Cận lâm sàng – Chẩn đoán hình ảnh', intro: 'Thực hiện các kỹ thuật chẩn đoán hình ảnh, hỗ trợ bác sĩ phát hiện, đánh giá và theo dõi bệnh lý.', items: ['Siêu âm ổ bụng, tuyến giáp, tuyến vú, tim, Doppler mạch máu và siêu âm phần mềm.', 'X-quang kỹ thuật số và chụp cắt lớp vi tính (CT) theo chỉ định chuyên môn.', 'Chú trọng an toàn bức xạ, hướng dẫn người bệnh và bảo đảm chất lượng vận hành thiết bị.'] },
+  { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y học cổ truyền – Phục hồi chức năng', intro: 'Kết hợp phương pháp y học cổ truyền với kỹ thuật phục hồi chức năng để chăm sóc người bệnh cơ xương khớp, thần kinh, đau mạn tính và phục hồi sau bệnh lý, chấn thương hoặc phẫu thuật.', items: ['Điện châm, thủy châm, xoa bóp – bấm huyệt, cấy chỉ theo chỉ định.', 'Vật lý trị liệu và phục hồi chức năng nhằm cải thiện vận động, sức mạnh cơ và sinh hoạt.', 'Cá thể hóa kế hoạch điều trị, hướng dẫn người bệnh và gia đình phối hợp trong quá trình phục hồi.'] },
+  { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây mê Hồi sức', intro: 'Đảm nhiệm công tác gây mê, gây tê và hồi sức trước, trong và sau phẫu thuật, thủ thuật tại Bệnh viện Đa khoa Tâm An.', items: ['Đánh giá nguy cơ gây mê, lựa chọn phương pháp gây mê hoặc gây tê phù hợp.', 'Theo dõi chức năng sống trong phẫu thuật, hồi sức sau mổ và kiểm soát đau.', 'Phối hợp liên chuyên khoa, chuẩn bị thiết bị và cải tiến chất lượng an toàn người bệnh.'] },
 ];
 
 function LeadershipBannerSection() { return <section id="lanh-dao" className="section leadership-section"><div className="container leadership-board"><img className="leadership-banner" src="/hospital/leadership-banner.png" alt="Ban lãnh đạo Bệnh viện Đa khoa Tâm An" /></div></section>; }
@@ -262,11 +277,13 @@ function PageHero({ title, text, label, backHome = false }: { title: string; tex
 
 function HealthSystemSection() {
 
-  return <section id="he-thong-y-te" className="section health-system-section"><div className="container"><SectionHeading eyebrow="Hệ thống Y tế Tâm An" title="ĐỒNG HÀNH CHĂM SÓC SỨC KHỎE TOÀN DIỆN" text="Hệ thống Tâm An gồm các đơn vị khám chữa bệnh và các khoa chuyên môn phục vụ nhu cầu chăm sóc sức khỏe của người dân." /><div className="health-system-grid">{healthSystemFacilities.map((facility) => <article className="health-system-card" id={facility.id} key={facility.id}><span className="health-system-number">{facility.number}</span><h3>{facility.title}</h3>{facility.id === 'benh-vien-da-khoa' && <><h4>Các khoa</h4><ul>{generalHospitalDepartments.map((department) => <li id={department.id} key={department.id}>{department.title}</li>)}</ul></>}</article>)}</div></div></section>;
+  return <section id="he-thong-y-te" className="section health-system-section"><div className="container"><SectionHeading eyebrow="Hệ thống Y tế Tâm An" title="ĐỒNG HÀNH CHĂM SÓC SỨC KHỎE TOÀN DIỆN" text="Hệ thống Tâm An gồm các đơn vị khám chữa bệnh và các khoa chuyên môn phục vụ nhu cầu chăm sóc sức khỏe của người dân." /><div className="health-system-grid">{healthSystemFacilities.map((facility) => <article className="health-system-card" id={facility.id} key={facility.id}><span className="health-system-number">{facility.number}</span><h3>{facility.title}</h3>{facility.id === 'benh-vien-da-khoa' && <><h4>Các khoa</h4><ul>{generalHospitalDepartments.map((department) => <li id={departmentDetails.some((detail) => detail.id === department.id) ? undefined : department.id} key={department.id}>{department.title}</li>)}</ul></>}</article>)}</div></div></section>;
 
 }
 
-function AboutPage() { return <main><PageHero label="Về Tâm An" title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><HealthSystemSection /><AboutStorySection /></main>; }
+function DepartmentDetailsSection() { return <section className="section department-details-section"><div className="container"><SectionHeading eyebrow="Thông tin chuyên môn" title="CÁC KHOA TẠI BỆNH VIỆN ĐA KHOA TÂM AN" text="Thông tin khái quát về chức năng, kỹ thuật và định hướng chăm sóc của từng khoa." /><div className="department-details-grid">{departmentDetails.map((department) => <article className="department-detail-card" id={department.id} key={department.id}><span className="department-detail-number">KHOA</span><h3>{department.title}</h3><p>{department.intro}</p><ul>{department.items.map((item) => <li key={item}>{item}</li>)}</ul></article>)}</div></div></section>; }
+
+function AboutPage() { return <main><PageHero label="Về Tâm An" title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><HealthSystemSection /><DepartmentDetailsSection /><AboutStorySection /></main>; }
 
 
 

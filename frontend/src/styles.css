@@ -380,3 +380,14 @@ h6,
 }
 
 h1,h2{font-weight:800;letter-spacing:-.025em}
+
+/* Department information cards. */
+.department-details-section{background:var(--soft)}
+.department-details-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.department-detail-card{scroll-margin-top:100px;padding:28px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 10px 28px rgba(19,74,87,.06)}
+.department-detail-number{display:block;margin-bottom:8px;color:var(--teal);font-size:10px;font-weight:800;letter-spacing:.12em}
+.department-detail-card h3{margin:0 0 12px;color:var(--navy);font-size:21px;line-height:1.3}
+.department-detail-card>p{margin:0 0 16px;color:var(--muted);font-size:13px;line-height:1.7}
+.department-detail-card ul{display:grid;gap:9px;margin:0;padding-left:18px;color:#527079;font-size:12px;line-height:1.55}
+.department-detail-card li::marker{color:var(--teal)}
+@media(max-width:650px){.department-details-grid{grid-template-columns:1fr}.department-detail-card{padding:22px}.department-detail-card h3{font-size:18px}}
