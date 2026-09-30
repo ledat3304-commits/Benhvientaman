@@ -346,3 +346,37 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .leadership-board:before{display:none}
 .leadership-banner{display:block;width:100%;height:auto;border-radius:22px}
 @media(max-width:650px){.leadership-section{padding-top:55px}.leadership-board{padding:0;border-radius:16px}.leadership-banner{border-radius:16px}}
+
+/* Unified typography for the hospital layout. */
+body,
+button,
+input,
+select,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.hero-note strong,
+.experience-badge strong,
+.stats-grid strong,
+.stats-grid strong span,
+.value-grid span,
+.disease-number,
+.guide-card>span,
+.location-index,
+.contact-hotline>a,
+.care-list article>b,
+.aftercare-highlight h3,
+.package-card>strong,
+.complications-heading h3,
+.equipment-showcase-heading h2,
+.expert-corner-card>span,
+.health-system-number,
+.chat-channel-icon {
+  font-family:'Be Vietnam Pro','Segoe UI',Arial,sans-serif;
+}
+
+h1,h2{font-weight:800;letter-spacing:-.025em}
