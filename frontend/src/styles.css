@@ -391,3 +391,8 @@ h1,h2{font-weight:800;letter-spacing:-.025em}
 .department-detail-card ul{display:grid;gap:9px;margin:0;padding-left:18px;color:#527079;font-size:12px;line-height:1.55}
 .department-detail-card li::marker{color:var(--teal)}
 @media(max-width:650px){.department-details-grid{grid-template-columns:1fr}.department-detail-card{padding:22px}.department-detail-card h3{font-size:18px}}
+
+/* Department links live under the Chuyên khoa menu. */
+.nav-dropdown--specialties .nav-dropdown-menu{width:min(390px,calc(100vw - 32px));max-height:calc(100vh - 64px);overflow-y:auto}
+.nav-dropdown--specialties .nav-dropdown-menu a{white-space:normal;line-height:1.4}
+@media(max-width:900px){.nav-dropdown--specialties .nav-dropdown-menu{width:100%;max-width:100%;max-height:none;overflow:visible}}
