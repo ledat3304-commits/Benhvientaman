@@ -400,6 +400,16 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 /* Ký tự đơn vị trong dải thống kê */
 .stats-grid>div>strong>span{font-size:50%!important;line-height:1;vertical-align:baseline}
 
+/* Đồng bộ tiêu đề các section chính */
+.intro-section .section-heading>h2,
+.hospital-evidence .section-heading>h2,
+.equipment-showcase-heading>h2,
+.expert-corner-heading h2,
+.anal-health-section .complications-heading>h3,
+.anal-health-section .methods-heading .section-heading>h2,
+.feedback-heading .section-heading>h2,
+.app-section .app-grid h2{font-size:36px!important;letter-spacing:0!important;line-height:1.15}
+
 /* Đồng bộ chính xác các nhãn section được yêu cầu về 20px */
 .intro-section .section-heading>.eyebrow,
 .hospital-evidence .section-heading>.eyebrow,
