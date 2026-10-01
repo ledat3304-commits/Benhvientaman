@@ -410,6 +410,15 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .feedback-heading .section-heading>h2,
 .app-section .app-grid h2{font-size:36px!important;letter-spacing:0!important;line-height:1.15}
 
+/* Đồng bộ đoạn mô tả dưới các section chính */
+.intro-section .section-heading>p,
+.hospital-evidence .section-heading>p,
+.equipment-showcase-heading>p,
+.expert-corner-heading p,
+.anal-health-section .complications-heading>p,
+.anal-health-section .methods-heading .section-heading>p,
+.feedback-heading .section-heading>p{font-size:16px!important;letter-spacing:0!important;line-height:1.6}
+
 /* Đồng bộ chính xác các nhãn section được yêu cầu về 20px */
 .intro-section .section-heading>.eyebrow,
 .hospital-evidence .section-heading>.eyebrow,
