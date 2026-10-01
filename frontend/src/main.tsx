@@ -379,16 +379,16 @@ function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
 function EquipmentSectionNew() {
   const equipmentItems = [
-    { name: 'Hệ thống chụp cắt lớp vi tính CT', note: 'Chụp cắt lớp nhiều lớp, hỗ trợ phát hiện tổn thương nhanh và chính xác.', image: '/hospital/equipment/equipment-01.png' },
-    { name: 'Máy siêu âm chẩn đoán', note: 'Khảo sát cơ quan, mô mềm và thai kỳ bằng hình ảnh siêu âm.', image: '/hospital/equipment/equipment-02.png' },
-    { name: 'Máy phân tích sinh hóa BS-430 Mindray', note: 'Phân tích các chỉ số sinh hóa tự động, phục vụ chẩn đoán và theo dõi.', image: '/hospital/equipment/equipment-03.png' },
-    { name: 'Máy miễn dịch CL-960i Mindray', note: 'Hỗ trợ xét nghiệm miễn dịch tự động với quy trình nhanh và chính xác.', image: '/hospital/equipment/equipment-04.png' },
-    { name: 'Hệ thống nội soi tiêu hóa Olympus CV-170', note: 'Hỗ trợ quan sát và đánh giá các tổn thương trong đường tiêu hóa.', image: '/hospital/equipment/equipment-05.png' },
-    { name: 'Máy thở hồi sức cấp cứu', note: 'Hỗ trợ hô hấp trong cấp cứu và chăm sóc người bệnh nặng.', image: '/hospital/equipment/equipment-06.png' },
-    { name: 'Hệ thống chụp X-quang kỹ thuật số DR', note: 'Ghi nhận hình ảnh X-quang kỹ thuật số DR nhanh, rõ nét.', image: '/hospital/equipment/equipment-07.png' },
-    { name: 'Máy hỗ trợ thở áp lực dương CPAP/BiPAP', note: 'Duy trì áp lực dương, hỗ trợ điều trị suy hô hấp khi phù hợp.', image: '/hospital/equipment/equipment-08.png' },
-    { name: 'Máy gây mê kèm hệ thống theo dõi bệnh nhân', note: 'Gây mê an toàn, đồng thời theo dõi các chỉ số sinh tồn.', image: '/hospital/equipment/equipment-09.png' },
-    { name: 'Máy thở ICU', note: 'Hỗ trợ hô hấp liên tục trong điều trị hồi sức tích cực.', image: '/hospital/equipment/equipment-10.png' },
+    { name: 'Hệ thống chụp cắt lớp vi tính CT', note: 'Chụp cắt lớp nhiều lớp, hỗ trợ phát hiện tổn thương nhanh và chính xác.', image: '/hospital/equipment/pdf-equipment-01.png' },
+    { name: 'Máy siêu âm chẩn đoán', note: 'Khảo sát cơ quan, mô mềm và thai kỳ bằng hình ảnh siêu âm.', image: '/hospital/equipment/pdf-equipment-02.png' },
+    { name: 'Máy phân tích sinh hóa BS-430 Mindray', note: 'Phân tích các chỉ số sinh hóa tự động, phục vụ chẩn đoán và theo dõi.', image: '/hospital/equipment/pdf-equipment-03.png' },
+    { name: 'Máy miễn dịch CL-960i Mindray', note: 'Hỗ trợ xét nghiệm miễn dịch tự động với quy trình nhanh và chính xác.', image: '/hospital/equipment/pdf-equipment-04.png' },
+    { name: 'Hệ thống nội soi tiêu hóa Olympus CV-170', note: 'Hỗ trợ quan sát và đánh giá các tổn thương trong đường tiêu hóa.', image: '/hospital/equipment/pdf-equipment-05.png' },
+    { name: 'Máy thở hồi sức cấp cứu', note: 'Hỗ trợ hô hấp trong cấp cứu và chăm sóc người bệnh nặng.', image: '/hospital/equipment/pdf-equipment-06.png' },
+    { name: 'Hệ thống chụp X-quang kỹ thuật số DR', note: 'Ghi nhận hình ảnh X-quang kỹ thuật số DR nhanh, rõ nét.', image: '/hospital/equipment/pdf-equipment-07.png' },
+    { name: 'Máy hỗ trợ thở áp lực dương CPAP/BiPAP', note: 'Duy trì áp lực dương, hỗ trợ điều trị suy hô hấp khi phù hợp.', image: '/hospital/equipment/pdf-equipment-08.png' },
+    { name: 'Máy gây mê kèm hệ thống theo dõi bệnh nhân', note: 'Gây mê an toàn, đồng thời theo dõi các chỉ số sinh tồn.', image: '/hospital/equipment/pdf-equipment-09.png' },
+    { name: 'Máy thở ICU', note: 'Hỗ trợ hô hấp liên tục trong điều trị hồi sức tích cực.', image: '/hospital/equipment/pdf-equipment-10.png' },
   ];
 
   return <section className="section equipment-showcase"><div className="container"><div className="equipment-showcase-heading"><span className="eyebrow">CƠ SỞ VẬT CHẤT HIỆN ĐẠI</span><h2>MỘT SỐ THIẾT BỊ Y TẾ <em>NỔI BẬT</em></h2><p>Hệ thống thiết bị được đầu tư đồng bộ, hỗ trợ bác sĩ chẩn đoán và điều trị an toàn, chính xác.</p></div><div className="equipment-card-grid">{equipmentItems.map((item, index) => <article className="equipment-card" key={item.name}><div className="equipment-card-image"><img src={item.image} alt={item.name} /></div><div className="equipment-card-content"><span>{String(index + 1).padStart(2, '0')}</span><h3>{item.name}</h3><p>{item.note}</p></div></article>)}</div></div></section>;
