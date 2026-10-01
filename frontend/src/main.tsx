@@ -108,8 +108,6 @@ const healthSystemFacilities = [
 
 const generalHospitalDepartments = [
 
-  { id: 'khoa-lao-khoa', title: 'Khoa Lão Khoa' },
-
   { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp' },
 
   { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp' },
