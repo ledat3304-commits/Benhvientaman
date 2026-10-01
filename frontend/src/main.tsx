@@ -166,7 +166,7 @@ const healthSystemProfiles = [
     title: 'Bệnh Viện Đa Khoa Tâm An',
     summary: 'Cơ sở đa khoa quy mô lớn, kết nối nhiều chuyên khoa để phục vụ nhu cầu điều trị và chăm sóc toàn diện.',
     address: 'Lô 05-06-07 đường Trịnh Kiểm, P. Quảng Phú, TP. Thanh Hóa',
-    status: 'Đang triển khai',
+    status: '',
     details: [
       ['Quy mô dự kiến', '250 giường bệnh'],
       ['Định hướng', 'Đa khoa hiện đại'],
@@ -330,7 +330,7 @@ function PageHero({ title, text, label, backHome = false }: { title: string; tex
 
 function HealthSystemSection() {
 
-  return <section id="he-thong-y-te" className="section health-system-section"><div className="container"><SectionHeading eyebrow="Hệ thống Y tế Tâm An" title="ĐỒNG HÀNH CHĂM SÓC SỨC KHỎE TOÀN DIỆN" text="Mỗi cơ sở đảm nhiệm một vai trò riêng, cùng tạo nên hệ sinh thái chăm sóc sức khỏe thuận tiện và chuyên sâu." /><div className="health-system-grid">{healthSystemProfiles.map((facility) => <article className={`health-system-card health-system-card--${facility.tone}`} id={facility.id} key={facility.id}><div className="health-system-card-top"><span className="health-system-number">{facility.number}</span><span className="health-system-status">{facility.status}</span></div><span className="health-system-kicker">{facility.kicker}</span><h3>{facility.title}</h3><p className="health-system-summary">{facility.summary}</p><div className="health-system-address"><span>Địa chỉ</span><strong>{facility.address}</strong></div><div className="health-system-details">{facility.details.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div><div className="health-system-services"><h4>Dịch vụ & chuyên môn</h4><ul>{facility.services.map((service, index) => <li id={facility.id === 'benh-vien-da-khoa' ? generalHospitalDepartments[index]?.id : undefined} key={service}>{service}</li>)}</ul></div><Link className="health-system-link" to={facility.href}>{facility.cta}<span>→</span></Link></article>)}</div></div></section>;
+  return <section id="he-thong-y-te" className="section health-system-section"><div className="container"><SectionHeading eyebrow="Hệ thống Y tế Tâm An" title="ĐỒNG HÀNH CHĂM SÓC SỨC KHỎE TOÀN DIỆN" text="Mỗi cơ sở đảm nhiệm một vai trò riêng, cùng tạo nên hệ sinh thái chăm sóc sức khỏe thuận tiện và chuyên sâu." /><div className="health-system-grid">{healthSystemProfiles.map((facility) => <article className={`health-system-card health-system-card--${facility.tone}`} id={facility.id} key={facility.id}><div className="health-system-card-top"><span className="health-system-number">{facility.number}</span>{facility.status && <span className="health-system-status">{facility.status}</span>}</div><span className="health-system-kicker">{facility.kicker}</span><h3>{facility.title}</h3><p className="health-system-summary">{facility.summary}</p><div className="health-system-address"><span>Địa chỉ</span><strong>{facility.address}</strong></div><div className="health-system-details">{facility.details.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div><div className="health-system-services"><h4>Dịch vụ & chuyên môn</h4><ul>{facility.services.map((service, index) => <li id={facility.id === 'benh-vien-da-khoa' ? generalHospitalDepartments[index]?.id : undefined} key={service}>{service}</li>)}</ul></div><Link className="health-system-link" to={facility.href}>{facility.cta}<span>→</span></Link></article>)}</div></div></section>;
 
 }
 
