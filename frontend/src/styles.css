@@ -419,6 +419,14 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .anal-health-section .methods-heading .section-heading>p,
 .feedback-heading .section-heading>p{font-size:16px!important;letter-spacing:0!important;line-height:1.6}
 
+/* Mô tả dưới ảnh: căn đều và giữ khoảng cách đoạn thống nhất */
+.evidence-card>p,
+.expert-corner-card>p,
+.complication-card p,
+.method-card-body>p,
+.health-card p,
+.equipment-board figcaption{margin-bottom:16px;text-align:justify;text-justify:inter-word;line-height:1.6}
+
 /* Đồng bộ chính xác các nhãn section được yêu cầu về 20px */
 .intro-section .section-heading>.eyebrow,
 .hospital-evidence .section-heading>.eyebrow,
