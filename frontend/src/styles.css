@@ -428,7 +428,7 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .equipment-board figcaption{margin-bottom:16px;text-align:justify;text-justify:inter-word;line-height:1.6}
 
 /* Góc chuyên gia: mô tả ngắn ở thẻ, nội dung đầy đủ nằm tại trang chi tiết */
-.expert-corner-card>p{display:-webkit-box;min-height:0;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:3}
+.expert-corner-card>p{display:-webkit-box;min-height:0;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3}
 
 /* Nút về đầu trang và thu gọn khung hỗ trợ còn 75% */
 .back-to-top{position:fixed;left:24px;bottom:24px;z-index:49;display:grid;place-items:center;width:48px;height:48px;padding:0;border:1px solid rgba(255,255,255,.35);border-radius:50%;color:var(--navy);background:var(--lime);box-shadow:0 10px 24px rgba(23,64,170,.22);transition:transform .2s,box-shadow .2s}
