@@ -112,7 +112,7 @@ const generalHospitalDepartments = [
 
   { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp' },
 
-  { id: 'khoa-phu-san-nhi', title: 'Khoa Phụ Sản - Nhi' },
+  { id: 'khoa-nhi', title: 'Khoa Nhi' },
 
   { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y Học Cổ Truyền Và Phục Hồi Chức Năng' },
 
