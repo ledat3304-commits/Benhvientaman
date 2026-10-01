@@ -466,7 +466,7 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .equipment-card-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 .equipment-card{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 10px 24px rgba(23,64,170,.08);transition:transform .2s,box-shadow .2s}
 .equipment-card:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(23,64,170,.16)}
-.equipment-card-image{width:100%;aspect-ratio:.75;background-color:#fff;background-repeat:no-repeat;background-size:500% auto;border-bottom:1px solid #edf1f7}
+.equipment-card-image{width:100%;aspect-ratio:.68;background-color:#fff;background-repeat:no-repeat;background-size:500% auto;border-bottom:1px solid #edf1f7;background-position-x:center}
 .equipment-card-content{padding:14px 15px 17px}
 .equipment-card-content>span{display:inline-grid;place-items:center;width:28px;height:28px;margin-bottom:9px;border-radius:50%;color:#fff;background:var(--navy);font-size:11px;font-weight:700}
 .equipment-card h3{min-height:44px;margin:0 0 8px;color:var(--navy);font-family:'Be Vietnam Pro',Arial,sans-serif;font-size:14px;line-height:1.35}
