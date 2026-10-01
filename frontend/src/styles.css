@@ -339,3 +339,34 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
   .site-header .nav-search input{font-size:13px}
   .site-header .nav-search button{flex-basis:42px;width:42px;font-size:18px}
 }
+
+/* About page: three independent facility layouts */
+.health-system-section{background:linear-gradient(180deg,#f4faf9 0%,#eef7f5 100%)}
+.health-system-grid{align-items:stretch;gap:18px}
+.health-system-card{display:flex;flex-direction:column;min-width:0;padding:27px 25px 23px;border:1px solid #d7e8e5;border-radius:18px;background:#fff;box-shadow:0 12px 30px rgba(19,74,87,.07);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.health-system-card:hover{border-color:#9bcfc4;box-shadow:0 18px 35px rgba(19,74,87,.12);transform:translateY(-4px)}
+.health-system-card--clinic{border-top:4px solid #80bda9}
+.health-system-card--specialist{border-top:4px solid var(--teal)}
+.health-system-card--general{border-top:4px solid #d2b267}
+.health-system-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.health-system-number{font-size:34px;line-height:1;color:var(--teal)}
+.health-system-status{padding:6px 9px;border-radius:999px;color:#39766b;background:#e9f7f2;font-size:10px;font-weight:800;white-space:nowrap}
+.health-system-card--general .health-system-status{color:#8b6a27;background:#fff6df}
+.health-system-kicker{display:block;margin-bottom:8px;color:var(--teal);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.health-system-card h3{min-height:50px;margin:0;color:var(--navy);font-size:19px;line-height:1.35}
+.health-system-summary{min-height:66px;margin:13px 0 19px;color:#5b777d;font-size:12px;line-height:1.7}
+.health-system-address{padding:13px 0;border-top:1px solid #e7f0ee;border-bottom:1px solid #e7f0ee}
+.health-system-address span,.health-system-details span{display:block;margin-bottom:5px;color:#8aa0a2;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.health-system-address strong{display:block;color:#3b6269;font-size:12px;line-height:1.55}
+.health-system-details{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 0 3px}
+.health-system-details>div{min-width:0}
+.health-system-details strong{display:block;color:var(--navy);font-size:11px;line-height:1.5}
+.health-system-services{flex:1;margin-top:13px}
+.health-system-services h4{margin:0 0 9px;color:var(--teal);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.health-system-services ul{display:grid;gap:7px;padding-left:17px;margin:0;color:#5d7a80;font-size:12px;line-height:1.45}
+.health-system-services li::marker{color:#8cb8ae}
+.health-system-link{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:23px;padding-top:15px;border-top:1px solid #e7f0ee;color:var(--teal);font-size:12px;font-weight:800}
+.health-system-link span{font-size:18px;line-height:1}
+.health-system-card--general .health-system-link{color:#98742e}
+@media(max-width:900px){.health-system-grid{grid-template-columns:1fr 1fr}.health-system-card h3{min-height:0}.health-system-summary{min-height:0}}
+@media(max-width:650px){.health-system-grid{grid-template-columns:1fr}.health-system-card{padding:24px 21px 21px}.health-system-card h3{font-size:18px}.health-system-summary{margin-bottom:16px}}

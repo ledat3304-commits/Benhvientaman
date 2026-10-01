@@ -120,6 +120,64 @@ const generalHospitalDepartments = [
 
 ];
 
+const healthSystemProfiles = [
+
+  {
+    id: 'phong-kham-da-khoa',
+    number: '1.',
+    tone: 'clinic',
+    kicker: 'Khám ngoại trú',
+    title: 'Phòng Khám Đa Khoa Tâm An',
+    summary: 'Điểm đến thuận tiện cho nhu cầu khám tổng quát và chăm sóc sức khỏe ban đầu của cả gia đình.',
+    address: '04 Phan Huy Ích, P. Hạc Thành, TP. Thanh Hóa',
+    status: 'Đang hoạt động',
+    details: [
+      ['Mô hình', 'Phòng khám đa khoa'],
+      ['Phù hợp', 'Khám nhanh, theo dõi định kỳ'],
+    ],
+    services: ['Nội khoa tổng quát', 'Nhi khoa & Sản phụ khoa', 'Cơ xương khớp, Tai mũi họng'],
+    cta: 'Xem thông tin cơ sở',
+    href: '/lien-he',
+  },
+
+  {
+    id: 'benh-vien-chuyen-khoa',
+    number: '2.',
+    tone: 'specialist',
+    kicker: 'Chuyên khoa mũi nhọn',
+    title: 'Bệnh Viện Chuyên Khoa Hậu Môn - Trực Tràng Tâm An',
+    summary: 'Trung tâm chuyên sâu với đội ngũ giàu kinh nghiệm trong chẩn đoán và điều trị bệnh lý hậu môn - trực tràng.',
+    address: '257 Nguyễn Trãi, P. Hạc Thành, TP. Thanh Hóa',
+    status: 'Cơ sở chính',
+    details: [
+      ['Thế mạnh', 'Hậu môn - Trực tràng'],
+      ['Dịch vụ', 'Nội soi, phẫu thuật, hậu phẫu'],
+    ],
+    services: ['Bệnh trĩ, rò hậu môn, áp-xe', 'Nội soi tiêu hóa & tầm soát', 'Phẫu thuật hậu môn - trực tràng'],
+    cta: 'Đặt lịch khám',
+    href: '/dat-lich',
+  },
+
+  {
+    id: 'benh-vien-da-khoa',
+    number: '3.',
+    tone: 'general',
+    kicker: 'Đa khoa toàn diện',
+    title: 'Bệnh Viện Đa Khoa Tâm An',
+    summary: 'Cơ sở đa khoa quy mô lớn, kết nối nhiều chuyên khoa để phục vụ nhu cầu điều trị và chăm sóc toàn diện.',
+    address: 'Lô 05-06-07 đường Trịnh Kiểm, P. Quảng Phú, TP. Thanh Hóa',
+    status: 'Đang triển khai',
+    details: [
+      ['Quy mô dự kiến', '250 giường bệnh'],
+      ['Định hướng', 'Đa khoa hiện đại'],
+    ],
+    services: generalHospitalDepartments.map((department) => department.title),
+    cta: 'Khám phá các khoa',
+    href: '#khoa-lao-khoa',
+  },
+
+];
+
 function readSession() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; } }
 
 function Icon({ children }: { children: React.ReactNode }) { return <span className="ui-icon" aria-hidden="true">{children}</span>; }
@@ -260,7 +318,7 @@ function PageHero({ title, text, label, backHome = false }: { title: string; tex
 
 function HealthSystemSection() {
 
-  return <section id="he-thong-y-te" className="section health-system-section"><div className="container"><SectionHeading eyebrow="Hệ thống Y tế Tâm An" title="ĐỒNG HÀNH CHĂM SÓC SỨC KHỎE TOÀN DIỆN" text="Hệ thống Tâm An gồm các đơn vị khám chữa bệnh và các khoa chuyên môn phục vụ nhu cầu chăm sóc sức khỏe của người dân." /><div className="health-system-grid">{healthSystemFacilities.map((facility) => <article className="health-system-card" id={facility.id} key={facility.id}><span className="health-system-number">{facility.number}</span><h3>{facility.title}</h3>{facility.id === 'benh-vien-da-khoa' && <><h4>Các khoa</h4><ul>{generalHospitalDepartments.map((department) => <li id={department.id} key={department.id}>{department.title}</li>)}</ul></>}</article>)}</div></div></section>;
+  return <section id="he-thong-y-te" className="section health-system-section"><div className="container"><SectionHeading eyebrow="Hệ thống Y tế Tâm An" title="ĐỒNG HÀNH CHĂM SÓC SỨC KHỎE TOÀN DIỆN" text="Mỗi cơ sở đảm nhiệm một vai trò riêng, cùng tạo nên hệ sinh thái chăm sóc sức khỏe thuận tiện và chuyên sâu." /><div className="health-system-grid">{healthSystemProfiles.map((facility) => <article className={`health-system-card health-system-card--${facility.tone}`} id={facility.id} key={facility.id}><div className="health-system-card-top"><span className="health-system-number">{facility.number}</span><span className="health-system-status">{facility.status}</span></div><span className="health-system-kicker">{facility.kicker}</span><h3>{facility.title}</h3><p className="health-system-summary">{facility.summary}</p><div className="health-system-address"><span>Địa chỉ</span><strong>{facility.address}</strong></div><div className="health-system-details">{facility.details.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div><div className="health-system-services"><h4>Dịch vụ & chuyên môn</h4><ul>{facility.services.map((service, index) => <li id={facility.id === 'benh-vien-da-khoa' ? generalHospitalDepartments[index]?.id : undefined} key={service}>{service}</li>)}</ul></div><Link className="health-system-link" to={facility.href}>{facility.cta}<span>→</span></Link></article>)}</div></div></section>;
 
 }
 
