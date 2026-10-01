@@ -377,7 +377,7 @@ function PatientPage() { const session = readSession(); if (!session) return <Na
 function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<DiseasesPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/phuong-phap-phau-thuat-tri" element={<SurgeryPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
-+function EquipmentSectionNew() {
+function EquipmentSectionNew() {
   const equipmentItems = [
     { name: 'Hệ thống chụp cắt lớp vi tính CT', note: 'Chụp cắt lớp nhiều lớp, hỗ trợ phát hiện tổn thương nhanh và chính xác.', image: '/hospital/devices-slide.png', panel: 0 },
     { name: 'Máy siêu âm chẩn đoán', note: 'Khảo sát cơ quan, mô mềm và thai kỳ bằng hình ảnh siêu âm.', image: '/hospital/devices-slide.png', panel: 1 },
