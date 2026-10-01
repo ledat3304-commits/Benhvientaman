@@ -210,6 +210,22 @@ function ChatWidget() {
 
 }
 
+function BackToTop() {
+
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setVisible(window.scrollY > 320);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return <button className="back-to-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Về đầu trang"><span aria-hidden="true">↑</span><small>Đầu trang</small></button>;
+}
+
 
 
 function Layout({ children }: { children: React.ReactNode }) {
@@ -276,7 +292,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       </header>
 
-      {children}<ChatWidget /><Footer />
+      {children}<ChatWidget /><BackToTop /><Footer />
 
     </div>
 
