@@ -8,6 +8,8 @@ import './styles.css';
 
 import { AdminDashboardPage, BookingPageApi } from './role-pages';
 
+import { departmentArticles } from './department-content';
+
 
 
 const API_BASE = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/+$/, '');
@@ -117,6 +119,16 @@ const generalHospitalDepartments = [
   { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y Học Cổ Truyền Và Phục Hồi Chức Năng' },
 
   { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu' },
+
+  { id: 'khoa-duoc', title: 'Khoa Dược' },
+
+  { id: 'khoa-xet-nghiem', title: 'Khoa Xét Nghiệm' },
+
+  { id: 'khoa-kham-benh', title: 'Khoa Khám Bệnh' },
+
+  { id: 'khoa-can-lam-sang', title: 'Khoa Cận Lâm Sàng - Chẩn Đoán Hình Ảnh' },
+
+  { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây Mê Hồi Sức' },
 
 ];
 
@@ -324,7 +336,7 @@ function EquipmentSection() { return <section className="section equipment-showc
 
 function PatientFeedbackSection() { return <section className="section feedback-section" style={{ backgroundColor: '#f9fafb', padding: '4rem 0' }}><div className="container feedback-grid" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}><div className="feedback-heading"><SectionHeading eyebrow="Góc nhìn người bệnh" title="PHẢN HỒI SAU ĐIỀU TRỊ" text="Lắng nghe những chia sẻ thực tế từ người bệnh đã từng thăm khám và điều trị tại Tâm An." /></div><div className="feedback-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}><article className="feedback-card" style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}><p>"Bác sĩ tư vấn rất nhiệt tình, cặn kẽ. Bệnh viện sạch sẽ và hiện đại. Tôi cảm thấy rất yên tâm khi điều trị trĩ tại đây."</p><strong style={{ display: 'block', marginTop: '1rem' }}>Anh Nguyễn Văn T.</strong><span style={{ fontSize: '0.9rem', color: '#666' }}>Bệnh nhân điều trị trĩ</span></article><article className="feedback-card" style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}><p>"Quy trình nhanh gọn, nhân viên thân thiện hướng dẫn chi tiết. Rất hài lòng về dịch vụ của Tâm An."</p><strong style={{ display: 'block', marginTop: '1rem' }}>Chị Lê Thị H.</strong><span style={{ fontSize: '0.9rem', color: '#666' }}>Khám tổng quát</span></article><article className="feedback-card" style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}><p>"Tuyệt vời, cơ sở vật chất mới, bác sĩ giỏi. Sau phẫu thuật tôi được chăm sóc rất chu đáo."</p><strong style={{ display: 'block', marginTop: '1rem' }}>Cô Trần M.</strong><span style={{ fontSize: '0.9rem', color: '#666' }}>Phẫu thuật tiêu hóa</span></article></div><div className="feedback-action" style={{ textAlign: 'center', marginTop: '2rem' }}><a href="#" target="_blank" rel="noreferrer" className="button button-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>Xem thêm đánh giá & góp ý <span>→</span></a></div></div></section>; }
 
-function PageHero({ title, text, label, backHome = false }: { title: string; text: string; label: string; backHome?: boolean }) { return <section className="page-hero"><div className="container"><span className="eyebrow">{label}</span><h1>{title}</h1><p>{text}</p><div className="breadcrumbs"><Link to="/gioi-thieu">Giới thiệu</Link><span>/</span><span>{title}</span></div>{backHome && <Link to="/gioi-thieu" className="button button-primary page-back-button"><span>←</span> Về trang chủ</Link>}</div></section>; }
+function PageHero({ title, text, label, backHome = false }: { title: string; text?: string; label: string; backHome?: boolean }) { return <section className="page-hero"><div className="container"><span className="eyebrow">{label}</span><h1>{title}</h1>{text && <p>{text}</p>}<div className="breadcrumbs"><Link to="/gioi-thieu">Giới thiệu</Link><span>/</span><span>{title}</span></div>{backHome && <Link to="/gioi-thieu" className="button button-primary page-back-button"><span>←</span> Về trang chủ</Link>}</div></section>; }
 
 
 
@@ -372,7 +384,7 @@ function PatientPage() { const session = readSession(); if (!session) return <Na
 
 function DepartmentIndexPage() { return <main><PageHero label="Chuyên khoa" title="Danh sách chuyên khoa" text="" backHome /><section className="section"><div className="container"><div className="value-grid department-index-grid">{generalHospitalDepartments.map((department) => <Link className="department-index-card" to={`/khoa/${department.id}`} key={department.id}><span>→</span><h3>{department.title}</h3></Link>)}</div></div></section></main>; }
 
-function DepartmentPage() { const { slug } = useParams(); const department = generalHospitalDepartments.find((item) => item.id === slug); if (!department) return <Navigate to="/benh-ly" replace />; return <main><PageHero label="Chuyên khoa" title={department.title} text="" backHome /><section className="section"><div className="container"><Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></div></section></main>; }
+function DepartmentPage() { const { slug } = useParams(); const department = generalHospitalDepartments.find((item) => item.id === slug); const article = departmentArticles[slug || '']; if (!department && !article) return <Navigate to="/benh-ly" replace />; const title = article?.title || department?.title || ''; const lines = article?.content.split(/\r?\n/) || []; return <main><PageHero label="Chuyên khoa" title={title} text="" backHome /><section className="section"><div className="container department-detail-layout"><article className="medical-article department-article">{lines.map((line, index) => line.startsWith('* ') ? <p className="department-bullet" key={`${line}-${index}`}>{line.slice(2)}</p> : /^[A-ZÀ-Ỹ🩺💧👨‍⚕️🏥💊🔐🌿🔬⚙️]/u.test(line) && line.length < 90 ? <h2 key={`${line}-${index}`}>{line}</h2> : <p key={`${line}-${index}`}>{line}</p>)}<Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></article></div></section></main>; }
 
 function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<DiseasesPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/phuong-phap-phau-thuat-tri" element={<SurgeryPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
 
