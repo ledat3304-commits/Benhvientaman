@@ -370,3 +370,13 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .health-system-card--general .health-system-link{color:#98742e}
 @media(max-width:900px){.health-system-grid{grid-template-columns:1fr 1fr}.health-system-card h3{min-height:0}.health-system-summary{min-height:0}}
 @media(max-width:650px){.health-system-grid{grid-template-columns:1fr}.health-system-card{padding:24px 21px 21px}.health-system-card h3{font-size:18px}.health-system-summary{margin-bottom:16px}}
+
+/* Đồng bộ chính xác các nhãn section được yêu cầu về 20px */
+.intro-section .section-heading>.eyebrow,
+.hospital-evidence .section-heading>.eyebrow,
+.equipment-showcase-heading>.eyebrow,
+.expert-corner-heading .eyebrow,
+.anal-health-section .complications-heading>.eyebrow,
+.anal-health-section .methods-heading .section-heading>.eyebrow,
+.feedback-heading .section-heading>.eyebrow,
+.app-section .eyebrow{font-size:20px!important;line-height:1.3!important}
