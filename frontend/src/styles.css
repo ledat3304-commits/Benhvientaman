@@ -230,6 +230,9 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .nav-dropdown--specialties .nav-dropdown-menu{width:min(360px,calc(100vw - 32px));max-height:calc(100vh - 64px);overflow-y:auto}
 .nav-dropdown--specialties .nav-dropdown-menu a{white-space:normal;line-height:1.4}
 .nav-menu-subtitle{display:block;padding:9px 15px 4px;border-top:1px solid var(--line);color:var(--teal);font-size:9px;font-weight:800;letter-spacing:.04em;line-height:1.35;white-space:normal}
+.department-index-card{display:block;padding:30px;border-radius:14px;background:#fff;box-shadow:0 8px 20px rgba(23,64,170,.08)}
+.department-index-card span{color:var(--teal);font-size:25px}
+.department-index-card h3{margin:12px 0 0;color:var(--navy);font-size:17px}
 .hero-slider.slide-banner-image{height:clamp(320px,42vw,560px);min-height:0;aspect-ratio:auto;background:#004f51 url('/hospital/banner-tam-an.png') center / 100% 100% no-repeat}
 .hero-slider.slide-banner-image .hero-content{display:none}
 .hero-slider.slide-banner-image .slider-controls{position:absolute;right:0;bottom:0;left:0;padding-top:12px;padding-bottom:17px;color:#fff}
