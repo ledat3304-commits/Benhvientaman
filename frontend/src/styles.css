@@ -427,6 +427,9 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .health-card p,
 .equipment-board figcaption{margin-bottom:16px;text-align:justify;text-justify:inter-word;line-height:1.6}
 
+/* Góc chuyên gia: mô tả ngắn ở thẻ, nội dung đầy đủ nằm tại trang chi tiết */
+.expert-corner-card>p{display:-webkit-box;min-height:0;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:3}
+
 /* Đồng bộ chính xác các nhãn section được yêu cầu về 20px */
 .intro-section .section-heading>.eyebrow,
 .hospital-evidence .section-heading>.eyebrow,
