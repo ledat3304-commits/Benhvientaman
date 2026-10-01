@@ -397,6 +397,9 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .leader-card--green .leader-info>span{color:#4265b5}
 .leader-card--green .leader-info i{background:#5276ca}
 
+/* Ký tự đơn vị trong dải thống kê */
+.stats-grid>div>strong>span{font-size:20px!important;line-height:1;vertical-align:baseline}
+
 /* Đồng bộ chính xác các nhãn section được yêu cầu về 20px */
 .intro-section .section-heading>.eyebrow,
 .hospital-evidence .section-heading>.eyebrow,
