@@ -473,3 +473,7 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .equipment-card p{min-height:68px;margin:0;color:var(--muted);font-size:12px;line-height:1.55;text-align:justify;text-justify:inter-word}
 @media(max-width:1100px){.equipment-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.equipment-card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.equipment-card{border-radius:13px}.equipment-card-content{padding:12px 12px 14px}.equipment-card h3{min-height:0;font-size:13px}.equipment-card p{min-height:0;font-size:11px}.equipment-card-content>span{width:25px;height:25px;font-size:10px}}
+
+/* Ảnh thiết bị đã được cắt thành từng file riêng */
+.equipment-card-image{aspect-ratio:auto;background:none;background-position:initial;background-size:initial}
+.equipment-card-image img{display:block;width:100%;height:auto}
