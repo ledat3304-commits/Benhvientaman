@@ -278,7 +278,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             </div>
 
-            <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group nav-menu-group--support"><Link to="/dat-lich">Đặt lịch khám</Link><Link to="/bao-hiem">BHYT & bảo hiểm</Link></div></div></div>
+            <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}</div></div>
 
             <Link className={location.pathname === '/bao-hiem' ? 'active' : ''} to="/bao-hiem">BHYT</Link><Link to="/benh-ly">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
 
