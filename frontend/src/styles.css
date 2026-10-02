@@ -837,6 +837,8 @@ main .anal-health-section{display:none!important}
 .home-team-card--director>div>span{color:#dbe7ff}
 .home-team-card h3{margin:0;color:var(--navy);font-size:16px;line-height:1.35}
 .home-team-card--director h3{color:#fff}
+.home-team-banner-wrap{overflow:hidden;border:1px solid #d7e5f8;border-radius:20px;background:#fff;box-shadow:0 18px 38px rgba(23,64,170,.12)}
+.home-team-banner{display:block;width:100%;height:auto;max-height:560px;object-fit:cover}
 @media(max-width:800px){
   .home-service-grid{grid-template-columns:1fr}
   .home-team-grid{grid-template-columns:1fr 1fr}
@@ -850,4 +852,6 @@ main .anal-health-section{display:none!important}
   .home-service-card{min-height:0;padding:24px}
   .home-team-grid{grid-template-columns:1fr}
   .home-team-card--director{grid-column:auto}
+  .home-team-banner-wrap{border-radius:14px}
+  .home-team-banner{min-height:180px;object-fit:cover;object-position:center}
 }

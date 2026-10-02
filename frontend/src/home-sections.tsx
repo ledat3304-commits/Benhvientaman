@@ -20,14 +20,6 @@ const homeServiceGroups = [
   },
 ];
 
-const teamMembers = [
-  { role: 'Chủ tịch HĐQT / Giám đốc', name: 'BS CKII. Lê Thái Cơ', photo: '/hospital/leader-le-thai-co.jpg' },
-  { role: 'Phó giám đốc chuyên môn', name: 'TS. BS. Lê Xuân Huệ', initials: 'LXH' },
-  { role: 'Phó giám đốc tài chính – nhân sự', name: 'CN. Mai Thị Hồng Hải', initials: 'MHH' },
-  { role: 'Đội ngũ chuyên môn', name: 'PGS.TS Nguyễn Mạnh Nhâm', initials: 'NMN' },
-  { role: 'Đội ngũ chuyên môn', name: 'BS CKI Lê Thái Cương', initials: 'LTC' },
-];
-
 export function ServicePackagesSection() {
   return (
     <section className="section home-services-section" id="dich-vu">
@@ -68,13 +60,8 @@ export function TeamSection() {
           </div>
           <Link to="/gioi-thieu#lanh-dao" className="button button-primary">Xem đội ngũ <span>→</span></Link>
         </div>
-        <div className="home-team-grid">
-          {teamMembers.map((member, index) => (
-            <article className={`home-team-card${index === 0 ? ' home-team-card--director' : ''}`} key={member.name}>
-              {member.photo ? <img src={member.photo} alt={member.name} /> : <span className="home-team-avatar">{member.initials}</span>}
-              <div><span>{member.role}</span><h3>{member.name}</h3></div>
-            </article>
-          ))}
+        <div className="home-team-banner-wrap">
+          <img className="home-team-banner" src="/hospital/leadership-team-banner.png" alt="Ban lãnh đạo Bệnh viện Đa khoa Tâm An" />
         </div>
       </div>
     </section>
