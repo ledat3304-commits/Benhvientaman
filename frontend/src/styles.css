@@ -1062,6 +1062,12 @@ main .department-group-heading>p{
   text-align:justify!important;
   text-justify:inter-word
 }
+main .department-directory-note strong,
+main .department-directory-note span,
+main .department-directory-note a{
+  font-size:130%!important;
+  line-height:1.5
+}
 @media(max-width:650px){
   main .hospital-evidence .section-heading>p,
   main .department-directory-intro>div>p,
