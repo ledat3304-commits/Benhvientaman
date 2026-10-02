@@ -993,3 +993,8 @@ main .department-directory .department-card-number{
   main .department-directory .department-directory-intro>div>p,
   main .department-directory .department-group-heading>p{font-size:15px!important}
 }
+
+/* Font chu thong nhat cho toan bo website */
+html,body,body *{
+  font-family:'Times New Roman',Times,serif!important
+}
