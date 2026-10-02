@@ -220,6 +220,90 @@ function ChatWidget() {
 
 }
 
+function setupStatsAnimation() {
+  let activeSection: HTMLElement | null = null;
+  let stopActiveAnimation = () => {};
+
+  const attachStatsAnimation = () => {
+    const section = document.querySelector<HTMLElement>('.stats-section');
+
+    if (section === activeSection) return;
+
+    stopActiveAnimation();
+    activeSection = section;
+    if (!section) return;
+
+    const values = [15, 50, 25000, 98];
+    const statItems = Array.from(section.querySelectorAll<HTMLElement>('.stats-grid > div'));
+    const frameIds: number[] = [];
+    let hasStarted = false;
+    let visibilityObserver: IntersectionObserver | null = null;
+
+    const animate = () => {
+      if (hasStarted) return;
+      hasStarted = true;
+
+      statItems.forEach((item, index) => {
+        const strong = item.querySelector<HTMLElement>('strong');
+        if (!strong || values[index] === undefined) return;
+
+        const suffix = index === 2 ? '' : strong.querySelector('span')?.textContent || '';
+        const numberNode = document.createTextNode('0');
+        strong.replaceChildren(numberNode);
+
+        if (suffix) {
+          const suffixNode = document.createElement('span');
+          suffixNode.textContent = suffix;
+          strong.appendChild(suffixNode);
+        }
+
+        const startedAt = performance.now();
+        const duration = 1100;
+        const frame = (now: number) => {
+          const progress = Math.min((now - startedAt) / duration, 1);
+          const easedProgress = 1 - Math.pow(1 - progress, 3);
+          numberNode.textContent = String(Math.round(values[index] * easedProgress));
+
+          if (progress < 1) {
+            frameIds.push(window.requestAnimationFrame(frame));
+          } else {
+            item.classList.add('is-bounced');
+          }
+        };
+
+        frameIds.push(window.requestAnimationFrame(frame));
+      });
+    };
+
+    if ('IntersectionObserver' in window) {
+      visibilityObserver = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          animate();
+          visibilityObserver?.disconnect();
+        }
+      }, { threshold: 0.35 });
+      visibilityObserver.observe(section);
+    } else {
+      animate();
+    }
+
+    stopActiveAnimation = () => {
+      visibilityObserver?.disconnect();
+      frameIds.forEach((frameId) => window.cancelAnimationFrame(frameId));
+    };
+  };
+
+  const domObserver = new MutationObserver(attachStatsAnimation);
+  domObserver.observe(document.body, { childList: true, subtree: true });
+  attachStatsAnimation();
+
+  return () => {
+    domObserver.disconnect();
+    stopActiveAnimation();
+    activeSection = null;
+  };
+}
+
 function BackToTop() {
 
   const [visible, setVisible] = useState(false);
@@ -230,6 +314,8 @@ function BackToTop() {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => setupStatsAnimation(), []);
 
   if (!visible) return null;
 
