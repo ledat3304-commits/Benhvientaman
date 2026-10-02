@@ -1047,6 +1047,13 @@ main .hospital-evidence .section-heading>p{
   text-align:justify!important;
   text-justify:inter-word
 }
+main .equipment-card p{
+  color:#000!important;
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word
+}
 @media(max-width:650px){
   main .hospital-evidence .section-heading>p{font-size:15px!important}
 }
