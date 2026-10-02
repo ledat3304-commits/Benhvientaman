@@ -913,3 +913,17 @@ main .event-news-article p{font-size:16px!important;line-height:1.75!important}
   main .medical-article p,
   main .event-news-article p{font-size:15px!important}
 }
+
+/* Chuan tieu de: dong bo nhu muc Co so vat chat hien dai */
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6{ text-transform:uppercase }
+main .home-services-heading h2,
+main .home-team-heading h2,
+main .home-news-heading h2{font-size:var(--site-section-title-size)!important;line-height:1.15!important;letter-spacing:0!important}
+main .home-services-heading h2 em,
+main .home-team-heading h2 em,
+main .home-news-heading h2 em{ text-transform:uppercase }
