@@ -1087,3 +1087,11 @@ main .medical-image-credits{
 }
 main .department-directory-note strong{color:var(--navy)!important}
 main .department-directory-note a{color:#ba141a!important}
+main .department-directory .department-group-heading>p{
+  color:#000!important;
+  font-size:16px!important;
+  line-height:1.6!important;
+}
+@media(max-width:650px){
+  main .department-directory .department-group-heading>p{font-size:15px!important}
+}
