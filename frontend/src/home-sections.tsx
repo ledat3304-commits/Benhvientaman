@@ -26,7 +26,7 @@ export function ServicePackagesSection() {
       <div className="container">
         <div className="home-services-heading">
           <div>
-            <span className="eyebrow">Dịch vụ</span>
+            <span className="eyebrow">Dịch vụ và các gói khám bệnh</span>
             <h2>Dịch vụ và các gói khám bệnh</h2>
             <p>Chủ động chăm sóc sức khỏe với các gói khám và hướng điều trị được xây dựng theo từng nhu cầu.</p>
           </div>

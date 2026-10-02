@@ -1107,3 +1107,19 @@ main .home-news-heading h2,
 main .feedback-heading .section-heading h2{
   display:none!important
 }
+
+/* Dong bo cac dong tieu de tren trang chu */
+main .intro-copy .section-heading>.eyebrow,
+main .home-services-heading .eyebrow,
+main .hospital-evidence .section-heading>.eyebrow,
+main .equipment-showcase-heading>.eyebrow,
+main .home-news-heading .eyebrow,
+main .feedback-heading .section-heading>.eyebrow{
+  display:block!important;
+  font-size:30px!important;
+  line-height:1.2!important;
+}
+main .home-news-card h3{
+  font-size:30px!important;
+  line-height:1.25!important;
+}
