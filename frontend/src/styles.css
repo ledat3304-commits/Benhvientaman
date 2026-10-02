@@ -521,6 +521,7 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .department-card-link b{font-size:17px;font-weight:400;transition:transform .2s}
 .department-directory-card:hover .department-card-icon{color:#fff;background:var(--teal)}
 .department-directory-card:hover .department-card-link b{transform:translateX(4px)}
+.nav-specialties-index-link{font-weight:800!important;color:var(--teal)!important;border-bottom:1px solid var(--line)}
 .department-directory-note{display:flex;align-items:center;gap:18px;margin-top:55px;padding:22px 25px;border-left:4px solid var(--lime);border-radius:10px;color:#55727a;background:#fff;box-shadow:0 8px 22px rgba(23,64,170,.06);font-size:12px}
 .department-directory-note strong{color:var(--navy);font-size:14px}
 .department-directory-note a{margin-left:auto;color:var(--teal);font-weight:700;white-space:nowrap}
