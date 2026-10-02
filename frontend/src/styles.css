@@ -931,8 +931,9 @@ main .home-news-heading h2 em{ text-transform:uppercase }
 /* Dong bo cac nhan section tren trang chu */
 main .equipment-showcase-heading>.eyebrow,
 main .hospital-evidence .section-heading>.eyebrow,
-main .home-services-heading>.eyebrow,
+  main .home-services-heading .eyebrow,
 main .home-team-heading .eyebrow,
+  main .home-news-heading .eyebrow,
 main .feedback-heading .section-heading>.eyebrow{
   margin-bottom:14px;
   color:var(--navy)!important;
@@ -945,7 +946,8 @@ main .feedback-heading .section-heading>.eyebrow{
 @media(max-width:650px){
   main .equipment-showcase-heading>.eyebrow,
   main .hospital-evidence .section-heading>.eyebrow,
-  main .home-services-heading>.eyebrow,
+  main .home-services-heading .eyebrow,
   main .home-team-heading .eyebrow,
+  main .home-news-heading .eyebrow,
   main .feedback-heading .section-heading>.eyebrow{font-size:17px!important}
 }
