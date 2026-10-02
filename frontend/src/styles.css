@@ -981,6 +981,11 @@ main .department-directory .department-directory-card>p{
   text-align:justify!important;
   text-justify:inter-word
 }
+main .department-directory .department-group-index,
+main .department-directory .department-card-number{
+  font-family:'Playfair Display',Georgia,serif!important;
+  font-weight:700!important
+}
 @media(max-width:650px){
   main .department-directory .department-directory-intro .eyebrow,
   main .department-directory .department-group-heading .eyebrow{font-size:17px!important}
