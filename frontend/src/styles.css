@@ -1144,3 +1144,9 @@ main .stats-grid>div:nth-child(2)>strong>span{
   line-height:1;
   vertical-align:middle;
 }
+main .stats-grid>div{text-align:center!important}
+main .stats-grid>div>p{text-align:center!important}
+main .home-news-link,
+main .home-news-link b{
+  color:var(--lime)!important;
+}
