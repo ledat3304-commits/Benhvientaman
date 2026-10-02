@@ -1085,3 +1085,5 @@ main .medical-image-credits{
   main .department-directory-note span,
   main .department-directory-note a{font-size:15px!important}
 }
+main .department-directory-note strong{color:var(--navy)!important}
+main .department-directory-note a{color:#ba141a!important}
