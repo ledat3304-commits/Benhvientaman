@@ -575,3 +575,48 @@ main p,main li{text-align:justify!important;text-justify:inter-word}
 
 /* Trang hiện chưa cung cấp ứng dụng mobile nên ẩn khu vực giới thiệu app. */
 main .app-section{display:none!important}
+
+/* Chuáº©n hiá»ƒn thá»‹ ná»™i dung cÃ´ng khai theo trang chá»§ */
+:root{--site-body-size:16px;--site-body-line-height:1.6;--site-card-size:13px;--site-card-line-height:1.6}
+main .section{padding-block:95px}
+main .section-heading>p,
+main .equipment-showcase-heading>p,
+main .expert-corner-heading p,
+main .complications-heading>p,
+main .methods-heading .section-heading>p,
+main .feedback-heading .section-heading>p,
+main .department-directory-intro>p,
+main .department-group-heading>p,
+main .page-hero p{font-size:var(--site-body-size)!important;line-height:var(--site-body-line-height)!important;text-align:justify!important;text-justify:inter-word}
+main .evidence-card>p,
+main .health-system-summary,
+main .health-system-card li,
+main .health-card p,
+main .method-card p,
+main .methods-overview p,
+main .expert-corner-card>p,
+main .complication-card p,
+main .equipment-card p,
+main .department-directory-card>p,
+main .about-facility-grid p{font-size:var(--site-card-size)!important;line-height:var(--site-card-line-height)!important;text-align:justify!important;text-justify:inter-word}
+main .about-story p,
+main .about-story li,
+main .department-article p,
+main .medical-article p{font-size:var(--site-body-size)!important;line-height:1.75!important;text-align:justify!important;text-justify:inter-word}
+main p,main li,main figcaption,main blockquote{text-justify:inter-word}
+@media(max-width:650px){
+  main .section{padding-block:65px}
+  main .section-heading>p,
+  main .equipment-showcase-heading>p,
+  main .expert-corner-heading p,
+  main .complications-heading>p,
+  main .methods-heading .section-heading>p,
+  main .feedback-heading .section-heading>p,
+  main .department-directory-intro>p,
+  main .department-group-heading>p,
+  main .page-hero p{font-size:15px!important}
+  main .about-story p,
+  main .about-story li,
+  main .department-article p,
+  main .medical-article p{font-size:15px!important}
+}
