@@ -406,7 +406,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             <Link className={location.pathname === '/bao-hiem' ? 'active' : ''} to="/bao-hiem">BHYT</Link><Link className={(location.pathname.startsWith('/benh-ly') || location.pathname.startsWith('/khoa') || location.pathname.startsWith('/chuyen-khoa')) ? 'active' : ''} to="/chuyen-khoa">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
 
-            <div className={dropdownClass('news', 'nav-dropdown--news')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('news')} aria-expanded={mobileDropdown === 'news'} aria-haspopup="true">TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu"><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link><Link to="/faq">Câu hỏi thường gặp</Link><Link className="nav-news-menu-item" to="/cam-nang#hoi-nghi"><img src="/news/hoi-nghi-khoa-hoc-2025.jpg" alt="" /><span><strong>Hội nghị khoa học Hậu môn – Trực tràng</strong><small>Xem hình ảnh sự kiện</small></span></Link></div></div>
+            <div className={dropdownClass('news', 'nav-dropdown--news')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('news')} aria-expanded={mobileDropdown === 'news'} aria-haspopup="true">TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu"><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div></div>
 
             <Link to="/lien-he">TUYỂN DỤNG</Link><div className="nav-search"><input type="search" aria-label="Tìm kiếm" placeholder="Tìm kiếm" /><button type="button" aria-label="Thực hiện tìm kiếm">⌕</button></div>
 
