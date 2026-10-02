@@ -620,3 +620,146 @@ main p,main li,main figcaption,main blockquote{text-justify:inter-word}
   main .department-article p,
   main .medical-article p{font-size:15px!important}
 }
+
+/* Department page palette: navy, blue and lime from the logo */
+.department-directory{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg,#edf3ff 0%,#fff 35%,#f7fbe9 100%)
+}
+.department-directory:before,.department-directory:after{
+  content:'';
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none
+}
+.department-directory:before{
+  width:360px;
+  height:360px;
+  top:110px;
+  right:-170px;
+  background:rgba(191,224,71,.18)
+}
+.department-directory:after{
+  width:280px;
+  height:280px;
+  bottom:90px;
+  left:-150px;
+  border:34px solid rgba(23,64,170,.06)
+}
+.department-directory>.container{position:relative;z-index:1}
+.department-directory-intro{
+  position:relative;
+  margin-bottom:42px;
+  padding:34px 38px;
+  border:1px solid #d7e2fb;
+  border-radius:22px;
+  background:linear-gradient(115deg,#fff 0%,#f4f8ff 68%,#eff8d8 100%);
+  box-shadow:0 18px 40px rgba(23,64,170,.09)
+}
+.department-directory-intro:after{
+  content:'';
+  position:absolute;
+  right:28px;
+  top:0;
+  width:82px;
+  height:5px;
+  border-radius:0 0 8px 8px;
+  background:var(--lime)
+}
+.department-directory-intro .eyebrow{color:var(--teal)}
+.department-directory-intro h2{color:var(--navy)!important}
+.department-directory-intro p{color:#536b91!important}
+.department-directory-intro .button{box-shadow:0 10px 20px rgba(23,64,170,.16)}
+.department-group{
+  position:relative;
+  margin-bottom:22px;
+  padding:30px 30px 26px;
+  border:1px solid #dbe5f6;
+  border-top:0;
+  border-radius:18px;
+  background:rgba(255,255,255,.86);
+  box-shadow:0 12px 30px rgba(23,64,170,.06)
+}
+.department-group:before{
+  content:'';
+  position:absolute;
+  inset:0 auto 0 0;
+  width:5px;
+  border-radius:18px 0 0 18px;
+  background:var(--navy)
+}
+.department-group:nth-child(2):before{background:var(--lime)}
+.department-group-heading{margin-bottom:26px}
+.department-group-index{
+  display:grid;
+  place-items:center;
+  width:58px;
+  height:58px;
+  border-radius:18px;
+  color:var(--navy);
+  background:linear-gradient(145deg,#e3ebff,#fff);
+  box-shadow:inset 0 0 0 1px #cbd9f7
+}
+.department-group:nth-child(2) .department-group-index{
+  color:#536b12;
+  background:linear-gradient(145deg,#eff8d8,#fff);
+  box-shadow:inset 0 0 0 1px #d9eaa0
+}
+.department-group-heading .eyebrow{color:#4b70c6}
+.department-group:nth-child(2) .department-group-heading .eyebrow{color:#718b19}
+.department-group-heading h3{color:var(--navy)!important}
+.department-group-heading>p{
+  padding:12px 16px;
+  border-left:3px solid #cbd9f7;
+  border-radius:0 10px 10px 0;
+  color:#566d91!important;
+  background:#f5f8ff
+}
+.department-group:nth-child(2) .department-group-heading>p{
+  border-left-color:#d9eaa0;
+  color:#647334!important;
+  background:#f8fbe9
+}
+.department-directory-grid{gap:18px}
+.department-directory-card{
+  border-color:#dce5f5;
+  background:#fff;
+  box-shadow:0 9px 22px rgba(23,64,170,.07)
+}
+.department-directory-card:nth-child(4n+1) .department-card-top{background:#f4f7ff}
+.department-directory-card:nth-child(4n+2) .department-card-top{background:#f8fbe9}
+.department-directory-card:nth-child(4n+3) .department-card-top{background:#f5f1ff}
+.department-directory-card:nth-child(4n) .department-card-top{background:#fff7e0}
+.department-card-top{margin:0;padding:20px 20px 15px}
+.department-card-icon{box-shadow:0 5px 12px rgba(23,64,170,.08)}
+.department-directory-card:nth-child(4n+1) .department-card-icon{color:var(--navy);background:#dfe8ff}
+.department-directory-card:nth-child(4n+2) .department-card-icon{color:#5d7411;background:#eaf5bc}
+.department-directory-card:nth-child(4n+3) .department-card-icon{color:#6653a4;background:#e9e1ff}
+.department-directory-card:nth-child(4n) .department-card-icon{color:#986e16;background:#ffedb9}
+.department-directory-card h4{background:var(--navy)}
+.department-directory-card:nth-child(4n+2) h4{background:#5f7615}
+.department-directory-card:nth-child(4n+3) h4{background:#3157b5}
+.department-directory-card:nth-child(4n) h4{background:#8b6b19}
+.department-directory-card p{color:#627395!important}
+.department-card-link{color:#bd171d}
+.department-directory-card:hover{border-color:#9cb4e9;box-shadow:0 16px 30px rgba(23,64,170,.14)}
+.department-directory-card:nth-child(4n+2):hover{border-color:#c6db70}
+.department-directory-card:nth-child(4n+1):hover .department-card-icon{background:var(--navy)}
+.department-directory-card:nth-child(4n+2):hover .department-card-icon{background:#718b19}
+.department-directory-card:nth-child(4n+3):hover .department-card-icon{background:#3157b5}
+.department-directory-card:nth-child(4n):hover .department-card-icon{background:#8b6b19}
+.department-directory-note{
+  border-left-color:var(--lime);
+  background:linear-gradient(105deg,#fff,#f4f8ff);
+  box-shadow:0 12px 26px rgba(23,64,170,.08)
+}
+.department-directory-note strong{color:var(--navy)}
+.department-directory-note a{color:#ba141a}
+@media(max-width:650px){
+  .department-directory-intro{padding:27px 22px;border-radius:17px}
+  .department-group{padding:25px 18px 20px;border-radius:15px}
+  .department-group:before{border-radius:15px 0 0 15px}
+  .department-group-heading>p{padding:10px 12px}
+  .department-group-index{width:46px;height:46px;border-radius:14px}
+}
