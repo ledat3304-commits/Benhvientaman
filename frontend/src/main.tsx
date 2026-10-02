@@ -130,6 +130,31 @@ const generalHospitalDepartments = [
 
 ];
 
+const departmentGroups = [
+  {
+    title: 'Lâm sàng',
+    description: 'Các chuyên khoa trực tiếp thăm khám, điều trị và đồng hành cùng người bệnh trong suốt hành trình chăm sóc sức khỏe.',
+    items: [
+      { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp', icon: '✚', description: 'Khám và điều trị các bệnh lý nội khoa, theo dõi sức khỏe toàn diện.' },
+      { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp', icon: '◇', description: 'Điều trị ngoại khoa với quy trình an toàn, phối hợp chuyên môn chặt chẽ.' },
+      { id: 'khoa-nhi', title: 'Khoa Nhi', icon: '♡', description: 'Chăm sóc sức khỏe trẻ em trong không gian thân thiện, tận tâm.' },
+      { id: 'khoa-y-hoc-co-truyen', title: 'Y học cổ truyền & Phục hồi chức năng', icon: '✦', description: 'Kết hợp y học cổ truyền và phục hồi chức năng theo từng tình trạng.' },
+      { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu', icon: '◈', description: 'Theo dõi, điều trị bệnh lý thận và thực hiện lọc máu theo chỉ định.' },
+      { id: 'khoa-kham-benh', title: 'Khoa Khám Bệnh', icon: '⌖', description: 'Tiếp nhận, tư vấn và định hướng khám chữa bệnh phù hợp.' },
+      { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây Mê Hồi Sức', icon: '✧', description: 'Đảm bảo an toàn trước, trong và sau phẫu thuật, thủ thuật.' },
+    ],
+  },
+  {
+    title: 'Cận lâm sàng',
+    description: 'Hệ thống xét nghiệm, chẩn đoán hình ảnh và dược hỗ trợ bác sĩ đưa ra hướng xử trí chính xác, kịp thời.',
+    items: [
+      { id: 'khoa-can-lam-sang', title: 'Cận lâm sàng - Chẩn đoán hình ảnh', icon: '⌁', description: 'Hỗ trợ phát hiện, đánh giá và theo dõi bệnh bằng kỹ thuật hiện đại.' },
+      { id: 'khoa-xet-nghiem', title: 'Khoa Xét Nghiệm', icon: '▣', description: 'Thực hiện các xét nghiệm phục vụ chẩn đoán và theo dõi điều trị.' },
+      { id: 'khoa-duoc', title: 'Khoa Dược', icon: '＋', description: 'Đảm bảo cung ứng và sử dụng thuốc an toàn, hợp lý, hiệu quả.' },
+    ],
+  },
+];
+
 const healthSystemProfiles = [
 
   {
@@ -392,7 +417,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 }
 
-function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link to="/" className="brand brand-light"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><p className="footer-intro">Đồng hành cùng bạn trên hành trình chăm sóc sức khỏe an toàn, chuyên nghiệp và nhân văn.</p><div className="social-row"><span>f</span><span>in</span><span>▶</span></div></div><div><h3>Khám phá</h3><Link to="/gioi-thieu">Về Tâm An</Link><Link to="/dat-lich">Đặt lịch trực tuyến</Link><Link to="/benh-ly">Chuyên mục bệnh lý</Link><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div><div><h3>Hỗ trợ người bệnh</h3><Link to="/faq">Câu hỏi thường gặp</Link><Link to="/bao-hiem">Bảo hiểm y tế</Link><Link to="/bao-hiem#bao-lanh">Bảo lãnh viện phí</Link><Link to="/lien-he">Liên hệ & cơ sở</Link></div><div><h3>Liên hệ</h3><a href="tel:0977335599" className="footer-hotline">0977 33 55 99</a><p>Hotline 24/7</p><a href="mailto:contact@benhvientaman.vn">contact@benhvientaman.vn</a><p>257 Nguyễn Trãi, Thanh Hóa</p></div></div><div className="container footer-bottom"><span>© 2025 Bệnh viện Tâm An</span><span>Chính sách bảo mật · Điều khoản sử dụng</span></div></footer>; }
+function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link to="/" className="brand brand-light"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><p className="footer-intro">Đồng hành cùng bạn trên hành trình chăm sóc sức khỏe an toàn, chuyên nghiệp và nhân văn.</p><div className="social-row"><span>f</span><span>in</span><span>▶</span></div></div><div><h3>Khám phá</h3><Link to="/gioi-thieu">Về Tâm An</Link><Link to="/dat-lich">Đặt lịch trực tuyến</Link><Link to="/benh-ly">Chuyên mục bệnh lý</Link><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div><div><h3>Hỗ trợ người bệnh</h3><Link to="/faq">Câu hỏi thường gặp</Link><Link to="/bao-hiem">Bảo hiểm y tế</Link><Link to="/bao-hiem#bao-lanh">Bảo lãnh viện phí</Link><Link to="/lien-he">Liên hệ & cơ sở</Link></div><div><h3>Liên hệ</h3><a href="tel:0977335599" className="footer-hotline">0977 33 55 99</a><p>Hotline 24/7</p><a href="mailto:contact@benhvientaman.vn">contact@benhvientaman.vn</a><p>Lô 05-06-07 đường Trịnh Kiểm, P. Quảng Phú, TP. Thanh Hóa</p></div></div><div className="container footer-bottom"><span>© 2025 Bệnh viện Tâm An</span><span>Chính sách bảo mật · Điều khoản sử dụng</span></div></footer>; }
 
 function SectionHeading({ eyebrow, title, text, light = false, eyebrowClassName = '' }: { eyebrow?: string; title: string; text?: string; light?: boolean; eyebrowClassName?: string }) { return <div className={light ? 'section-heading light' : 'section-heading'}>{eyebrow && <span className={`eyebrow${eyebrowClassName ? ` ${eyebrowClassName}` : ''}`}>{eyebrow}</span>}<h2>{title}</h2>{text && <p>{text}</p>}</div>; }
 
@@ -466,7 +491,7 @@ function RegisterPage() { const [message, setMessage] = useState(''); const [for
 
 function PatientPage() { const session = readSession(); if (!session) return <Navigate to="/login" replace />; return <main><PageHero label="Khu vực cá nhân" title={`Xin chào, ${session.user?.HoTen || 'bạn'}`} text="Theo dõi lịch khám và thông tin sức khỏe của bạn tại Tâm An." /><section className="section"><div className="container dashboard-card"><h2>Lịch khám của bạn</h2><p>Bạn có thể đặt lịch mới hoặc liên hệ hotline để được hỗ trợ quản lý lịch hẹn.</p><Link to="/dat-lich" className="button button-primary">Đặt lịch mới <span>→</span></Link></div></section></main>; }
 
-function DepartmentIndexPage() { return <main><PageHero label="Chuyên khoa" title="Danh sách chuyên khoa" text="" backHome /><section className="section"><div className="container"><div className="value-grid department-index-grid">{generalHospitalDepartments.map((department) => <Link className="department-index-card" to={`/khoa/${department.id}`} key={department.id}><span>→</span><h3>{department.title}</h3></Link>)}</div></div></section></main>; }
+function DepartmentIndexPage() { return <main><PageHero label="Chuyên khoa" title="Danh sách chuyên khoa" text="Tìm hiểu các đơn vị chuyên môn và lựa chọn nơi đồng hành phù hợp với nhu cầu chăm sóc sức khỏe của bạn." backHome /><section className="section department-directory"><div className="container"><div className="department-directory-intro"><div><span className="eyebrow">Hệ thống chuyên môn</span><h2>Chăm sóc toàn diện theo từng nhu cầu</h2><p>Tâm An xây dựng hệ thống chuyên khoa phối hợp liên tục, từ thăm khám ban đầu đến chẩn đoán, điều trị và phục hồi.</p></div><Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></div><div className="department-group-list">{departmentGroups.map((group, groupIndex) => <section className="department-group" key={group.title}><div className="department-group-heading"><span className="department-group-index">0{groupIndex + 1}</span><div><span className="eyebrow">Lĩnh vực chuyên môn</span><h3>{group.title}</h3></div><p>{group.description}</p></div><div className="department-directory-grid">{group.items.map((department, index) => <Link className="department-directory-card" to={`/khoa/${department.id}`} key={department.id}><div className="department-card-top"><span className="department-card-icon">{department.icon}</span><span className="department-card-number">{String(index + 1).padStart(2, '0')}</span></div><h4>{department.title}</h4><p>{department.description}</p><span className="department-card-link">Xem chi tiết <b>→</b></span></Link>)}</div></section>)}</div><div className="department-directory-note"><strong>Cần được tư vấn chuyên khoa?</strong><span>Đội ngũ Tâm An sẵn sàng hỗ trợ bạn lựa chọn bước thăm khám phù hợp.</span><a href="tel:0977335599">Gọi 0977 33 55 99</a></div></div></section></main>; }
 
 function isDepartmentHeading(line: string) { return line.length < 90 && (line === line.toUpperCase() || /^Gây (mê|tê)$/.test(line) || /^Bước \d+:/.test(line)); }
 
