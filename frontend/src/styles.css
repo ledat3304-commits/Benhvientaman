@@ -365,7 +365,7 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .health-system-status{padding:6px 9px;border-radius:999px;color:#39766b;background:#e9f7f2;font-size:10px;font-weight:800;white-space:nowrap}
 .health-system-card--general .health-system-status{color:#8b6a27;background:#fff6df}
 .health-system-kicker{display:block;margin-bottom:8px;color:var(--teal);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.health-system-card h3{min-height:50px;margin:0;color:var(--navy);font-size:19px;line-height:1.35}
+.health-system-card h3{min-height:50px;margin:0;color:var(--navy);font-size:18px;line-height:1.35}
 .health-system-summary{min-height:66px;margin:13px 0 19px;color:#5b777d;font-size:12px;line-height:1.7}
 .health-system-address{padding:13px 0;border-top:1px solid #e7f0ee;border-bottom:1px solid #e7f0ee}
 .health-system-address span,.health-system-details span{display:block;margin-bottom:5px;color:#8aa0a2;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
