@@ -527,3 +527,45 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .department-directory-note a{margin-left:auto;color:var(--teal);font-weight:700;white-space:nowrap}
 @media(max-width:1000px){.department-directory-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.department-group-heading{grid-template-columns:50px minmax(180px,.7fr) 1fr}}
 @media(max-width:650px){.department-directory{padding-top:55px}.department-directory-intro{display:block;margin-bottom:38px;padding-bottom:28px}.department-directory-intro h2{font-size:1.55rem}.department-directory-intro .button{margin-top:22px}.department-group{padding-top:28px}.department-group-heading{grid-template-columns:42px 1fr;gap:12px 16px;margin-bottom:20px}.department-group-heading p{grid-column:2;font-size:13px}.department-group-index{font-size:32px}.department-group-heading h3{font-size:1.35rem}.department-directory-grid{grid-template-columns:1fr;gap:12px}.department-directory-card{min-height:0;padding:0}.department-card-top{padding:16px 18px 12px}.department-card-icon{width:48px;height:48px;font-size:20px}.department-directory-card h4{min-height:0;font-size:13px}.department-directory-card p{min-height:0;padding:13px 15px 0;font-size:11px}.department-directory-note{display:block;margin-top:38px;padding:18px}.department-directory-note span,.department-directory-note a{display:block;margin-top:7px}.department-directory-note a{margin-left:0}}
+
+/* Quy chuan typography chung theo trang chu */
+:root{--site-section-title-size:36px;--site-section-subtitle-size:clamp(1.35rem,2.2vw,2rem);--site-section-copy-size:16px;--site-card-copy-size:13px}
+main .section-heading>h2,
+main .equipment-showcase-heading>h2,
+main .expert-corner-heading h2,
+main .complications-heading>h3,
+main .methods-heading .section-heading>h2,
+main .feedback-heading .section-heading>h2,
+main .app-section .app-grid h2,
+main .department-directory-intro h2,
+main .about-story>h2{font-size:var(--site-section-title-size)!important;line-height:1.15!important;letter-spacing:0!important}
+main .about-story h3,
+main .department-group-heading h3{font-size:var(--site-section-subtitle-size)!important;line-height:1.3!important}
+main .section-heading>p,
+main .equipment-showcase-heading>p,
+main .expert-corner-heading p,
+main .complications-heading>p,
+main .methods-heading .section-heading>p,
+main .feedback-heading .section-heading>p,
+main .department-directory-intro p,
+main .department-group-heading>p,
+main .page-hero p{font-size:var(--site-section-copy-size)!important;line-height:1.6!important;text-align:center!important}
+main .evidence-card>p,
+main .health-system-summary,
+main .health-card p,
+main .method-card p,
+main .expert-corner-card>p,
+main .complication-card p,
+main .equipment-card p,
+main .department-directory-card>p,
+main .about-facility-grid p{font-size:var(--site-card-copy-size)!important;line-height:1.6!important;text-align:center!important}
+main .about-story p,
+main .about-story li{font-size:14px;line-height:1.75;text-align:center}
+main .department-article p,
+main .medical-article p{font-size:16px;line-height:1.75;text-align:center}
+
+@media(max-width:650px){
+  :root{--site-section-title-size:clamp(1.65rem,7vw,2.2rem);--site-section-copy-size:15px}
+  main .about-story h3,
+  main .department-group-heading h3{font-size:1.35rem!important}
+}
