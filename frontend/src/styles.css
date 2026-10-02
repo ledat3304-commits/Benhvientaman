@@ -879,3 +879,37 @@ main .anal-health-section{display:none!important}
   .home-news-content{padding:24px}
   .home-news-content h3{font-size:1.55rem}
 }
+
+/* Quy chuan cuoi cho cac noi dung mo ta tren toan bo website */
+main p,
+main li,
+main figcaption,
+main blockquote{ text-align:justify!important;text-justify:inter-word }
+main .home-services-heading>div>p,
+main .home-team-heading>div>p,
+main .home-news-heading>div>p,
+main .page-hero p,
+main .section-heading>p{font-size:16px!important;line-height:1.6!important}
+main .home-service-card li,
+main .home-news-content>p,
+main .evidence-card>p,
+main .department-directory-card>p,
+main .health-system-summary,
+main .about-facility-grid p{font-size:13px!important;line-height:1.6!important}
+main .about-story p,
+main .about-story li,
+main .department-article p,
+main .medical-article p,
+main .event-news-article p{font-size:16px!important;line-height:1.75!important}
+@media(max-width:650px){
+  main .home-services-heading>div>p,
+  main .home-team-heading>div>p,
+  main .home-news-heading>div>p,
+  main .page-hero p,
+  main .section-heading>p{font-size:15px!important}
+  main .about-story p,
+  main .about-story li,
+  main .department-article p,
+  main .medical-article p,
+  main .event-news-article p{font-size:15px!important}
+}
