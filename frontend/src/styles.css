@@ -1095,3 +1095,15 @@ main .department-directory .department-group-heading>p{
 @media(max-width:650px){
   main .department-directory .department-group-heading>p{font-size:15px!important}
 }
+
+/* An cac tieu de duoc yeu cau bo khoi trang chu */
+main .intro-copy .section-heading h2,
+main .home-team-heading h2,
+main .home-services-heading h2,
+main .hospital-evidence .section-heading h2,
+main .equipment-showcase-heading h2,
+main .home-news-heading .eyebrow,
+main .home-news-heading h2,
+main .feedback-heading .section-heading h2{
+  display:none!important
+}
