@@ -795,3 +795,7 @@ main p,main li,main figcaption,main blockquote{text-justify:inter-word}
   .department-card-icon:has(.department-card-logo){flex-basis:76px;width:76px;height:76px}
   .department-card-number{top:11px;right:14px}
 }
+
+/* An cac khoi noi dung y khoa nay khoi trang chu */
+main .expert-corner,
+main .anal-health-section{display:none!important}
