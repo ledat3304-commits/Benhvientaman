@@ -408,7 +408,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             <div className={dropdownClass('news', 'nav-dropdown--news')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('news')} aria-expanded={mobileDropdown === 'news'} aria-haspopup="true">TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu"><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div></div>
 
-            <Link to="/lien-he">TUYỂN DỤNG</Link><div className="nav-search"><input type="search" aria-label="Tìm kiếm" placeholder="Tìm kiếm" /><button type="button" aria-label="Thực hiện tìm kiếm">⌕</button></div>
+            <Link to="/lien-he">TUYỂN DỤNG</Link>
 
           </nav>
 
