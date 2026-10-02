@@ -572,3 +572,6 @@ main .medical-article p{font-size:16px;line-height:1.75;text-align:center}
 
 /* Can deu hai ben cho toan bo doan van noi dung */
 main p,main li{text-align:justify!important;text-justify:inter-word}
+
+/* Trang hiện chưa cung cấp ứng dụng mobile nên ẩn khu vực giới thiệu app. */
+main .app-section{display:none!important}
