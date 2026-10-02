@@ -135,22 +135,22 @@ const departmentGroups = [
     title: 'Lâm sàng',
     description: 'Các chuyên khoa trực tiếp thăm khám, điều trị và đồng hành cùng người bệnh trong suốt hành trình chăm sóc sức khỏe.',
     items: [
-      { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp', icon: '✚', description: 'Khám và điều trị các bệnh lý nội khoa, theo dõi sức khỏe toàn diện.' },
-      { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp', icon: '◇', description: 'Điều trị ngoại khoa với quy trình an toàn, phối hợp chuyên môn chặt chẽ.' },
-      { id: 'khoa-nhi', title: 'Khoa Nhi', icon: '♡', description: 'Chăm sóc sức khỏe trẻ em trong không gian thân thiện, tận tâm.' },
-      { id: 'khoa-y-hoc-co-truyen', title: 'Y học cổ truyền & Phục hồi chức năng', icon: '✦', description: 'Kết hợp y học cổ truyền và phục hồi chức năng theo từng tình trạng.' },
-      { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu', icon: '◈', description: 'Theo dõi, điều trị bệnh lý thận và thực hiện lọc máu theo chỉ định.' },
-      { id: 'khoa-kham-benh', title: 'Khoa Khám Bệnh', icon: '⌖', description: 'Tiếp nhận, tư vấn và định hướng khám chữa bệnh phù hợp.' },
-      { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây Mê Hồi Sức', icon: '✧', description: 'Đảm bảo an toàn trước, trong và sau phẫu thuật, thủ thuật.' },
+      { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp', icon: '✚', logo: '/specialties/01-noi-tong-hop.svg', description: 'Khám và điều trị các bệnh lý nội khoa, theo dõi sức khỏe toàn diện.' },
+      { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp', icon: '◇', logo: '/specialties/02-ngoai-tong-hop.svg', description: 'Điều trị ngoại khoa với quy trình an toàn, phối hợp chuyên môn chặt chẽ.' },
+      { id: 'khoa-nhi', title: 'Khoa Nhi', icon: '♡', logo: '/specialties/03-nhi.svg', description: 'Chăm sóc sức khỏe trẻ em trong không gian thân thiện, tận tâm.' },
+      { id: 'khoa-y-hoc-co-truyen', title: 'Y học cổ truyền & Phục hồi chức năng', icon: '✦', logo: '/specialties/04-y-hoc-co-truyen.svg', description: 'Kết hợp y học cổ truyền và phục hồi chức năng theo từng tình trạng.' },
+      { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu', icon: '◈', logo: '/specialties/05-than-loc-mau.svg', description: 'Theo dõi, điều trị bệnh lý thận và thực hiện lọc máu theo chỉ định.' },
+      { id: 'khoa-kham-benh', title: 'Khoa Khám Bệnh', icon: '⌖', logo: '/specialties/06-kham-benh.svg', description: 'Tiếp nhận, tư vấn và định hướng khám chữa bệnh phù hợp.' },
+      { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây Mê Hồi Sức', icon: '✧', logo: '/specialties/07-gay-me-hoi-suc.svg', description: 'Đảm bảo an toàn trước, trong và sau phẫu thuật, thủ thuật.' },
     ],
   },
   {
     title: 'Cận lâm sàng',
     description: 'Hệ thống xét nghiệm, chẩn đoán hình ảnh và dược hỗ trợ bác sĩ đưa ra hướng xử trí chính xác, kịp thời.',
     items: [
-      { id: 'khoa-can-lam-sang', title: 'Cận lâm sàng - Chẩn đoán hình ảnh', icon: '⌁', description: 'Hỗ trợ phát hiện, đánh giá và theo dõi bệnh bằng kỹ thuật hiện đại.' },
-      { id: 'khoa-xet-nghiem', title: 'Khoa Xét Nghiệm', icon: '▣', description: 'Thực hiện các xét nghiệm phục vụ chẩn đoán và theo dõi điều trị.' },
-      { id: 'khoa-duoc', title: 'Khoa Dược', icon: '＋', description: 'Đảm bảo cung ứng và sử dụng thuốc an toàn, hợp lý, hiệu quả.' },
+      { id: 'khoa-can-lam-sang', title: 'Cận lâm sàng - Chẩn đoán hình ảnh', icon: '⌁', logo: '/specialties/08-chan-doan-hinh-anh.svg', description: 'Hỗ trợ phát hiện, đánh giá và theo dõi bệnh bằng kỹ thuật hiện đại.' },
+      { id: 'khoa-xet-nghiem', title: 'Khoa Xét Nghiệm', icon: '▣', logo: '/specialties/09-xet-nghiem.svg', description: 'Thực hiện các xét nghiệm phục vụ chẩn đoán và theo dõi điều trị.' },
+      { id: 'khoa-duoc', title: 'Khoa Dược', icon: '＋', logo: '/specialties/10-duoc.svg', description: 'Đảm bảo cung ứng và sử dụng thuốc an toàn, hợp lý, hiệu quả.' },
     ],
   },
   {
@@ -498,7 +498,7 @@ function RegisterPage() { const [message, setMessage] = useState(''); const [for
 
 function PatientPage() { const session = readSession(); if (!session) return <Navigate to="/login" replace />; return <main><PageHero label="Khu vực cá nhân" title={`Xin chào, ${session.user?.HoTen || 'bạn'}`} text="Theo dõi lịch khám và thông tin sức khỏe của bạn tại Tâm An." /><section className="section"><div className="container dashboard-card"><h2>Lịch khám của bạn</h2><p>Bạn có thể đặt lịch mới hoặc liên hệ hotline để được hỗ trợ quản lý lịch hẹn.</p><Link to="/dat-lich" className="button button-primary">Đặt lịch mới <span>→</span></Link></div></section></main>; }
 
-function DepartmentIndexPage() { return <main><section className="section department-directory"><div className="container"><div className="department-directory-intro"><div><span className="eyebrow">Hệ thống chuyên môn</span><h2>Chăm sóc toàn diện theo từng nhu cầu</h2><p>Tâm An xây dựng hệ thống chuyên khoa phối hợp liên tục, từ thăm khám ban đầu đến chẩn đoán, điều trị và phục hồi.</p></div><Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></div><div className="department-group-list">{departmentGroups.map((group, groupIndex) => <section className="department-group" key={group.title}><div className="department-group-heading"><span className="department-group-index">0{groupIndex + 1}</span><div><span className="eyebrow">Lĩnh vực chuyên môn</span><h3>{group.title}</h3></div><p>{group.description}</p></div><div className="department-directory-grid">{group.items.map((department, index) => <Link className="department-directory-card" to={'href' in department ? department.href : `/khoa/${department.id}`} key={department.id}><div className="department-card-top"><span className="department-card-icon">{department.icon}</span><span className="department-card-number">{String(index + 1).padStart(2, '0')}</span></div><h4>{department.title}</h4><p>{department.description}</p><span className="department-card-link">Xem chi tiết <b>→</b></span></Link>)}</div></section>)}</div><div className="department-directory-note"><strong>Cần được tư vấn chuyên khoa?</strong><span>Đội ngũ Tâm An sẵn sàng hỗ trợ bạn lựa chọn bước thăm khám phù hợp.</span><a href="tel:0977335599">Gọi 0977 33 55 99</a></div></div></section></main>; }
+function DepartmentIndexPage() { return <main><section className="section department-directory"><div className="container"><div className="department-directory-intro"><div><span className="eyebrow">Hệ thống chuyên môn</span><h2>Chăm sóc toàn diện theo từng nhu cầu</h2><p>Tâm An xây dựng hệ thống chuyên khoa phối hợp liên tục, từ thăm khám ban đầu đến chẩn đoán, điều trị và phục hồi.</p></div><Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></div><div className="department-group-list">{departmentGroups.map((group, groupIndex) => <section className="department-group" key={group.title}><div className="department-group-heading"><span className="department-group-index">0{groupIndex + 1}</span><div><span className="eyebrow">Lĩnh vực chuyên môn</span><h3>{group.title}</h3></div><p>{group.description}</p></div><div className="department-directory-grid">{group.items.map((department, index) => <Link className="department-directory-card" to={'href' in department ? department.href : `/khoa/${department.id}`} key={department.id}><div className="department-card-top"><span className="department-card-icon">{'logo' in department ? <img className="department-card-logo" src={department.logo} alt="" aria-hidden="true" /> : department.icon}</span><span className="department-card-number">{String(index + 1).padStart(2, '0')}</span></div><h4>{department.title}</h4><p>{department.description}</p><span className="department-card-link">Xem chi tiết <b>→</b></span></Link>)}</div></section>)}</div><div className="department-directory-note"><strong>Cần được tư vấn chuyên khoa?</strong><span>Đội ngũ Tâm An sẵn sàng hỗ trợ bạn lựa chọn bước thăm khám phù hợp.</span><a href="tel:0977335599">Gọi 0977 33 55 99</a></div></div></section></main>; }
 
 function isDepartmentHeading(line: string) { return line.length < 90 && (line === line.toUpperCase() || /^Gây (mê|tê)$/.test(line) || /^Bước \d+:/.test(line)); }
 
