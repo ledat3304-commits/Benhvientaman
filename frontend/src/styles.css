@@ -569,3 +569,6 @@ main .medical-article p{font-size:16px;line-height:1.75;text-align:center}
   main .about-story h3,
   main .department-group-heading h3{font-size:1.35rem!important}
 }
+
+/* Can deu hai ben cho toan bo doan van noi dung */
+main p,main li{text-align:justify!important;text-justify:inter-word}
