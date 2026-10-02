@@ -1054,6 +1054,16 @@ main .equipment-card p{
   text-align:justify!important;
   text-justify:inter-word
 }
+main .department-directory-intro>div>p,
+main .department-group-heading>p{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word
+}
 @media(max-width:650px){
-  main .hospital-evidence .section-heading>p{font-size:15px!important}
+  main .hospital-evidence .section-heading>p,
+  main .department-directory-intro>div>p,
+  main .department-group-heading>p{font-size:15px!important}
 }
