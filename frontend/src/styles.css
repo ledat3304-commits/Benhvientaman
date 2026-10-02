@@ -998,3 +998,9 @@ main .department-directory .department-card-number{
 html,body,body *{
   font-family:'Open Sans',Arial,sans-serif!important
 }
+
+/* Tang do tuong phan cho phan gioi thieu tren trang chu */
+main .intro-copy .section-heading>p,
+main .intro-copy .check-list p{
+  color:#000!important
+}
