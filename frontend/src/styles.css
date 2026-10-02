@@ -385,7 +385,7 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 
 /* Logo palette: royal blue + lime green */
 .hero-slider{background:#1740AA}
-.hero-slider:before{background:radial-gradient(circle at 80% 20%,rgba(184,230,55,.34),transparent 30%),linear-gradient(90deg,rgba(12,35,103,.78),rgba(33,75,179,.16))}
+.hero-slider:before{display:none}
 .slide-two{background:linear-gradient(110deg,#1c3d91,#2858bd)}
 .slide-three{background:linear-gradient(110deg,#183b8e,#2d61c6)}
 .slide-four{background:linear-gradient(110deg,#142f78,#214eae)}
