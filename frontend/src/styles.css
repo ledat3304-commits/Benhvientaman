@@ -927,3 +927,25 @@ main .home-news-heading h2{font-size:var(--site-section-title-size)!important;li
 main .home-services-heading h2 em,
 main .home-team-heading h2 em,
 main .home-news-heading h2 em{ text-transform:uppercase }
+
+/* Dong bo cac nhan section tren trang chu */
+main .equipment-showcase-heading>.eyebrow,
+main .hospital-evidence .section-heading>.eyebrow,
+main .home-services-heading>.eyebrow,
+main .home-team-heading .eyebrow,
+main .feedback-heading .section-heading>.eyebrow{
+  margin-bottom:14px;
+  color:var(--navy)!important;
+  font-size:20px!important;
+  font-weight:700!important;
+  letter-spacing:.08em!important;
+  line-height:1.3!important;
+  text-transform:uppercase
+}
+@media(max-width:650px){
+  main .equipment-showcase-heading>.eyebrow,
+  main .hospital-evidence .section-heading>.eyebrow,
+  main .home-services-heading>.eyebrow,
+  main .home-team-heading .eyebrow,
+  main .feedback-heading .section-heading>.eyebrow{font-size:17px!important}
+}
