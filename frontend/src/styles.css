@@ -1002,5 +1002,30 @@ html,body,body *{
 /* Tang do tuong phan cho phan gioi thieu tren trang chu */
 main .intro-copy .section-heading>p,
 main .intro-copy .check-list p{
-  color:#000!important
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important
+}
+
+/* Dong bo mau sac va kich thuoc cac doan mo ta tren trang chu */
+main .home-team-heading p,
+main .home-services-heading p,
+main .equipment-showcase-heading>p,
+main .home-news-heading p,
+main .feedback-heading .section-heading>p{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word
+}
+@media(max-width:650px){
+  main .intro-copy .section-heading>p,
+  main .intro-copy .check-list p,
+  main .home-team-heading p,
+  main .home-services-heading p,
+  main .equipment-showcase-heading>p,
+  main .home-news-heading p,
+  main .feedback-heading .section-heading>p{font-size:15px!important}
 }
