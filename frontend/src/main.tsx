@@ -154,7 +154,7 @@ const departmentGroups = [
     ],
   },
   {
-    title: 'Góc chuyên gia',
+    title: 'Chuyên Khoa Hậu Môn - Trực Tràng',
     description: 'Thông tin y khoa dễ hiểu giúp bạn nhận biết dấu hiệu, chủ động chăm sóc và lựa chọn thời điểm thăm khám phù hợp.',
     items: [
       { id: 'goc-chuyen-gia', title: 'Hiểu đúng để chăm sóc đúng', icon: '✦', description: 'Cẩm nang bệnh lý và hướng dẫn chăm sóc sức khỏe được trình bày rõ ràng, dễ theo dõi.', href: '/benh-ly' },
