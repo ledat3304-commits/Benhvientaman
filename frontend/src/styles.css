@@ -1124,3 +1124,23 @@ main .home-news-card h3{
   font-size:30px!important;
   line-height:1.25!important;
 }
+main .home-service-link,
+main .home-service-link b{
+  color:var(--lime)!important;
+}
+
+/* Dong bo mo ta trong khoi thong ke */
+main .stats-grid>div>p{
+  color:#fff!important;
+  font-size:20px!important;
+  font-weight:700!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main .stats-grid>div:nth-child(1)>strong>span,
+main .stats-grid>div:nth-child(2)>strong>span{
+  display:inline-block;
+  font-size:50%!important;
+  line-height:1;
+  vertical-align:middle;
+}
