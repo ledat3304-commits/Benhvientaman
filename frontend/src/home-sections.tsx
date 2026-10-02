@@ -67,3 +67,29 @@ export function TeamSection() {
     </section>
   );
 }
+
+export function NewsEventsSection() {
+  return (
+    <section className="section home-news-section" id="tin-tuc-su-kien">
+      <div className="container">
+        <div className="home-news-heading">
+          <div>
+            <span className="eyebrow">Tin tức Sự kiện</span>
+            <h2>Tin tức Sự kiện</h2>
+            <p>Cập nhật những hoạt động chuyên môn, hội nghị và dấu ấn nổi bật của Bệnh viện Đa khoa Tâm An.</p>
+          </div>
+          <Link to="/cam-nang" className="button button-outline">Xem tất cả <span>→</span></Link>
+        </div>
+        <article className="home-news-card">
+          <div className="home-news-image"><img src="/news/hoi-nghi-khoa-hoc-2025.jpg" alt="Hội nghị Khoa học Hậu môn – Trực tràng toàn quốc lần thứ XIII" /></div>
+          <div className="home-news-content">
+            <span className="home-news-date">11.10.2025 · Thanh Hóa</span>
+            <h3>Hội nghị Khoa học Hậu môn – Trực tràng toàn quốc lần thứ XIII</h3>
+            <p>Hội nghị kết nối các chuyên gia, nhà khoa học và bác sĩ để chia sẻ những tiến bộ trong chẩn đoán, điều trị và chăm sóc người bệnh.</p>
+            <Link to="/cam-nang" className="home-news-link">Đọc tin tức <b>→</b></Link>
+          </div>
+        </article>
+      </div>
+    </section>
+  );
+}
