@@ -443,13 +443,13 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .expert-corner-card>p{display:-webkit-box;min-height:0;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3}
 
 /* Nút về đầu trang và thu gọn khung hỗ trợ còn 75% */
-.back-to-top{position:fixed;left:24px;bottom:24px;z-index:49;display:grid;place-items:center;width:48px;height:48px;padding:0;border:1px solid rgba(255,255,255,.35);border-radius:50%;color:var(--navy);background:var(--lime);box-shadow:0 10px 24px rgba(23,64,170,.22);transition:transform .2s,box-shadow .2s}
+.back-to-top{position:fixed;right:24px;bottom:74px;z-index:49;display:grid;place-items:center;width:48px;height:48px;padding:0;border:1px solid rgba(255,255,255,.35);border-radius:50%;color:var(--navy);background:var(--lime);box-shadow:0 10px 24px rgba(23,64,170,.22);transition:transform .2s,box-shadow .2s}
 .back-to-top:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(23,64,170,.3)}
 .back-to-top span{font-size:22px;line-height:1}
 .back-to-top small{position:absolute;left:calc(100% + 8px);padding:5px 8px;border-radius:6px;color:#fff;background:var(--navy);font-size:10px;opacity:0;pointer-events:none;white-space:nowrap;transition:opacity .2s}
 .back-to-top:hover small{opacity:1}
 .chat-widget{transform:scale(.75);transform-origin:bottom right}
-@media(max-width:650px){.back-to-top{left:16px;bottom:16px;width:42px;height:42px}.back-to-top span{font-size:19px}.chat-widget{transform:scale(.75);transform-origin:bottom right}}
+@media(max-width:650px){.back-to-top{right:16px;bottom:61px;width:42px;height:42px}.back-to-top span{font-size:19px}.chat-widget{transform:scale(.75);transform-origin:bottom right}}
 
 /* Khung quick actions nổi bật theo màu logo */
 .quick-actions{width:min(1160px,calc(100% - 48px));margin:-1px auto 0;border:4px solid #1740AA;border-radius:20px;background:#1740AA;overflow:hidden;box-shadow:0 10px 26px rgba(23,64,170,.14)}
