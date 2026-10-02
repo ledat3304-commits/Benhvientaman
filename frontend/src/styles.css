@@ -1029,3 +1029,24 @@ main .feedback-heading .section-heading>p{
   main .home-news-heading p,
   main .feedback-heading .section-heading>p{font-size:15px!important}
 }
+
+/* Noi dung goi dich vu, co so vat chat va tin tuc */
+main .home-service-card li,
+main .evidence-card>p,
+main .home-news-content>p{
+  color:#000!important;
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word
+}
+main .hospital-evidence .section-heading>p{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word
+}
+@media(max-width:650px){
+  main .hospital-evidence .section-heading>p{font-size:15px!important}
+}
