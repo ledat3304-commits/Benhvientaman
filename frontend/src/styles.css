@@ -1738,3 +1738,51 @@ main.contact-page .hours-card p span{
   .booking-page .booking-api-form textarea,
   .booking-page .booking-api-form>button{transition:none!important}
 }
+
+/* Quy chuan chu, khoang cach va mau cho trang Dat lich */
+.booking-page .booking-api-card{
+  padding:38px;
+}
+.booking-page .booking-api-card h1{
+  font-size:36px!important;
+  line-height:1.15!important;
+  letter-spacing:0!important;
+}
+.booking-page .booking-api-card>p{
+  color:#000!important;
+  font-size:16px!important;
+  line-height:1.6!important;
+}
+.booking-page .booking-api-form{
+  gap:20px;
+  margin-top:30px;
+}
+.booking-page .booking-api-form label{
+  color:#000!important;
+  font-size:13px!important;
+  line-height:1.4!important;
+}
+.booking-page .booking-api-form input,
+.booking-page .booking-api-form select,
+.booking-page .booking-api-form textarea{
+  color:#000!important;
+  font-size:13px!important;
+  line-height:1.5!important;
+}
+.booking-page .booking-api-form input::placeholder,
+.booking-page .booking-api-form textarea::placeholder{color:#000!important;opacity:.7}
+.booking-page .booking-api-row{gap:20px}
+.booking-page .booking-api-doctor,
+.booking-page .form-success,
+.booking-page .form-error{
+  color:#000!important;
+  font-size:13px!important;
+  line-height:1.6!important;
+}
+@media(max-width:700px){
+  .booking-page .booking-api-card{padding:25px 20px}
+  .booking-page .booking-api-card h1{font-size:30px!important}
+  .booking-page .booking-api-card>p{font-size:15px!important}
+  .booking-page .booking-api-form{gap:16px;margin-top:24px}
+  .booking-page .booking-api-row{gap:16px}
+}
