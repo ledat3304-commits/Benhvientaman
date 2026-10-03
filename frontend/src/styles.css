@@ -1195,3 +1195,42 @@ main .home-news-link,
 main .home-news-link b{
   color:var(--lime)!important;
 }
+
+/* Nut dieu huong tren trang chu theo mau xanh-lime */
+main .home-services-heading .button,
+main .home-team-heading .button,
+main .home-news-heading .button{
+  min-width:156px;
+  min-height:48px;
+  padding:0 17px;
+  border:0;
+  border-radius:9px;
+  color:var(--navy)!important;
+  background:var(--lime)!important;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  line-height:1;
+  box-shadow:none;
+}
+main .home-services-heading .button span,
+main .home-team-heading .button span,
+main .home-news-heading .button span{
+  margin-left:auto;
+  color:var(--navy);
+  font-size:20px;
+  line-height:1;
+}
+main .home-services-heading .button:hover,
+main .home-team-heading .button:hover,
+main .home-news-heading .button:hover{
+  color:var(--navy)!important;
+  background:#cbe95a!important;
+  box-shadow:0 8px 18px rgba(23,64,170,.14);
+  transform:translateY(-2px);
+}
+@media(max-width:650px){
+  main .home-services-heading .button,
+  main .home-team-heading .button,
+  main .home-news-heading .button{min-width:156px}
+}
