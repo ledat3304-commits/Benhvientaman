@@ -1252,3 +1252,4 @@ main.about-page .about-facility-grid p{
 }
 main.about-page .about-contact a,
 main.about-page .about-story-slogan{color:var(--teal)!important}
+main.about-page .about-facility-grid article:first-child h4 span{display:none!important}
