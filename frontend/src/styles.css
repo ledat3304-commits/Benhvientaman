@@ -1315,10 +1315,28 @@ main.guide-page .event-details-grid p{
   line-height:var(--site-card-line-height)!important;
 }
 main.guide-page .page-hero .breadcrumbs{display:none!important}
+/* Can lai khoang cach bo cuc trang Cam nang */
+main.guide-page .page-hero{padding:52px 0 42px}
+main.guide-page>.section{padding-block:64px}
+main.guide-page .event-feature-card{margin-top:26px}
+main.guide-page .event-feature-content{padding:30px}
+main.guide-page .event-details-grid{gap:16px;margin-top:28px}
+main.guide-page .value-grid article{padding:24px}
+main.guide-page .event-news-article{margin-top:36px;padding-top:28px}
+main.guide-page>.soft-section{padding-top:52px;padding-bottom:52px}
+main.guide-page .cta-inline{gap:28px}
 @media(max-width:650px){
   main.guide-page .page-hero p,
   main.guide-page .event-news-article p,
   main.guide-page .cta-inline p{font-size:15px!important}
+  main.guide-page .page-hero{padding:38px 0 30px}
+  main.guide-page>.section{padding-block:42px}
+  main.guide-page .event-feature-card{margin-top:18px}
+  main.guide-page .event-feature-content{padding:20px}
+  main.guide-page .event-details-grid{gap:12px;margin-top:20px}
+  main.guide-page .value-grid article{padding:20px}
+  main.guide-page .event-news-article{margin-top:28px;padding-top:22px}
+  main.guide-page>.soft-section{padding-block:38px}
 }
 main.about-page .health-system-status,
 main.about-page .health-system-details{display:none!important}
