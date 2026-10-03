@@ -20,9 +20,7 @@ const STORAGE_KEY = 'bta_session';const CHAT_LINKS = {
 
   zalo: import.meta.env.VITE_ZALO_OA_URL || 'https://zalo.me/0977335599',
 
-  messenger: import.meta.env.VITE_FACEBOOK_PAGE_URL || 'https://www.facebook.com/bvtrita',
-
-  email: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(import.meta.env.VITE_SUPPORT_EMAIL || 'ledat3304@gmail.com')}`
+  messenger: import.meta.env.VITE_FACEBOOK_PAGE_URL || 'https://www.facebook.com/bvtrita'
 
 };
 
@@ -244,7 +242,6 @@ function ChatWidget() {
 
       <a className="chat-channel chat-channel--messenger" href={CHAT_LINKS.messenger} target="_blank" rel="noreferrer"><span className="chat-channel-icon">f</span><span><strong>Chat qua Facebook Messenger</strong><small>Nhắn tin tới Fanpage Tâm An</small></span><b>→</b></a>
 
-      <a className="chat-channel chat-channel--gmail" href={CHAT_LINKS.email} target="_blank" rel="noreferrer"><span className="chat-channel-icon">G</span><span><strong>Gửi email qua Gmail</strong><small>Liên hệ ledat3304@gmail.com</small></span><b>→</b></a>
 
     </div>}
 
