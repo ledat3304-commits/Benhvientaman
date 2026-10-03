@@ -1509,7 +1509,7 @@ main .home-feedback-button{
 }
 main .home-consult-button{
   width:166px;
-  border:1px solid #fff!important;
+  border:1px solid var(--navy)!important;
 }
 main .home-feedback-button span,
 main .home-consult-button span{
