@@ -1343,6 +1343,7 @@ main.department-index-page .department-directory-card>p{
   line-height:var(--site-card-line-height)!important;
 }
 main.department-index-page .department-group-description{color:#000!important}
+main.department-index-page .department-group:nth-child(2) .department-group-description{color:#000!important}
 main.department-index-page .department-directory-note strong,
 main.department-index-page .department-directory-note span,
 main.department-index-page .department-directory-note a{
