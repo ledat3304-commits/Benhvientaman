@@ -1253,3 +1253,36 @@ main.about-page .about-facility-grid p{
 main.about-page .about-contact a,
 main.about-page .about-story-slogan{color:var(--teal)!important}
 main.about-page .about-facility-grid article:first-child h4 span{display:none!important}
+
+/* Dong bo dung quy chuan co chu dang dung tren trang chu */
+main.about-page .page-hero h1,
+main.about-page .about-story>h2{
+  max-width:760px;
+  font-size:var(--site-section-title-size)!important;
+  line-height:1.15!important;
+  letter-spacing:0!important
+}
+main.about-page .page-hero p,
+main.about-page .health-system-section .section-heading>p,
+main.about-page .about-story p:not(.about-story-slogan),
+main.about-page .about-story li{
+  font-size:var(--site-section-copy-size)!important;
+  line-height:var(--site-body-line-height)!important
+}
+main.about-page .health-system-summary,
+main.about-page .about-facility-grid p{
+  min-height:0;
+  font-size:var(--site-card-copy-size)!important;
+  line-height:var(--site-card-line-height)!important
+}
+main.about-page .health-system-card h3{
+  min-height:0;
+  font-size:var(--site-section-subtitle-size)!important;
+  line-height:1.3!important
+}
+main.about-page .health-system-kicker{font-size:10px!important;line-height:1.4!important}
+main.about-page .health-system-address span,
+main.about-page .health-system-details span{font-size:10px!important;line-height:1.4!important}
+main.about-page .health-system-address strong{font-size:12px!important;line-height:1.55!important}
+main.about-page .health-system-details strong{font-size:11px!important;line-height:1.5!important}
+main.about-page .health-system-link{font-size:12px!important}
