@@ -1513,7 +1513,9 @@ main .home-feedback-button{
 }
 main .home-consult-button{
   width:166px;
-  border:2px solid var(--navy)!important;
+  border:0!important;
+  border-radius:9px;
+  background:var(--lime)!important;
 }
 main .home-feedback-button span,
 main .home-consult-button span{
