@@ -1290,6 +1290,19 @@ main.about-page .health-system-card--general .health-system-link{color:var(--nav
   font-size:13px!important;
   line-height:1.6!important
 }
+@media(max-width:900px){
+  .site-header .main-nav .nav-dropdown-toggle,
+  .site-header .main-nav>a{
+    color:#fff!important;
+  }
+  .site-header .main-nav .nav-dropdown-toggle:hover,
+  .site-header .main-nav .nav-dropdown-toggle.active,
+  .site-header .main-nav>a:hover,
+  .site-header .main-nav>a.active{
+    color:var(--navy)!important;
+    background:var(--lime)!important;
+  }
+}
 main.about-page .page-hero p,
 main.about-page .health-system-section .section-heading>p,
 main.about-page .about-story p:not(.about-story-slogan),
