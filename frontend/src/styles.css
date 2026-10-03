@@ -1372,6 +1372,45 @@ main.department-index-page .department-card-link:hover{
   background:var(--navy);
 }
 main.department-index-page .department-card-link:hover b{color:#fff!important}
+/* Lam moi hai nut dieu huong tren trang chu */
+main .feedback-action .button{
+  min-width:253px;
+  min-height:48px;
+  padding:0 20px;
+  border:1px solid var(--navy)!important;
+  border-radius:8px;
+  color:var(--navy)!important;
+  background:#fff!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  justify-content:space-between;
+  box-shadow:none!important;
+}
+main .feedback-action .button span{
+  margin-left:auto;
+  color:var(--navy)!important;
+  font-size:18px;
+  line-height:1;
+}
+main .cta-box .button-light{
+  min-width:166px;
+  min-height:48px;
+  padding:0 18px;
+  border:1px solid #fff;
+  border-radius:8px;
+  color:var(--navy)!important;
+  background:#fff!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  justify-content:space-between;
+  box-shadow:none!important;
+}
+main .cta-box .button-light span{
+  margin-left:auto;
+  color:var(--navy)!important;
+  font-size:18px;
+  line-height:1;
+}
 @media(max-width:650px){
   main.guide-page .page-hero p,
   main.guide-page .event-news-article p,
