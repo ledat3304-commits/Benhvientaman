@@ -1758,8 +1758,8 @@ main.contact-page .hours-card p span{
   margin-top:30px;
 }
 .booking-page .booking-api-form label{
-  color:#000!important;
-  font-size:13px!important;
+  color:var(--navy)!important;
+  font-size:16px!important;
   line-height:1.4!important;
 }
 .booking-page .booking-api-form input,
