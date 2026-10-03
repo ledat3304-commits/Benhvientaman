@@ -363,11 +363,11 @@ export function BookingPageApi() {
   };
 
   if (bookingCode) {
-    return <main className="admin-notification-page"><div className="booking-api-card"><div className="success-check">✓</div><h1>Đặt lịch thành công</h1><p>Mã lịch hẹn: <strong>{bookingCode}</strong></p><p className="form-success">{message}</p><a className="button button-primary" href="/">Về trang chủ</a></div></main>;
+    return <main className="admin-notification-page booking-page"><div className="booking-api-card"><div className="success-check">✓</div><h1>Đặt lịch thành công</h1><p>Mã lịch hẹn: <strong>{bookingCode}</strong></p><p className="form-success">{message}</p><a className="button button-primary" href="/">Về trang chủ</a></div></main>;
   }
 
   return (
-    <main className="admin-notification-page">
+    <main className="admin-notification-page booking-page">
       <div className="booking-api-card">
         <span className="eyebrow">Đặt lịch trực tuyến</span>
         <h1>Gửi thông tin lịch khám</h1>
