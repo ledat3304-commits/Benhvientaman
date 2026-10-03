@@ -1234,3 +1234,21 @@ main .home-news-heading .button:hover{
   main .home-team-heading .button,
   main .home-news-heading .button{min-width:156px}
 }
+
+/* Trang Gioi thieu: an tieu de khong can thiet va tang do tuong phan */
+main.about-page .health-system-section .section-heading h2{display:none!important}
+main.about-page .health-system-section .section-heading{margin-bottom:28px}
+main.about-page .page-hero p,
+main.about-page .health-system-section .section-heading>p,
+main.about-page .health-system-summary,
+main.about-page .health-system-address span,
+main.about-page .health-system-address strong,
+main.about-page .health-system-details span,
+main.about-page .health-system-details strong,
+main.about-page .about-story p:not(.about-story-slogan),
+main.about-page .about-story li,
+main.about-page .about-facility-grid p{
+  color:#000!important
+}
+main.about-page .about-contact a,
+main.about-page .about-story-slogan{color:var(--teal)!important}

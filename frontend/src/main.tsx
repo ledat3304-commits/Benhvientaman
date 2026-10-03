@@ -464,7 +464,7 @@ function HealthSystemSection() {
 
 }
 
-function AboutPage() { return <main><PageHero label="Về Tâm An" title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><HealthSystemSection /><LeadershipSection /><AboutStorySection /></main>; }
+function AboutPage() { return <main className="about-page"><PageHero label="Về Tâm An" title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><HealthSystemSection /><LeadershipSection /><AboutStorySection /></main>; }
 
 
 
