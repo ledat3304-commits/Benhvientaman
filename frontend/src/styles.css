@@ -1314,6 +1314,7 @@ main.guide-page .event-details-grid p{
   font-size:var(--site-card-size)!important;
   line-height:var(--site-card-line-height)!important;
 }
+main.guide-page .page-hero .breadcrumbs{display:none!important}
 @media(max-width:650px){
   main.guide-page .page-hero p,
   main.guide-page .event-news-article p,
