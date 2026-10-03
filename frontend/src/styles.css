@@ -1352,6 +1352,26 @@ main.department-index-page .department-card-link,
 main.department-index-page .department-card-link b{
   color:var(--navy)!important;
 }
+main.department-index-page .department-card-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:calc(100% - 32px);
+  min-height:48px;
+  margin:12px 16px 16px;
+  padding:0 14px;
+  border:1px solid var(--navy);
+  border-radius:7px;
+  background:#fff;
+  font-size:13px!important;
+  line-height:1.2;
+}
+main.department-index-page .department-card-link b{font-size:18px}
+main.department-index-page .department-card-link:hover{
+  color:#fff!important;
+  background:var(--navy);
+}
+main.department-index-page .department-card-link:hover b{color:#fff!important}
 @media(max-width:650px){
   main.guide-page .page-hero p,
   main.guide-page .event-news-article p,
