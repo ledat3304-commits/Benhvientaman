@@ -1146,6 +1146,51 @@ main .stats-grid>div:nth-child(2)>strong>span{
 }
 main .stats-grid>div{text-align:center!important}
 main .stats-grid>div>p{text-align:center!important}
+
+/* Quy chuan typography va khoang cach cho trang Gioi thieu */
+html{scroll-padding-top:92px}
+main #lanh-dao{scroll-margin-top:92px}
+main .about-story{max-width:930px}
+main .about-story>h2{
+  margin-bottom:28px;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:36px!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+  letter-spacing:0!important;
+  text-align:center!important
+}
+main .about-story h3{
+  margin:40px 0 14px;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:28px!important;
+  font-weight:700!important;
+  line-height:1.3!important;
+  text-align:left!important
+}
+main .about-story h4{
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:20px!important;
+  line-height:1.4!important
+}
+main .about-story p,
+main .about-story li{
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:16px!important;
+  line-height:1.75!important;
+  text-align:justify!important;
+  text-justify:inter-word
+}
+main .about-story ul{gap:12px;margin:18px 0;padding-left:20px;text-align:left}
+main .leadership-section{padding-block:72px}
+@media(max-width:650px){
+  main .about-story>h2{font-size:26px!important;line-height:1.25!important}
+  main .about-story h3{margin-top:32px;font-size:22px!important}
+  main .about-story h4{font-size:18px!important}
+  main .about-story p,
+  main .about-story li{font-size:15px!important;line-height:1.7!important}
+  main .leadership-section{padding:35px 0 0}
+}
 main .home-news-link,
 main .home-news-link b{
   color:var(--lime)!important;

@@ -442,7 +442,7 @@ const slides = [
 
   { tag: 'Dịch vụ tận tâm', title: 'Một hành trình\nkhỏe mạnh hơn', text: 'Không gian hiện đại, quy trình minh bạch, chăm sóc trọn vẹn.', cta: 'Về Tâm An', link: '/gioi-thieu', className: 'slide-three' },
 
-  { tag: 'Tổ chức & chuyên môn', title: 'Ban lãnh đạo và\nphụ trách chuyên môn', text: 'Đội ngũ lãnh đạo và phụ trách chuyên môn đồng hành cùng định hướng chăm sóc chất lượng tại Tâm An.', cta: 'Xem đội ngũ', link: '#lanh-dao', className: 'slide-four' },
+  { tag: 'Tổ chức & chuyên môn', title: 'Ban lãnh đạo và\nphụ trách chuyên môn', text: 'Đội ngũ lãnh đạo và phụ trách chuyên môn đồng hành cùng định hướng chăm sóc chất lượng tại Tâm An.', cta: 'Xem đội ngũ', link: '/gioi-thieu#lanh-dao', className: 'slide-four' },
 
   { tag: 'Vị trí thuận tiện', title: 'Bản đồ cơ sở chính', text: 'Xem vị trí và hướng dẫn đường đến Bệnh viện Tâm An.', cta: 'Xem chi tiết', link: '/lien-he', className: 'slide-six' },
 
@@ -464,7 +464,7 @@ function HealthSystemSection() {
 
 }
 
-function AboutPage() { return <main><PageHero label="Về Tâm An" title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><HealthSystemSection /><AboutStorySection /></main>; }
+function AboutPage() { return <main><PageHero label="Về Tâm An" title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><HealthSystemSection /><LeadershipSection /><AboutStorySection /></main>; }
 
 
 
