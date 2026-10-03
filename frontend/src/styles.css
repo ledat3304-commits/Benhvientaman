@@ -1600,6 +1600,12 @@ main.about-page .health-system-link{font-size:12px!important}
   background:var(--lime);
   font-size:19px;
 }
+/* Tang co chu cac dong mau xanh trong Trung tam ho tro */
+.chat-panel-header strong,
+.chat-channel strong{
+  font-size:20px!important;
+  line-height:1.25!important;
+}
 
 /* Nut trang chu - selector rieng de khong bi rule chung ghi de */
 main .home-feedback-button,
