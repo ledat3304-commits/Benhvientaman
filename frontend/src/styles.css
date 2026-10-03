@@ -1724,6 +1724,123 @@ main.contact-page .hours-card p span{
   .booking-page .booking-api-card h1{font-size:30px}
   .booking-page .booking-api-form>button{width:100%}
 }
+/* Bo cuc hai cot theo khu vuc dang ky lich hen tham khao */
+.booking-page .booking-api-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(300px,.82fr);
+  align-items:stretch;
+  gap:24px;
+  width:min(100%,1080px);
+  margin:0 auto;
+}
+.booking-page .booking-api-layout .booking-api-card{
+  width:100%;
+  max-width:none;
+  margin:0;
+}
+.booking-page .booking-api-guide{
+  position:relative;
+  overflow:hidden;
+  align-self:stretch;
+  padding:36px 32px;
+  border-radius:16px;
+  color:#fff;
+  background:linear-gradient(145deg,#1740aa 0%,#1c51bd 58%,#2f72c8 100%);
+  box-shadow:0 22px 55px rgba(23,64,170,.2);
+}
+.booking-page .booking-api-guide:before{
+  content:'';
+  position:absolute;
+  top:-100px;
+  right:-80px;
+  width:250px;
+  height:250px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:50%;
+  box-shadow:0 0 0 18px rgba(255,255,255,.05),0 0 0 38px rgba(255,255,255,.04);
+}
+.booking-page .booking-api-guide>.eyebrow{
+  position:relative;
+  z-index:1;
+  color:var(--lime);
+  font-size:16px;
+  letter-spacing:.08em;
+}
+.booking-page .booking-api-guide h2{
+  position:relative;
+  z-index:1;
+  margin:8px 0 16px;
+  color:#fff;
+  font-size:32px;
+  line-height:1.18;
+}
+.booking-page .booking-api-guide h2 em{
+  color:var(--lime);
+  font-style:normal;
+}
+.booking-page .booking-api-guide>p{
+  position:relative;
+  z-index:1;
+  margin:0;
+  color:#e4edff;
+  font-size:16px;
+  line-height:1.65;
+}
+.booking-page .booking-guide-links{
+  position:relative;
+  z-index:1;
+  display:grid;
+  gap:12px;
+  margin-top:28px;
+}
+.booking-page .booking-guide-links>div{
+  display:grid;
+  grid-template-columns:38px 1fr;
+  align-items:center;
+  gap:2px 12px;
+  padding:13px 14px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;
+  background:rgba(255,255,255,.1);
+  transition:transform .2s ease,background .2s ease,border-color .2s ease;
+}
+.booking-page .booking-guide-links>div:hover{
+  border-color:rgba(191,224,71,.75);
+  background:rgba(255,255,255,.17);
+  transform:translateX(5px);
+}
+.booking-page .booking-guide-links>div>span{
+  display:grid;
+  grid-row:span 2;
+  place-items:center;
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  color:var(--navy);
+  background:var(--lime);
+  font-size:19px;
+  font-weight:700;
+}
+.booking-page .booking-guide-links strong{
+  color:#fff;
+  font-size:14px;
+  line-height:1.35;
+}
+.booking-page .booking-guide-links small{
+  color:#dce8ff;
+  font-size:12px;
+  line-height:1.4;
+}
+@media(max-width:900px){
+  .booking-page .booking-api-layout{grid-template-columns:1fr;max-width:760px}
+  .booking-page .booking-api-guide{min-height:0}
+}
+@media(max-width:700px){
+  .booking-page .booking-api-layout{gap:18px}
+  .booking-page .booking-api-guide{padding:28px 22px}
+  .booking-page .booking-api-guide h2{font-size:28px}
+  .booking-page .booking-api-guide>p{font-size:15px}
+}
 @media(prefers-reduced-motion:reduce){
   .booking-page:before,
   .booking-page:after,

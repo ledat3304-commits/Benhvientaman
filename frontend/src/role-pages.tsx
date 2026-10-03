@@ -368,6 +368,7 @@ export function BookingPageApi() {
 
   return (
     <main className="admin-notification-page booking-page">
+      <div className="booking-api-layout">
       <div className="booking-api-card">
         <span className="eyebrow">Đặt lịch trực tuyến</span>
         <h1>Gửi thông tin lịch khám</h1>
@@ -384,6 +385,17 @@ export function BookingPageApi() {
           {message ? <p className={message.includes('ghi nhận') ? 'form-success' : 'form-error'}>{message}</p> : null}
           <button className="button button-primary" type="submit" disabled={submitting}>{submitting ? 'Đang gửi...' : 'Xác nhận đặt lịch'}</button>
         </form>
+      </div>
+      <aside className="booking-api-guide">
+        <span className="eyebrow">Đồng hành cùng sức khỏe</span>
+        <h2>Đặt lịch khám<br /><em>nhanh chóng, thuận tiện</em></h2>
+        <p>Chọn dịch vụ, bác sĩ và thời gian phù hợp. Đội ngũ Tâm An sẽ tiếp nhận thông tin và liên hệ xác nhận lịch hẹn.</p>
+        <div className="booking-guide-links">
+          <div><span>✦</span><strong>Tư vấn khám bệnh</strong><small>Được hướng dẫn theo nhu cầu</small></div>
+          <div><span>✓</span><strong>Chọn giờ phù hợp</strong><small>Chủ động sắp xếp lịch cá nhân</small></div>
+          <div><span>☎</span><strong>Hỗ trợ nhanh chóng</strong><small>Liên hệ khi cần thay đổi lịch</small></div>
+        </div>
+      </aside>
       </div>
     </main>
   );
