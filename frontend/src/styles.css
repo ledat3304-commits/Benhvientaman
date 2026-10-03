@@ -1592,3 +1592,149 @@ main.contact-page .hours-card p span{
   main.contact-page .hours-card small{font-size:13px!important}
   main.contact-page .contact-hotline>a{font-size:28px!important}
 }
+
+/* Hieu ung noi bat cho trang Dat lich */
+.booking-page{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:linear-gradient(135deg,#eef5ff 0%,#fff 48%,#f5fbe4 100%)!important;
+}
+.booking-page:before,
+.booking-page:after{
+  content:'';
+  position:absolute;
+  z-index:-1;
+  border-radius:50%;
+  pointer-events:none;
+}
+.booking-page:before{
+  top:9%;
+  right:-120px;
+  width:360px;
+  height:360px;
+  background:rgba(191,224,71,.2);
+  filter:blur(2px);
+  animation:booking-orbit 9s ease-in-out infinite;
+}
+.booking-page:after{
+  bottom:4%;
+  left:-150px;
+  width:330px;
+  height:330px;
+  border:42px solid rgba(23,64,170,.07);
+  animation:booking-orbit 11s ease-in-out -2s infinite reverse;
+}
+.booking-page .booking-api-card{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(23,64,170,.1);
+  box-shadow:0 22px 55px rgba(23,64,170,.14);
+  animation:booking-card-enter .65s cubic-bezier(.2,.75,.25,1) both;
+}
+.booking-page .booking-api-card:before{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  left:0;
+  height:5px;
+  background:linear-gradient(90deg,var(--navy),var(--lime),var(--navy));
+  background-size:200% 100%;
+  animation:booking-gradient 4s linear infinite;
+}
+.booking-page .booking-api-card .eyebrow{
+  color:var(--navy);
+  font-size:14px;
+  letter-spacing:.12em;
+}
+.booking-page .booking-api-card h1{margin-top:12px}
+.booking-page .booking-api-form{
+  position:relative;
+  z-index:1;
+}
+.booking-page .booking-api-form>label,
+.booking-page .booking-api-row{
+  animation:booking-field-enter .55s ease both;
+}
+.booking-page .booking-api-form>label:nth-child(1){animation-delay:.08s}
+.booking-page .booking-api-form>label:nth-child(2){animation-delay:.14s}
+.booking-page .booking-api-form>.booking-api-row:nth-of-type(3){animation-delay:.2s}
+.booking-page .booking-api-form>.booking-api-row:nth-of-type(4){animation-delay:.26s}
+.booking-page .booking-api-form>label:nth-of-type(3){animation-delay:.32s}
+.booking-page .booking-api-form>label:nth-of-type(4){animation-delay:.38s}
+.booking-page .booking-api-form input,
+.booking-page .booking-api-form select,
+.booking-page .booking-api-form textarea{
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease,background .2s ease;
+}
+.booking-page .booking-api-form input:hover,
+.booking-page .booking-api-form select:hover,
+.booking-page .booking-api-form textarea:hover{
+  border-color:#9cb5ef;
+  background:#fcfdff;
+}
+.booking-page .booking-api-form input:focus,
+.booking-page .booking-api-form select:focus,
+.booking-page .booking-api-form textarea:focus{
+  border-color:var(--navy);
+  box-shadow:0 0 0 4px rgba(23,64,170,.12),0 8px 18px rgba(23,64,170,.08);
+  transform:translateY(-1px);
+}
+.booking-page .booking-api-form>button{
+  min-width:190px;
+  margin-top:5px;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.booking-page .booking-api-form>button:hover:not(:disabled){
+  background:#cbe95a;
+  box-shadow:0 12px 24px rgba(23,64,170,.2);
+  transform:translateY(-3px);
+}
+.booking-page .booking-api-form>button:active:not(:disabled){transform:translateY(-1px)}
+.booking-page .booking-api-doctor{
+  padding:11px 14px;
+  border-left:3px solid var(--lime);
+  border-radius:0 8px 8px 0;
+  background:#f7fbe9;
+  animation:booking-field-enter .4s ease both;
+}
+.booking-page .booking-api-doctor strong{color:var(--navy)}
+.booking-page .success-check{animation:booking-success-pop .55s cubic-bezier(.2,.8,.25,1) both}
+@keyframes booking-card-enter{
+  from{opacity:0;transform:translateY(22px) scale(.985)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes booking-field-enter{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes booking-success-pop{
+  0%{opacity:0;transform:scale(.65) rotate(-8deg)}
+  70%{transform:scale(1.08) rotate(2deg)}
+  100%{opacity:1;transform:scale(1) rotate(0)}
+}
+@keyframes booking-orbit{
+  0%,100%{transform:translate3d(0,0,0)}
+  50%{transform:translate3d(-18px,16px,0)}
+}
+@keyframes booking-gradient{to{background-position:200% 0}}
+@media(max-width:700px){
+  .booking-page .booking-api-card{padding:25px 20px}
+  .booking-page .booking-api-card h1{font-size:30px}
+  .booking-page .booking-api-form>button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .booking-page:before,
+  .booking-page:after,
+  .booking-page .booking-api-card,
+  .booking-page .booking-api-card:before,
+  .booking-page .booking-api-form>label,
+  .booking-page .booking-api-row,
+  .booking-page .booking-api-doctor,
+  .booking-page .success-check{animation:none!important}
+  .booking-page .booking-api-form input,
+  .booking-page .booking-api-form select,
+  .booking-page .booking-api-form textarea,
+  .booking-page .booking-api-form>button{transition:none!important}
+}
