@@ -1262,7 +1262,11 @@ main.about-page .about-story>h2{
   line-height:1.15!important;
   letter-spacing:0!important
 }
-main.about-page .about-story>h2{text-align:justify!important;text-justify:inter-word}
+main.about-page .about-story>h2{
+  margin-right:auto;
+  margin-left:auto;
+  text-align:center!important
+}
 main.about-page .page-hero p,
 main.about-page .health-system-section .section-heading>p,
 main.about-page .about-story p:not(.about-story-slogan),
