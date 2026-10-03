@@ -1284,6 +1284,41 @@ main .department-directory .department-card-link b,
 main .department-directory .department-directory-note a{
   color:var(--lime)!important;
 }
+
+/* Quy chuan chu va mau cho trang Cam nang */
+main.guide-page .page-hero .eyebrow,
+main.guide-page .event-feature-content>.eyebrow,
+main.guide-page .cta-inline .eyebrow{
+  font-size:30px!important;
+  line-height:1.2!important;
+}
+main.guide-page .page-hero h1,
+main.guide-page .event-feature-content h2,
+main.guide-page .event-news-article h2,
+main.guide-page .cta-inline h2{
+  font-size:30px!important;
+  line-height:1.25!important;
+  letter-spacing:0!important;
+}
+main.guide-page .page-hero p,
+main.guide-page .event-news-article p,
+main.guide-page .cta-inline p{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+}
+main.guide-page .event-feature-content p,
+main.guide-page .event-feature-content small,
+main.guide-page .event-details-grid p{
+  color:#000!important;
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+@media(max-width:650px){
+  main.guide-page .page-hero p,
+  main.guide-page .event-news-article p,
+  main.guide-page .cta-inline p{font-size:15px!important}
+}
 main.about-page .health-system-status,
 main.about-page .health-system-details{display:none!important}
 main.about-page .health-system-card--general{border-top-color:var(--navy)!important}
