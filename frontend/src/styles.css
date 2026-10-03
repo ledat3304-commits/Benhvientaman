@@ -1530,3 +1530,59 @@ main .home-consult-button:hover{
   background:#cbe95a!important;
   transform:translateY(-2px);
 }
+
+/* Quy chuan co chu trang Lien he theo trang chu */
+main.contact-page .page-hero .eyebrow,
+main.contact-page .contact-hotline .eyebrow,
+main.contact-page .section-heading>.eyebrow{
+  font-size:20px!important;
+  line-height:1.3!important;
+  letter-spacing:.08em!important;
+}
+main.contact-page .page-hero h1{
+  font-size:var(--site-section-title-size)!important;
+  line-height:1.15!important;
+  letter-spacing:0!important;
+}
+main.contact-page .page-hero p,
+main.contact-page .section-heading>p{
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+}
+main.contact-page .section-heading h2{
+  font-size:var(--site-section-title-size)!important;
+  line-height:1.15!important;
+  letter-spacing:0!important;
+}
+main.contact-page .location-row h3,
+main.contact-page .hours-card h3{
+  font-size:var(--site-section-subtitle-size)!important;
+  line-height:1.3!important;
+}
+main.contact-page .location-row p,
+main.contact-page .location-row div>a,
+main.contact-page .map-link,
+main.contact-page .contact-hotline p,
+main.contact-page .hours-card p,
+main.contact-page .hours-card small{
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+main.contact-page .contact-hotline>a{
+  font-size:30px!important;
+  line-height:1.2!important;
+}
+@media(max-width:650px){
+  main.contact-page .page-hero .eyebrow,
+  main.contact-page .contact-hotline .eyebrow,
+  main.contact-page .section-heading>.eyebrow{font-size:17px!important}
+  main.contact-page .page-hero p,
+  main.contact-page .section-heading>p{font-size:15px!important}
+  main.contact-page .location-row p,
+  main.contact-page .location-row div>a,
+  main.contact-page .map-link,
+  main.contact-page .contact-hotline p,
+  main.contact-page .hours-card p,
+  main.contact-page .hours-card small{font-size:13px!important}
+  main.contact-page .contact-hotline>a{font-size:28px!important}
+}
