@@ -251,6 +251,23 @@ function ChatWidget() {
 
 }
 
+function BookingWidget() {
+
+  const [open, setOpen] = useState(false);
+
+  return <div className={open ? 'booking-widget is-open' : 'booking-widget'}>
+
+    {open && <div className="booking-widget-panel" role="dialog" aria-label="Đặt lịch khám nhanh">
+      <div className="booking-widget-header"><div><strong>Đặt lịch khám</strong><span>Đăng ký lịch hẹn trực tuyến</span></div><button className="booking-widget-close" onClick={() => setOpen(false)} aria-label="Đóng đặt lịch">×</button></div>
+      <div className="booking-widget-body"><span className="booking-widget-icon">✦</span><h3>Chủ động thời gian thăm khám</h3><p>Chọn dịch vụ, bác sĩ và thời gian phù hợp. Tâm An sẽ tiếp nhận thông tin và liên hệ xác nhận lịch hẹn.</p><Link className="booking-widget-action" to="/dat-lich">Mở trang đặt lịch <span>→</span></Link></div>
+    </div>}
+
+    <button className="booking-widget-launcher" onClick={() => setOpen(!open)} aria-label={open ? 'Đóng đặt lịch' : 'Mở đặt lịch'} aria-expanded={open}><span className="booking-widget-launcher-icon">{open ? '×' : '✚'}</span><span>Đặt lịch</span></button>
+
+  </div>;
+
+}
+
 function setupStatsAnimation() {
   let activeSection: HTMLElement | null = null;
   let stopActiveAnimation = () => {};
@@ -415,7 +432,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       </header>
 
-      {children}<ChatWidget /><BackToTop /><Footer />
+      {children}{location.pathname === '/' && <BookingWidget />}<ChatWidget /><BackToTop /><Footer />
 
     </div>
 
