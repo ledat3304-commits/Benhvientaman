@@ -1504,8 +1504,12 @@ main .home-consult-button{
   box-shadow:none!important;
 }
 main .home-feedback-button{
-  width:253px;
-  border:2px solid var(--navy)!important;
+  width:auto;
+  min-width:156px;
+  padding:0 17px;
+  border:0!important;
+  border-radius:9px;
+  background:var(--lime)!important;
 }
 main .home-consult-button{
   width:166px;
@@ -1521,6 +1525,6 @@ main .home-consult-button span{
 main .home-feedback-button:hover,
 main .home-consult-button:hover{
   color:var(--navy)!important;
-  background:#f5f8ff!important;
+  background:#cbe95a!important;
   transform:translateY(-2px);
 }
