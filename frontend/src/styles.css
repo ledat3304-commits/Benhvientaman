@@ -1325,6 +1325,7 @@ main.guide-page .value-grid article{padding:24px}
 main.guide-page .event-news-article{margin-top:36px;padding-top:28px}
 main.guide-page>.soft-section{padding-top:52px;padding-bottom:52px}
 main.guide-page .cta-inline{gap:28px}
+main.guide-page>.soft-section{display:none!important}
 @media(max-width:650px){
   main.guide-page .page-hero p,
   main.guide-page .event-news-article p,
