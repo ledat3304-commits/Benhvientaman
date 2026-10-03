@@ -1277,6 +1277,13 @@ main.about-page .health-system-section .section-heading>.eyebrow{
   font-size:30px!important;
   line-height:1.25!important
 }
+
+/* Mau xanh lime cho cac dong lien ket tren trang Chuyen khoa */
+main .department-directory .department-card-link,
+main .department-directory .department-card-link b,
+main .department-directory .department-directory-note a{
+  color:var(--lime)!important;
+}
 main.about-page .health-system-status,
 main.about-page .health-system-details{display:none!important}
 main.about-page .health-system-card--general{border-top-color:var(--navy)!important}
