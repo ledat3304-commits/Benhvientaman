@@ -240,7 +240,7 @@ function ChatWidget() {
 
       <a className="chat-channel chat-channel--zalo" href={CHAT_LINKS.zalo} target="_blank" rel="noreferrer"><span className="chat-channel-icon">Z</span><span><strong>Chat qua Zalo</strong><small>Liên hệ Zalo OA Tâm An</small></span><b>→</b></a>
 
-      <a className="chat-channel chat-channel--messenger" href={CHAT_LINKS.messenger} target="_blank" rel="noreferrer"><span className="chat-channel-icon">f</span><span><strong>Chat qua Facebook Messenger</strong><small>Nhắn tin tới Fanpage Tâm An</small></span><b>→</b></a>
+      <a className="chat-channel chat-channel--messenger" href={CHAT_LINKS.messenger} target="_blank" rel="noreferrer"><span className="chat-channel-icon">f</span><span><strong>Chat qua Fanpage</strong><small>Nhắn tin tới Fanpage Tâm An</small></span><b>→</b></a>
 
       <Link className="chat-channel chat-channel--booking" to="/dat-lich"><span className="chat-channel-icon">▣</span><span><strong>Đặt lịch khám</strong><small>Chọn dịch vụ và thời gian khám</small></span><b>→</b></Link>
 
