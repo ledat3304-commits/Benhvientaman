@@ -1292,7 +1292,13 @@ main.about-page .health-system-card--general .health-system-link{color:var(--nav
 }
 @media(max-width:900px){
   .site-header .main-nav .nav-dropdown-toggle,
-  .site-header .main-nav>a{
+  .site-header .main-nav>a,
+  .site-header .main-nav .nav-dropdown>a{
+    min-height:44px!important;
+    height:44px;
+    padding:0 10px!important;
+    display:flex;
+    align-items:center;
     color:#fff!important;
   }
   .site-header .main-nav .nav-dropdown-toggle:hover,
