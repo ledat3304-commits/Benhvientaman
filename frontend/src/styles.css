@@ -1485,3 +1485,42 @@ main.about-page .health-system-details span{font-size:10px!important;line-height
 main.about-page .health-system-address strong{font-size:12px!important;line-height:1.55!important}
 main.about-page .health-system-details strong{font-size:11px!important;line-height:1.5!important}
 main.about-page .health-system-link{font-size:12px!important}
+
+/* Nut trang chu - selector rieng de khong bi rule chung ghi de */
+main .home-feedback-button,
+main .home-consult-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:48px;
+  padding:0 20px;
+  border-radius:8px;
+  color:var(--navy)!important;
+  background:#fff!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  line-height:1.2;
+  text-decoration:none;
+  box-shadow:none!important;
+}
+main .home-feedback-button{
+  width:253px;
+  border:1px solid var(--navy)!important;
+}
+main .home-consult-button{
+  width:166px;
+  border:1px solid #fff!important;
+}
+main .home-feedback-button span,
+main .home-consult-button span{
+  margin-left:auto;
+  color:var(--navy)!important;
+  font-size:18px;
+  line-height:1;
+}
+main .home-feedback-button:hover,
+main .home-consult-button:hover{
+  color:var(--navy)!important;
+  background:#f5f8ff!important;
+  transform:translateY(-2px);
+}
