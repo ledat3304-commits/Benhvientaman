@@ -1505,11 +1505,11 @@ main .home-consult-button{
 }
 main .home-feedback-button{
   width:253px;
-  border:1px solid var(--navy)!important;
+  border:2px solid var(--navy)!important;
 }
 main .home-consult-button{
   width:166px;
-  border:1px solid var(--navy)!important;
+  border:2px solid var(--navy)!important;
 }
 main .home-feedback-button span,
 main .home-consult-button span{
