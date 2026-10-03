@@ -1348,6 +1348,10 @@ main.department-index-page .department-directory-note a{
   font-size:16px!important;
   line-height:1.6!important;
 }
+main.department-index-page .department-card-link,
+main.department-index-page .department-card-link b{
+  color:var(--navy)!important;
+}
 @media(max-width:650px){
   main.guide-page .page-hero p,
   main.guide-page .event-news-article p,
