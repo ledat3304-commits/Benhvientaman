@@ -1277,6 +1277,8 @@ main.about-page .health-system-section .section-heading>.eyebrow{
   font-size:30px!important;
   line-height:1.25!important
 }
+main.about-page .health-system-status,
+main.about-page .health-system-details{display:none!important}
 main.about-page .page-hero p,
 main.about-page .health-system-section .section-heading>p,
 main.about-page .about-story p:not(.about-story-slogan),
