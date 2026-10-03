@@ -1267,6 +1267,11 @@ main.about-page .about-story>h2{
   margin-left:auto;
   text-align:center!important
 }
+main.about-page .page-hero .eyebrow,
+main.about-page .page-hero h1{
+  font-size:30px!important;
+  line-height:1.25!important
+}
 main.about-page .page-hero p,
 main.about-page .health-system-section .section-heading>p,
 main.about-page .about-story p:not(.about-story-slogan),
