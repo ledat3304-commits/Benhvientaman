@@ -1572,6 +1572,12 @@ main.contact-page .contact-hotline>a{
   font-size:30px!important;
   line-height:1.2!important;
 }
+main.contact-page .page-hero p,
+main.contact-page .section-heading>p,
+main.contact-page .location-row p,
+main.contact-page .hours-card p span{
+  color:#000!important;
+}
 @media(max-width:650px){
   main.contact-page .page-hero .eyebrow,
   main.contact-page .contact-hotline .eyebrow,
