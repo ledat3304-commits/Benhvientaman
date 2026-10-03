@@ -242,27 +242,12 @@ function ChatWidget() {
 
       <a className="chat-channel chat-channel--messenger" href={CHAT_LINKS.messenger} target="_blank" rel="noreferrer"><span className="chat-channel-icon">f</span><span><strong>Chat qua Facebook Messenger</strong><small>Nhắn tin tới Fanpage Tâm An</small></span><b>→</b></a>
 
+      <Link className="chat-channel chat-channel--booking" to="/dat-lich"><span className="chat-channel-icon">▣</span><span><strong>Đặt lịch khám</strong><small>Chọn dịch vụ và thời gian khám</small></span><b>→</b></Link>
+
 
     </div>}
 
     <button className="chat-launcher" onClick={() => setOpen(!open)} aria-label={open ? 'Đóng hỗ trợ trực tuyến' : 'Mở hỗ trợ trực tuyến'} aria-expanded={open}><span className="chat-launcher-icon">{open ? '×' : '✦'}</span><span className="chat-launcher-label">Hỗ trợ</span></button>
-
-  </div>;
-
-}
-
-function BookingWidget() {
-
-  const [open, setOpen] = useState(false);
-
-  return <div className={open ? 'booking-widget is-open' : 'booking-widget'}>
-
-    {open && <div className="booking-widget-panel" role="dialog" aria-label="Đặt lịch khám nhanh">
-      <div className="booking-widget-header"><div><strong>Đặt lịch khám</strong><span>Đăng ký lịch hẹn trực tuyến</span></div><button className="booking-widget-close" onClick={() => setOpen(false)} aria-label="Đóng đặt lịch">×</button></div>
-      <div className="booking-widget-body"><span className="booking-widget-icon">✦</span><h3>Chủ động thời gian thăm khám</h3><p>Chọn dịch vụ, bác sĩ và thời gian phù hợp. Tâm An sẽ tiếp nhận thông tin và liên hệ xác nhận lịch hẹn.</p><Link className="booking-widget-action" to="/dat-lich">Mở trang đặt lịch <span>→</span></Link></div>
-    </div>}
-
-    <button className="booking-widget-launcher" onClick={() => setOpen(!open)} aria-label={open ? 'Đóng đặt lịch' : 'Mở đặt lịch'} aria-expanded={open}><span className="booking-widget-launcher-icon">{open ? '×' : '✚'}</span><span>Đặt lịch</span></button>
 
   </div>;
 
@@ -432,7 +417,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       </header>
 
-      {children}{location.pathname === '/' && <BookingWidget />}<ChatWidget /><BackToTop /><Footer />
+      {children}<ChatWidget /><BackToTop /><Footer />
 
     </div>
 

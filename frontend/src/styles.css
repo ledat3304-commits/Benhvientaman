@@ -1595,6 +1595,11 @@ main.about-page .health-system-link{font-size:12px!important}
   .booking-widget-launcher{min-height:46px;padding:0 15px;font-size:12px}
   .booking-widget-panel{width:min(330px,calc(100vw - 32px))}
 }
+.chat-channel--booking .chat-channel-icon{
+  color:var(--navy);
+  background:var(--lime);
+  font-size:19px;
+}
 
 /* Nut trang chu - selector rieng de khong bi rule chung ghi de */
 main .home-feedback-button,
