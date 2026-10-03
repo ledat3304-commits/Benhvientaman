@@ -1326,6 +1326,28 @@ main.guide-page .event-news-article{margin-top:36px;padding-top:28px}
 main.guide-page>.soft-section{padding-top:52px;padding-bottom:52px}
 main.guide-page .cta-inline{gap:28px}
 main.guide-page>.soft-section{display:none!important}
+/* Dong bo co chu va tang tuong phan cho trang Chuyen khoa */
+main.department-index-page .department-directory-intro>div>p,
+main.department-index-page .department-group-heading>p,
+main.department-index-page .department-directory-note span{
+  color:#000!important;
+}
+main.department-index-page .department-directory-intro>div>p,
+main.department-index-page .department-group-heading>p{
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+}
+main.department-index-page .department-directory-card>p{
+  color:#000!important;
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+main.department-index-page .department-directory-note strong,
+main.department-index-page .department-directory-note span,
+main.department-index-page .department-directory-note a{
+  font-size:16px!important;
+  line-height:1.6!important;
+}
 @media(max-width:650px){
   main.guide-page .page-hero p,
   main.guide-page .event-news-article p,
@@ -1338,6 +1360,11 @@ main.guide-page>.soft-section{display:none!important}
   main.guide-page .value-grid article{padding:20px}
   main.guide-page .event-news-article{margin-top:28px;padding-top:22px}
   main.guide-page>.soft-section{padding-block:38px}
+  main.department-index-page .department-directory-intro>div>p,
+  main.department-index-page .department-group-heading>p,
+  main.department-index-page .department-directory-note strong,
+  main.department-index-page .department-directory-note span,
+  main.department-index-page .department-directory-note a{font-size:15px!important}
 }
 main.about-page .health-system-status,
 main.about-page .health-system-details{display:none!important}
