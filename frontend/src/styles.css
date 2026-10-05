@@ -2263,6 +2263,68 @@ main .quick-grid .quick-action-icon{
   transform:scale(1.35);
 }
 
+/* Lưới 2x2 cho các nút tiện ích trên mobile */
+@media(max-width:650px){
+  main .quick-actions{
+    width:calc(100% - 32px);
+    margin:0 auto;
+    border:3px solid #1740aa;
+    border-top:0;
+    border-radius:0 0 16px 16px;
+    background:#1740aa;
+    overflow:hidden;
+  }
+
+  main .quick-actions .quick-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:2px;
+    width:100%;
+    background:#1740aa;
+  }
+
+  main .quick-actions .quick-grid>a{
+    min-height:156px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    padding:18px 12px;
+    border:0;
+    color:var(--navy);
+    text-align:center;
+  }
+
+  main .quick-actions .quick-grid>a:nth-child(odd){background:var(--lime)}
+  main .quick-actions .quick-grid>a:nth-child(even){background:#fff}
+
+  main .quick-actions .quick-grid .ui-icon{
+    flex:0 0 58px;
+    width:58px;
+    height:58px;
+    border-radius:16px;
+  }
+
+  main .quick-actions .quick-grid>a:first-child .ui-icon{
+    background:rgba(255,255,255,.78)!important;
+  }
+
+  main .quick-actions .quick-grid>a>span:not(.ui-icon){
+    display:block;
+    min-width:0;
+  }
+
+  main .quick-actions .quick-grid strong{
+    display:block;
+    font-size:14px;
+    line-height:1.35;
+  }
+
+  main .quick-actions .quick-grid small{display:none}
+  main .quick-actions .quick-grid b{display:none}
+}
+
 /* Dong bo logo chuc nang tai cac khu vuc khac trong website */
 .chat-channel--booking .chat-channel-icon,
 .faq-contact .ui-icon{
@@ -2287,6 +2349,25 @@ main .quick-grid .quick-action-icon{
 }
 .faq-contact .ui-icon::before{
   background-image:url('/icons/quick-faq.png');
+}
+
+/* Kich thuoc banner so 1 theo cac kich thuoc thiet ke */
+main .hero-slider.slide-banner-image{
+  height:650px;
+  min-height:0;
+  aspect-ratio:auto;
+  background-size:100% 100%;
+}
+@media(min-width:1600px){
+  main .hero-slider.slide-banner-image{height:760px}
+}
+@media(max-width:650px){
+  main .hero-slider.slide-banner-image{
+    height:auto;
+    aspect-ratio:1080 / 1350;
+    background-size:cover;
+    background-position:center center;
+  }
 }
 
 /* Quy chuan rieng cho trang FAQ theo bo typography trang chu */
