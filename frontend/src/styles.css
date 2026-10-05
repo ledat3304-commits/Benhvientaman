@@ -2262,3 +2262,29 @@ main .quick-grid .quick-action-icon{
   object-fit:cover;
   transform:scale(1.35);
 }
+
+/* Dong bo logo chuc nang tai cac khu vuc khac trong website */
+.chat-channel--booking .chat-channel-icon,
+.faq-contact .ui-icon{
+  position:relative;
+  overflow:hidden;
+  color:transparent!important;
+  background:var(--mint)!important;
+  font-size:0!important;
+}
+.chat-channel--booking .chat-channel-icon::before,
+.faq-contact .ui-icon::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:cover;
+  transform:scale(1.35);
+}
+.chat-channel--booking .chat-channel-icon::before{
+  background-image:url('/icons/quick-appointment.png');
+}
+.faq-contact .ui-icon::before{
+  background-image:url('/icons/quick-faq.png');
+}
