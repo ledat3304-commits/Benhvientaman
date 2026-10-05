@@ -261,6 +261,84 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .medical-image-credits a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
 @media(max-width:650px){.disease-card-image{height:185px}}
 
+/* Quy chuan chu, mau va can le cho trang Benh ly */
+main.diseases-page .page-hero .eyebrow{
+  color:var(--navy)!important;
+  font-size:20px!important;
+  line-height:1.3!important;
+}
+main.diseases-page .page-hero h1{
+  max-width:820px;
+  color:var(--navy)!important;
+  font-size:var(--site-section-title-size)!important;
+  line-height:1.15!important;
+  letter-spacing:0!important;
+}
+main.diseases-page .page-hero p,
+main.diseases-page .breadcrumbs,
+main.diseases-page .breadcrumbs span,
+main.diseases-page .disease-card p,
+main.diseases-page .medical-note,
+main.diseases-page .medical-image-credits,
+main.diseases-page .disease-cta p{
+  color:#000!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main.diseases-page .page-hero p,
+main.diseases-page .disease-cta p{
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+}
+main.diseases-page .breadcrumbs,
+main.diseases-page .breadcrumbs span{
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+main.diseases-page .breadcrumbs a,
+main.diseases-page .medical-image-credits a{
+  color:var(--navy)!important;
+}
+main.diseases-page .disease-grid{
+  gap:22px;
+}
+main.diseases-page .disease-card h2{
+  color:var(--navy)!important;
+  font-size:30px!important;
+  line-height:1.25!important;
+  letter-spacing:0!important;
+}
+main.diseases-page .disease-number{
+  color:#000!important;
+}
+main.diseases-page .disease-card p,
+main.diseases-page .medical-note,
+main.diseases-page .medical-image-credits{
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+main.diseases-page .medical-note,
+main.diseases-page .medical-image-credits{
+  text-align:justify!important;
+}
+main.diseases-page .disease-cta h2{
+  color:var(--navy)!important;
+  font-size:30px!important;
+  line-height:1.25!important;
+  letter-spacing:0!important;
+}
+@media(max-width:650px){
+  main.diseases-page .page-hero .eyebrow{font-size:17px!important}
+  main.diseases-page .page-hero h1{font-size:30px!important}
+  main.diseases-page .page-hero p,
+  main.diseases-page .disease-cta p{font-size:15px!important}
+  main.diseases-page .disease-card h2,
+  main.diseases-page .disease-cta h2{font-size:22px!important}
+  main.diseases-page .disease-card p,
+  main.diseases-page .medical-note,
+  main.diseases-page .medical-image-credits{font-size:13px!important}
+}
+
 .expert-corner-card{overflow:hidden;padding-top:0}
 .expert-card-image{height:150px;margin:0 -25px 24px;background:#edf7f5}
 .expert-card-image img{display:block;width:100%;height:100%;object-fit:cover}
