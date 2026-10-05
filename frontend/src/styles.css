@@ -2026,3 +2026,56 @@ main.contact-page .hours-card p span{
   .booking-page .booking-api-form{gap:16px;margin-top:24px}
   .booking-page .booking-api-row{gap:16px}
 }
+
+/* Quy chuan trang chi tiet chuyen khoa theo trang chu */
+main.department-detail-page .page-hero .eyebrow{
+  color:var(--navy)!important;
+  font-size:20px!important;
+  line-height:1.3!important;
+}
+main.department-detail-page .page-hero h1{
+  max-width:820px;
+  margin-bottom:18px;
+  color:var(--navy)!important;
+  font-size:var(--site-section-title-size)!important;
+  line-height:1.15!important;
+  letter-spacing:0!important;
+}
+main.department-detail-page .breadcrumbs,
+main.department-detail-page .breadcrumbs span{
+  color:#000!important;
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+main.department-detail-page .breadcrumbs a{color:var(--navy)!important}
+main.department-detail-page .department-detail-layout{
+  max-width:900px;
+  margin-inline:auto;
+}
+main.department-detail-page .department-article h2{
+  margin-top:34px;
+  color:var(--navy)!important;
+  font-size:30px!important;
+  line-height:1.25!important;
+  letter-spacing:0!important;
+}
+main.department-detail-page .department-article p,
+main.department-detail-page .department-article li,
+main.department-detail-page .department-article .department-bullet{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:1.75!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main.department-detail-page .department-article .department-bullet:before{
+  color:var(--navy)!important;
+}
+@media(max-width:650px){
+  main.department-detail-page .page-hero .eyebrow{font-size:17px!important}
+  main.department-detail-page .page-hero h1{font-size:30px!important}
+  main.department-detail-page .department-article h2{font-size:22px!important}
+  main.department-detail-page .department-article p,
+  main.department-detail-page .department-article li,
+  main.department-detail-page .department-article .department-bullet{font-size:15px!important}
+}
