@@ -2483,4 +2483,10 @@ main:has(.faq-layout) .faq-contact .button{
   main .site-header .nav-menu-subtitle{
     color:#fff!important;
   }
+
+  main .site-header .nav-menu-group-title{
+    color:#fff!important;
+    font-size:12px!important;
+    line-height:1.35!important;
+  }
 }
