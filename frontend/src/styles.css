@@ -240,7 +240,7 @@ h2{font-size:clamp(1.8rem,3vw,2.8rem)}
 .department-article p.department-bullet{position:relative;margin:0 0 10px;padding-left:24px;text-align:left}
 .department-article p.department-bullet:before{content:'•';position:absolute;left:7px;color:var(--teal);font-weight:700}
 @media(max-width:650px){.department-article h2{margin-top:26px;font-size:20px}.department-article p{font-size:15px;line-height:1.7}.department-article p.department-bullet{margin-bottom:8px}}
-.hero-slider.slide-banner-image{height:clamp(320px,42vw,560px);min-height:0;aspect-ratio:auto;background:#004f51 url('/hospital/banner-tam-an.png') center / 100% 100% no-repeat}
+.hero-slider.slide-banner-image{height:clamp(320px,42vw,560px);min-height:0;aspect-ratio:auto;background:#004f51 url('/hospital/banner-tam-an-1.png') center / 100% 100% no-repeat}
 .hero-slider.slide-banner-image .hero-content{display:none}
 .hero-slider.slide-banner-image .slider-controls{position:absolute;right:0;bottom:0;left:0;padding-top:12px;padding-bottom:17px;color:#fff}
 .health-system-section{background:var(--soft)}
