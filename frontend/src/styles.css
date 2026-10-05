@@ -2507,4 +2507,13 @@ main:has(.faq-layout) .faq-contact .button{
     font-size:14px!important;
     line-height:1.45!important;
   }
+
+  .site-header .nav-dropdown--about .nav-menu-group-title{
+    font-size:12px!important;
+    line-height:1.35!important;
+  }
+  .site-header .nav-dropdown--about .nav-menu-group>a{
+    font-size:14px!important;
+    line-height:1.45!important;
+  }
 }
