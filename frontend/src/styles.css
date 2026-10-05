@@ -2288,3 +2288,72 @@ main .quick-grid .quick-action-icon{
 .faq-contact .ui-icon::before{
   background-image:url('/icons/quick-faq.png');
 }
+
+/* Quy chuan rieng cho trang FAQ theo bo typography trang chu */
+main:has(.faq-layout) .page-hero .eyebrow,
+main:has(.faq-layout) .section-heading .eyebrow{
+  color:var(--navy)!important;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:30px!important;
+  font-weight:700!important;
+  line-height:1.2!important;
+  letter-spacing:0!important;
+  text-transform:uppercase!important;
+}
+main:has(.faq-layout) .page-hero h1,
+main:has(.faq-layout) .section-heading h2{
+  color:var(--navy)!important;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:36px!important;
+  font-weight:700!important;
+  line-height:1.2!important;
+  letter-spacing:0!important;
+  text-transform:uppercase!important;
+}
+main:has(.faq-layout) .page-hero p,
+main:has(.faq-layout) .faq-item p{
+  color:#000!important;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:16px!important;
+  line-height:1.75!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main:has(.faq-layout) .faq-item button{
+  color:var(--navy)!important;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:700!important;
+  line-height:1.5!important;
+  text-align:left!important;
+}
+main:has(.faq-layout) .faq-item button b{
+  color:var(--navy)!important;
+}
+main:has(.faq-layout) .faq-contact h3{
+  color:#fff!important;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:20px!important;
+  font-weight:700!important;
+  line-height:1.35!important;
+}
+main:has(.faq-layout) .faq-contact p{
+  color:#fff!important;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:13px!important;
+  line-height:1.6!important;
+  text-align:justify!important;
+}
+main:has(.faq-layout) .faq-contact .button{
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:13px!important;
+}
+@media(max-width:650px){
+  main:has(.faq-layout) .page-hero .eyebrow,
+  main:has(.faq-layout) .section-heading .eyebrow{font-size:20px!important}
+  main:has(.faq-layout) .page-hero h1,
+  main:has(.faq-layout) .section-heading h2{font-size:30px!important}
+  main:has(.faq-layout) .page-hero p,
+  main:has(.faq-layout) .faq-item p{font-size:15px!important}
+  main:has(.faq-layout) .faq-item button{font-size:15px!important}
+}
