@@ -2472,3 +2472,15 @@ main:has(.faq-layout) .faq-contact .button{
   main:has(.faq-layout) .faq-item p{font-size:15px!important}
   main:has(.faq-layout) .faq-item button{font-size:15px!important}
 }
+
+/* Tăng tương phản chữ trong menu mobile trên nền navy */
+@media(max-width:900px){
+  main .site-header .main-nav .nav-dropdown-toggle,
+  main .site-header .main-nav>a,
+  main .site-header .main-nav .nav-dropdown>a,
+  main .site-header .nav-dropdown-menu a,
+  main .site-header .nav-menu-group-title,
+  main .site-header .nav-menu-subtitle{
+    color:#fff!important;
+  }
+}
