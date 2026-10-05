@@ -394,8 +394,6 @@ function Layout({ children }: { children: React.ReactNode }) {
 
                   <span className="nav-menu-group-title">HỆ THỐNG Y TẾ TÂM AN</span>
 
-                  <Link to="/gioi-thieu">Về Tâm An</Link>
-
                   {healthSystemFacilities.map((facility) => <Link to={`/gioi-thieu#${facility.id}`} key={facility.id}>{facility.number} {facility.title}</Link>)}
 
                 </div>
