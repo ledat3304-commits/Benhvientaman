@@ -508,7 +508,7 @@ main .intro-copy .section-heading>.section-eyebrow-20{
 .slide-six{background:linear-gradient(110deg,#173b92,#2560c2)}
 .page-hero{background:linear-gradient(110deg,#edf3ff,#fff)}
 .app-section{background:#f1f8df}
-.intro-image,.about-image,.equipment-image{background-image:linear-gradient(135deg,rgba(33,71,173,.24),rgba(184,230,55,.2)),url('/hospital/floorplan-slide.png')}
+.intro-image,.about-image,.equipment-image{background-image:linear-gradient(135deg,rgba(33,71,173,.08),rgba(184,230,55,.06)),url('/hospital/bvta-seo.png')}
 .about-image{background-image:linear-gradient(135deg,rgba(33,71,173,.24),rgba(184,230,55,.2)),url('/hospital/surgery-slide.png')}
 .equipment-image{background-image:linear-gradient(135deg,rgba(33,71,173,.24),rgba(184,230,55,.12)),url('/hospital/imaging-device.png')}
 .site-header .main-nav>a:hover,.site-header .main-nav>a.active,.site-header .nav-dropdown>a:hover,.site-header .nav-dropdown>a.active{border-bottom-color:var(--teal)}
@@ -2522,5 +2522,27 @@ main:has(.faq-layout) .faq-contact .button{
   .site-header .nav-dropdown--news .nav-news-menu-item a{
     font-size:14px!important;
     line-height:1.45!important;
+  }
+}
+
+/* Ảnh giới thiệu BVTA: giữ đúng tỷ lệ ảnh gốc, không tràn khung */
+.intro-visual{
+  height:auto;
+  min-height:0;
+  aspect-ratio:750 / 501;
+  overflow:hidden;
+}
+.intro-image{
+  height:100%;
+  min-height:0;
+  background-position:center;
+}
+@media(max-width:650px){
+  .intro-visual{
+    height:auto;
+    aspect-ratio:750 / 501;
+  }
+  .intro-image{
+    min-height:0;
   }
 }
