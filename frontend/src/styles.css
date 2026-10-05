@@ -2068,6 +2068,12 @@ main.department-detail-page .department-article .department-bullet{
   text-align:justify!important;
   text-justify:inter-word;
 }
+main.department-detail-page .department-article>p:not(.department-bullet){
+  text-indent:2em;
+}
+main.department-detail-page .department-article>p.department-bullet{
+  text-indent:0;
+}
 main.department-detail-page .department-article .department-bullet:before{
   color:var(--navy)!important;
 }
