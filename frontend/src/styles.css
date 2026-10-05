@@ -592,7 +592,21 @@ main .intro-copy .section-heading>.section-eyebrow-20{
 /* Banner lãnh đạo mới: dùng ảnh desktop/mobile đã cung cấp */
 .leadership-board{padding:0!important;border:0;border-radius:0;background:#fff url('/hospital/leadership-banner.png') center/100% 100% no-repeat;box-shadow:none;aspect-ratio:3/1}
 .leadership-board:before,.leadership-heading,.leadership-grid{display:none}
-@media(max-width:650px){.leadership-section{padding:35px 0 0}.leadership-board{aspect-ratio:768/894;background-image:url('/hospital/leadership-banner-mobile.png')}}
+@media(max-width:650px){
+  main .leadership-section{padding:35px 0 0;overflow-x:hidden}
+  main .leadership-board{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    aspect-ratio:768/894;
+    background-color:#fff;
+    background-image:url('/hospital/leadership-banner-mobile.png');
+    background-position:center top;
+    background-size:contain;
+    background-repeat:no-repeat;
+    overflow:hidden;
+  }
+}
 
 /* Tách riêng từng thiết bị và ghi chú ngay dưới ảnh */
 .equipment-card-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
