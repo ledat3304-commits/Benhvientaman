@@ -339,6 +339,22 @@ main.diseases-page .disease-cta h2{
   main.diseases-page .medical-image-credits{font-size:13px!important}
 }
 
+main.diseases-page .disease-surgery-copy{
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+}
+main.diseases-page .disease-surgery-copy p{
+  margin:0 0 10px;
+  color:#000!important;
+  font-size:13px!important;
+  line-height:1.65!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main.diseases-page .disease-surgery-copy p:last-child{margin-bottom:0}
+main.diseases-page .disease-surgery-copy strong{color:var(--navy)!important}
+
 .expert-corner-card{overflow:hidden;padding-top:0}
 .expert-card-image{height:150px;margin:0 -25px 24px;background:#edf7f5}
 .expert-card-image img{display:block;width:100%;height:100%;object-fit:cover}
