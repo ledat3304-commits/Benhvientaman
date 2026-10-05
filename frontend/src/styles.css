@@ -2201,3 +2201,31 @@ main.department-detail-page .department-article .department-bullet:before{
   main.department-detail-page .department-article li,
   main.department-detail-page .department-article .department-bullet{font-size:15px!important}
 }
+
+/* Mau navy cho nhan gioi thieu tren trang chu */
+main .intro-copy .section-heading>.eyebrow.section-eyebrow-20{
+  color:var(--navy)!important;
+}
+
+/* Can lai dai thong ke sau khi bo muc 15 nam kinh nghiem */
+main .stats-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+main .stats-grid>div:last-child{
+  border-right:0!important;
+}
+@media(max-width:650px){
+  main .stats-grid{
+    grid-template-columns:1fr!important;
+    gap:20px!important;
+  }
+  main .stats-grid>div{
+    padding-bottom:20px;
+    border-right:0!important;
+    border-bottom:1px solid rgba(255,255,255,.15);
+  }
+  main .stats-grid>div:last-child{
+    padding-bottom:0;
+    border-bottom:0!important;
+  }
+}
