@@ -606,6 +606,23 @@ main .intro-copy .section-heading>.section-eyebrow-20{
     background-repeat:no-repeat;
     overflow:hidden;
   }
+
+  /* Dùng cùng banner ban lãnh đạo mới cho khu vực Đội ngũ nhân sự trang chủ */
+  main .home-team-banner-wrap{
+    width:100%;
+    max-width:100%;
+    overflow:hidden;
+  }
+  main .home-team-banner{
+    content:url('/hospital/leadership-banner-mobile-new.png');
+    display:block;
+    width:100%;
+    max-width:100%;
+    height:auto;
+    max-height:none;
+    object-fit:contain;
+    object-position:center top;
+  }
 }
 
 /* Tách riêng từng thiết bị và ghi chú ngay dưới ảnh */
