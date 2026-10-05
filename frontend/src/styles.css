@@ -2475,6 +2475,12 @@ main:has(.faq-layout) .faq-contact .button{
 
 /* Tăng tương phản chữ trong menu mobile trên nền navy */
 @media(max-width:900px){
+  .site-header .nav-menu-group-title{
+    color:#fff!important;
+    font-size:12px!important;
+    line-height:1.35!important;
+  }
+
   main .site-header .main-nav .nav-dropdown-toggle,
   main .site-header .main-nav>a,
   main .site-header .main-nav .nav-dropdown>a,
