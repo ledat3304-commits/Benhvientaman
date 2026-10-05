@@ -2229,3 +2229,18 @@ main .stats-grid>div:last-child{
     border-bottom:0!important;
   }
 }
+
+/* Dong bo cac nhan section tren trang chu */
+main .home-team-heading>.eyebrow,
+main .home-services-heading .eyebrow,
+main .hospital-evidence .section-heading>.eyebrow,
+main .equipment-showcase-heading>.eyebrow,
+main .home-news-heading .eyebrow,
+main .feedback-heading .section-heading>.eyebrow{
+  color:var(--navy)!important;
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-size:30px!important;
+  font-weight:700!important;
+  line-height:1.2!important;
+  text-transform:uppercase!important;
+}
