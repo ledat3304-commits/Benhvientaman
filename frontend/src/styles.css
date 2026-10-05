@@ -2289,6 +2289,104 @@ main .quick-grid .quick-action-icon{
   background-image:url('/icons/quick-faq.png');
 }
 
+/* Khung suon trang chu moi: hero, chuyen khoa, dich vu, doi ngu, ly do chon, co so, kien thuc va CTA */
+.hero-slider.slide-home-hero{
+  background:
+    linear-gradient(90deg,rgba(4,57,75,.98) 0%,rgba(8,91,106,.92) 47%,rgba(8,91,106,.35) 100%),
+    url('/hospital/floorplan-slide.png') right center/54% 100% no-repeat,
+    #064457;
+}
+.hero-slider.slide-home-hero:before{opacity:.28}
+.slide-home-hero .hero-content{z-index:1}
+.slide-home-hero .hero-copy{position:relative;z-index:2;max-width:590px}
+.slide-home-hero .hero-home-image{position:absolute;top:0;right:0;bottom:0;width:54%;overflow:hidden;z-index:0;pointer-events:none}
+.slide-home-hero .hero-home-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center right;opacity:.68;mix-blend-mode:screen}
+.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hero-secondary-button{color:var(--navy)!important;background:#fff!important;border-color:#fff!important}
+.nav-cta{color:var(--navy)!important;background:var(--lime)!important}
+
+.home-specialties-section{background:#f7fafc}
+.home-specialties-heading,
+.home-knowledge-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:38px}
+.home-specialties-heading>div,
+.home-knowledge-heading>div{max-width:700px}
+.home-specialties-heading .eyebrow,
+.home-knowledge-heading .eyebrow,
+.home-why-grid>.home-why-content>.eyebrow{color:var(--navy)!important;font-family:'Open Sans',Arial,sans-serif;font-size:30px!important;font-weight:700;letter-spacing:.01em;line-height:1.2;text-transform:uppercase}
+.home-specialties-heading h2,
+.home-knowledge-heading h2{display:none}
+.home-specialties-heading p,
+.home-knowledge-heading p{max-width:640px;margin:0;color:#000;font-size:16px;line-height:1.6;text-align:justify;text-justify:inter-word}
+.home-specialties-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.home-specialty-card{position:relative;display:flex;min-height:280px;flex-direction:column;padding:25px;border:1px solid #dce5f5;border-radius:16px;background:#fff;box-shadow:0 10px 25px rgba(23,64,170,.06);transition:transform .2s,box-shadow .2s,border-color .2s}
+.home-specialty-card:hover{border-color:#9bd1cd;box-shadow:0 16px 30px rgba(23,64,170,.12);transform:translateY(-4px)}
+.home-specialty-icon{display:grid;place-items:center;width:58px;height:58px;margin-bottom:18px;border-radius:16px;background:#eaf5ff;overflow:hidden}
+.home-specialty-icon img{display:block;width:100%;height:100%;object-fit:contain;padding:8px}
+.home-specialty-number{position:absolute;top:25px;right:25px;color:#b8c9ed;font-family:Georgia,serif;font-size:28px;line-height:1}
+.home-specialty-card h3{margin:0 0 10px;color:var(--navy);font-size:18px;line-height:1.35}
+.home-specialty-card p{margin:0;color:#000;font-size:13px;line-height:1.65;text-align:justify;text-justify:inter-word}
+.home-specialty-card b{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:18px;color:var(--navy);font-size:13px}
+.home-specialty-card i,.home-knowledge-card i{font-size:18px;font-style:normal;font-weight:400}
+
+.home-why-section{background:#eef5ff}
+.home-why-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;align-items:center;gap:80px}
+.home-why-grid h2{margin:8px 0 16px;color:var(--navy);font-family:'Open Sans',Arial,sans-serif;font-size:36px;font-weight:700;line-height:1.2;letter-spacing:0}
+.home-why-lead{max-width:650px;margin:0;color:#000;font-size:16px;line-height:1.7;text-align:justify;text-justify:inter-word}
+.home-why-list{display:grid;gap:14px;margin:27px 0;padding:0;list-style:none}
+.home-why-list li{display:flex;align-items:flex-start;gap:11px;color:#000}
+.home-why-list li>b{display:grid;place-items:center;flex:0 0 23px;width:23px;height:23px;border-radius:50%;color:var(--navy);background:var(--lime);font-size:13px}
+.home-why-list span{display:grid;gap:2px}
+.home-why-list strong{color:var(--navy);font-size:15px}
+.home-why-list small{font-size:13px;line-height:1.55}
+.home-why-panel{display:grid;justify-items:center;padding:32px 20px;border-radius:20px;color:#fff;background:var(--navy);box-shadow:0 18px 36px rgba(23,64,170,.16)}
+.home-why-panel strong{font-family:Georgia,serif;font-size:46px;line-height:1.05}
+.home-why-panel strong span{color:var(--lime);font-family:'Open Sans',Arial,sans-serif;font-size:24px}
+.home-why-panel p{margin:5px 0 22px;color:#fff;font-size:14px;text-align:center}
+.home-why-panel p:last-child{margin-bottom:0}
+
+.home-knowledge-section{background:#fff}
+.home-knowledge-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.home-knowledge-card{overflow:hidden;border:1px solid #dce5f5;border-radius:16px;background:#fff;box-shadow:0 10px 25px rgba(23,64,170,.06);transition:transform .2s,box-shadow .2s}
+.home-knowledge-card:hover{box-shadow:0 16px 30px rgba(23,64,170,.12);transform:translateY(-4px)}
+.home-knowledge-image{aspect-ratio:16/9;overflow:hidden;background:#eef4ff}
+.home-knowledge-image img{display:block;width:100%;height:100%;object-fit:cover}
+.home-knowledge-card>div:last-child{padding:20px 22px 22px}
+.home-knowledge-card h3{min-height:52px;margin:0 0 16px;color:var(--navy);font-size:18px;line-height:1.45}
+.home-knowledge-card b{display:inline-flex;align-items:center;gap:8px;color:var(--navy);font-size:13px}
+
+.cta-section .home-consult-button--outline{border:1px solid rgba(255,255,255,.8)!important;color:#fff!important;background:transparent!important}
+.cta-section .hero-actions{margin-top:8px}
+
+@media(max-width:900px){
+  .main-nav{gap:12px}
+  .home-specialties-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .home-why-grid{grid-template-columns:1fr;gap:35px}
+  .home-why-panel{grid-template-columns:repeat(3,1fr);align-items:start;gap:8px}
+  .home-why-panel p{margin-bottom:0}
+  .home-knowledge-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px){
+  .slide-home-hero{min-height:570px}
+  .slide-home-hero .hero-content{min-height:510px}
+  .slide-home-hero .hero-home-image{right:-24%;width:90%;opacity:.35}
+  .slide-home-hero .hero-copy{max-width:none}
+  .hero-actions{gap:9px}
+  .hero-actions .button{min-height:46px;padding-inline:16px}
+  .home-specialties-heading,
+  .home-knowledge-heading{display:block;margin-bottom:28px}
+  .home-specialties-heading .button,
+  .home-knowledge-heading .button{margin-top:20px}
+  .home-specialties-heading .eyebrow,
+  .home-knowledge-heading .eyebrow,
+  .home-why-grid>.home-why-content>.eyebrow{font-size:20px!important}
+  .home-specialties-grid{grid-template-columns:1fr}
+  .home-why-grid h2{font-size:30px}
+  .home-why-panel{grid-template-columns:1fr;gap:0}
+  .home-why-panel strong{font-size:40px}
+  .home-why-panel p{margin:3px 0 20px}
+  .home-knowledge-grid{grid-template-columns:1fr}
+}
+
 /* Quy chuan rieng cho trang FAQ theo bo typography trang chu */
 main:has(.faq-layout) .page-hero .eyebrow,
 main:has(.faq-layout) .section-heading .eyebrow{

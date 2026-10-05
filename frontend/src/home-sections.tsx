@@ -1,5 +1,97 @@
 import { Link } from 'react-router-dom';
 
+const specialtyHighlights = [
+  { title: 'Hậu môn – Trực tràng', description: 'Khám và điều trị bệnh trĩ, rò hậu môn, áp xe hậu môn.', image: '/specialties/02_ngoai_tong_hop.png', href: '/benh-ly' },
+  { title: 'Tiêu hóa', description: 'Tầm soát và điều trị bệnh lý dạ dày, đại tràng, gan mật.', image: '/specialties/08_chan_doan_hinh_anh.png', href: '/chuyen-khoa' },
+  { title: 'Tim mạch', description: 'Theo dõi, chẩn đoán và điều trị bệnh lý tim mạch.', image: '/specialties/01_noi_tong_hop.png', href: '/chuyen-khoa' },
+  { title: 'Nội tổng quát', description: 'Chăm sóc sức khỏe toàn diện cho người trưởng thành.', image: '/specialties/01_noi_tong_hop.png', href: '/khoa/khoa-noi-tong-hop' },
+];
+
+const healthKnowledge = [
+  { title: 'Bệnh trĩ: dấu hiệu nhận biết và khi nào nên đi khám', image: '/medical/benh-tri.png', href: '/benh-ly/benh-tri' },
+  { title: 'Rò hậu môn: nguyên nhân và hướng xử trí', image: '/medical/ro-hau-mon.svg', href: '/benh-ly/ro-hau-mon' },
+  { title: 'Áp xe hậu môn: dấu hiệu cần khám sớm', image: '/medical/ap-xe-hau-mon.svg', href: '/benh-ly/ap-xe-hau-mon' },
+];
+
+export function SpecialtyHighlightsSection() {
+  return (
+    <section className="section home-specialties-section" id="chuyen-khoa-noi-bat">
+      <div className="container">
+        <div className="home-specialties-heading">
+          <div>
+            <span className="eyebrow">Chuyên khoa nổi bật</span>
+            <h2>CHUYÊN KHOA NỔI BẬT</h2>
+            <p>Đội ngũ chuyên môn phối hợp để mang đến hướng thăm khám phù hợp cho từng nhu cầu sức khỏe.</p>
+          </div>
+          <Link to="/chuyen-khoa" className="button button-primary">Xem tất cả <span>→</span></Link>
+        </div>
+        <div className="home-specialties-grid">
+          {specialtyHighlights.map((item, index) => (
+            <Link className="home-specialty-card" to={item.href} key={item.title}>
+              <div className="home-specialty-icon"><img src={item.image} alt="" aria-hidden="true" /></div>
+              <span className="home-specialty-number">0{index + 1}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <b>Xem chi tiết <i>→</i></b>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function WhyChooseSection() {
+  return (
+    <section className="section home-why-section" id="tai-sao-chon-tam-an">
+      <div className="container home-why-grid">
+        <div className="home-why-content">
+          <span className="eyebrow">Tại sao chọn Tâm An</span>
+          <h2>TẬN TÂM TRONG TỪNG TRẢI NGHIỆM</h2>
+          <p className="home-why-lead">Tâm An xây dựng môi trường y tế hiện đại, nơi người bệnh được lắng nghe, tư vấn rõ ràng và chăm sóc bằng tất cả sự tận tâm.</p>
+          <ul className="home-why-list">
+            <li><b>✓</b><span><strong>Bác sĩ chuyên môn</strong><small>Đội ngũ giàu kinh nghiệm, phối hợp chặt chẽ.</small></span></li>
+            <li><b>✓</b><span><strong>Thiết bị hiện đại</strong><small>Hỗ trợ chẩn đoán và điều trị chính xác, kịp thời.</small></span></li>
+            <li><b>✓</b><span><strong>Quy trình thuận tiện</strong><small>Đặt lịch nhanh, hướng dẫn rõ ràng, minh bạch.</small></span></li>
+            <li><b>✓</b><span><strong>Chăm sóc tận tâm</strong><small>Đồng hành trước, trong và sau quá trình điều trị.</small></span></li>
+          </ul>
+          <Link to="/gioi-thieu" className="button button-outline">Tìm hiểu về Tâm An <span>→</span></Link>
+        </div>
+        <div className="home-why-panel">
+          <strong>50<span>+</span></strong><p>Bác sĩ chuyên khoa</p>
+          <strong>25.000</strong><p>Người bệnh tin chọn</p>
+          <strong>98<span>%</span></strong><p>Hài lòng dịch vụ</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function HealthKnowledgeSection() {
+  return (
+    <section className="section home-knowledge-section" id="kien-thuc-suc-khoe">
+      <div className="container">
+        <div className="home-knowledge-heading">
+          <div>
+            <span className="eyebrow">Kiến thức sức khỏe</span>
+            <h2>KIẾN THỨC SỨC KHỎE</h2>
+            <p>Thông tin y khoa dễ hiểu giúp bạn chủ động nhận biết dấu hiệu và chăm sóc sức khỏe đúng cách.</p>
+          </div>
+          <Link to="/benh-ly" className="button button-outline">Xem tất cả <span>→</span></Link>
+        </div>
+        <div className="home-knowledge-grid">
+          {healthKnowledge.map((item) => (
+            <Link className="home-knowledge-card" to={item.href} key={item.title}>
+              <div className="home-knowledge-image"><img src={item.image} alt={item.title} loading="lazy" /></div>
+              <div><h3>{item.title}</h3><b>Đọc bài viết <i>→</i></b></div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 const homeServiceGroups = [
   {
     icon: '✦',
