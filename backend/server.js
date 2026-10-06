@@ -500,12 +500,27 @@ app.get('/api/doctors', async (req, res) => {
 
 app.get('/api/services', async (req, res) => {
   try {
+    const specialtyId = req.query.specialtyId === undefined || req.query.specialtyId === ''
+      ? null
+      : Number(req.query.specialtyId);
+    if (specialtyId !== null && (!Number.isInteger(specialtyId) || specialtyId < 1)) {
+      return res.status(400).json({ success: false, message: 'specialtyId không hợp lệ.' });
+    }
+    const params = specialtyId === null ? [] : [specialtyId];
+    const specialtyFilter = specialtyId === null ? '' : 'AND d.chuyenkhoaid = $1';
     const result = await pool.query(`
-      SELECT dichvuid AS id, tendichvu AS name, mota AS description, dongia AS price
-      FROM danhmucdichvu
-      WHERE hoatdong = true
-      ORDER BY dichvuid
-    `);
+      SELECT d.dichvuid AS id,
+             d.tendichvu AS name,
+             d.mota AS description,
+             d.dongia AS price,
+             d.chuyenkhoaid AS "specialtyId",
+             c.tenchuyenkhoa AS specialty
+        FROM danhmucdichvu d
+        LEFT JOIN chuyenkhoa c ON c.chuyenkhoaid = d.chuyenkhoaid
+       WHERE d.hoatdong = true
+         ${specialtyFilter}
+       ORDER BY d.dichvuid
+    `, params);
     res.json(result.rows);
   } catch (error) {
     console.error(error);
@@ -617,6 +632,7 @@ app.post('/api/appointments', async (req, res) => {
     const body = req.body || {};
     const doctorId = Number(body.doctorId || body.BacSiID || body.bacsiid);
     const serviceId = Number(body.serviceId || body.DichVuID || body.dichvuid || 0);
+    const specialtyId = optionalId(body.specialtyId ?? body.ChuyenKhoaID ?? body.chuyenkhoaid);
     const date = String(body.date || body.apptDate || '').trim();
     const time = String(body.time || body.apptTime || '').trim();
     const name = String(body.name || body.HoTen || body.hoten || '').trim();
@@ -627,7 +643,10 @@ app.post('/api/appointments', async (req, res) => {
     const parsedDate = parseIsoDate(date);
     const timeMinutes = clockToMinutes(time);
 
-    if (!Number.isInteger(doctorId) || doctorId < 1 || !parsedDate || date < getTodayIsoDate() || timeMinutes === null || !name || name.length > 100 || !isValidPhone(phone) || !isValidEmail(email)) {
+    if (phone && !/^\d+$/.test(phone)) {
+      return res.status(400).json({ success: false, message: 'Số điện thoại chỉ được chứa chữ số.' });
+    }
+    if (!Number.isInteger(doctorId) || doctorId < 1 || Number.isNaN(specialtyId) || !parsedDate || date < getTodayIsoDate() || timeMinutes === null || !name || name.length > 100 || !isValidPhone(phone) || !isValidEmail(email)) {
       return res.status(400).json({ success: false, message: 'Vui lòng nhập đầy đủ bác sĩ, ngày giờ, họ tên và số điện thoại.' });
     }
 
@@ -636,7 +655,7 @@ app.post('/api/appointments', async (req, res) => {
     const requesterId = requester ? Number(requester.UserID || requester.userid) : null;
 
     await client.query('BEGIN');
-    const doctorResult = await client.query('SELECT bacsiid, hoatdong, thoiluongkham, phidatlich FROM bacsi WHERE bacsiid = $1', [doctorId]);
+    const doctorResult = await client.query('SELECT bacsiid, chuyenkhoaid, hoatdong, thoiluongkham, phidatlich FROM bacsi WHERE bacsiid = $1', [doctorId]);
     if (!doctorResult.rows[0]) {
       await client.query('ROLLBACK');
       return res.status(404).json({ success: false, message: 'Không tìm thấy bác sĩ.' });
@@ -645,6 +664,10 @@ app.post('/api/appointments', async (req, res) => {
     if (doctorResult.rows[0].hoatdong === false) {
       await client.query('ROLLBACK');
       return res.status(400).json({ success: false, message: 'Bác sĩ hiện không nhận lịch khám.' });
+    }
+    if (specialtyId && Number(doctorResult.rows[0].chuyenkhoaid) !== specialtyId) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({ success: false, message: 'Bác sĩ đã chọn không thuộc chuyên khoa hiện tại.' });
     }
     const duration = Number(doctorResult.rows[0].thoiluongkham || 30);
     if (!Number.isInteger(duration) || duration < 15 || duration > 240) {
@@ -660,7 +683,7 @@ app.post('/api/appointments', async (req, res) => {
     let selectedService = null;
     if (serviceId > 0) {
       const serviceResult = await client.query(
-        `SELECT dichvuid, dongia
+        `SELECT dichvuid, chuyenkhoaid, dongia
            FROM danhmucdichvu
           WHERE dichvuid = $1 AND hoatdong = true`,
         [serviceId]
@@ -669,6 +692,14 @@ app.post('/api/appointments', async (req, res) => {
       if (!selectedService) {
         await client.query('ROLLBACK');
         return res.status(404).json({ success: false, message: 'Không tìm thấy dịch vụ đang hoạt động.' });
+      }
+      if (specialtyId && Number(selectedService.chuyenkhoaid) !== specialtyId) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ success: false, message: 'Dịch vụ đã chọn không thuộc chuyên khoa hiện tại.' });
+      }
+      if (Number(selectedService.chuyenkhoaid || 0) > 0 && Number(doctorResult.rows[0].chuyenkhoaid || 0) !== Number(selectedService.chuyenkhoaid)) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ success: false, message: 'Dịch vụ và bác sĩ không cùng chuyên khoa.' });
       }
     }
 
@@ -778,6 +809,9 @@ app.post('/api/booking-requests', async (req, res) => {
     const reason = String(body.reason || body.Symptoms || body.LyDoKham || '').trim() || null;
     const note = String(body.note || body.notes || body.GhiChu || '').trim() || null;
 
+    if (phone && !/^\d+$/.test(phone)) {
+      return res.status(400).json({ success: false, message: 'Số điện thoại chỉ được chứa chữ số.' });
+    }
     if (!name || name.length > 100 || !isValidPhone(phone)) {
       return res.status(400).json({ success: false, message: 'Vui lòng nhập họ tên và số điện thoại hợp lệ.' });
     }
@@ -803,12 +837,18 @@ app.post('/api/booking-requests', async (req, res) => {
     }
 
     let serviceName = null;
+    let serviceSpecialtyId = null;
     let serviceFee = null;
     if (serviceId) {
-      const result = await client.query('SELECT dichvuid, tendichvu, dongia FROM danhmucdichvu WHERE dichvuid = $1 AND hoatdong = true', [serviceId]);
+      const result = await client.query('SELECT dichvuid, chuyenkhoaid, tendichvu, dongia FROM danhmucdichvu WHERE dichvuid = $1 AND hoatdong = true', [serviceId]);
       if (!result.rows[0]) {
         await client.query('ROLLBACK');
         return res.status(404).json({ success: false, message: 'Không tìm thấy dịch vụ đang hoạt động.' });
+      }
+      serviceSpecialtyId = result.rows[0].chuyenkhoaid;
+      if (specialtyId && Number(serviceSpecialtyId) !== specialtyId) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ success: false, message: 'Dịch vụ đã chọn không thuộc chuyên khoa hiện tại.' });
       }
       serviceName = result.rows[0].tendichvu;
       serviceFee = Number(result.rows[0].dongia || 0);
@@ -834,6 +874,10 @@ app.post('/api/booking-requests', async (req, res) => {
       if (specialtyId && Number(result.rows[0].chuyenkhoaid) !== specialtyId) {
         await client.query('ROLLBACK');
         return res.status(400).json({ success: false, message: 'Bác sĩ không thuộc chuyên khoa đã chọn.' });
+      }
+      if (serviceSpecialtyId && Number(result.rows[0].chuyenkhoaid) !== Number(serviceSpecialtyId)) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ success: false, message: 'Dịch vụ và bác sĩ không cùng chuyên khoa.' });
       }
       doctorName = result.rows[0].hoten;
       doctorFee = Number(result.rows[0].phidatlich || 0);
@@ -1450,12 +1494,22 @@ app.post('/api/admin/booking-requests/:requestId/convert', async (req, res) => {
     }
 
     const doctorFee = Number(doctorResult.rows[0].phidatlich || 0);
+    let serviceSpecialtyId = null;
     let serviceFee = null;
     if (serviceId) {
-      const serviceResult = await client.query('SELECT dichvuid, dongia FROM danhmucdichvu WHERE dichvuid = $1 AND hoatdong = true', [serviceId]);
+      const serviceResult = await client.query('SELECT dichvuid, chuyenkhoaid, dongia FROM danhmucdichvu WHERE dichvuid = $1 AND hoatdong = true', [serviceId]);
       if (!serviceResult.rows[0]) {
         await client.query('ROLLBACK');
         return res.status(404).json({ success: false, message: 'Không tìm thấy dịch vụ đang hoạt động.' });
+      }
+      serviceSpecialtyId = serviceResult.rows[0].chuyenkhoaid;
+      if (specialtyId && Number(serviceSpecialtyId) !== specialtyId) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ success: false, message: 'Dịch vụ đã chọn không thuộc chuyên khoa hiện tại.' });
+      }
+      if (serviceSpecialtyId && Number(serviceSpecialtyId) !== Number(doctorResult.rows[0].chuyenkhoaid)) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ success: false, message: 'Dịch vụ và bác sĩ không cùng chuyên khoa.' });
       }
       serviceFee = Number(serviceResult.rows[0].dongia || 0);
     }

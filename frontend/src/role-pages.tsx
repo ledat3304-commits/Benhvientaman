@@ -372,8 +372,8 @@ export function AdminDashboardPage() {
   return <main className="admin-dashboard-page"><div className="admin-dashboard-shell"><header className="admin-dashboard-header"><div><span className="eyebrow">Khu vực quản trị</span><h1>Bảng điều khiển admin</h1><p>{getValue(session.user || {}, 'HoTen', 'hoten') || 'Quản trị viên'} · {getValue(session.user || {}, 'Email', 'email') || 'Không có email'}</p></div><div className="admin-dashboard-actions"><a className="button button-outline" href="/">Xem website</a><button className="button button-outline" type="button" onClick={logout}>Đăng xuất</button></div></header><div className="admin-dashboard-layout"><aside className="admin-sidebar"><p className="admin-sidebar-label">Quản trị hệ thống</p>{navItems.map((item) => <button className={section === item.key ? 'admin-nav-item is-active' : 'admin-nav-item'} type="button" key={item.key} onClick={() => setSection(item.key)}><span className="admin-nav-icon">{item.icon}</span><span>{item.label}</span>{item.count ? <b>{item.count}</b> : null}</button>)}<div className="admin-sidebar-note"><strong>Bảo mật tài khoản</strong><span>Chỉ tài khoản có vai trò quản trị mới truy cập được khu vực này.</span></div></aside><section className="admin-dashboard-content">{loading ? <p className="admin-notification-state">Đang tải dữ liệu quản trị...</p> : null}{error ? <p className="admin-notification-error">{error}</p> : null}{actionMessage ? <p className="admin-action-message">{actionMessage}</p> : null}{!loading && section === 'overview' ? overview : null}{!loading && section === 'notifications' ? <section className="admin-panel"><div className="admin-panel-heading"><div><span className="eyebrow">Hộp thư hệ thống</span><h2>Tất cả thông báo</h2></div><div className="admin-heading-actions"><button className="button button-outline" type="button" onClick={markAllAsRead}>Đánh dấu tất cả đã đọc</button><button className="button button-outline" type="button" onClick={() => loadData()}>Làm mới</button></div></div>{notificationList(notifications)}</section> : null}{!loading && section === 'appointments' ? appointmentsPanel : null}{!loading && section === 'booking-requests' ? bookingRequestsPanel : null}{!loading && section === 'patients' ? patientsPanel : null}{!loading && section === 'users' ? usersPanel : null}{!loading && section === 'doctors' ? doctorsPanel : null}{!loading && section === 'catalog' ? catalogPanel : null}</section></div></div></main>;
 }
 
-type Doctor = { bacsiid?: number; id?: number; hoten?: string; name?: string; tenchuyenkhoa?: string; specialtyId?: number; specialty?: string; experience?: string; expertise?: string; description?: string; title?: string; education?: string; image?: string; bookingFee?: number | string; duration?: number; featured?: boolean };
-type Service = { id?: number; dichvuid?: number; name?: string; tendichvu?: string; description?: string; price?: number | string; dongia?: number | string };
+type Doctor = { bacsiid?: number; id?: number; hoten?: string; name?: string; tenchuyenkhoa?: string; chuyenkhoaid?: number; specialtyId?: number; specialty?: string; experience?: string; expertise?: string; description?: string; title?: string; education?: string; image?: string; bookingFee?: number | string; duration?: number; featured?: boolean };
+type Service = { id?: number; dichvuid?: number; name?: string; tendichvu?: string; description?: string; price?: number | string; dongia?: number | string; specialtyId?: number; specialty?: string };
 
 function LegacyBookingPageApi() {
   const session = readSession();
@@ -407,7 +407,7 @@ function LegacyBookingPageApi() {
     }));
   }, [session?.user?.UserID, session?.user?.userid]);
 
-  const update = (key: string, value: string) => setForm((current) => ({ ...current, [key]: value }));
+  const update = (key: string, value: string) => setForm((current) => ({ ...current, [key]: key === 'phone' ? sanitizePhoneValue(value) : value }));
   const selectedDoctor = useMemo(() => doctors.find((doctor) => String(doctor.bacsiid ?? doctor.id) === form.doctorId), [doctors, form.doctorId]);
   const selectedService = useMemo(() => services.find((service) => String(service.id ?? service.dichvuid) === form.serviceId), [services, form.serviceId]);
 
@@ -476,12 +476,17 @@ type BookingSlot = { time: string; available: boolean };
 
 type BookingResult = { bookingCode?: string; requestCode?: string; appointment?: Record<string, any>; request?: Record<string, any>; message?: string };
 
+const BOOKING_SPECIALTY_NAMES = new Set(['Hậu môn – Trực tràng', 'Tiêu hóa', 'Tim mạch', 'Nội tổng quát']);
+const sanitizePhoneValue = (value: string) => value.replace(/\D/g, '');
+
 export function BookingPageApi() {
   const session = readSession();
   const [step, setStep] = useState(1);
   const [specialties, setSpecialties] = useState<BookingSpecialty[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [allDoctors, setAllDoctors] = useState<Doctor[]>([]);
   const [services, setServices] = useState<Service[]>([]);
+  const [allServices, setAllServices] = useState<Service[]>([]);
   const [slots, setSlots] = useState<BookingSlot[]>([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -490,7 +495,7 @@ export function BookingPageApi() {
   const [form, setForm] = useState({ specialtyId: '', doctorId: '', serviceId: '', date: '', time: '', name: '', phone: '', email: '', reason: '', note: '' });
 
   const today = new Date().toISOString().slice(0, 10);
-  const update = (key: string, value: string) => setForm((current) => ({ ...current, [key]: value }));
+  const update = (key: string, value: string) => setForm((current) => ({ ...current, [key]: key === 'phone' ? sanitizePhoneValue(value) : value }));
   const selectedSpecialty = specialties.find((item) => String(item.id) === form.specialtyId);
   const selectedDoctor = doctors.find((item) => String(item.bacsiid ?? item.id) === form.doctorId);
   const selectedService = services.find((item) => String(item.id ?? item.dichvuid) === form.serviceId);
@@ -505,12 +510,19 @@ export function BookingPageApi() {
       fetch(API_BASE + '/api/doctors').then((response) => response.json())
     ])
       .then(([specialtyData, serviceData, doctorData]) => {
-        setSpecialties(Array.isArray(specialtyData) ? specialtyData : []);
-        setServices(Array.isArray(serviceData) ? serviceData : []);
-        setDoctors(Array.isArray(doctorData) ? doctorData : []);
+        const availableSpecialties = Array.isArray(specialtyData)
+          ? specialtyData.filter((item: BookingSpecialty) => BOOKING_SPECIALTY_NAMES.has(item.name))
+          : [];
+        const availableServices = Array.isArray(serviceData) ? serviceData : [];
+        const availableDoctors = Array.isArray(doctorData) ? doctorData : [];
+        setSpecialties(availableSpecialties);
+        setAllServices(availableServices);
+        setServices(availableServices);
+        setAllDoctors(availableDoctors);
+        setDoctors(availableDoctors);
         const initialDoctorId = new URLSearchParams(window.location.search).get('doctorId');
         const initialDoctor = Array.isArray(doctorData) ? doctorData.find((doctor: Doctor) => String(doctor.id ?? doctor.bacsiid) === initialDoctorId) : null;
-        if (initialDoctor) {
+        if (initialDoctor && availableSpecialties.some((item) => String(item.id) === String(initialDoctor.specialtyId ?? ''))) {
           setForm((current) => ({ ...current, doctorId: String(initialDoctor.id ?? initialDoctor.bacsiid), specialtyId: String(initialDoctor.specialtyId ?? '') }));
         }
       })
@@ -519,12 +531,37 @@ export function BookingPageApi() {
 
   useEffect(() => {
     setSlots([]);
-    if (!form.specialtyId) return;
-    fetch(API_BASE + '/api/doctors?specialtyId=' + encodeURIComponent(form.specialtyId))
-      .then((response) => response.json())
-      .then((data) => setDoctors(Array.isArray(data) ? data : []))
-      .catch(() => setDoctors([]));
-  }, [form.specialtyId]);
+    if (!form.specialtyId) {
+      setServices(allServices);
+      setDoctors(allDoctors);
+      return;
+    }
+    let cancelled = false;
+    const query = '?specialtyId=' + encodeURIComponent(form.specialtyId);
+    Promise.all([
+      fetch(API_BASE + '/api/services' + query).then((response) => response.json()),
+      fetch(API_BASE + '/api/doctors' + query).then((response) => response.json())
+    ])
+      .then(([serviceData, doctorData]) => {
+        if (cancelled) return;
+        const filteredServices = Array.isArray(serviceData)
+          ? serviceData.filter((item: Service) => String(item.specialtyId ?? '') === form.specialtyId)
+          : [];
+        const filteredDoctors = Array.isArray(doctorData)
+          ? doctorData.filter((item: Doctor) => String(item.specialtyId ?? item.chuyenkhoaid ?? '') === form.specialtyId)
+          : [];
+        setServices(filteredServices);
+        setDoctors(filteredDoctors);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setServices([]);
+        setDoctors([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [form.specialtyId, allServices, allDoctors]);
 
   useEffect(() => {
     setForm((current) => ({
@@ -551,15 +588,25 @@ export function BookingPageApi() {
       .finally(() => setSlotsLoading(false));
   }, [form.doctorId, form.date]);
 
+  useEffect(() => {
+    const phoneInput = document.querySelector<HTMLInputElement>('input[placeholder="Nhập số điện thoại"]');
+    if (phoneInput) {
+      phoneInput.type = 'tel';
+      phoneInput.inputMode = 'numeric';
+      phoneInput.pattern = '[0-9]*';
+    }
+  }, [step]);
+
   const chooseSpecialty = (value: string) => {
-    setForm((current) => ({ ...current, specialtyId: value, doctorId: '', date: '', time: '' }));
+    setForm((current) => ({ ...current, specialtyId: value, serviceId: '', doctorId: '', date: '', time: '' }));
     setSlots([]);
   };
 
   const skipStep = () => {
     if (step === 1) {
-      setForm((current) => ({ ...current, specialtyId: '', doctorId: '', serviceId: '' }));
-      setDoctors([]);
+      setForm((current) => ({ ...current, specialtyId: '', doctorId: '', serviceId: '', date: '', time: '' }));
+      setServices(allServices);
+      setDoctors(allDoctors);
     }
     if (step === 2) {
       setForm((current) => ({ ...current, date: '', time: '' }));
