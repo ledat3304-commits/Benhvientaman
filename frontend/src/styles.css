@@ -2573,3 +2573,8 @@ main:has(.hero-slider) > .app-section{
     color:var(--navy)!important;
   }
 }
+
+/* Ẩn nhãn phụ trên các thẻ hệ thống y tế */
+.health-system-kicker{
+  display:none!important;
+}
