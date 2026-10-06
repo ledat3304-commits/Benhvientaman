@@ -2562,3 +2562,8 @@ main:has(.hero-slider) > .home-news-section,
 main:has(.hero-slider) > .app-section{
   background:#fff!important;
 }
+
+/* Mục con menu tin tức */
+.site-header .nav-dropdown--news .nav-dropdown-menu a{
+  font-size:12px!important;
+}
