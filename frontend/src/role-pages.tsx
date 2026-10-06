@@ -80,7 +80,7 @@ function statusLabel(value: unknown) {
   return labels[String(value || '')] || String(value || 'Chưa cập nhật');
 }
 
-type AdminSection = 'overview' | 'notifications' | 'appointments' | 'patients' | 'users' | 'doctors' | 'catalog';
+type AdminSection = 'overview' | 'notifications' | 'appointments' | 'booking-requests' | 'patients' | 'users' | 'doctors' | 'catalog';
 
 export function AdminDashboardPage() {
   const session = readSession();
@@ -88,6 +88,8 @@ export function AdminDashboardPage() {
   const [notifications, setNotifications] = useState<Record<string, any>[]>([]);
   const [stats, setStats] = useState<Record<string, any>>({});
   const [appointments, setAppointments] = useState<Record<string, any>[]>([]);
+  const [bookingRequests, setBookingRequests] = useState<Record<string, any>[]>([]);
+  const [requestDrafts, setRequestDrafts] = useState<Record<string, { specialtyId: string; serviceId: string; doctorId: string; preferredDate: string; preferredTime: string }>>({});
   const [patients, setPatients] = useState<Record<string, any>[]>([]);
   const [users, setUsers] = useState<Record<string, any>[]>([]);
   const [doctors, setDoctors] = useState<Record<string, any>[]>([]);
@@ -113,10 +115,11 @@ export function AdminDashboardPage() {
 
     setLoading(true);
     try {
-      const [dashboard, notificationData, appointmentData, patientData, userData, doctorData, specialtyData, serviceData, medicineData] = await Promise.all([
+      const [dashboard, notificationData, appointmentData, bookingRequestData, patientData, userData, doctorData, specialtyData, serviceData, medicineData] = await Promise.all([
         adminFetch('/api/admin/dashboard', session),
         adminFetch('/api/admin/notifications?limit=100', session),
         adminFetch('/api/admin/appointments', session),
+        adminFetch('/api/admin/booking-requests', session),
         adminFetch('/api/admin/patients', session),
         adminFetch('/api/admin/users', session),
         adminFetch('/api/admin/doctors', session),
@@ -127,6 +130,24 @@ export function AdminDashboardPage() {
       setStats(dashboard.stats || {});
       setNotifications(notificationData.notifications || []);
       setAppointments(appointmentData.appointments || []);
+      const loadedBookingRequests = bookingRequestData.requests || [];
+      setBookingRequests(loadedBookingRequests);
+      setRequestDrafts((current) => {
+        const next = { ...current };
+        loadedBookingRequests.forEach((request: Record<string, any>) => {
+          const id = String(getValue(request, 'yeucauid', 'YeuCauID'));
+          if (!next[id]) {
+            next[id] = {
+              specialtyId: String(getValue(request, 'chuyenkhoaid', 'ChuyenKhoaID') || ''),
+              serviceId: String(getValue(request, 'dichvuid', 'DichVuID') || ''),
+              doctorId: String(getValue(request, 'bacsiid', 'BacSiID') || ''),
+              preferredDate: String(getValue(request, 'ngaymongmuon', 'NgayMongMuon') || '').slice(0, 10),
+              preferredTime: String(getValue(request, 'giomongmuon', 'GioMongMuon') || '').slice(0, 5)
+            };
+          }
+        });
+        return next;
+      });
       setPatients(patientData.patients || []);
       setUsers(userData.users || []);
       setDoctors(doctorData.doctors || []);
@@ -180,6 +201,52 @@ export function AdminDashboardPage() {
       showActionMessage('Đã cập nhật trạng thái lịch khám.');
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : 'Không thể cập nhật lịch khám.');
+    } finally {
+      setSavingId('');
+    }
+  };
+
+  const requestDraft = (request: Record<string, any>) => {
+    const id = String(getValue(request, 'yeucauid', 'YeuCauID'));
+    return requestDrafts[id] || {
+      specialtyId: String(getValue(request, 'chuyenkhoaid', 'ChuyenKhoaID') || ''),
+      serviceId: String(getValue(request, 'dichvuid', 'DichVuID') || ''),
+      doctorId: String(getValue(request, 'bacsiid', 'BacSiID') || ''),
+      preferredDate: String(getValue(request, 'ngaymongmuon', 'NgayMongMuon') || '').slice(0, 10),
+      preferredTime: String(getValue(request, 'giomongmuon', 'GioMongMuon') || '').slice(0, 5)
+    };
+  };
+
+  const setRequestDraft = (requestId: string | number, key: keyof ReturnType<typeof requestDraft>, value: string) => {
+    const id = String(requestId);
+    setRequestDrafts((current) => {
+      const previous = current[id] || { specialtyId: '', serviceId: '', doctorId: '', preferredDate: '', preferredTime: '' };
+      return { ...current, [id]: { ...previous, [key]: value } };
+    });
+  };
+
+  const updateBookingRequestStatus = async (requestId: string | number, status: string) => {
+    setSavingId(`request-status-${requestId}`);
+    try {
+      const data = await adminFetch(`/api/admin/booking-requests/${requestId}/status`, session, { method: 'PATCH', body: JSON.stringify({ status }) });
+      setBookingRequests((items) => items.map((item) => String(getValue(item, 'yeucauid', 'YeuCauID')) === String(requestId) ? { ...item, ...data.request } : item));
+      showActionMessage('Đã cập nhật trạng thái yêu cầu đặt lịch.');
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : 'Không thể cập nhật yêu cầu đặt lịch.');
+    } finally {
+      setSavingId('');
+    }
+  };
+
+  const convertBookingRequest = async (request: Record<string, any>) => {
+    const requestId = getValue(request, 'yeucauid', 'YeuCauID');
+    setSavingId(`request-convert-${requestId}`);
+    try {
+      const data = await adminFetch(`/api/admin/booking-requests/${requestId}/convert`, session, { method: 'POST', body: JSON.stringify(requestDraft(request)) });
+      setBookingRequests((items) => items.map((item) => String(getValue(item, 'yeucauid', 'YeuCauID')) === String(requestId) ? { ...item, ...data.request } : item));
+      showActionMessage(`Đã chuyển yêu cầu thành lịch khám ${data.bookingCode || ''}.`);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : 'Không thể chuyển yêu cầu thành lịch khám.');
     } finally {
       setSavingId('');
     }
@@ -250,6 +317,8 @@ export function AdminDashboardPage() {
     }
   };
 
+  const bookingRequestsPanel = <section className="admin-panel admin-booking-requests-panel"><div className="admin-panel-heading"><div><span className="eyebrow">Tiếp nhận khách hàng</span><h2>Yêu cầu đặt lịch</h2></div><button className="button button-outline" type="button" onClick={() => loadData()}>Làm mới</button></div><div className="admin-booking-request-list">{bookingRequests.length === 0 ? <p className="admin-notification-state">Chưa có yêu cầu đặt lịch.</p> : bookingRequests.map((item, index) => { const id = getValue(item, 'yeucauid', 'YeuCauID') || index; const draft = requestDraft(item); const filteredDoctors = doctors.filter((doctor) => !draft.specialtyId || String(getValue(doctor, 'chuyenkhoaid', 'ChuyenKhoaID')) === draft.specialtyId); const status = String(getValue(item, 'trangthai', 'TrangThai') || 'ChoLienHe'); const phone = getValue(item, 'sodienthoai', 'SoDienThoai'); return <article className="admin-booking-request-card" key={id}><div className="admin-booking-request-header"><div><span className="admin-request-code">{getValue(item, 'requestCode') || `YC-${id}`}</span><h3>{getValue(item, 'hoten', 'HoTen') || 'Chưa cung cấp'}</h3><small>{formatAdminDate(getValue(item, 'ngaytao', 'NgayTao'))}</small></div><select className="admin-status-select" value={status} disabled={String(savingId) === `request-status-${id}`} onChange={(event) => updateBookingRequestStatus(id, event.target.value)}><option value="ChoLienHe">Chờ liên hệ</option><option value="DangXuLy">Đang xử lý</option><option value="DaXacNhan">Đã xác nhận</option><option value="DaChuyenThanhLichKham">Đã chuyển thành lịch</option><option value="DaHuy">Đã hủy</option></select></div><div className="admin-booking-request-details"><span>SĐT<strong>{phone || 'Chưa cung cấp'}</strong></span><span>Email<strong>{getValue(item, 'email', 'Email') || 'Chưa cung cấp'}</strong></span><span>Chuyên khoa<strong>{getValue(item, 'tenchuyenkhoa', 'TenChuyenKhoa') || 'Chưa chọn'}</strong></span><span>Dịch vụ<strong>{getValue(item, 'tendichvu', 'TenDichVu') || 'Chưa chọn'}</strong></span><span>Bác sĩ<strong>{getValue(item, 'tenbacsi', 'TenBacSi') || 'Cần bệnh viện tư vấn'}</strong></span><span>Ngày / giờ<strong>{getValue(item, 'ngaymongmuon', 'NgayMongMuon') || 'Chưa chọn'} · {String(getValue(item, 'giomongmuon', 'GioMongMuon') || 'Chưa chọn').slice(0, 5)}</strong></span><span>Lý do<strong>{getValue(item, 'lydokham', 'LyDoKham') || 'Chưa cung cấp'}</strong></span><span>Ghi chú<strong>{getValue(item, 'ghichu', 'GhiChu') || 'Chưa cung cấp'}</strong></span></div><details className="admin-booking-request-convert"><summary>Chọn thông tin để chuyển thành lịch khám</summary><div className="admin-form-row"><label>Chuyên khoa<select value={draft.specialtyId} onChange={(event) => setRequestDraft(id, 'specialtyId', event.target.value)}><option value="">Chưa chọn</option>{specialties.map((specialty, specialtyIndex) => <option key={getValue(specialty, 'chuyenkhoaid', 'ChuyenKhoaID') || specialtyIndex} value={getValue(specialty, 'chuyenkhoaid', 'ChuyenKhoaID')}>{getValue(specialty, 'tenchuyenkhoa', 'TenChuyenKhoa')}</option>)}</select></label><label>Dịch vụ<select value={draft.serviceId} onChange={(event) => setRequestDraft(id, 'serviceId', event.target.value)}><option value="">Chưa chọn</option>{services.map((service, serviceIndex) => <option key={getValue(service, 'dichvuid', 'DichVuID') || serviceIndex} value={getValue(service, 'dichvuid', 'DichVuID')}>{getValue(service, 'tendichvu', 'TenDichVu')}</option>)}</select></label></div><div className="admin-form-row"><label>Bác sĩ<select value={draft.doctorId} onChange={(event) => setRequestDraft(id, 'doctorId', event.target.value)}><option value="">Chưa chọn</option>{filteredDoctors.map((doctor, doctorIndex) => <option key={getValue(doctor, 'bacsiid', 'BacSiID') || doctorIndex} value={getValue(doctor, 'bacsiid', 'BacSiID')}>{getValue(doctor, 'hoten', 'HoTen')}</option>)}</select></label><label>Ngày khám<input type="date" min={new Date().toISOString().slice(0, 10)} value={draft.preferredDate} onChange={(event) => setRequestDraft(id, 'preferredDate', event.target.value)} /></label></div><label>Giờ khám<input type="time" step="1800" value={draft.preferredTime} onChange={(event) => setRequestDraft(id, 'preferredTime', event.target.value)} /></label><div className="admin-request-action-row"><a className="admin-small-button" href={phone ? `tel:${phone}` : undefined}>Gọi cho khách</a><button className="button button-primary" type="button" disabled={String(savingId) === `request-convert-${id}` || status === 'DaChuyenThanhLichKham'} onClick={() => convertBookingRequest(item)}>{String(savingId) === `request-convert-${id}` ? 'Đang chuyển...' : 'Xác nhận lịch khám'}</button></div></details></article>; })}</div></section>;
+
   const logout = () => {
     localStorage.removeItem(STORAGE_KEY);
     window.location.href = '/login';
@@ -257,6 +326,7 @@ export function AdminDashboardPage() {
 
   const unreadCount = stats.unreadNotifications ?? notifications.filter((item) => !getValue(item, 'dadoc', 'DaDoc')).length;
   const navItems: Array<{ key: AdminSection; label: string; icon: string; count?: number }> = [
+    { key: 'booking-requests', label: 'Yêu cầu đặt lịch', icon: '☎', count: bookingRequests.filter((item) => !['DaChuyenThanhLichKham', 'DaHuy'].includes(String(getValue(item, 'trangthai', 'TrangThai')))).length },
     { key: 'overview', label: 'Tổng quan', icon: '⌂' },
     { key: 'notifications', label: 'Thông báo', icon: '!' , count: unreadCount },
     { key: 'appointments', label: 'Lịch khám', icon: '◷', count: appointments.length },
@@ -299,10 +369,10 @@ export function AdminDashboardPage() {
 
   const catalogPanel = <section className="admin-panel"><div className="admin-panel-heading"><div><span className="eyebrow">Nội dung vận hành</span><h2>Quản lý danh mục</h2></div></div><div className="admin-tabs">{([{ key: 'services', label: `Dịch vụ (${services.length})` }, { key: 'specialties', label: `Chuyên khoa (${specialties.length})` }, { key: 'medicines', label: `Thuốc (${medicines.length})` }] as const).map((tab) => <button type="button" className={catalogTab === tab.key ? 'is-active' : ''} key={tab.key} onClick={() => setCatalogTab(tab.key)}>{tab.label}</button>)}</div>{catalogTab === 'services' ? <div className="admin-catalog-layout"><div className="admin-catalog-list">{services.map((item, index) => <article className="admin-catalog-item" key={getValue(item, 'dichvuid', 'DichVuID') || index}><div><strong>{getValue(item, 'tendichvu', 'TenDichVu')}</strong><small>{getValue(item, 'mota', 'MoTa') || 'Chưa có mô tả.'}</small></div><span>{formatAdminMoney(getValue(item, 'dongia', 'DonGia'))}</span></article>)}</div><form className="admin-form admin-form-card" onSubmit={(event) => createCatalogItem(event, 'service')}><h3>Thêm dịch vụ</h3><label>Tên dịch vụ<input required value={serviceForm.name} onChange={(event) => setServiceForm({ ...serviceForm, name: event.target.value })} /></label><label>Mô tả<textarea value={serviceForm.description} onChange={(event) => setServiceForm({ ...serviceForm, description: event.target.value })} /></label><label>Giá tham khảo<input type="number" min="0" value={serviceForm.price} onChange={(event) => setServiceForm({ ...serviceForm, price: event.target.value })} /></label><button className="button button-primary" type="submit" disabled={savingId === 'new-service'}>Thêm dịch vụ</button></form></div> : null}{catalogTab === 'specialties' ? <div className="admin-catalog-layout"><div className="admin-catalog-list">{specialties.map((item, index) => <article className="admin-catalog-item" key={getValue(item, 'chuyenkhoaid', 'ChuyenKhoaID') || index}><div><strong>{getValue(item, 'tenchuyenkhoa', 'TenChuyenKhoa')}</strong><small>{getValue(item, 'mota', 'MoTa') || 'Chưa có mô tả.'}</small></div></article>)}</div><form className="admin-form admin-form-card" onSubmit={(event) => createCatalogItem(event, 'specialty')}><h3>Thêm chuyên khoa</h3><label>Tên chuyên khoa<input required value={specialtyForm.name} onChange={(event) => setSpecialtyForm({ ...specialtyForm, name: event.target.value })} /></label><label>Mô tả<textarea value={specialtyForm.description} onChange={(event) => setSpecialtyForm({ ...specialtyForm, description: event.target.value })} /></label><button className="button button-primary" type="submit" disabled={savingId === 'new-specialty'}>Thêm chuyên khoa</button></form></div> : null}{catalogTab === 'medicines' ? <div className="admin-catalog-layout"><div className="admin-catalog-list">{medicines.map((item, index) => <article className="admin-catalog-item" key={getValue(item, 'thuocid', 'ThuocID') || index}><div><strong>{getValue(item, 'tenthuoc', 'TenThuoc')}</strong><small>{getValue(item, 'hoatchat', 'HoatChat') || 'Chưa có hoạt chất.'}</small></div><span>{getValue(item, 'donvitinh', 'DonViTinh') || '—'}</span></article>)}</div><form className="admin-form admin-form-card" onSubmit={(event) => createCatalogItem(event, 'medicine')}><h3>Thêm thuốc</h3><label>Tên thuốc<input required value={medicineForm.name} onChange={(event) => setMedicineForm({ ...medicineForm, name: event.target.value })} /></label><label>Hoạt chất<input value={medicineForm.activeIngredient} onChange={(event) => setMedicineForm({ ...medicineForm, activeIngredient: event.target.value })} /></label><label>Đơn vị tính<input required value={medicineForm.unit} onChange={(event) => setMedicineForm({ ...medicineForm, unit: event.target.value })} placeholder="Viên, lọ, hộp..." /></label><button className="button button-primary" type="submit" disabled={savingId === 'new-medicine'}>Thêm thuốc</button></form></div> : null}</section>;
 
-  return <main className="admin-dashboard-page"><div className="admin-dashboard-shell"><header className="admin-dashboard-header"><div><span className="eyebrow">Khu vực quản trị</span><h1>Bảng điều khiển admin</h1><p>{getValue(session.user || {}, 'HoTen', 'hoten') || 'Quản trị viên'} · {getValue(session.user || {}, 'Email', 'email') || 'Không có email'}</p></div><div className="admin-dashboard-actions"><a className="button button-outline" href="/">Xem website</a><button className="button button-outline" type="button" onClick={logout}>Đăng xuất</button></div></header><div className="admin-dashboard-layout"><aside className="admin-sidebar"><p className="admin-sidebar-label">Quản trị hệ thống</p>{navItems.map((item) => <button className={section === item.key ? 'admin-nav-item is-active' : 'admin-nav-item'} type="button" key={item.key} onClick={() => setSection(item.key)}><span className="admin-nav-icon">{item.icon}</span><span>{item.label}</span>{item.count ? <b>{item.count}</b> : null}</button>)}<div className="admin-sidebar-note"><strong>Bảo mật tài khoản</strong><span>Chỉ tài khoản có vai trò quản trị mới truy cập được khu vực này.</span></div></aside><section className="admin-dashboard-content">{loading ? <p className="admin-notification-state">Đang tải dữ liệu quản trị...</p> : null}{error ? <p className="admin-notification-error">{error}</p> : null}{actionMessage ? <p className="admin-action-message">{actionMessage}</p> : null}{!loading && section === 'overview' ? overview : null}{!loading && section === 'notifications' ? <section className="admin-panel"><div className="admin-panel-heading"><div><span className="eyebrow">Hộp thư hệ thống</span><h2>Tất cả thông báo</h2></div><div className="admin-heading-actions"><button className="button button-outline" type="button" onClick={markAllAsRead}>Đánh dấu tất cả đã đọc</button><button className="button button-outline" type="button" onClick={() => loadData()}>Làm mới</button></div></div>{notificationList(notifications)}</section> : null}{!loading && section === 'appointments' ? appointmentsPanel : null}{!loading && section === 'patients' ? patientsPanel : null}{!loading && section === 'users' ? usersPanel : null}{!loading && section === 'doctors' ? doctorsPanel : null}{!loading && section === 'catalog' ? catalogPanel : null}</section></div></div></main>;
+  return <main className="admin-dashboard-page"><div className="admin-dashboard-shell"><header className="admin-dashboard-header"><div><span className="eyebrow">Khu vực quản trị</span><h1>Bảng điều khiển admin</h1><p>{getValue(session.user || {}, 'HoTen', 'hoten') || 'Quản trị viên'} · {getValue(session.user || {}, 'Email', 'email') || 'Không có email'}</p></div><div className="admin-dashboard-actions"><a className="button button-outline" href="/">Xem website</a><button className="button button-outline" type="button" onClick={logout}>Đăng xuất</button></div></header><div className="admin-dashboard-layout"><aside className="admin-sidebar"><p className="admin-sidebar-label">Quản trị hệ thống</p>{navItems.map((item) => <button className={section === item.key ? 'admin-nav-item is-active' : 'admin-nav-item'} type="button" key={item.key} onClick={() => setSection(item.key)}><span className="admin-nav-icon">{item.icon}</span><span>{item.label}</span>{item.count ? <b>{item.count}</b> : null}</button>)}<div className="admin-sidebar-note"><strong>Bảo mật tài khoản</strong><span>Chỉ tài khoản có vai trò quản trị mới truy cập được khu vực này.</span></div></aside><section className="admin-dashboard-content">{loading ? <p className="admin-notification-state">Đang tải dữ liệu quản trị...</p> : null}{error ? <p className="admin-notification-error">{error}</p> : null}{actionMessage ? <p className="admin-action-message">{actionMessage}</p> : null}{!loading && section === 'overview' ? overview : null}{!loading && section === 'notifications' ? <section className="admin-panel"><div className="admin-panel-heading"><div><span className="eyebrow">Hộp thư hệ thống</span><h2>Tất cả thông báo</h2></div><div className="admin-heading-actions"><button className="button button-outline" type="button" onClick={markAllAsRead}>Đánh dấu tất cả đã đọc</button><button className="button button-outline" type="button" onClick={() => loadData()}>Làm mới</button></div></div>{notificationList(notifications)}</section> : null}{!loading && section === 'appointments' ? appointmentsPanel : null}{!loading && section === 'booking-requests' ? bookingRequestsPanel : null}{!loading && section === 'patients' ? patientsPanel : null}{!loading && section === 'users' ? usersPanel : null}{!loading && section === 'doctors' ? doctorsPanel : null}{!loading && section === 'catalog' ? catalogPanel : null}</section></div></div></main>;
 }
 
-type Doctor = { bacsiid?: number; id?: number; hoten?: string; name?: string; tenchuyenkhoa?: string; specialtyId?: number; specialty?: string; experience?: string; description?: string };
+type Doctor = { bacsiid?: number; id?: number; hoten?: string; name?: string; tenchuyenkhoa?: string; specialtyId?: number; specialty?: string; experience?: string; expertise?: string; description?: string; title?: string; education?: string; image?: string; bookingFee?: number | string; duration?: number; featured?: boolean };
 type Service = { id?: number; dichvuid?: number; name?: string; tendichvu?: string; description?: string; price?: number | string; dongia?: number | string };
 
 function LegacyBookingPageApi() {
@@ -404,6 +474,8 @@ function LegacyBookingPageApi() {
 type BookingSpecialty = { id: number; name: string; description?: string };
 type BookingSlot = { time: string; available: boolean };
 
+type BookingResult = { bookingCode?: string; requestCode?: string; appointment?: Record<string, any>; request?: Record<string, any>; message?: string };
+
 export function BookingPageApi() {
   const session = readSession();
   const [step, setStep] = useState(1);
@@ -411,30 +483,48 @@ export function BookingPageApi() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [slots, setSlots] = useState<BookingSlot[]>([]);
-  const [loading, setLoading] = useState(false);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
-  const [booking, setBooking] = useState<any>(null);
-  const [form, setForm] = useState({ specialtyId: '', doctorId: '', serviceId: '', date: '', time: '', name: '', phone: '', email: '', reason: '' });
+  const [result, setResult] = useState<BookingResult | null>(null);
+  const [form, setForm] = useState({ specialtyId: '', doctorId: '', serviceId: '', date: '', time: '', name: '', phone: '', email: '', reason: '', note: '' });
 
   const today = new Date().toISOString().slice(0, 10);
   const update = (key: string, value: string) => setForm((current) => ({ ...current, [key]: value }));
   const selectedSpecialty = specialties.find((item) => String(item.id) === form.specialtyId);
   const selectedDoctor = doctors.find((item) => String(item.bacsiid ?? item.id) === form.doctorId);
   const selectedService = services.find((item) => String(item.id ?? item.dichvuid) === form.serviceId);
+  const phoneDigits = form.phone.replace(/\D/g, '');
+  const phoneValid = /^(0\d{8,10}|84\d{9})$/.test(phoneDigits);
+  const formReady = Boolean(form.name.trim()) && phoneValid;
 
   useEffect(() => {
     Promise.all([
-      fetch(`${API_BASE}/api/specialties`).then((response) => response.json()),
-      fetch(`${API_BASE}/api/services`).then((response) => response.json())
+      fetch(API_BASE + '/api/specialties').then((response) => response.json()),
+      fetch(API_BASE + '/api/services').then((response) => response.json()),
+      fetch(API_BASE + '/api/doctors').then((response) => response.json())
     ])
-      .then(([specialtyData, serviceData]) => {
+      .then(([specialtyData, serviceData, doctorData]) => {
         setSpecialties(Array.isArray(specialtyData) ? specialtyData : []);
         setServices(Array.isArray(serviceData) ? serviceData : []);
+        setDoctors(Array.isArray(doctorData) ? doctorData : []);
+        const initialDoctorId = new URLSearchParams(window.location.search).get('doctorId');
+        const initialDoctor = Array.isArray(doctorData) ? doctorData.find((doctor: Doctor) => String(doctor.id ?? doctor.bacsiid) === initialDoctorId) : null;
+        if (initialDoctor) {
+          setForm((current) => ({ ...current, doctorId: String(initialDoctor.id ?? initialDoctor.bacsiid), specialtyId: String(initialDoctor.specialtyId ?? '') }));
+        }
       })
-      .catch(() => setMessage('Không thể tải danh sách chuyên khoa và dịch vụ.'));
+      .catch(() => setMessage('Không thể tải dữ liệu đặt lịch.'));
   }, []);
+
+  useEffect(() => {
+    setSlots([]);
+    if (!form.specialtyId) return;
+    fetch(API_BASE + '/api/doctors?specialtyId=' + encodeURIComponent(form.specialtyId))
+      .then((response) => response.json())
+      .then((data) => setDoctors(Array.isArray(data) ? data : []))
+      .catch(() => setDoctors([]));
+  }, [form.specialtyId]);
 
   useEffect(() => {
     setForm((current) => ({
@@ -445,23 +535,10 @@ export function BookingPageApi() {
   }, [session?.user?.UserID, session?.user?.userid]);
 
   useEffect(() => {
-    setForm((current) => ({ ...current, doctorId: '', date: '', time: '' }));
-    setSlots([]);
-    if (!form.specialtyId) {
-      setDoctors([]);
-      return;
-    }
-    fetch(`${API_BASE}/api/doctors?specialtyId=${encodeURIComponent(form.specialtyId)}`)
-      .then((response) => response.json())
-      .then((data) => setDoctors(Array.isArray(data) ? data : []))
-      .catch(() => setDoctors([]));
-  }, [form.specialtyId]);
-
-  useEffect(() => {
     setSlots([]);
     if (!form.doctorId || !form.date) return;
     setSlotsLoading(true);
-    fetch(`${API_BASE}/api/doctors/${encodeURIComponent(form.doctorId)}/available-slots?date=${encodeURIComponent(form.date)}`)
+    fetch(API_BASE + '/api/doctors/' + encodeURIComponent(form.doctorId) + '/available-slots?date=' + encodeURIComponent(form.date))
       .then((response) => response.json().then((data) => ({ response, data })))
       .then(({ response, data }) => {
         if (!response.ok || data.success === false) throw new Error(data.message || 'Không thể tải khung giờ.');
@@ -474,31 +551,44 @@ export function BookingPageApi() {
       .finally(() => setSlotsLoading(false));
   }, [form.doctorId, form.date]);
 
-  const nextStep = () => {
+  const chooseSpecialty = (value: string) => {
+    setForm((current) => ({ ...current, specialtyId: value, doctorId: '', date: '', time: '' }));
+    setSlots([]);
+  };
+
+  const skipStep = () => {
+    if (step === 1) {
+      setForm((current) => ({ ...current, specialtyId: '', doctorId: '', serviceId: '' }));
+      setDoctors([]);
+    }
+    if (step === 2) {
+      setForm((current) => ({ ...current, date: '', time: '' }));
+      setSlots([]);
+    }
     setMessage('');
-    if (step === 1 && (!form.specialtyId || !form.doctorId)) {
-      setMessage('Vui lòng chọn chuyên khoa và bác sĩ.');
-      return;
-    }
-    if (step === 2 && (!form.date || !form.time)) {
-      setMessage('Vui lòng chọn ngày và khung giờ khám còn trống.');
-      return;
-    }
     setStep((current) => Math.min(current + 1, 3));
   };
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
     setMessage('');
-    if (!form.name.trim()) return setMessage('Vui lòng nhập họ tên.');
-    if (!form.phone.trim()) return setMessage('Vui lòng nhập số điện thoại.');
-    if (!form.time) return setMessage('Vui lòng chọn khung giờ khám.');
+    if (!form.name.trim()) return setMessage('Vui lòng nhập họ và tên.');
+    if (!phoneValid) return setMessage('Vui lòng nhập số điện thoại hợp lệ.');
     setSubmitting(true);
+    const hasCompleteAppointment = Boolean(form.doctorId && form.date && form.time);
+    const endpoint = hasCompleteAppointment ? '/api/appointments' : '/api/booking-requests';
     try {
-      const response = await fetch(`${API_BASE}/api/appointments`, {
+      const payload = {
+        ...form,
+        preferredDate: form.date || null,
+        preferredTime: form.time || null,
+        note: form.note.trim(),
+        reason: form.reason.trim()
+      };
+      const response = await fetch(API_BASE + endpoint, {
         method: 'POST',
         headers: authHeaders(session),
-        body: JSON.stringify({ ...form, reason: form.reason.trim() })
+        body: JSON.stringify(payload)
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.success) {
@@ -507,90 +597,27 @@ export function BookingPageApi() {
           setMessage('Khung giờ vừa được người khác đặt. Vui lòng chọn khung giờ khác.');
           return;
         }
-        throw new Error(data.message || 'Không thể đặt lịch.');
+        throw new Error(data.message || 'Không thể gửi yêu cầu đặt lịch.');
       }
-      setBooking(data);
+      setResult(data);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Không thể đặt lịch.');
+      setMessage(error instanceof Error ? error.message : 'Không thể gửi yêu cầu đặt lịch.');
     } finally {
       setSubmitting(false);
     }
   };
 
-  if (booking) {
-    return (
-      <main className="booking-wizard-page">
-        <section className="booking-wizard-success">
-          <div className="success-check">✓</div>
-          <span className="eyebrow">Tâm An Hospital</span>
-          <h1>Đặt lịch thành công</h1>
-          <p>Mã lịch hẹn: <strong>{booking.bookingCode}</strong></p>
-          <div className="booking-success-details">
-            <span>Chuyên khoa<strong>{selectedSpecialty?.name || '—'}</strong></span>
-            <span>Bác sĩ<strong>{selectedDoctor?.name || selectedDoctor?.hoten || '—'}</strong></span>
-            <span>Ngày khám<strong>{form.date}</strong></span>
-            <span>Giờ khám<strong>{form.time}</strong></span>
-            <span>Họ tên<strong>{form.name}</strong></span>
-            <span>Số điện thoại<strong>{form.phone}</strong></span>
-          </div>
-          <div className="booking-success-actions">
-            <a className="button button-primary" href="/">Về trang chủ</a>
-            <button className="button button-outline" type="button" onClick={() => window.location.reload()}>Đặt lịch khác</button>
-          </div>
-        </section>
-      </main>
-    );
+  const resetBooking = () => {
+    setResult(null);
+    setStep(1);
+    setMessage('');
+    setForm({ specialtyId: '', doctorId: '', serviceId: '', date: '', time: '', name: '', phone: '', email: '', reason: '', note: '' });
+  };
+
+  if (result) {
+    const isDirectAppointment = Boolean(result.bookingCode && result.appointment);
+    return <main className="booking-wizard-page"><section className="booking-wizard-success"><div className="success-check">✓</div><span className="eyebrow">Tâm An Hospital</span><h1>{isDirectAppointment ? 'Đặt lịch thành công' : 'Yêu cầu đã được tiếp nhận'}</h1><p>{isDirectAppointment ? 'Mã lịch hẹn: ' : 'Mã yêu cầu: '}<strong>{result.bookingCode || result.requestCode}</strong></p><p className="form-success">{isDirectAppointment ? 'Lịch khám đã được ghi nhận. Bệnh viện sẽ gửi thông tin xác nhận.' : 'Bệnh viện đã nhận thông tin. Nhân viên sẽ liên hệ qua số điện thoại bạn cung cấp để xác nhận chuyên khoa, bác sĩ và thời gian khám.'}</p><div className="booking-success-details"><span>Họ tên<strong>{form.name || 'Chưa cung cấp'}</strong></span><span>Số điện thoại<strong>{form.phone || 'Chưa cung cấp'}</strong></span><span>Email<strong>{form.email || 'Chưa cung cấp'}</strong></span><span>Chuyên khoa<strong>{selectedSpecialty?.name || 'Chưa chọn'}</strong></span><span>Dịch vụ<strong>{selectedService?.name || selectedService?.tendichvu || 'Chưa chọn'}</strong></span><span>Bác sĩ<strong>{selectedDoctor?.name || selectedDoctor?.hoten || 'Cần bệnh viện tư vấn'}</strong></span><span>Ngày khám<strong>{form.date || 'Chưa chọn'}</strong></span><span>Giờ khám<strong>{form.time || 'Chưa chọn'}</strong></span></div><div className="booking-success-actions"><a className="button button-primary" href="/">Về trang chủ</a><button className="button button-outline" type="button" onClick={resetBooking}>Đặt lịch khác</button></div></section></main>;
   }
 
-  return (
-    <main className="booking-wizard-page">
-      <div className="booking-wizard-shell">
-        <div className="booking-wizard-layout">
-          <section className="booking-wizard-card">
-            <div className="booking-wizard-heading">
-              <span className="eyebrow">Đặt lịch trực tuyến</span>
-              <h1>Đặt lịch khám<br /><em>nhanh chóng, thuận tiện</em></h1>
-              <p>Chọn thông tin phù hợp để Tâm An liên hệ xác nhận lịch hẹn của bạn.</p>
-            </div>
-            <div className="booking-stepper" aria-label="Các bước đặt lịch">
-              {[['1', 'Chuyên khoa & bác sĩ'], ['2', 'Ngày & giờ'], ['3', 'Thông tin bệnh nhân']].map(([number, label], index) => (
-                <button type="button" key={number} className={step === index + 1 ? 'is-active' : step > index + 1 ? 'is-done' : ''} onClick={() => index + 1 < step && setStep(index + 1)} disabled={index + 1 > step}>
-                  <b>{number}</b><span>{label}</span>
-                </button>
-              ))}
-            </div>
-
-            {step === 1 ? <div className="booking-wizard-fields">
-              <label>Chuyên khoa<select value={form.specialtyId} onChange={(event) => update('specialtyId', event.target.value)}><option value="">Chọn chuyên khoa</option>{specialties.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
-              <label>Bác sĩ<select value={form.doctorId} onChange={(event) => update('doctorId', event.target.value)} disabled={!form.specialtyId}><option value="">{form.specialtyId ? 'Chọn bác sĩ' : 'Chọn chuyên khoa trước'}</option>{doctors.map((doctor) => <option key={doctor.id ?? doctor.bacsiid} value={doctor.id ?? doctor.bacsiid}>{doctor.name || doctor.hoten}</option>)}</select></label>
-              {selectedDoctor ? <div className="booking-doctor-card"><strong>{selectedDoctor.name || selectedDoctor.hoten}</strong><span>{selectedDoctor.specialty || selectedSpecialty?.name}</span><small>{selectedDoctor.experience || 'Đang cập nhật'} · {selectedDoctor.description || 'Chưa có mô tả.'}</small></div> : null}
-              <button className="button button-primary booking-next-button" type="button" onClick={nextStep}>Tiếp tục chọn ngày <span>→</span></button>
-            </div> : null}
-
-            {step === 2 ? <div className="booking-wizard-fields">
-              <div className="booking-wizard-row"><label>Ngày khám<input type="date" min={today} value={form.date} onChange={(event) => update('date', event.target.value)} /></label><div className="booking-selected-doctor"><span>Bác sĩ đã chọn</span><strong>{selectedDoctor?.name || selectedDoctor?.hoten}</strong></div></div>
-              <div className="booking-slot-panel"><div className="booking-slot-heading"><strong>Khung giờ còn trống</strong><small>{slotsLoading ? 'Đang tải...' : 'Mỗi lượt khám 30 phút'}</small></div>{!slotsLoading && form.date && slots.length === 0 ? <p className="booking-empty-state">Bác sĩ không có ca làm việc trong ngày này.</p> : null}<div className="booking-slots">{slots.map((slot) => <button type="button" key={slot.time} className={form.time === slot.time ? 'is-selected' : ''} disabled={!slot.available} onClick={() => update('time', slot.time)}>{slot.time}{!slot.available ? <small>Hết lịch</small> : null}</button>)}</div></div>
-              <div className="booking-wizard-actions"><button className="button button-outline" type="button" onClick={() => setStep(1)}>← Quay lại</button><button className="button button-primary" type="button" onClick={nextStep}>Tiếp tục nhập thông tin <span>→</span></button></div>
-            </div> : null}
-
-            {step === 3 ? <form className="booking-wizard-fields" onSubmit={submit}>
-              <div className="booking-wizard-row"><label>Họ tên<input required value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="Nhập họ tên" /></label><label>Số điện thoại<input required value={form.phone} onChange={(event) => update('phone', event.target.value)} placeholder="Nhập số điện thoại" /></label></div>
-              <label>Email <span className="booking-optional">(nếu có)</span><input type="email" value={form.email} onChange={(event) => update('email', event.target.value)} placeholder="example@email.com" /></label>
-              <label>Dịch vụ / gói khám <span className="booking-optional">(nếu có)</span><select value={form.serviceId} onChange={(event) => update('serviceId', event.target.value)}><option value="">Chọn dịch vụ</option>{services.map((service) => <option key={service.id ?? service.dichvuid} value={service.id ?? service.dichvuid}>{service.name || service.tendichvu}</option>)}</select></label>
-              <label>Lý do khám / triệu chứng<textarea value={form.reason} onChange={(event) => update('reason', event.target.value)} placeholder="Mô tả ngắn lý do bạn muốn thăm khám" /></label>
-              <div className="booking-wizard-actions"><button className="button button-outline" type="button" onClick={() => setStep(2)}>← Quay lại</button><button className="button button-primary" type="submit" disabled={submitting}>{submitting ? 'Đang gửi...' : 'Xác nhận đặt lịch'}</button></div>
-            </form> : null}
-            {message ? <p className="booking-wizard-message form-error">{message}</p> : null}
-          </section>
-
-          <aside className="booking-summary-card">
-            <span className="eyebrow">Thông tin lịch khám</span>
-            <h2>Tóm tắt<br /><em>lịch hẹn của bạn</em></h2>
-            <div className="booking-summary-list"><span>Chuyên khoa<strong>{selectedSpecialty?.name || 'Chưa chọn'}</strong></span><span>Bác sĩ<strong>{selectedDoctor?.name || selectedDoctor?.hoten || 'Chưa chọn'}</strong></span><span>Dịch vụ<strong>{selectedService?.name || selectedService?.tendichvu || 'Chưa chọn'}</strong></span><span>Ngày khám<strong>{form.date || 'Chưa chọn'}</strong></span><span>Giờ khám<strong>{form.time || 'Chưa chọn'}</strong></span><span>Họ tên<strong>{form.name || 'Chưa nhập'}</strong></span></div>
-            <div className="booking-summary-note">Thông tin của bạn được bảo mật và chỉ dùng để xác nhận lịch khám.</div>
-          </aside>
-        </div>
-      </div>
-    </main>
-  );
+  return <main className="booking-wizard-page"><div className="booking-wizard-shell"><div className="booking-wizard-layout"><section className="booking-wizard-card"><div className="booking-wizard-heading"><span className="eyebrow">Đặt lịch trực tuyến</span><h1>Gửi yêu cầu khám<br /><em>theo cách thuận tiện nhất</em></h1><p>Bạn có thể chọn đủ lịch khám hoặc chỉ để lại thông tin để bệnh viện tư vấn.</p></div><div className="booking-stepper" aria-label="Các bước đặt lịch">{[['1', 'Chuyên khoa & dịch vụ'], ['2', 'Bác sĩ, ngày & giờ'], ['3', 'Thông tin liên hệ']].map(([number, label], index) => <button type="button" key={number} className={step === index + 1 ? 'is-active' : step > index + 1 ? 'is-done' : ''} onClick={() => setStep(index + 1)}><b>{number}</b><span>{label}</span></button>)}</div>{step === 1 ? <div className="booking-wizard-fields"><label>Chuyên khoa <span className="booking-optional">Không bắt buộc</span><select value={form.specialtyId} onChange={(event) => chooseSpecialty(event.target.value)}><option value="">Chưa chọn — bệnh viện tư vấn</option>{specialties.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label><label>Dịch vụ / gói khám <span className="booking-optional">Không bắt buộc</span><select value={form.serviceId} onChange={(event) => update('serviceId', event.target.value)}><option value="">Chưa chọn — bệnh viện tư vấn</option>{services.map((service) => <option key={service.id ?? service.dichvuid} value={service.id ?? service.dichvuid}>{service.name || service.tendichvu}</option>)}</select></label><label>Bác sĩ <span className="booking-optional">Không bắt buộc — bệnh viện có thể tư vấn</span><select value={form.doctorId} onChange={(event) => update('doctorId', event.target.value)} disabled={!form.specialtyId}><option value="">{form.specialtyId ? 'Chưa chọn — bệnh viện tư vấn' : 'Chọn chuyên khoa trước hoặc bỏ qua'}</option>{doctors.map((doctor) => <option key={doctor.id ?? doctor.bacsiid} value={doctor.id ?? doctor.bacsiid}>{doctor.name || doctor.hoten}</option>)}</select></label>{selectedDoctor ? <div className="booking-doctor-card"><strong>{selectedDoctor.name || selectedDoctor.hoten}</strong><span>{selectedDoctor.specialty || selectedSpecialty?.name || 'Chuyên khoa'}</span><small>{selectedDoctor.experience || 'Đang cập nhật'} · {selectedDoctor.description || 'Chưa có mô tả.'}{selectedDoctor.bookingFee ? ' · Phí đặt lịch: ' + Number(selectedDoctor.bookingFee).toLocaleString('vi-VN') + 'đ' : ''}</small></div> : <div className="booking-help-callout">Bạn có thể bỏ qua bước này. Nhân viên bệnh viện sẽ liên hệ để tư vấn.</div>}<div className="booking-wizard-actions"><button className="button button-outline" type="button" disabled>← Quay lại</button><button className="button booking-skip-button" type="button" onClick={skipStep}>Bỏ qua / Để bệnh viện tư vấn</button><button className="button button-primary" type="button" onClick={() => { setMessage(''); setStep(2); }}>Tiếp tục <span>→</span></button></div></div> : null}{step === 2 ? <div className="booking-wizard-fields"><div className="booking-wizard-row"><label>Ngày khám <span className="booking-optional">Không bắt buộc — có thể để bệnh viện sắp xếp</span><input type="date" min={today} value={form.date} onChange={(event) => update('date', event.target.value)} /></label><div className="booking-selected-doctor"><span>Bác sĩ đã chọn</span><strong>{selectedDoctor?.name || selectedDoctor?.hoten || 'Cần bệnh viện tư vấn'}</strong></div></div>{!form.doctorId ? <div className="booking-help-callout">Bạn có thể bỏ qua bước này. Nhân viên bệnh viện sẽ liên hệ để sắp xếp thời gian phù hợp.</div> : null}{form.doctorId && !form.date ? <div className="booking-help-callout">Chọn ngày để xem các khung giờ còn trống của bác sĩ.</div> : null}<div className="booking-slot-panel"><div className="booking-slot-heading"><strong>Khung giờ <span className="booking-optional">Không bắt buộc</span></strong><small>{slotsLoading ? 'Đang tải...' : form.doctorId && form.date ? 'Mỗi lượt khám theo lịch bác sĩ' : 'Chưa chọn bác sĩ / ngày'}</small></div>{form.doctorId && form.date && !slotsLoading && slots.length === 0 ? <p className="booking-empty-state">Bác sĩ không có ca làm việc trong ngày này.</p> : null}<div className="booking-slots">{slots.map((slot) => <button type="button" key={slot.time} className={form.time === slot.time ? 'is-selected' : ''} disabled={!slot.available} onClick={() => update('time', slot.time)}>{slot.time}{!slot.available ? <small>Hết lịch</small> : null}</button>)}</div></div><div className="booking-wizard-actions"><button className="button button-outline" type="button" onClick={() => setStep(1)}>← Quay lại</button><button className="button booking-skip-button" type="button" onClick={skipStep}>Bỏ qua / Để bệnh viện tư vấn</button><button className="button button-primary" type="button" onClick={() => { setMessage(''); setStep(3); }}>Tiếp tục <span>→</span></button></div></div> : null}{step === 3 ? <form className="booking-wizard-fields" onSubmit={submit}><div className="booking-wizard-row"><label>Họ và tên *<input required value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="Nhập họ và tên" /></label><label>Số điện thoại *<input required value={form.phone} onChange={(event) => update('phone', event.target.value)} placeholder="Nhập số điện thoại" /></label></div><label>Email <span className="booking-optional">Không bắt buộc</span><input type="email" value={form.email} onChange={(event) => update('email', event.target.value)} placeholder="example@email.com" /></label><label>Lý do khám / triệu chứng <span className="booking-optional">Không bắt buộc</span><textarea value={form.reason} onChange={(event) => update('reason', event.target.value)} placeholder="Mô tả ngắn lý do thăm khám" /></label><label>Ghi chú <span className="booking-optional">Không bắt buộc</span><textarea value={form.note} onChange={(event) => update('note', event.target.value)} placeholder="Ví dụ: Mong bệnh viện gọi lại buổi chiều" /></label><div className="booking-review"><h3>Xem lại thông tin</h3><div><span>Họ và tên<strong>{form.name || 'Chưa cung cấp'}</strong></span><span>Số điện thoại<strong>{form.phone || 'Chưa cung cấp'}</strong></span><span>Email<strong>{form.email || 'Chưa cung cấp'}</strong></span><span>Chuyên khoa<strong>{selectedSpecialty?.name || 'Chưa chọn'}</strong></span><span>Dịch vụ<strong>{selectedService?.name || selectedService?.tendichvu || 'Chưa chọn'}</strong></span><span>Bác sĩ<strong>{selectedDoctor?.name || selectedDoctor?.hoten || 'Cần bệnh viện tư vấn'}</strong></span><span>Ngày khám<strong>{form.date || 'Chưa chọn'}</strong></span><span>Giờ khám<strong>{form.time || 'Chưa chọn'}</strong></span><span>Lý do khám<strong>{form.reason || 'Chưa cung cấp'}</strong></span><span>Ghi chú<strong>{form.note || 'Chưa cung cấp'}</strong></span></div></div><div className="booking-wizard-actions"><button className="button button-outline" type="button" onClick={() => setStep(2)}>← Quay lại</button><button className="button button-primary" type="submit" disabled={submitting || !formReady}>{submitting ? 'Đang gửi...' : 'Gửi yêu cầu đặt lịch'}</button></div></form> : null}{message ? <p className="booking-wizard-message form-error">{message}</p> : null}</section><aside className="booking-summary-card"><span className="eyebrow">Thông tin lịch khám</span><h2>Tóm tắt<br /><em>yêu cầu của bạn</em></h2><div className="booking-summary-list"><span>Chuyên khoa<strong>{selectedSpecialty?.name || 'Chưa chọn'}</strong></span><span>Dịch vụ<strong>{selectedService?.name || selectedService?.tendichvu || 'Chưa chọn'}</strong></span><span>Bác sĩ<strong>{selectedDoctor?.name || selectedDoctor?.hoten || 'Cần bệnh viện tư vấn'}</strong></span><span>Ngày khám<strong>{form.date || 'Chưa chọn'}</strong></span><span>Giờ khám<strong>{form.time || 'Chưa chọn'}</strong></span><span>Họ tên<strong>{form.name || 'Chưa cung cấp'}</strong></span></div><div className="booking-summary-note">Bạn có thể để trống các thông tin lịch khám. Nhân viên Tâm An sẽ liên hệ tư vấn.</div></aside></div></div></main>;
 }
