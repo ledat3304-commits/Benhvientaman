@@ -22,9 +22,72 @@ CREATE TABLE IF NOT EXISTS yeucaudatlich (
     CONSTRAINT ck_yeucaudatlich_status CHECK (trangthai IN ('ChoLienHe', 'DangXuLy', 'DaXacNhan', 'DaChuyenThanhLichKham', 'DaHuy'))
 );
 
+-- Keep an already-created request table compatible with the booking API.
+ALTER TABLE yeucaudatlich ADD COLUMN IF NOT EXISTS phibacsitaithoidiem numeric(15,2);
+ALTER TABLE yeucaudatlich ADD COLUMN IF NOT EXISTS phidichvutaithoidiem numeric(15,2);
+ALTER TABLE yeucaudatlich ADD COLUMN IF NOT EXISTS tongtamtinh numeric(15,2);
+
+-- Add the expected foreign keys when this migration is applied to an older
+-- request table that existed before the booking flow was introduced.
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+         WHERE conname = 'fk_yeucaudatlich_user'
+           AND conrelid = 'yeucaudatlich'::regclass
+    ) THEN
+        ALTER TABLE yeucaudatlich
+            ADD CONSTRAINT fk_yeucaudatlich_user
+            FOREIGN KEY (userid) REFERENCES nguoidung(userid) ON DELETE SET NULL;
+    END IF;
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+         WHERE conname = 'fk_yeucaudatlich_specialty'
+           AND conrelid = 'yeucaudatlich'::regclass
+    ) THEN
+        ALTER TABLE yeucaudatlich
+            ADD CONSTRAINT fk_yeucaudatlich_specialty
+            FOREIGN KEY (chuyenkhoaid) REFERENCES chuyenkhoa(chuyenkhoaid) ON DELETE SET NULL;
+    END IF;
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+         WHERE conname = 'fk_yeucaudatlich_service'
+           AND conrelid = 'yeucaudatlich'::regclass
+    ) THEN
+        ALTER TABLE yeucaudatlich
+            ADD CONSTRAINT fk_yeucaudatlich_service
+            FOREIGN KEY (dichvuid) REFERENCES danhmucdichvu(dichvuid) ON DELETE SET NULL;
+    END IF;
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+         WHERE conname = 'fk_yeucaudatlich_doctor'
+           AND conrelid = 'yeucaudatlich'::regclass
+    ) THEN
+        ALTER TABLE yeucaudatlich
+            ADD CONSTRAINT fk_yeucaudatlich_doctor
+            FOREIGN KEY (bacsiid) REFERENCES bacsi(bacsiid) ON DELETE SET NULL;
+    END IF;
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+         WHERE conname = 'fk_yeucaudatlich_appointment'
+           AND conrelid = 'yeucaudatlich'::regclass
+    ) THEN
+        ALTER TABLE yeucaudatlich
+            ADD CONSTRAINT fk_yeucaudatlich_appointment
+            FOREIGN KEY (lichkhamid) REFERENCES lichkham(lichkhamid) ON DELETE SET NULL;
+    END IF;
+END;
+$$;
+
 CREATE INDEX IF NOT EXISTS idx_yeucaudatlich_status_time
     ON yeucaudatlich(trangthai, ngaytao DESC);
 CREATE INDEX IF NOT EXISTS idx_yeucaudatlich_user
     ON yeucaudatlich(userid);
+CREATE INDEX IF NOT EXISTS idx_yeucaudatlich_phone
+    ON yeucaudatlich(sodienthoai);
+CREATE INDEX IF NOT EXISTS idx_yeucaudatlich_doctor
+    ON yeucaudatlich(bacsiid);
+CREATE INDEX IF NOT EXISTS idx_yeucaudatlich_specialty
+    ON yeucaudatlich(chuyenkhoaid);
 
 COMMIT;

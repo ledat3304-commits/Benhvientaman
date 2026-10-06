@@ -142,6 +142,9 @@ function normalizeDbRow(row) {
   if (normalized.trangthai !== undefined) normalized.TrangThai = normalized.trangthai;
   if (normalized.lydokham !== undefined) normalized.LyDoKham = normalized.lydokham;
   if (normalized.ghichu !== undefined) normalized.GhiChu = normalized.ghichu;
+  if (normalized.phibacsitaithoidiem !== undefined) normalized.PhiBacSiTaiThoiDiem = normalized.phibacsitaithoidiem;
+  if (normalized.phidichvutaithoidiem !== undefined) normalized.PhiDichVuTaiThoiDiem = normalized.phidichvutaithoidiem;
+  if (normalized.tongtamtinh !== undefined) normalized.TongTamTinh = normalized.tongtamtinh;
   if (normalized.tenchuyenkhoa !== undefined) normalized.TenChuyenKhoa = normalized.tenchuyenkhoa;
   if (normalized.kinhnghiem !== undefined) normalized.KinhNghiem = normalized.kinhnghiem;
   if (normalized.mota !== undefined) normalized.MoTa = normalized.mota;
@@ -411,7 +414,7 @@ async function notifyAdmins(queryable, title, content) {
   for (const admin of admins.rows) {
     await queryable.query(
       `INSERT INTO thongbao (userid, loai, tieude, noidung)
-       VALUES ($1, 'BOOKING_REQUEST', $2, $3)`,
+       VALUES ($1, 'NEW_BOOKING_REQUEST', $2, $3)`,
       [admin.userid, title, content]
     );
   }
@@ -800,19 +803,22 @@ app.post('/api/booking-requests', async (req, res) => {
     }
 
     let serviceName = null;
+    let serviceFee = null;
     if (serviceId) {
-      const result = await client.query('SELECT dichvuid, tendichvu FROM danhmucdichvu WHERE dichvuid = $1 AND hoatdong = true', [serviceId]);
+      const result = await client.query('SELECT dichvuid, tendichvu, dongia FROM danhmucdichvu WHERE dichvuid = $1 AND hoatdong = true', [serviceId]);
       if (!result.rows[0]) {
         await client.query('ROLLBACK');
         return res.status(404).json({ success: false, message: 'Không tìm thấy dịch vụ đang hoạt động.' });
       }
       serviceName = result.rows[0].tendichvu;
+      serviceFee = Number(result.rows[0].dongia || 0);
     }
 
     let doctorName = null;
+    let doctorFee = null;
     if (doctorId) {
       const result = await client.query(
-        `SELECT b.bacsiid, b.chuyenkhoaid, b.hoatdong, u.hoten
+        `SELECT b.bacsiid, b.chuyenkhoaid, b.hoatdong, b.phidatlich, u.hoten
            FROM bacsi b JOIN nguoidung u ON u.userid = b.userid
           WHERE b.bacsiid = $1`,
         [doctorId]
@@ -830,18 +836,25 @@ app.post('/api/booking-requests', async (req, res) => {
         return res.status(400).json({ success: false, message: 'Bác sĩ không thuộc chuyên khoa đã chọn.' });
       }
       doctorName = result.rows[0].hoten;
+      doctorFee = Number(result.rows[0].phidatlich || 0);
     }
+
+    const estimatedTotal = (doctorFee || 0) + (serviceFee || 0);
 
     const inserted = await client.query(
       `INSERT INTO yeucaudatlich
-        (userid, hoten, sodienthoai, email, chuyenkhoaid, dichvuid, bacsiid, ngaymongmuon, giomongmuon, lydokham, ghichu)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+        (userid, hoten, sodienthoai, email, chuyenkhoaid, dichvuid, bacsiid, ngaymongmuon, giomongmuon, lydokham, ghichu,
+         phibacsitaithoidiem, phidichvutaithoidiem, tongtamtinh)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
        RETURNING *`,
-      [requesterId, name, phone, email, specialtyId, serviceId, doctorId, preferredDate, preferredTime, reason, note]
+      [requesterId, name, phone, email, specialtyId, serviceId, doctorId, preferredDate, preferredTime, reason, note, doctorFee, serviceFee, estimatedTotal]
     );
     const requestRow = normalizeDbRow(inserted.rows[0]);
     const requestCode = normalizeRequestCode(requestRow.YeuCauID, requestRow.ngaytao);
     const notificationContent = [
+      `Doctor fee: ${displayRequestValue(doctorFee, 'Not provided')}`,
+      `Service fee: ${displayRequestValue(serviceFee, 'Not provided')}`,
+      `Estimated total: ${displayRequestValue(estimatedTotal, '0')}`,
       `Mã yêu cầu: ${requestCode}`,
       `Khách hàng: ${displayRequestValue(name)}`,
       `SĐT: ${displayRequestValue(phone)}`,
@@ -1284,6 +1297,33 @@ app.get('/api/admin/booking-requests', async (req, res) => {
   }
 });
 
+app.get('/api/admin/booking-requests/:requestId', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const requestId = Number(req.params.requestId);
+    if (!Number.isInteger(requestId) || requestId < 1) {
+      return res.status(400).json({ success: false, message: 'Request id is invalid.' });
+    }
+    const result = await pool.query(`
+      SELECT r.*, c.tenchuyenkhoa, dv.tendichvu, du.hoten AS tenbacsi
+        FROM yeucaudatlich r
+        LEFT JOIN chuyenkhoa c ON c.chuyenkhoaid = r.chuyenkhoaid
+        LEFT JOIN danhmucdichvu dv ON dv.dichvuid = r.dichvuid
+        LEFT JOIN bacsi b ON b.bacsiid = r.bacsiid
+        LEFT JOIN nguoidung du ON du.userid = b.userid
+       WHERE r.yeucauid = $1
+       LIMIT 1
+    `, [requestId]);
+    if (!result.rows[0]) return res.status(404).json({ success: false, message: 'Booking request not found.' });
+    const row = result.rows[0];
+    return res.json({ success: true, request: { ...normalizeDbRow(row), requestCode: normalizeRequestCode(row.yeucauid, row.ngaytao) } });
+  } catch (error) {
+    console.error('Admin booking request detail error:', error);
+    return res.status(error.code === '42P01' ? 503 : 500).json({ success: false, message: 'Could not load booking request.' });
+  }
+});
+
 app.patch('/api/admin/booking-requests/:requestId/status', async (req, res) => {
   try {
     const admin = await requireRole(req, res, 'admin');
@@ -1303,6 +1343,29 @@ app.patch('/api/admin/booking-requests/:requestId/status', async (req, res) => {
   } catch (error) {
     console.error('Admin booking request status error:', error);
     return res.status(error.code === '42P01' ? 503 : 500).json({ success: false, message: 'Không thể cập nhật yêu cầu đặt lịch.' });
+  }
+});
+
+// Keep the shorter PATCH contract as an alias for existing admin clients.
+app.patch('/api/admin/booking-requests/:requestId', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const requestId = Number(req.params.requestId);
+    const status = String(req.body?.status || req.body?.trangthai || '').trim();
+    const validStatuses = ['ChoLienHe', 'DangXuLy', 'DaXacNhan', 'DaChuyenThanhLichKham', 'DaHuy'];
+    if (!Number.isInteger(requestId) || requestId < 1 || !validStatuses.includes(status)) {
+      return res.status(400).json({ success: false, message: 'Request or status is invalid.' });
+    }
+    const result = await pool.query(
+      'UPDATE yeucaudatlich SET trangthai = $1 WHERE yeucauid = $2 RETURNING *',
+      [status, requestId]
+    );
+    if (!result.rows[0]) return res.status(404).json({ success: false, message: 'Booking request not found.' });
+    return res.json({ success: true, request: { ...normalizeDbRow(result.rows[0]), requestCode: normalizeRequestCode(requestId, result.rows[0].ngaytao) } });
+  } catch (error) {
+    console.error('Admin booking request patch error:', error);
+    return res.status(error.code === '42P01' ? 503 : 500).json({ success: false, message: 'Could not update booking request.' });
   }
 });
 
@@ -1386,12 +1449,15 @@ app.post('/api/admin/booking-requests/:requestId/convert', async (req, res) => {
       return res.status(409).json({ success: false, message: 'Khung giờ này đã có lịch. Vui lòng chọn giờ khác.' });
     }
 
+    const doctorFee = Number(doctorResult.rows[0].phidatlich || 0);
+    let serviceFee = null;
     if (serviceId) {
       const serviceResult = await client.query('SELECT dichvuid, dongia FROM danhmucdichvu WHERE dichvuid = $1 AND hoatdong = true', [serviceId]);
       if (!serviceResult.rows[0]) {
         await client.query('ROLLBACK');
         return res.status(404).json({ success: false, message: 'Không tìm thấy dịch vụ đang hoạt động.' });
       }
+      serviceFee = Number(serviceResult.rows[0].dongia || 0);
     }
 
     let patientResult = { rows: [] };
@@ -1430,10 +1496,11 @@ app.post('/api/admin/booking-requests/:requestId/convert', async (req, res) => {
     const updatedRequest = await client.query(
       `UPDATE yeucaudatlich
           SET chuyenkhoaid = $1, dichvuid = $2, bacsiid = $3, ngaymongmuon = $4,
-              giomongmuon = $5, trangthai = 'DaChuyenThanhLichKham', lichkhamid = $6
-        WHERE yeucauid = $7
+              giomongmuon = $5, phibacsitaithoidiem = $6, phidichvutaithoidiem = $7,
+              tongtamtinh = $8, trangthai = 'DaChuyenThanhLichKham', lichkhamid = $9
+        WHERE yeucauid = $10
         RETURNING *`,
-      [specialtyId || doctorResult.rows[0].chuyenkhoaid || null, serviceId, doctorId, date, time, appointmentResult.rows[0].lichkhamid, requestId]
+      [specialtyId || doctorResult.rows[0].chuyenkhoaid || null, serviceId, doctorId, date, time, doctorFee, serviceFee, doctorFee + (serviceFee || 0), appointmentResult.rows[0].lichkhamid, requestId]
     );
 
     await client.query('COMMIT');
