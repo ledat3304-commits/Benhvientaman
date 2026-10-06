@@ -2706,6 +2706,7 @@ main.about-page .about-story p{
 .booking-wizard-card,.booking-wizard-success{padding:clamp(26px,4vw,46px);background:#fff}
 .booking-wizard-card{border-top:6px solid var(--navy)}
 .booking-wizard-heading .eyebrow,.booking-summary-card .eyebrow{color:var(--navy);font-size:13px;letter-spacing:.12em}
+.booking-wizard-heading .eyebrow,.booking-summary-card>.eyebrow{display:none}
 .booking-wizard-heading h1{margin:12px 0 10px;color:var(--navy);font-size:clamp(30px,4vw,44px);line-height:1.12}
 .booking-wizard-heading h1 em,.booking-summary-card h2 em{color:#4f9414;font-style:normal}
 .booking-wizard-heading p{max-width:680px;margin:0;color:#65769b;font-size:15px;line-height:1.65}
