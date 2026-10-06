@@ -2691,6 +2691,9 @@ main.about-page .about-story p{
   padding:64px 20px 80px;
   background:linear-gradient(135deg,#eef5ff 0%,#fff 52%,#f4fbe5 100%);
 }
+.booking-wizard-page,.booking-wizard-page *,.booking-page,.booking-page *{
+  font-family:'Open Sans',Arial,sans-serif!important;
+}
 .booking-wizard-shell{width:min(100%,1180px);margin:0 auto}
 .booking-wizard-layout{
   display:grid;
