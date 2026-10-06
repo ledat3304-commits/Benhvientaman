@@ -1439,6 +1439,7 @@ main.guide-page .cta-inline .eyebrow{
   font-size:30px!important;
   line-height:1.2!important;
 }
+main.guide-page .event-feature-content>.eyebrow{display:none!important}
 main.guide-page .page-hero h1,
 main.guide-page .event-feature-content h2,
 main.guide-page .event-news-article h2,
