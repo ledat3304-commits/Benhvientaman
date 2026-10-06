@@ -302,10 +302,10 @@ export function AdminDashboardPage() {
   return <main className="admin-dashboard-page"><div className="admin-dashboard-shell"><header className="admin-dashboard-header"><div><span className="eyebrow">Khu vực quản trị</span><h1>Bảng điều khiển admin</h1><p>{getValue(session.user || {}, 'HoTen', 'hoten') || 'Quản trị viên'} · {getValue(session.user || {}, 'Email', 'email') || 'Không có email'}</p></div><div className="admin-dashboard-actions"><a className="button button-outline" href="/">Xem website</a><button className="button button-outline" type="button" onClick={logout}>Đăng xuất</button></div></header><div className="admin-dashboard-layout"><aside className="admin-sidebar"><p className="admin-sidebar-label">Quản trị hệ thống</p>{navItems.map((item) => <button className={section === item.key ? 'admin-nav-item is-active' : 'admin-nav-item'} type="button" key={item.key} onClick={() => setSection(item.key)}><span className="admin-nav-icon">{item.icon}</span><span>{item.label}</span>{item.count ? <b>{item.count}</b> : null}</button>)}<div className="admin-sidebar-note"><strong>Bảo mật tài khoản</strong><span>Chỉ tài khoản có vai trò quản trị mới truy cập được khu vực này.</span></div></aside><section className="admin-dashboard-content">{loading ? <p className="admin-notification-state">Đang tải dữ liệu quản trị...</p> : null}{error ? <p className="admin-notification-error">{error}</p> : null}{actionMessage ? <p className="admin-action-message">{actionMessage}</p> : null}{!loading && section === 'overview' ? overview : null}{!loading && section === 'notifications' ? <section className="admin-panel"><div className="admin-panel-heading"><div><span className="eyebrow">Hộp thư hệ thống</span><h2>Tất cả thông báo</h2></div><div className="admin-heading-actions"><button className="button button-outline" type="button" onClick={markAllAsRead}>Đánh dấu tất cả đã đọc</button><button className="button button-outline" type="button" onClick={() => loadData()}>Làm mới</button></div></div>{notificationList(notifications)}</section> : null}{!loading && section === 'appointments' ? appointmentsPanel : null}{!loading && section === 'patients' ? patientsPanel : null}{!loading && section === 'users' ? usersPanel : null}{!loading && section === 'doctors' ? doctorsPanel : null}{!loading && section === 'catalog' ? catalogPanel : null}</section></div></div></main>;
 }
 
-type Doctor = { bacsiid?: number; id?: number; hoten?: string; name?: string; tenchuyenkhoa?: string; specialty?: string };
+type Doctor = { bacsiid?: number; id?: number; hoten?: string; name?: string; tenchuyenkhoa?: string; specialtyId?: number; specialty?: string; experience?: string; description?: string };
 type Service = { id?: number; dichvuid?: number; name?: string; tendichvu?: string; description?: string; price?: number | string; dongia?: number | string };
 
-export function BookingPageApi() {
+function LegacyBookingPageApi() {
   const session = readSession();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [services, setServices] = useState<Service[]>([]);
@@ -396,6 +396,200 @@ export function BookingPageApi() {
           <div><span>☎</span><strong>Hỗ trợ nhanh chóng</strong><small>Liên hệ khi cần thay đổi lịch</small></div>
         </div>
       </aside>
+      </div>
+    </main>
+  );
+}
+
+type BookingSpecialty = { id: number; name: string; description?: string };
+type BookingSlot = { time: string; available: boolean };
+
+export function BookingPageApi() {
+  const session = readSession();
+  const [step, setStep] = useState(1);
+  const [specialties, setSpecialties] = useState<BookingSpecialty[]>([]);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [slots, setSlots] = useState<BookingSlot[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [slotsLoading, setSlotsLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState('');
+  const [booking, setBooking] = useState<any>(null);
+  const [form, setForm] = useState({ specialtyId: '', doctorId: '', serviceId: '', date: '', time: '', name: '', phone: '', email: '', reason: '' });
+
+  const today = new Date().toISOString().slice(0, 10);
+  const update = (key: string, value: string) => setForm((current) => ({ ...current, [key]: value }));
+  const selectedSpecialty = specialties.find((item) => String(item.id) === form.specialtyId);
+  const selectedDoctor = doctors.find((item) => String(item.bacsiid ?? item.id) === form.doctorId);
+  const selectedService = services.find((item) => String(item.id ?? item.dichvuid) === form.serviceId);
+
+  useEffect(() => {
+    Promise.all([
+      fetch(`${API_BASE}/api/specialties`).then((response) => response.json()),
+      fetch(`${API_BASE}/api/services`).then((response) => response.json())
+    ])
+      .then(([specialtyData, serviceData]) => {
+        setSpecialties(Array.isArray(specialtyData) ? specialtyData : []);
+        setServices(Array.isArray(serviceData) ? serviceData : []);
+      })
+      .catch(() => setMessage('Không thể tải danh sách chuyên khoa và dịch vụ.'));
+  }, []);
+
+  useEffect(() => {
+    setForm((current) => ({
+      ...current,
+      name: current.name || session?.user?.HoTen || session?.user?.hoten || '',
+      email: current.email || session?.user?.Email || session?.user?.email || ''
+    }));
+  }, [session?.user?.UserID, session?.user?.userid]);
+
+  useEffect(() => {
+    setForm((current) => ({ ...current, doctorId: '', date: '', time: '' }));
+    setSlots([]);
+    if (!form.specialtyId) {
+      setDoctors([]);
+      return;
+    }
+    fetch(`${API_BASE}/api/doctors?specialtyId=${encodeURIComponent(form.specialtyId)}`)
+      .then((response) => response.json())
+      .then((data) => setDoctors(Array.isArray(data) ? data : []))
+      .catch(() => setDoctors([]));
+  }, [form.specialtyId]);
+
+  useEffect(() => {
+    setSlots([]);
+    if (!form.doctorId || !form.date) return;
+    setSlotsLoading(true);
+    fetch(`${API_BASE}/api/doctors/${encodeURIComponent(form.doctorId)}/available-slots?date=${encodeURIComponent(form.date)}`)
+      .then((response) => response.json().then((data) => ({ response, data })))
+      .then(({ response, data }) => {
+        if (!response.ok || data.success === false) throw new Error(data.message || 'Không thể tải khung giờ.');
+        setSlots(Array.isArray(data.slots) ? data.slots : []);
+      })
+      .catch((error) => {
+        setSlots([]);
+        setMessage(error instanceof Error ? error.message : 'Không thể tải khung giờ.');
+      })
+      .finally(() => setSlotsLoading(false));
+  }, [form.doctorId, form.date]);
+
+  const nextStep = () => {
+    setMessage('');
+    if (step === 1 && (!form.specialtyId || !form.doctorId)) {
+      setMessage('Vui lòng chọn chuyên khoa và bác sĩ.');
+      return;
+    }
+    if (step === 2 && (!form.date || !form.time)) {
+      setMessage('Vui lòng chọn ngày và khung giờ khám còn trống.');
+      return;
+    }
+    setStep((current) => Math.min(current + 1, 3));
+  };
+
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    setMessage('');
+    if (!form.name.trim()) return setMessage('Vui lòng nhập họ tên.');
+    if (!form.phone.trim()) return setMessage('Vui lòng nhập số điện thoại.');
+    if (!form.time) return setMessage('Vui lòng chọn khung giờ khám.');
+    setSubmitting(true);
+    try {
+      const response = await fetch(`${API_BASE}/api/appointments`, {
+        method: 'POST',
+        headers: authHeaders(session),
+        body: JSON.stringify({ ...form, reason: form.reason.trim() })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) {
+        if (response.status === 409) {
+          setStep(2);
+          setMessage('Khung giờ vừa được người khác đặt. Vui lòng chọn khung giờ khác.');
+          return;
+        }
+        throw new Error(data.message || 'Không thể đặt lịch.');
+      }
+      setBooking(data);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : 'Không thể đặt lịch.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (booking) {
+    return (
+      <main className="booking-wizard-page">
+        <section className="booking-wizard-success">
+          <div className="success-check">✓</div>
+          <span className="eyebrow">Tâm An Hospital</span>
+          <h1>Đặt lịch thành công</h1>
+          <p>Mã lịch hẹn: <strong>{booking.bookingCode}</strong></p>
+          <div className="booking-success-details">
+            <span>Chuyên khoa<strong>{selectedSpecialty?.name || '—'}</strong></span>
+            <span>Bác sĩ<strong>{selectedDoctor?.name || selectedDoctor?.hoten || '—'}</strong></span>
+            <span>Ngày khám<strong>{form.date}</strong></span>
+            <span>Giờ khám<strong>{form.time}</strong></span>
+            <span>Họ tên<strong>{form.name}</strong></span>
+            <span>Số điện thoại<strong>{form.phone}</strong></span>
+          </div>
+          <div className="booking-success-actions">
+            <a className="button button-primary" href="/">Về trang chủ</a>
+            <button className="button button-outline" type="button" onClick={() => window.location.reload()}>Đặt lịch khác</button>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  return (
+    <main className="booking-wizard-page">
+      <div className="booking-wizard-shell">
+        <div className="booking-wizard-layout">
+          <section className="booking-wizard-card">
+            <div className="booking-wizard-heading">
+              <span className="eyebrow">Đặt lịch trực tuyến</span>
+              <h1>Đặt lịch khám<br /><em>nhanh chóng, thuận tiện</em></h1>
+              <p>Chọn thông tin phù hợp để Tâm An liên hệ xác nhận lịch hẹn của bạn.</p>
+            </div>
+            <div className="booking-stepper" aria-label="Các bước đặt lịch">
+              {[['1', 'Chuyên khoa & bác sĩ'], ['2', 'Ngày & giờ'], ['3', 'Thông tin bệnh nhân']].map(([number, label], index) => (
+                <button type="button" key={number} className={step === index + 1 ? 'is-active' : step > index + 1 ? 'is-done' : ''} onClick={() => index + 1 < step && setStep(index + 1)} disabled={index + 1 > step}>
+                  <b>{number}</b><span>{label}</span>
+                </button>
+              ))}
+            </div>
+
+            {step === 1 ? <div className="booking-wizard-fields">
+              <label>Chuyên khoa<select value={form.specialtyId} onChange={(event) => update('specialtyId', event.target.value)}><option value="">Chọn chuyên khoa</option>{specialties.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
+              <label>Bác sĩ<select value={form.doctorId} onChange={(event) => update('doctorId', event.target.value)} disabled={!form.specialtyId}><option value="">{form.specialtyId ? 'Chọn bác sĩ' : 'Chọn chuyên khoa trước'}</option>{doctors.map((doctor) => <option key={doctor.id ?? doctor.bacsiid} value={doctor.id ?? doctor.bacsiid}>{doctor.name || doctor.hoten}</option>)}</select></label>
+              {selectedDoctor ? <div className="booking-doctor-card"><strong>{selectedDoctor.name || selectedDoctor.hoten}</strong><span>{selectedDoctor.specialty || selectedSpecialty?.name}</span><small>{selectedDoctor.experience || 'Đang cập nhật'} · {selectedDoctor.description || 'Chưa có mô tả.'}</small></div> : null}
+              <button className="button button-primary booking-next-button" type="button" onClick={nextStep}>Tiếp tục chọn ngày <span>→</span></button>
+            </div> : null}
+
+            {step === 2 ? <div className="booking-wizard-fields">
+              <div className="booking-wizard-row"><label>Ngày khám<input type="date" min={today} value={form.date} onChange={(event) => update('date', event.target.value)} /></label><div className="booking-selected-doctor"><span>Bác sĩ đã chọn</span><strong>{selectedDoctor?.name || selectedDoctor?.hoten}</strong></div></div>
+              <div className="booking-slot-panel"><div className="booking-slot-heading"><strong>Khung giờ còn trống</strong><small>{slotsLoading ? 'Đang tải...' : 'Mỗi lượt khám 30 phút'}</small></div>{!slotsLoading && form.date && slots.length === 0 ? <p className="booking-empty-state">Bác sĩ không có ca làm việc trong ngày này.</p> : null}<div className="booking-slots">{slots.map((slot) => <button type="button" key={slot.time} className={form.time === slot.time ? 'is-selected' : ''} disabled={!slot.available} onClick={() => update('time', slot.time)}>{slot.time}{!slot.available ? <small>Hết lịch</small> : null}</button>)}</div></div>
+              <div className="booking-wizard-actions"><button className="button button-outline" type="button" onClick={() => setStep(1)}>← Quay lại</button><button className="button button-primary" type="button" onClick={nextStep}>Tiếp tục nhập thông tin <span>→</span></button></div>
+            </div> : null}
+
+            {step === 3 ? <form className="booking-wizard-fields" onSubmit={submit}>
+              <div className="booking-wizard-row"><label>Họ tên<input required value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="Nhập họ tên" /></label><label>Số điện thoại<input required value={form.phone} onChange={(event) => update('phone', event.target.value)} placeholder="Nhập số điện thoại" /></label></div>
+              <label>Email <span className="booking-optional">(nếu có)</span><input type="email" value={form.email} onChange={(event) => update('email', event.target.value)} placeholder="example@email.com" /></label>
+              <label>Dịch vụ / gói khám <span className="booking-optional">(nếu có)</span><select value={form.serviceId} onChange={(event) => update('serviceId', event.target.value)}><option value="">Chọn dịch vụ</option>{services.map((service) => <option key={service.id ?? service.dichvuid} value={service.id ?? service.dichvuid}>{service.name || service.tendichvu}</option>)}</select></label>
+              <label>Lý do khám / triệu chứng<textarea value={form.reason} onChange={(event) => update('reason', event.target.value)} placeholder="Mô tả ngắn lý do bạn muốn thăm khám" /></label>
+              <div className="booking-wizard-actions"><button className="button button-outline" type="button" onClick={() => setStep(2)}>← Quay lại</button><button className="button button-primary" type="submit" disabled={submitting}>{submitting ? 'Đang gửi...' : 'Xác nhận đặt lịch'}</button></div>
+            </form> : null}
+            {message ? <p className="booking-wizard-message form-error">{message}</p> : null}
+          </section>
+
+          <aside className="booking-summary-card">
+            <span className="eyebrow">Thông tin lịch khám</span>
+            <h2>Tóm tắt<br /><em>lịch hẹn của bạn</em></h2>
+            <div className="booking-summary-list"><span>Chuyên khoa<strong>{selectedSpecialty?.name || 'Chưa chọn'}</strong></span><span>Bác sĩ<strong>{selectedDoctor?.name || selectedDoctor?.hoten || 'Chưa chọn'}</strong></span><span>Dịch vụ<strong>{selectedService?.name || selectedService?.tendichvu || 'Chưa chọn'}</strong></span><span>Ngày khám<strong>{form.date || 'Chưa chọn'}</strong></span><span>Giờ khám<strong>{form.time || 'Chưa chọn'}</strong></span><span>Họ tên<strong>{form.name || 'Chưa nhập'}</strong></span></div>
+            <div className="booking-summary-note">Thông tin của bạn được bảo mật và chỉ dùng để xác nhận lịch khám.</div>
+          </aside>
+        </div>
       </div>
     </main>
   );

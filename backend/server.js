@@ -294,6 +294,78 @@ async function loadDoctorProfile(userId) {
   return normalizeDbRow(doctorResult.rows[0] || null);
 }
 
+function parseIsoDate(value) {
+  const date = String(value || '').trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
+  const parsed = new Date(`${date}T00:00:00.000Z`);
+  return Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== date ? null : parsed;
+}
+
+function getWeekdayFromIsoDate(date) {
+  const day = new Date(`${date}T00:00:00.000Z`).getUTCDay();
+  return day === 0 ? 7 : day;
+}
+
+function getTodayIsoDate() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function clockToMinutes(value) {
+  const match = String(value || '').match(/^(\d{2}):(\d{2})(?::\d{2}(?:\.\d+)?)?$/);
+  if (!match) return null;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  if (hours > 23 || minutes > 59) return null;
+  return hours * 60 + minutes;
+}
+
+function minutesToClock(value) {
+  return `${String(Math.floor(value / 60)).padStart(2, '0')}:${String(value % 60).padStart(2, '0')}`;
+}
+
+function isValidPhone(value) {
+  const phone = String(value || '').trim();
+  if (!/^[0-9+().\s-]+$/.test(phone)) return false;
+  const digits = phone.replace(/\D/g, '');
+  return (phone.startsWith('+84') && digits.length === 11) || (phone.startsWith('0') && digits.length >= 9 && digits.length <= 11);
+}
+
+function isValidEmail(value) {
+  return !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+async function loadDoctorSchedule(queryable, doctorId, weekday) {
+  const result = await queryable.query(
+    `SELECT giobatdau, gioketthuc
+       FROM lichlamviec
+      WHERE bacsiid = $1 AND ngaytrongtuan = $2
+      ORDER BY giobatdau`,
+    [doctorId, weekday]
+  );
+  return result.rows;
+}
+
+function slotFitsSchedule(scheduleRows, timeMinutes) {
+  return scheduleRows.some((row) => {
+    const start = clockToMinutes(row.giobatdau);
+    const end = clockToMinutes(row.gioketthuc);
+    return start !== null && end !== null && timeMinutes >= start && timeMinutes + 30 <= end && (timeMinutes - start) % 30 === 0;
+  });
+}
+
+async function loadBookedTimes(queryable, doctorId, date) {
+  const result = await queryable.query(
+    `SELECT TO_CHAR(thoigiankham, 'HH24:MI') AS time
+       FROM lichkham
+      WHERE bacsiid = $1
+        AND thoigiankham >= $2::date
+        AND thoigiankham < ($2::date + INTERVAL '1 day')
+        AND COALESCE(trangthai, '') <> 'DaHuy'`,
+    [doctorId, date]
+  );
+  return new Set(result.rows.map((row) => row.time));
+}
+
 app.get('/api/health', async (req, res) => {
   try {
     await pool.query('SELECT 1');
@@ -313,18 +385,42 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-app.get('/api/doctors', async (req, res) => {
+app.get('/api/specialties', async (req, res) => {
   try {
     const result = await pool.query(`
-      SELECT b.bacsiid, u.hoten, c.tenchuyenkhoa, b.kinhnghiem, b.mota
+      SELECT chuyenkhoaid AS id, tenchuyenkhoa AS name, mota AS description
+        FROM chuyenkhoa
+       ORDER BY tenchuyenkhoa ASC
+    `);
+    return res.json(result.rows);
+  } catch (error) {
+    console.error('Public specialties error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể tải danh sách chuyên khoa.' });
+  }
+});
+
+app.get('/api/doctors', async (req, res) => {
+  try {
+    const specialtyId = req.query.specialtyId === undefined || req.query.specialtyId === ''
+      ? null
+      : Number(req.query.specialtyId);
+    if (specialtyId !== null && (!Number.isInteger(specialtyId) || specialtyId < 1)) {
+      return res.status(400).json({ success: false, message: 'specialtyId không hợp lệ.' });
+    }
+    const params = specialtyId === null ? [] : [specialtyId];
+    const specialtyFilter = specialtyId === null ? '' : 'WHERE b.chuyenkhoaid = $1';
+    const result = await pool.query(`
+      SELECT b.bacsiid, b.chuyenkhoaid, u.hoten, c.tenchuyenkhoa, b.kinhnghiem, b.mota
       FROM bacsi b
       LEFT JOIN nguoidung u ON u.userid = b.userid
       LEFT JOIN chuyenkhoa c ON c.chuyenkhoaid = b.chuyenkhoaid
+      ${specialtyFilter}
       ORDER BY b.bacsiid
-    `);
+    `, params);
 
     const doctors = result.rows.map((row) => ({
       id: row.bacsiid,
+      specialtyId: row.chuyenkhoaid,
       name: row.hoten,
       specialty: row.tenchuyenkhoa || 'Chuyên khoa',
       experience: row.kinhnghiem || 'Đang cập nhật',
@@ -353,6 +449,47 @@ app.get('/api/services', async (req, res) => {
   }
 });
 
+app.get('/api/doctors/:doctorId/available-slots', async (req, res) => {
+  try {
+    const doctorId = Number(req.params.doctorId);
+    const date = String(req.query.date || '').trim();
+    if (!Number.isInteger(doctorId) || doctorId < 1) {
+      return res.status(400).json({ success: false, message: 'Mã bác sĩ không hợp lệ.' });
+    }
+    if (!parseIsoDate(date)) {
+      return res.status(400).json({ success: false, message: 'Ngày khám phải đúng định dạng YYYY-MM-DD.' });
+    }
+    if (date < getTodayIsoDate()) {
+      return res.status(400).json({ success: false, message: 'Không thể chọn ngày khám trong quá khứ.' });
+    }
+
+    const doctorResult = await pool.query('SELECT bacsiid FROM bacsi WHERE bacsiid = $1', [doctorId]);
+    if (!doctorResult.rows[0]) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy bác sĩ.' });
+    }
+
+    const schedules = await loadDoctorSchedule(pool, doctorId, getWeekdayFromIsoDate(date));
+    const bookedTimes = await loadBookedTimes(pool, doctorId, date);
+    const slotTimes = new Set();
+    schedules.forEach((row) => {
+      const start = clockToMinutes(row.giobatdau);
+      const end = clockToMinutes(row.gioketthuc);
+      if (start === null || end === null || end <= start) return;
+      for (let cursor = start; cursor + 30 <= end; cursor += 30) slotTimes.add(minutesToClock(cursor));
+    });
+
+    return res.json({
+      success: true,
+      doctorId,
+      date,
+      slots: Array.from(slotTimes).sort().map((time) => ({ time, available: !bookedTimes.has(time) }))
+    });
+  } catch (error) {
+    console.error('Available slots error:', error);
+    return res.status(500).json({ success: false, message: 'Không thể tải khung giờ khám.' });
+  }
+});
+
 app.post('/api/appointments', async (req, res) => {
   const client = await pool.connect();
   try {
@@ -366,7 +503,10 @@ app.post('/api/appointments', async (req, res) => {
     const email = String(body.email || body.Email || '').trim() || null;
     const reason = String(body.reason || body.Symptoms || body.LyDoKham || '').trim() || null;
 
-    if (!Number.isInteger(doctorId) || doctorId < 1 || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time) || !name || !phone) {
+    const parsedDate = parseIsoDate(date);
+    const timeMinutes = clockToMinutes(time);
+
+    if (!Number.isInteger(doctorId) || doctorId < 1 || !parsedDate || date < getTodayIsoDate() || timeMinutes === null || timeMinutes % 30 !== 0 || !name || name.length > 100 || !isValidPhone(phone) || !isValidEmail(email)) {
       return res.status(400).json({ success: false, message: 'Vui lòng nhập đầy đủ bác sĩ, ngày giờ, họ tên và số điện thoại.' });
     }
 
@@ -379,6 +519,12 @@ app.post('/api/appointments', async (req, res) => {
     if (!doctorResult.rows[0]) {
       await client.query('ROLLBACK');
       return res.status(404).json({ success: false, message: 'Không tìm thấy bác sĩ.' });
+    }
+
+    const schedules = await loadDoctorSchedule(client, doctorId, getWeekdayFromIsoDate(date));
+    if (!schedules.length || !slotFitsSchedule(schedules, timeMinutes)) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({ success: false, message: 'Bác sĩ không làm việc trong khung giờ đã chọn.' });
     }
 
     let selectedService = null;
@@ -475,6 +621,9 @@ app.post('/api/appointments', async (req, res) => {
   } catch (error) {
     await client.query('ROLLBACK').catch(() => {});
     console.error('Create appointment error:', error);
+    if (error.code === '23505') {
+      return res.status(409).json({ success: false, message: 'Khung giờ này đã có lịch. Vui lòng chọn giờ khác.' });
+    }
     if (error.code === '42703') {
       return res.status(500).json({ success: false, message: 'Schema chưa có cột email trong bảng benhnhan. Hãy chạy migration thông báo admin.' });
     }
@@ -598,7 +747,8 @@ app.post('/api/auth/register', async (req, res) => {
 
 app.get('/api/auth/profile', async (req, res) => {
   try {
-    const userId = getUserIdFromRequest(req);
+    const authenticatedUser = await getAuthenticatedUser(req);
+    const userId = authenticatedUser ? Number(authenticatedUser.UserID || authenticatedUser.userid) : null;
 
     if (!userId) {
       return res.status(400).json({ success: false, message: 'Thiếu userId.' });
@@ -626,7 +776,9 @@ app.get('/api/auth/profile', async (req, res) => {
 
 app.get('/api/admin/dashboard', async (req, res) => {
   try {
-    const userId = getUserIdFromRequest(req);
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const userId = Number(admin.UserID || admin.userid);
     if (!userId) {
       return res.status(400).json({ success: false, message: 'Thiếu userId.' });
     }
@@ -744,7 +896,9 @@ app.patch('/api/admin/notifications/read-all', async (req, res) => {
 
 app.get('/api/admin/users', async (req, res) => {
   try {
-    const userId = getUserIdFromRequest(req);
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const userId = Number(admin.UserID || admin.userid);
     if (!userId) {
       return res.status(400).json({ success: false, message: 'Thiếu userId.' });
     }
@@ -769,7 +923,9 @@ app.get('/api/admin/users', async (req, res) => {
 
 app.get('/api/admin/doctors', async (req, res) => {
   try {
-    const userId = getUserIdFromRequest(req);
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const userId = Number(admin.UserID || admin.userid);
     if (!userId) {
       return res.status(400).json({ success: false, message: 'Thiếu userId.' });
     }
@@ -796,7 +952,9 @@ app.get('/api/admin/doctors', async (req, res) => {
 
 app.get('/api/admin/patients', async (req, res) => {
   try {
-    const userId = getUserIdFromRequest(req);
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const userId = Number(admin.UserID || admin.userid);
     if (!userId) {
       return res.status(400).json({ success: false, message: 'Thiếu userId.' });
     }
@@ -1141,7 +1299,8 @@ app.post('/api/admin/medicines', async (req, res) => {
 
 app.get('/api/doctor/dashboard', async (req, res) => {
   try {
-    const userId = getUserIdFromRequest(req);
+    const authenticatedUser = await getAuthenticatedUser(req);
+    const userId = authenticatedUser ? Number(authenticatedUser.UserID || authenticatedUser.userid) : null;
     if (!userId) {
       return res.status(400).json({ success: false, message: 'Thiếu userId.' });
     }
@@ -1171,7 +1330,8 @@ app.get('/api/doctor/dashboard', async (req, res) => {
 
 app.get('/api/patient/profile', async (req, res) => {
   try {
-    const userId = getUserIdFromRequest(req);
+    const authenticatedUser = await getAuthenticatedUser(req);
+    const userId = authenticatedUser ? Number(authenticatedUser.UserID || authenticatedUser.userid) : null;
     if (!userId) {
       return res.status(400).json({ success: false, message: 'Thiếu userId.' });
     }
