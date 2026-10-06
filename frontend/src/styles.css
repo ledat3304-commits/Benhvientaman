@@ -2583,3 +2583,104 @@ main:has(.hero-slider) > .app-section{
 main.about-page .about-story p{
   text-indent:2em!important;
 }
+
+/* Trang đặt lịch: tập trung vào form, dùng màu nhận diện Tâm An */
+.booking-page .booking-api-layout{
+  display:block!important;
+  width:min(100%,760px)!important;
+  margin:0 auto!important;
+}
+.booking-page .booking-api-guide{
+  display:none!important;
+}
+.booking-page .booking-api-card{
+  width:100%!important;
+  max-width:760px!important;
+  padding:clamp(24px,4vw,46px)!important;
+  border:1px solid #dbe5f7!important;
+  border-top:6px solid var(--navy)!important;
+  border-radius:20px!important;
+  background:#fff!important;
+  box-shadow:0 24px 60px rgba(23,64,170,.13)!important;
+}
+.booking-page .booking-api-card .eyebrow{
+  color:var(--navy)!important;
+  font-size:13px!important;
+  letter-spacing:.12em!important;
+}
+.booking-page .booking-api-card h1{
+  color:var(--navy)!important;
+  font-size:clamp(30px,4vw,42px)!important;
+  line-height:1.15!important;
+}
+.booking-page .booking-api-card>p{
+  color:#62729a!important;
+}
+.booking-page .booking-api-form label{
+  color:var(--navy)!important;
+}
+.booking-page .booking-api-form input,
+.booking-page .booking-api-form select,
+.booking-page .booking-api-form textarea{
+  border:1px solid #cbd8f0!important;
+  border-radius:10px!important;
+  background:#f8fbff!important;
+  color:#163579!important;
+  transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.booking-page .booking-api-form input::placeholder,
+.booking-page .booking-api-form textarea::placeholder{
+  color:#8290ad!important;
+}
+.booking-page .booking-api-form input:hover,
+.booking-page .booking-api-form select:hover,
+.booking-page .booking-api-form textarea:hover,
+.booking-page .booking-api-form input:focus,
+.booking-page .booking-api-form select:focus,
+.booking-page .booking-api-form textarea:focus{
+  border-color:var(--navy)!important;
+  background:#fff!important;
+  box-shadow:0 0 0 4px rgba(23,64,170,.1)!important;
+  outline:none!important;
+}
+.booking-page .booking-api-form .button-primary{
+  min-height:48px;
+  border:1px solid var(--lime)!important;
+  border-radius:10px!important;
+  background:var(--lime)!important;
+  color:var(--navy)!important;
+  font-weight:800!important;
+  box-shadow:0 10px 22px rgba(191,224,71,.28);
+}
+.booking-page .booking-api-form .button-primary:hover{
+  background:#d0ed63!important;
+  color:var(--navy)!important;
+  transform:translateY(-1px);
+}
+.booking-page .booking-api-doctor{
+  padding:11px 14px!important;
+  border-left:3px solid var(--lime)!important;
+  border-radius:0 8px 8px 0!important;
+  background:#f5f9e9!important;
+  color:var(--navy)!important;
+}
+
+@media(max-width:700px){
+  .booking-page .booking-api-layout{
+    width:100%!important;
+  }
+  .booking-page .booking-api-card{
+    padding:25px 18px!important;
+    border-radius:16px!important;
+  }
+  .booking-page .booking-api-card h1{
+    font-size:30px!important;
+  }
+  .booking-page .booking-api-row{
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+  }
+  .booking-page .booking-api-form>button{
+    width:100%;
+  }
+}
