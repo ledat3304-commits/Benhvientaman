@@ -2567,3 +2567,9 @@ main:has(.hero-slider) > .app-section{
 .site-header .nav-dropdown--news .nav-dropdown-menu a{
   font-size:12px!important;
 }
+
+@media(min-width:901px){
+  .site-header .nav-dropdown--about .nav-menu-group-title{
+    color:var(--navy)!important;
+  }
+}
