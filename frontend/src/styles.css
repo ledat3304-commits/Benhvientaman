@@ -2546,3 +2546,19 @@ main:has(.faq-layout) .faq-contact .button{
     min-height:0;
   }
 }
+
+/* Trang chủ: nền xanh lơ và trắng xen kẽ */
+main:has(.hero-slider) > .intro-section,
+main:has(.hero-slider) > .home-services-section,
+main:has(.hero-slider) > .equipment-showcase,
+main:has(.hero-slider) > .anal-health-section,
+main:has(.hero-slider) > .feedback-section{
+  background:#eef6ff!important;
+}
+main:has(.hero-slider) > .home-team-section,
+main:has(.hero-slider) > .hospital-evidence,
+main:has(.hero-slider) > .expert-corner,
+main:has(.hero-slider) > .home-news-section,
+main:has(.hero-slider) > .app-section{
+  background:#fff!important;
+}
