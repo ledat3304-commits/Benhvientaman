@@ -2578,3 +2578,8 @@ main:has(.hero-slider) > .app-section{
 .health-system-kicker{
   display:none!important;
 }
+
+/* Thụt đầu dòng cho từng đoạn văn trang Giới thiệu */
+main.about-page .about-story p{
+  text-indent:2em!important;
+}
