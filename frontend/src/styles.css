@@ -3089,3 +3089,95 @@ main:has(.insurance-grid) .insurance-box .text-link{
   main:has(.insurance-grid) .insurance-banner{margin-bottom:24px;border-radius:14px}
   main:has(.insurance-grid) .insurance-box{padding:24px}
 }
+
+/* Bố cục nội dung chi tiết BHYT */
+main.insurance-page .insurance-article{
+  display:grid;
+  gap:24px;
+  margin-top:56px;
+}
+main.insurance-page .insurance-section-card{
+  padding:32px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 12px 28px rgba(23,64,170,.06);
+}
+main.insurance-page .insurance-section-card h2{
+  margin:0 0 16px;
+  color:var(--navy);
+  font-size:var(--site-section-subtitle-size)!important;
+  line-height:1.3!important;
+  letter-spacing:0!important;
+}
+main.insurance-page .insurance-section-card p,
+main.insurance-page .insurance-section-card li{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main.insurance-page .insurance-section-card p+p{
+  margin-top:16px;
+}
+main.insurance-page .insurance-section-card .plain-list{
+  margin:18px 0 0;
+}
+main.insurance-page .insurance-section-card .plain-list li{
+  margin:10px 0;
+}
+main.insurance-page .insurance-steps{
+  display:grid;
+  gap:14px;
+  margin:0;
+  padding:0;
+  list-style:none;
+  counter-reset:insurance-step;
+}
+main.insurance-page .insurance-steps li{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr);
+  gap:14px;
+  align-items:start;
+  margin:0;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+}
+main.insurance-page .insurance-steps li:last-child{
+  border-bottom:0;
+}
+main.insurance-page .insurance-steps li:before{
+  counter-increment:insurance-step;
+  content:counter(insurance-step,decimal-leading-zero);
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  color:var(--navy);
+  background:var(--mint);
+  font-size:15px;
+  font-weight:800;
+}
+main.insurance-page .insurance-section-card--closing{
+  border-left:4px solid var(--lime);
+  background:linear-gradient(115deg,#fff,#f4f8ff);
+}
+@media(max-width:650px){
+  main.insurance-page .insurance-article{
+    gap:18px;
+    margin-top:35px;
+  }
+  main.insurance-page .insurance-section-card{
+    padding:24px 20px;
+    border-radius:14px;
+  }
+  main.insurance-page .insurance-section-card h2{
+    font-size:22px!important;
+  }
+  main.insurance-page .insurance-section-card p,
+  main.insurance-page .insurance-section-card li{
+    font-size:15px!important;
+  }
+}
