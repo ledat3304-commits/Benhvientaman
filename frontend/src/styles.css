@@ -2976,6 +2976,11 @@ main.department-index-page .department-group-heading>p{
   }
 }
 
+/* Ẩn thanh trang trí màu xanh ở đầu phần giới thiệu chuyên khoa */
+main.department-index-page .department-directory-intro:after{
+  display:none;
+}
+
 /* Ảnh mô tả hiển thị trong trang chi tiết từng chuyên khoa */
 main.department-detail-page .department-detail-image{
   display:block;
