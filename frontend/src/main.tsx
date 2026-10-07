@@ -468,7 +468,147 @@ function BookingPage() { return <BookingPageApi />; }
 
 const diseaseData: Record<string, { title: string; intro: string; signs: string[]; causes: string[]; consult: string; image: string; imageAlt: string }> = { 'benh-tri': { title: 'Bệnh trĩ', image: '/medical/benh-tri.png', imageAlt: 'Minh họa bệnh trĩ', intro: 'Bệnh trĩ là tình trạng các đám rối tĩnh mạch ở vùng hậu môn – trực tràng bị giãn, thường gây chảy máu hoặc khó chịu.\n\nPhân loại: Trĩ nội, trĩ ngoại và trĩ hỗn hợp.\n\nDấu hiệu nhận biết sớm: Đi tiêu ra máu tươi (dính trên giấy vệ sinh hoặc nhỏ giọt); búi trĩ sa khi rặn; cảm giác cộm vướng, ngứa ngáy hoặc đau rát vùng hậu môn.\n\nNguyên nhân phổ biến: Táo bón kinh niên, tiêu chảy kéo dài, ngồi lâu một chỗ, mang thai hoặc áp lực ổ bụng tăng.', signs: ['Đi tiêu ra máu tươi, có thể dính trên giấy vệ sinh hoặc nhỏ giọt', 'Búi trĩ sa ra khi rặn, cảm giác cộm hoặc vướng', 'Ngứa ngáy, đau rát quanh hậu môn'], causes: ['Táo bón kinh niên', 'Tiêu chảy kéo dài', 'Ngồi lâu một chỗ như dân văn phòng, tài xế', 'Mang thai hoặc áp lực ổ bụng lớn'], consult: 'Khi chảy máu tái diễn, đau nhiều hoặc búi trĩ sa không tự co lên, bạn nên đi khám chuyên khoa. Chảy máu trực tràng không nên tự mặc định là do bệnh trĩ.' }, 'ro-hau-mon': { title: 'Rò hậu môn', image: '/medical/ro-hau-mon.svg', imageAlt: 'Sơ đồ minh họa rò hậu môn', intro: 'Rò hậu môn là đường hầm bất thường nối từ ống hậu môn ra vùng da cạnh hậu môn, thường xuất hiện sau một ổ áp xe.\n\nBản chất: Đây thường là giai đoạn mạn tính của áp xe hậu môn khi không được điều trị dứt điểm hoặc tự vỡ, để lại đường rò xơ chai.\n\nDấu hiệu nhận biết: Lỗ rò cạnh hậu môn liên tục rỉ mủ hoặc dịch vàng có mùi hôi, gây ẩm ướt; vùng da quanh lỗ rò sưng đau từng đợt khi đường rò bị bít tắc.\n\nBiến chứng: Đường rò có thể phân nhánh phức tạp, nhiễm trùng lan rộng và ảnh hưởng khả năng kiểm soát đại tiện.', signs: ['Lỗ rò trên da cạnh hậu môn rỉ mủ hoặc dịch vàng có mùi hôi', 'Vùng da quanh lỗ rò ẩm ướt, khó chịu', 'Sưng đau từng đợt khi đường rò bị bít tắc'], causes: ['Áp xe hậu môn không được điều trị triệt để hoặc tự vỡ', 'Viêm nhiễm tuyến hậu môn', 'Một số bệnh viêm ruột hoặc suy giảm miễn dịch'], consult: 'Rò hậu môn thường không tự khỏi và có thể cần phẫu thuật. Hãy khám sớm khi có lỗ chảy dịch, sưng đau tái phát hoặc nghi ngờ đường rò phức tạp.' }, 'ap-xe-hau-mon': { title: 'Áp xe hậu môn', image: '/medical/ap-xe-hau-mon.svg', imageAlt: 'Sơ đồ minh họa áp xe hậu môn', intro: 'Áp xe hậu môn là ổ mủ hình thành ở mô quanh hậu môn, có thể tiến triển nhanh và cần được xử trí đúng lúc.\n\nBản chất: Đây là tình trạng nhiễm trùng cấp tính; tuyến hoặc hốc hậu môn bị tắc nghẽn, nhiễm khuẩn và tạo thành bọc mủ cục bộ.\n\nDấu hiệu nhận biết: Đau nhức dữ dội, liên tục, tăng khi ngồi, đi lại, ho hoặc rặn; vùng da xung quanh sưng đỏ, nóng rát, có thể kèm sốt cao và mệt mỏi.\n\nCách xử trí: Cần được bác sĩ thăm khám và rạch dẫn lưu mủ kịp thời khi có chỉ định. Thuốc, trong đó có kháng sinh, chỉ dùng theo hướng dẫn của bác sĩ.', signs: ['Đau nhức dữ dội, liên tục, tăng khi ngồi, đi lại, ho hoặc rặn', 'Vùng da quanh hậu môn sưng đỏ, nóng rát', 'Sốt cao, ớn lạnh hoặc mệt mỏi do nhiễm trùng'], causes: ['Tắc nghẽn hoặc nhiễm khuẩn tuyến/hốc hậu môn', 'Nhiễm khuẩn vùng hậu môn', 'Một số chấn thương hoặc bệnh lý nền'], consult: 'Đau sưng kèm sốt là dấu hiệu cần khám sớm. Bác sĩ có thể chỉ định rạch dẫn lưu mủ; không tự nặn hoặc chọc tháo ổ mủ tại nhà.' } };
 
-function DiseasesPage() { return <main className="diseases-page"><PageHero label="Góc chuyên gia" title="Chuyên Khoa Hậu Môn - Trực Tràng" text="Thông tin y khoa được trình bày dễ hiểu, giúp bạn nhận biết dấu hiệu và chủ động đi khám." /><section className="section"><div className="container"><div className="disease-grid">{Object.entries(diseaseData).map(([slug, item], i) => <Link className="disease-card" to={`/benh-ly/${slug}`} key={slug}><span className="disease-number">0{i + 1}</span><div className="disease-card-image"><img src={item.image} alt={item.imageAlt} loading="lazy" /></div><h2>{item.title}</h2><p>{item.intro}</p><span className="text-link">Xem thông tin <b>→</b></span></Link>)}</div><div className="medical-note">ⓘ Nội dung mang tính tham khảo, không thay thế chẩn đoán và điều trị trực tiếp của bác sĩ.</div><div className="medical-image-credits">Hình minh họa: <a href="https://commons.wikimedia.org/wiki/File:Hemorrhoids.png" target="_blank" rel="noreferrer">Bệnh trĩ</a> (BruceBlaus, CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Fistula_diag_01.svg" target="_blank" rel="noreferrer">rò hậu môn</a> (McortNGHH, CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Abscess_diag_02.svg" target="_blank" rel="noreferrer">áp-xe hậu môn</a> (McortNGHH, CC BY-SA 4.0).</div></div></section><section id="phuong-phap-phau-thuat-tri" className="section soft-section"><div className="container disease-cta"><div><h2>Khám phá các phương pháp phẫu thuật trĩ</h2><img className="disease-surgery-image" src="/medical/so-sanh-phuong-phap-tri.png" alt="Bảng so sánh các phương pháp phẫu thuật trĩ" /></div><div className="button-row"><Link to="/dat-lich" className="button button-primary">Đặt lịch <span>→</span></Link></div></div></section></main>; }
+const hemorrhoidSymptoms = [
+  { icon: '↗', title: 'Chảy máu khi đại tiện:', text: 'máu thường có màu đỏ tươi, có thể dính trên phân, giấy vệ sinh hoặc nhỏ giọt.' },
+  { icon: '◈', title: 'Sa búi trĩ:', text: 'xuất hiện khối phồng ở hậu môn khi đại tiện hoặc gắng sức; tùy mức độ có thể tự co lên hoặc cần dùng tay đẩy vào.' },
+  { icon: '◌', title: 'Đau, rát hoặc khó chịu:', text: 'thường rõ hơn khi trĩ ngoại xuất hiện huyết khối hoặc trĩ nội sa nghẹt.' },
+  { icon: '≈', title: 'Ngứa và tiết dịch vùng hậu môn:', text: 'có thể xảy ra khi niêm mạc sa ra ngoài, gây kích ứng vùng da xung quanh.' },
+];
+
+const hemorrhoidRiskFactors = [
+  'Táo bón, tiêu chảy kéo dài hoặc thường xuyên phải rặn khi đại tiện.',
+  'Ngồi lâu, ít vận động.',
+  'Chế độ ăn thiếu chất xơ và uống không đủ nước.',
+  'Mang thai và sau sinh.',
+  'Thừa cân, béo phì.',
+  'Thường xuyên mang vác hoặc gắng sức.',
+  'Sự suy yếu của mô nâng đỡ theo tuổi.',
+];
+
+function HemorrhoidPage() {
+  useEffect(() => {
+    const previousTitle = document.title;
+    const description = document.querySelector('meta[name="description"]');
+    const previousDescription = description?.getAttribute('content') || '';
+    document.title = 'Tư vấn và điều trị trĩ | Bệnh viện Đa khoa Tâm An';
+    description?.setAttribute('content', 'Dịch vụ tư vấn và điều trị trĩ tại Bệnh viện Đa khoa Tâm An: thăm khám, đánh giá mức độ bệnh và lựa chọn điều trị nội khoa, thủ thuật hoặc phẫu thuật phù hợp.');
+
+    return () => {
+      document.title = previousTitle;
+      description?.setAttribute('content', previousDescription);
+    };
+  }, []);
+
+  return (
+    <main className="hemorrhoid-page">
+      <section className="page-hero hemorrhoid-hero">
+        <div className="container">
+          <span className="eyebrow">HẬU MÔN – TRỰC TRÀNG</span>
+          <h1>BỆNH TRĨ: NHẬN BIẾT, ĐIỀU TRỊ VÀ CHĂM SÓC TẠI BỆNH VIỆN ĐA KHOA TÂM AN</h1>
+          <p>Bệnh trĩ là tình trạng bệnh lý của đệm hậu môn, liên quan đến sự phì đại và sa xuống của các cấu trúc mạch máu, mô liên kết và tổ chức nâng đỡ.</p>
+          <nav className="breadcrumbs" aria-label="Breadcrumb">
+            <Link to="/">Trang chủ</Link><span>/</span><Link to="/benh-ly">Bệnh lý</Link><span>/</span><span>Bệnh trĩ</span>
+          </nav>
+          <div className="hemorrhoid-hero-actions">
+            <Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link>
+            <a href="tel:0977335599" className="button button-outline">Liên hệ tư vấn <span>↗</span></a>
+          </div>
+        </div>
+      </section>
+
+      <nav className="hemorrhoid-toc" aria-label="Nội dung chính">
+        <div className="container">
+          <strong>NỘI DUNG CHÍNH</strong>
+          <a href="#benh-tri-la-gi">Bệnh trĩ là gì?</a>
+          <a href="#dau-hieu">Dấu hiệu</a>
+          <a href="#yeu-to-nguy-co">Yếu tố nguy cơ</a>
+          <a href="#danh-gia">Đánh giá mức độ bệnh</a>
+          <a href="#dieu-tri">Phương pháp điều trị</a>
+          <a href="#cham-soc">Chăm sóc sau điều trị</a>
+          <a href="#tam-an">Điều trị tại Tâm An</a>
+        </div>
+      </nav>
+
+      <section id="benh-tri-la-gi" className="section hemorrhoid-section">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Thông tin bệnh lý</span><h2>BỆNH TRĨ LÀ GÌ?</h2></div>
+          <div className="hemorrhoid-intro-grid">
+            <div className="hemorrhoid-copy">
+              <p>Bệnh trĩ là tình trạng bệnh lý của đệm hậu môn, liên quan đến sự phì đại và sa xuống của các cấu trúc mạch máu, mô liên kết và tổ chức nâng đỡ. Bệnh có thể gây chảy máu khi đại tiện, sa búi trĩ, đau rát hoặc ngứa vùng hậu môn.</p>
+              <p>Dựa vào vị trí, bệnh trĩ được chia thành:</p>
+              <div className="hemorrhoid-type-grid">
+                <article className="hemorrhoid-type-card"><span className="hemorrhoid-card-index">01</span><h3>Trĩ nội (Internal hemorrhoids)</h3><p>nằm phía trên đường lược, thường gây chảy máu và có thể sa búi trĩ khi bệnh tiến triển.</p></article>
+                <article className="hemorrhoid-type-card"><span className="hemorrhoid-card-index">02</span><h3>Trĩ ngoại (External hemorrhoids)</h3><p>nằm phía dưới đường lược, có thể gây đau, đặc biệt khi hình thành huyết khối.</p></article>
+                <article className="hemorrhoid-type-card"><span className="hemorrhoid-card-index">03</span><h3>Trĩ hỗn hợp</h3><p>kết hợp cả trĩ nội và trĩ ngoại.</p></article>
+              </div>
+            </div>
+            <figure className="hemorrhoid-image-card"><img src="/hospital/hero-banner-desktop.png" alt="Bác sĩ Bệnh viện Đa khoa Tâm An tư vấn cho người bệnh tại phòng khám Hậu môn – Trực tràng" loading="lazy" /><figcaption>Bác sĩ thăm khám, tư vấn cho người bệnh tại phòng khám Hậu môn – Trực tràng.</figcaption></figure>
+          </div>
+          <div className="hemorrhoid-grades">
+            <div className="hemorrhoid-subheading"><span>TRĨ NỘI</span><h3>Độ I → II → III → IV</h3></div>
+            <div className="hemorrhoid-grade-grid">
+              <article><b>I</b><p>Búi trĩ phồng lên trong lòng hậu môn, chảy máu khi đi ngoài, không sa ra ngoài.</p></article>
+              <article><b>II</b><p>Búi trĩ sa ra ngoài khi rượt đuổi/đại tiện nhưng tự co lên được.</p></article>
+              <article><b>III</b><p>Búi trĩ sa ra ngoài khi đi ngoài hoặc vận động nặng, phải dùng tay đẩy mới lên.</p></article>
+              <article><b>IV</b><p>Búi trĩ sa thường trực bên ngoài, dùng tay đẩy cũng không co lên được.</p></article>
+            </div>
+          </div>
+          <p className="hemorrhoid-closing">Tại Bệnh viện Đa khoa Tâm An, người bệnh được thăm khám, đánh giá mức độ bệnh và tư vấn phương pháp điều trị phù hợp. Tùy loại trĩ, mức độ sa, triệu chứng, bệnh lý đi kèm và tình trạng sức khỏe, bác sĩ có thể chỉ định điều trị nội khoa, thủ thuật hoặc phẫu thuật.</p>
+        </div>
+      </section>
+
+      <section id="dau-hieu" className="section hemorrhoid-section hemorrhoid-section--soft">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Nhận biết sớm</span><h2>DẤU HIỆU NGƯỜI BỆNH KHÔNG NÊN BỎ QUA</h2><p>Triệu chứng của bệnh trĩ có thể khác nhau tùy từng trường hợp. Một số biểu hiện thường gặp gồm:</p></div>
+          <div className="hemorrhoid-symptom-grid">{hemorrhoidSymptoms.map((item) => <article className="hemorrhoid-symptom-card" key={item.title}><span className="hemorrhoid-icon" aria-hidden="true">{item.icon}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}</div>
+        </div>
+      </section>
+
+      <section id="yeu-to-nguy-co" className="section hemorrhoid-section">
+        <div className="container hemorrhoid-risk-layout">
+          <div><div className="hemorrhoid-section-heading"><span className="eyebrow">Chủ động chăm sóc</span><h2>NHỮNG YẾU TỐ CÓ THỂ LÀM TĂNG NGUY CƠ MẮC TRĨ</h2></div><p>Bệnh trĩ không phải lúc nào cũng có một nguyên nhân duy nhất. Một số yếu tố có thể liên quan đến sự hình thành hoặc làm nặng triệu chứng bệnh như:</p></div>
+          <ul className="hemorrhoid-checklist">{hemorrhoidRiskFactors.map((factor) => <li key={factor}><span aria-hidden="true">✓</span>{factor}</li>)}</ul>
+        </div>
+        <div className="container"><p className="hemorrhoid-closing">Việc điều chỉnh các yếu tố nguy cơ, duy trì thói quen đại tiện phù hợp và vận động hợp lý có vai trò hỗ trợ kiểm soát triệu chứng và hạn chế tái phát sau điều trị.</p></div>
+      </section>
+
+      <section id="danh-gia" className="section hemorrhoid-section hemorrhoid-section--soft">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Thăm khám chuyên khoa</span><h2>TƯ VẤN VÀ ĐÁNH GIÁ MỨC ĐỘ BỆNH</h2></div>
+          <div className="hemorrhoid-evaluation-grid">
+            <div className="hemorrhoid-copy"><div className="hemorrhoid-callout">Điều trị trĩ cần dựa trên loại trĩ, mức độ bệnh, triệu chứng và tình trạng sức khỏe của từng người bệnh, không nên tự lựa chọn phương pháp điều trị chỉ dựa vào mức độ sa búi trĩ.</div><p>Khi thăm khám, bác sĩ khai thác triệu chứng, thời gian mắc bệnh, tình trạng đại tiện và các yếu tố liên quan. Tùy trường hợp, người bệnh có thể được thăm khám vùng hậu môn – trực tràng và chỉ định các phương pháp cận lâm sàng cần thiết để hỗ trợ chẩn đoán.</p><p>Sau khi đánh giá, bác sĩ tư vấn hướng điều trị phù hợp, đồng thời giải thích lợi ích, hạn chế và những lưu ý của từng phương pháp.</p></div>
+            <figure className="hemorrhoid-image-card"><img src="/hospital/hero-banner-desktop.png" alt="Bác sĩ Bệnh viện Đa khoa Tâm An tư vấn và đánh giá cho người bệnh" loading="lazy" /></figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="dieu-tri" className="section hemorrhoid-section">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Điều trị theo từng tình trạng</span><h2>CÁC PHƯƠNG PHÁP ĐIỀU TRỊ TRĨ</h2></div>
+          <div className="hemorrhoid-treatment-list">
+            <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">01</div><div><h3>1. Điều trị nội khoa và thay đổi lối sống</h3><p>Điều trị bảo tồn thường được cân nhắc ở người bệnh có triệu chứng nhẹ hoặc một số trường hợp trĩ nội mức độ sớm.</p><p>Người bệnh được hướng dẫn:</p><ul><li>Tăng cường chất xơ trong chế độ ăn.</li><li>Uống đủ nước tùy nhu cầu và tình trạng sức khỏe.</li><li>Hạn chế rặn và không ngồi lâu khi đại tiện.</li><li>Tăng cường vận động phù hợp.</li><li>Sử dụng thuốc theo chỉ định của bác sĩ khi cần thiết.</li></ul><p>Thuốc có thể được sử dụng nhằm hỗ trợ kiểm soát triệu chứng như đau, ngứa, khó chịu hoặc chảy máu tùy từng trường hợp.</p></div></article>
+            <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">02</div><div><h3>2. Các thủ thuật điều trị trĩ</h3><p>Một số trường hợp trĩ nội có thể được điều trị bằng các thủ thuật ít xâm lấn như thắt búi trĩ bằng vòng cao su, tiêm xơ hoặc quang đông hồng ngoại.</p><p>Trong đó, thắt vòng cao su thường được áp dụng đối với một số trường hợp trĩ nội phù hợp. Bác sĩ đặt vòng cao su vào vị trí thích hợp trên búi trĩ nhằm làm giảm nguồn máu nuôi, sau đó búi trĩ thoái triển và rụng.</p><p>Việc lựa chọn thủ thuật phụ thuộc vào đặc điểm búi trĩ, mức độ sa và triệu chứng của từng người bệnh.</p></div></article>
+            <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">03</div><div><h3>3. Phẫu thuật điều trị trĩ</h3><p>Phẫu thuật có thể được cân nhắc khi bệnh trĩ ở mức độ nặng, sa nhiều, trĩ hỗn hợp hoặc khi các phương pháp điều trị khác không phù hợp.</p><p>Một số kỹ thuật phẫu thuật được sử dụng trong điều trị bệnh trĩ gồm cắt trĩ theo Milligan-Morgan, Ferguson, phẫu thuật Longo hoặc các kỹ thuật khâu treo – triệt mạch trĩ. Mỗi phương pháp có chỉ định, ưu điểm và hạn chế riêng.</p><p>Bác sĩ sẽ lựa chọn kỹ thuật dựa trên đặc điểm bệnh, mức độ sa, triệu chứng, bệnh lý đi kèm và điều kiện thực tế của người bệnh.</p><figure className="hemorrhoid-treatment-image"><img src="/hospital/surgery-slide.png" alt="Đội ngũ y tế tại Bệnh viện Đa khoa Tâm An" loading="lazy" /></figure></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="cham-soc" className="section hemorrhoid-section hemorrhoid-section--soft">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Đồng hành sau điều trị</span><h2>CHĂM SÓC VÀ THEO DÕI SAU ĐIỀU TRỊ</h2></div>
+          <div className="hemorrhoid-care-grid"><div><p>Sau điều trị, người bệnh cần tuân thủ hướng dẫn của bác sĩ để hỗ trợ quá trình hồi phục và hạn chế tái phát:</p><ul className="hemorrhoid-checklist"><li><span aria-hidden="true">✓</span>Ăn uống cân đối, tăng thực phẩm giàu chất xơ.</li><li><span aria-hidden="true">✓</span>Uống đủ nước và hạn chế táo bón.</li><li><span aria-hidden="true">✓</span>Không rặn hoặc ngồi lâu khi đại tiện.</li><li><span aria-hidden="true">✓</span>Vệ sinh vùng hậu môn nhẹ nhàng, tránh chà xát.</li><li><span aria-hidden="true">✓</span>Vận động phù hợp và tránh gắng sức quá mức trong giai đoạn hồi phục.</li><li><span aria-hidden="true">✓</span>Sử dụng thuốc đúng hướng dẫn và tái khám theo lịch hẹn.</li></ul></div><div className="hemorrhoid-warning"><strong>Người bệnh cần thông báo cho bác sĩ khi xuất hiện các dấu hiệu bất thường như chảy máu nhiều, đau tăng, sốt, bí đại tiện hoặc các triệu chứng khác kéo dài sau điều trị.</strong></div></div>
+        </div>
+      </section>
+
+      <section id="tam-an" className="section hemorrhoid-section">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Chuyên khoa Hậu môn – Trực tràng</span><h2>TƯ VẤN VÀ ĐIỀU TRỊ TRĨ TẠI BỆNH VIỆN ĐA KHOA TÂM AN</h2></div>
+          <div className="hemorrhoid-taman-grid"><div className="hemorrhoid-copy"><p>Bệnh trĩ có nhiều mức độ và biểu hiện khác nhau, do đó không có một phương pháp điều trị phù hợp cho tất cả người bệnh. Thăm khám sớm giúp xác định nguyên nhân triệu chứng, đánh giá mức độ bệnh và lựa chọn hướng điều trị phù hợp.</p><p>Bệnh viện Đa khoa Tâm An cung cấp dịch vụ tư vấn, thăm khám và điều trị bệnh lý hậu môn – trực tràng, trong đó có bệnh trĩ. Người bệnh được bác sĩ đánh giá tình trạng cụ thể, tư vấn phương pháp điều trị và hướng dẫn chăm sóc, theo dõi sau điều trị.</p><div className="hemorrhoid-final-actions"><Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link><a href="tel:0977335599" className="button button-outline">Liên hệ tư vấn <span>↗</span></a></div></div><figure className="hemorrhoid-image-card"><img src="/hospital/hero-banner-desktop.png" alt="Bác sĩ và người bệnh tại Bệnh viện Đa khoa Tâm An" loading="lazy" /></figure></div>
+        </div>
+      </section>
+    </main>
+  );
+}
 
 function DiseaseDetail() { const { slug } = useParams(); const item = diseaseData[slug || 'benh-tri'] || diseaseData['benh-tri']; return <main><PageHero label="Góc chuyên gia / Bệnh lý" title={item.title} text={item.intro} /><section className="section"><div className="container article-layout"><article className="medical-article"><p className="lead">{item.intro}</p><h2>Dấu hiệu nhận biết</h2><ul>{item.signs.map((x) => <li key={x}>{x}</li>)}</ul><h2>Nguyên nhân thường gặp</h2><ul>{item.causes.map((x) => <li key={x}>{x}</li>)}</ul><div className="warning-box"><strong>Khi nào nên đi khám?</strong><p>{item.consult}</p></div><p>Thông tin trên chỉ giúp bạn tham khảo ban đầu. Bác sĩ sẽ thăm khám trực tiếp và có thể chỉ định cận lâm sàng để đưa ra hướng điều trị phù hợp.</p><Link to="/dat-lich" className="button button-primary">Đặt lịch tư vấn <span>→</span></Link></article><aside className="article-aside"><div className="aside-card"><Icon>✚</Icon><h3>Chuyên khoa Hậu môn – Trực tràng</h3><p>Khám riêng tư, tư vấn rõ ràng, điều trị theo từng tình trạng.</p><Link to="/dat-lich" className="text-link">Đặt lịch ngay →</Link></div></aside></div></section></main>; }
 
@@ -619,7 +759,7 @@ function isDepartmentHeading(line: string) { return line.length < 90 && (line ==
 
 function DepartmentPage() { const { slug } = useParams(); const department = generalHospitalDepartments.find((item) => item.id === slug); const article = departmentArticles[slug || '']; if (!department && !article) return <Navigate to="/benh-ly" replace />; const title = article?.title || department?.title || ''; const lines = article?.content.split(/\r?\n/).slice(1) || []; return <main className="department-detail-page"><PageHero label="Chuyên khoa" title={title} text="" backHome /><section className="section"><div className="container department-detail-layout"><article className="medical-article department-article">{department?.image ? <img className="department-detail-image" src={department.image} alt={`Hình ảnh ${department.title}`} /> : null}{lines.map((line, index) => line.startsWith('* ') ? <p className="department-bullet" key={`${line}-${index}`}>{line.slice(2)}</p> : isDepartmentHeading(line) ? <h2 key={`${line}-${index}`}>{line}</h2> : <p key={`${line}-${index}`}>{line}</p>)}<Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></article></div></section></main>; }
 
-function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<DiseasesPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
+function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<HemorrhoidPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
 function EquipmentSectionNew() {
