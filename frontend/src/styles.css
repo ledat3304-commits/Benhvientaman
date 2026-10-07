@@ -2779,6 +2779,25 @@ main.about-page .about-story p{
   background-size:16px 16px;
 }
 
+/* Đổi các phần chữ xám trong trang đặt lịch sang màu đen */
+.booking-wizard-page .booking-wizard-heading p,
+.booking-wizard-page .booking-stepper button:not(.is-active):not(.is-done),
+.booking-wizard-page .booking-optional,
+.booking-wizard-page .booking-selected-doctor span,
+.booking-wizard-page .booking-slot-heading small,
+.booking-wizard-page .booking-empty-state,
+.booking-wizard-page .booking-help-callout,
+.booking-wizard-page .booking-doctor-card small,
+.booking-wizard-page .booking-review span,
+.booking-wizard-page .booking-success-details span{
+  color:#000!important;
+}
+.booking-wizard-page .booking-wizard-fields input::placeholder,
+.booking-wizard-page .booking-wizard-fields textarea::placeholder{
+  color:#000!important;
+  opacity:1;
+}
+
 .admin-booking-request-list{display:grid;gap:18px}
 .admin-booking-request-card{padding:20px;border:1px solid #dbe5f7;border-radius:14px;background:#fff;box-shadow:0 10px 25px rgba(23,64,170,.06)}
 .admin-booking-request-header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.admin-booking-request-header h3{margin:5px 0 3px;color:var(--navy);font-size:20px}.admin-booking-request-header small{color:#7b89a5}.admin-request-code{color:#4f9414;font-size:12px;font-weight:800;letter-spacing:.08em}
