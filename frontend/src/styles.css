@@ -2936,3 +2936,12 @@ main.department-index-page .department-directory-note a{
     font-size:20px!important;
   }
 }
+
+/* Số trang trí trên trang Chuyên khoa dùng cùng font Open Sans */
+main.department-index-page .department-group-index,
+main.department-index-page .department-card-number{
+  font-family:'Open Sans',Arial,sans-serif!important;
+  font-weight:800!important;
+  letter-spacing:.02em!important;
+  font-variant-numeric:tabular-nums;
+}
