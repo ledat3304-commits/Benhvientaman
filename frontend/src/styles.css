@@ -632,7 +632,7 @@ html,body,body *{font-family:var(--font-primary)!important}
 .hemorrhoid-page [id]{scroll-margin-top:24px}
 .hemorrhoid-page .page-hero{padding:72px 0 58px;background:linear-gradient(115deg,#eef5ff 0%,#fff 58%,#f2f9e5 100%)}
 .hemorrhoid-hero .container{max-width:1080px}
-.hemorrhoid-hero .eyebrow{display:inline-flex;margin-bottom:18px;color:var(--teal);font-size:13px;letter-spacing:.13em}
+.hemorrhoid-hero .eyebrow{display:inline-flex;margin-bottom:18px;color:var(--teal);font-size:30px;letter-spacing:.13em}
 .hemorrhoid-hero h1{max-width:1020px;margin:0;color:var(--navy);font-family:var(--font-primary)!important;font-size:clamp(2.5rem,3.3vw,2.875rem)!important;line-height:1.18!important;font-weight:700!important;letter-spacing:0!important}
 .hemorrhoid-hero p{max-width:820px;margin:20px 0 0;color:#000;font-size:16px!important;line-height:1.6!important;text-align:left!important}
 .hemorrhoid-hero .breadcrumbs{justify-content:flex-start;margin-top:25px;color:#526f77;font-size:13px}
