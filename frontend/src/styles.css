@@ -625,6 +625,20 @@ main .intro-copy .section-heading>.section-eyebrow-20{
   }
 }
 
+html,body,body *{font-family:var(--font-primary)!important}
+
+.brand-name{white-space:nowrap}
+
+/* Feedback section migrated from inline styles to shared CSS */
+.feedback-section{background:#f9fafb}
+.feedback-grid{display:flex;flex-direction:column;gap:32px}
+.feedback-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--card-gap)}
+.feedback-card{border-radius:12px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.feedback-card p{margin:0}
+.feedback-card strong{display:block;margin-top:16px;font-size:16px;line-height:1.4}
+.feedback-card span{display:block;color:#666;font-size:14px;line-height:1.6}
+.feedback-action{text-align:center;margin-top:32px}
+
 /* Tách riêng từng thiết bị và ghi chú ngay dưới ảnh */
 .equipment-card-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 .equipment-card{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 10px 24px rgba(23,64,170,.08);transition:transform .2s,box-shadow .2s}
@@ -3609,3 +3623,332 @@ main.insurance-page .insurance-timeline p{
     font-size:15px!important;
   }
 }
+
+/* Global design system: typography, spacing and content cards */
+:root{
+  --font-primary:'Open Sans',Arial,sans-serif;
+  --font-size-page-title:clamp(2.5rem,3.3vw,2.875rem);
+  --font-size-page-title-mobile:clamp(1.8rem,8vw,2.4rem);
+  --font-size-section-title:36px;
+  --font-size-body:16px;
+  --font-size-body-mobile:15px;
+  --font-size-card-title:20px;
+  --font-size-card-body:14px;
+  --line-height-heading:1.2;
+  --line-height-body:1.6;
+  --line-height-card-title:1.35;
+  --card-gap:20px;
+  --card-padding:30px;
+  --card-padding-mobile:24px;
+  --section-spacing:95px;
+  --section-spacing-mobile:65px;
+  --container-max:1160px;
+  --site-section-title-size:var(--font-size-section-title);
+  --site-section-copy-size:var(--font-size-body);
+  --site-card-copy-size:var(--font-size-card-body);
+  --site-body-size:var(--font-size-body);
+  --site-body-line-height:var(--line-height-body);
+  --site-card-size:var(--font-size-card-body);
+  --site-card-line-height:var(--line-height-body);
+}
+
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body,
+button,
+input,
+select,
+textarea{
+  font-family:var(--font-primary)!important;
+}
+body{
+  font-size:var(--font-size-body);
+  line-height:var(--line-height-body);
+}
+.container{
+  width:min(var(--container-max),calc(100% - 48px));
+}
+
+/* Shared page and section heading rules */
+main h1{
+  font-family:var(--font-primary)!important;
+  font-size:var(--font-size-page-title)!important;
+  line-height:var(--line-height-heading)!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+}
+main .section-heading>h2,
+main .home-services-heading h2,
+main .home-team-heading h2,
+main .home-news-heading h2,
+main .equipment-showcase-heading h2,
+main .expert-corner-heading h2,
+main .complications-heading>h3,
+main .about-story>h2,
+main .department-directory-intro h2,
+main .insurance-content-section>h2,
+main .insurance-cta-section>h2,
+main .medical-article>h2,
+main .event-news-article>h2{
+  font-family:var(--font-primary)!important;
+  font-size:var(--font-size-section-title)!important;
+  line-height:var(--line-height-heading)!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+  margin-bottom:20px;
+}
+main .section-heading>p,
+main .home-services-heading p,
+main .home-team-heading p,
+main .home-news-heading p,
+main .equipment-showcase-heading>p,
+main .expert-corner-heading p,
+main .complications-heading>p,
+main .page-hero p{
+  font-size:var(--font-size-body)!important;
+  line-height:var(--line-height-body)!important;
+}
+
+/* Standard content card rules */
+main:not(.admin-dashboard-page) .home-service-card,
+main:not(.admin-dashboard-page) .specialty-card,
+main:not(.admin-dashboard-page) .health-system-card,
+main:not(.admin-dashboard-page) .evidence-card,
+main:not(.admin-dashboard-page) .expert-corner-card,
+main:not(.admin-dashboard-page) .complication-card,
+main:not(.admin-dashboard-page) .method-card,
+main:not(.admin-dashboard-page) .guide-card,
+main:not(.admin-dashboard-page) .value-grid article,
+main:not(.admin-dashboard-page) .insurance-timeline>li>div,
+main:not(.admin-dashboard-page) .feedback-card{
+  padding:var(--card-padding);
+}
+main:not(.admin-dashboard-page) .home-service-card h3,
+main:not(.admin-dashboard-page) .specialty-card h3,
+main:not(.admin-dashboard-page) .health-system-card h3,
+main:not(.admin-dashboard-page) .evidence-card h3,
+main:not(.admin-dashboard-page) .expert-corner-card h3,
+main:not(.admin-dashboard-page) .method-card-body h3,
+main:not(.admin-dashboard-page) .guide-card h3,
+main:not(.admin-dashboard-page) .insurance-timeline h3{
+  font-family:var(--font-primary)!important;
+  font-size:var(--font-size-card-title)!important;
+  line-height:var(--line-height-card-title)!important;
+  font-weight:700!important;
+  margin-bottom:16px;
+}
+main:not(.admin-dashboard-page) .home-service-card li,
+main:not(.admin-dashboard-page) .specialty-card p,
+main:not(.admin-dashboard-page) .health-system-card p,
+main:not(.admin-dashboard-page) .evidence-card>p,
+main:not(.admin-dashboard-page) .expert-corner-card p,
+main:not(.admin-dashboard-page) .complication-card p,
+main:not(.admin-dashboard-page) .method-card-body p,
+main:not(.admin-dashboard-page) .guide-card p,
+main:not(.admin-dashboard-page) .value-grid article p,
+main:not(.admin-dashboard-page) .insurance-timeline p,
+main:not(.admin-dashboard-page) .feedback-card p{
+  color:#000!important;
+  font-size:var(--font-size-card-body)!important;
+  line-height:var(--line-height-body)!important;
+}
+main:not(.admin-dashboard-page) .home-service-grid,
+main:not(.admin-dashboard-page) .specialty-grid,
+main:not(.admin-dashboard-page) .health-system-grid,
+main:not(.admin-dashboard-page) .evidence-grid,
+main:not(.admin-dashboard-page) .expert-corner-grid,
+main:not(.admin-dashboard-page) .complication-grid,
+main:not(.admin-dashboard-page) .method-card-grid,
+main:not(.admin-dashboard-page) .value-grid,
+main:not(.admin-dashboard-page) .feedback-cards{
+  gap:var(--card-gap);
+}
+
+/* Standard section rhythm; hero, footer and compact utility blocks remain exceptions. */
+main .section:not(.cta-section):not(.leadership-section):not(.map-section){
+  padding-top:var(--section-spacing)!important;
+  padding-bottom:var(--section-spacing)!important;
+}
+main .insurance-content-section,
+main .insurance-cta-section{
+  padding:var(--card-padding)!important;
+}
+main .insurance-timeline h3{
+  min-height:0!important;
+  margin:16px 0!important;
+}
+main .insurance-timeline p{
+  margin:0!important;
+  text-indent:0;
+}
+
+/* Keep headings readable without forcing every content heading to uppercase. */
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6{
+  text-transform:none;
+}
+
+@media(max-width:768px){
+  :root{
+    --font-size-body:var(--font-size-body-mobile);
+    --site-section-copy-size:var(--font-size-body-mobile);
+    --site-body-size:var(--font-size-body-mobile);
+  }
+  .container{width:min(var(--container-max),calc(100% - 32px))}
+  main h1{
+    font-size:var(--font-size-page-title-mobile)!important;
+    line-height:1.2!important;
+  }
+  main .section-heading>h2,
+  main .home-services-heading h2,
+  main .home-team-heading h2,
+  main .home-news-heading h2,
+  main .equipment-showcase-heading h2,
+  main .expert-corner-heading h2,
+  main .complications-heading>h3,
+  main .about-story>h2,
+  main .department-directory-intro h2,
+  main .insurance-content-section>h2,
+  main .insurance-cta-section>h2,
+  main .medical-article>h2,
+  main .event-news-article>h2{
+    font-size:clamp(1.65rem,7vw,2.2rem)!important;
+    line-height:1.2!important;
+  }
+  main .section-heading>p,
+  main .home-services-heading p,
+  main .home-team-heading p,
+  main .home-news-heading p,
+  main .equipment-showcase-heading>p,
+  main .expert-corner-heading p,
+  main .complications-heading>p,
+  main .page-hero p{
+    font-size:var(--font-size-body-mobile)!important;
+  }
+  main .section:not(.cta-section):not(.leadership-section):not(.map-section){
+    padding-top:var(--section-spacing-mobile)!important;
+    padding-bottom:var(--section-spacing-mobile)!important;
+  }
+  main:not(.admin-dashboard-page) .home-service-card,
+  main:not(.admin-dashboard-page) .specialty-card,
+  main:not(.admin-dashboard-page) .health-system-card,
+  main:not(.admin-dashboard-page) .evidence-card,
+  main:not(.admin-dashboard-page) .expert-corner-card,
+  main:not(.admin-dashboard-page) .complication-card,
+  main:not(.admin-dashboard-page) .method-card,
+  main:not(.admin-dashboard-page) .guide-card,
+  main:not(.admin-dashboard-page) .value-grid article,
+  main:not(.admin-dashboard-page) .insurance-timeline>li>div,
+  main:not(.admin-dashboard-page) .feedback-card,
+  main .insurance-content-section,
+  main .insurance-cta-section{
+    padding:var(--card-padding-mobile)!important;
+  }
+  main:not(.admin-dashboard-page) .home-service-card h3,
+  main:not(.admin-dashboard-page) .specialty-card h3,
+  main:not(.admin-dashboard-page) .health-system-card h3,
+  main:not(.admin-dashboard-page) .evidence-card h3,
+  main:not(.admin-dashboard-page) .expert-corner-card h3,
+  main:not(.admin-dashboard-page) .method-card-body h3,
+  main:not(.admin-dashboard-page) .guide-card h3,
+  main:not(.admin-dashboard-page) .insurance-timeline h3{
+    font-size:var(--font-size-card-title)!important;
+  }
+}
+
+/* Final token enforcement for legacy page-specific selectors */
+main:not(.admin-dashboard-page) .page-hero h1,
+main:not(.admin-dashboard-page) .hero-copy h1{
+  font-family:var(--font-primary)!important;
+  font-size:var(--font-size-page-title)!important;
+  line-height:var(--line-height-heading)!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+}
+main:not(.admin-dashboard-page) .section-heading>h2,
+main:not(.admin-dashboard-page) .home-services-heading h2,
+main:not(.admin-dashboard-page) .home-team-heading h2,
+main:not(.admin-dashboard-page) .home-news-heading h2,
+main:not(.admin-dashboard-page) .equipment-showcase-heading h2,
+main:not(.admin-dashboard-page) .expert-corner-heading h2,
+main:not(.admin-dashboard-page) .complications-heading>h3,
+main:not(.admin-dashboard-page) .about-story>h2,
+main:not(.admin-dashboard-page) .department-directory-intro h2,
+main:not(.admin-dashboard-page) .insurance-content-section>h2,
+main:not(.admin-dashboard-page) .insurance-cta-section>h2,
+main:not(.admin-dashboard-page) .medical-article>h2,
+main:not(.admin-dashboard-page) .event-news-article>h2{
+  font-family:var(--font-primary)!important;
+  font-size:var(--font-size-section-title)!important;
+  line-height:var(--line-height-heading)!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+}
+main:not(.admin-dashboard-page) .department-directory-grid,
+main:not(.admin-dashboard-page) .disease-grid,
+main:not(.admin-dashboard-page) .guide-grid,
+main:not(.admin-dashboard-page) .equipment-card-grid,
+main:not(.admin-dashboard-page) .equipment-board-grid,
+main:not(.admin-dashboard-page) .home-team-grid,
+main:not(.admin-dashboard-page) .insurance-timeline{
+  gap:var(--card-gap);
+}
+main:not(.admin-dashboard-page) .disease-card,
+main:not(.admin-dashboard-page) .event-details-grid article,
+main:not(.admin-dashboard-page) .package-card{
+  padding:var(--card-padding);
+}
+main:not(.admin-dashboard-page) .department-directory-card h4,
+main:not(.admin-dashboard-page) .disease-card h2,
+main:not(.admin-dashboard-page) .equipment-card h3,
+main:not(.admin-dashboard-page) .home-news-content h3,
+main:not(.admin-dashboard-page) .event-details-grid article h3{
+  font-family:var(--font-primary)!important;
+  font-size:var(--font-size-card-title)!important;
+  line-height:var(--line-height-card-title)!important;
+  font-weight:700!important;
+  margin-bottom:16px;
+}
+main:not(.admin-dashboard-page) .department-directory-card p,
+main:not(.admin-dashboard-page) .disease-card p,
+main:not(.admin-dashboard-page) .equipment-card p,
+main:not(.admin-dashboard-page) .home-news-content>p,
+main:not(.admin-dashboard-page) .event-details-grid article p,
+main:not(.admin-dashboard-page) .package-card p{
+  color:#000!important;
+  font-size:var(--font-size-card-body)!important;
+  line-height:var(--line-height-body)!important;
+}
+@media(max-width:768px){
+  main:not(.admin-dashboard-page) .page-hero h1,
+  main:not(.admin-dashboard-page) .hero-copy h1{
+    font-size:var(--font-size-page-title-mobile)!important;
+    line-height:1.2!important;
+  }
+  main:not(.admin-dashboard-page) .section-heading>h2,
+  main:not(.admin-dashboard-page) .home-services-heading h2,
+  main:not(.admin-dashboard-page) .home-team-heading h2,
+  main:not(.admin-dashboard-page) .home-news-heading h2,
+  main:not(.admin-dashboard-page) .equipment-showcase-heading h2,
+  main:not(.admin-dashboard-page) .expert-corner-heading h2,
+  main:not(.admin-dashboard-page) .complications-heading>h3,
+  main:not(.admin-dashboard-page) .about-story>h2,
+  main:not(.admin-dashboard-page) .department-directory-intro h2,
+  main:not(.admin-dashboard-page) .insurance-content-section>h2,
+  main:not(.admin-dashboard-page) .insurance-cta-section>h2,
+  main:not(.admin-dashboard-page) .medical-article>h2,
+  main:not(.admin-dashboard-page) .event-news-article>h2{
+    font-size:clamp(1.65rem,7vw,2.2rem)!important;
+    line-height:1.2!important;
+  }
+  main:not(.admin-dashboard-page) .disease-card,
+  main:not(.admin-dashboard-page) .event-details-grid article,
+  main:not(.admin-dashboard-page) .package-card{
+    padding:var(--card-padding-mobile)!important;
+  }
+}
+
+html,body,body *{font-family:var(--font-primary)!important}
