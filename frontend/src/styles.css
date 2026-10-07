@@ -635,6 +635,12 @@ main.contact-page .hours-card h3{
   text-transform:none!important;
 }
 
+main.contact-page .page-hero .eyebrow,
+main.contact-page .contact-layout>div:first-child .section-heading>.eyebrow,
+main.contact-page .map-section .section-heading>.eyebrow{
+  color:var(--navy)!important;
+}
+
 .brand-name{white-space:nowrap}
 
 /* Feedback section migrated from inline styles to shared CSS */
