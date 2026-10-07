@@ -627,6 +627,14 @@ main .intro-copy .section-heading>.section-eyebrow-20{
 
 html,body,body *{font-family:var(--font-primary)!important}
 
+/* Trang Liên hệ: không ép các tiêu đề nội dung thành chữ in hoa */
+main.contact-page .page-hero h1,
+main.contact-page .section-heading h2,
+main.contact-page .location-row h3,
+main.contact-page .hours-card h3{
+  text-transform:none!important;
+}
+
 .brand-name{white-space:nowrap}
 
 /* Feedback section migrated from inline styles to shared CSS */
