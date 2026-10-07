@@ -2999,3 +2999,93 @@ main.department-detail-page .department-detail-image{
     border-radius:14px;
   }
 }
+
+/* Đồng bộ trang Bảo hiểm theo quy chuẩn typography trang chủ */
+main:has(.insurance-grid) .page-hero .eyebrow,
+main:has(.insurance-grid) .insurance-copy>.eyebrow{
+  color:var(--navy)!important;
+  font-size:20px!important;
+  font-weight:700!important;
+  line-height:1.3!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+}
+main:has(.insurance-grid) .page-hero h1,
+main:has(.insurance-grid) .insurance-copy h2{
+  color:var(--navy)!important;
+  font-size:var(--site-section-title-size)!important;
+  line-height:1.15!important;
+  letter-spacing:0!important;
+}
+main:has(.insurance-grid) .page-hero p,
+main:has(.insurance-grid) .insurance-copy>p,
+main:has(.insurance-grid) .insurance-copy li,
+main:has(.insurance-grid) .insurance-box p{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main:has(.insurance-grid) .insurance-grid{
+  gap:56px;
+}
+main:has(.insurance-grid) .insurance-banner{
+  aspect-ratio:3 / 2;
+  margin:0 0 32px;
+  border-radius:18px;
+  object-fit:cover;
+  box-shadow:0 18px 38px rgba(23,64,170,.12);
+}
+main:has(.insurance-grid) .insurance-copy>.eyebrow{
+  margin:0 0 12px;
+}
+main:has(.insurance-grid) .insurance-copy h2{
+  margin:0 0 16px;
+}
+main:has(.insurance-grid) .insurance-highlight{
+  margin:24px 0;
+  padding:16px 18px;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+}
+main:has(.insurance-grid) .plain-list{
+  margin:24px 0;
+  padding-left:22px;
+}
+main:has(.insurance-grid) .plain-list li{
+  margin:10px 0;
+}
+main:has(.insurance-grid) .insurance-footnote{
+  margin-top:24px;
+  color:#000!important;
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+main:has(.insurance-grid) .insurance-box{
+  padding:32px;
+  border-radius:18px;
+}
+main:has(.insurance-grid) .insurance-box h3{
+  color:var(--navy)!important;
+  font-size:var(--site-section-subtitle-size)!important;
+  line-height:1.3!important;
+  letter-spacing:0!important;
+}
+main:has(.insurance-grid) .insurance-box .text-link{
+  margin-top:20px;
+  font-size:var(--site-card-size)!important;
+}
+@media(max-width:650px){
+  main:has(.insurance-grid) .page-hero .eyebrow,
+  main:has(.insurance-grid) .insurance-copy>.eyebrow{font-size:17px!important}
+  main:has(.insurance-grid) .page-hero h1,
+  main:has(.insurance-grid) .insurance-copy h2{font-size:30px!important}
+  main:has(.insurance-grid) .page-hero p,
+  main:has(.insurance-grid) .insurance-copy>p,
+  main:has(.insurance-grid) .insurance-copy li,
+  main:has(.insurance-grid) .insurance-box p{font-size:15px!important}
+  main:has(.insurance-grid) .insurance-grid{gap:35px}
+  main:has(.insurance-grid) .insurance-banner{margin-bottom:24px;border-radius:14px}
+  main:has(.insurance-grid) .insurance-box{padding:24px}
+}
