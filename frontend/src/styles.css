@@ -3573,3 +3573,39 @@ main.insurance-page .insurance-timeline p{
     display:block;
   }
 }
+
+/* Chuẩn hóa cỡ chữ và khoảng cách trong 5 bước quy trình BHYT */
+main.insurance-page .insurance-timeline>li>div{
+  padding:24px 22px;
+}
+main.insurance-page .insurance-timeline span{
+  width:42px;
+  height:42px;
+  font-size:15px!important;
+  line-height:1!important;
+}
+main.insurance-page .insurance-timeline h3{
+  margin:16px 0 12px;
+  font-size:20px!important;
+  line-height:1.35!important;
+  min-height:calc(1.35em * 3);
+  letter-spacing:0!important;
+}
+main.insurance-page .insurance-timeline p{
+  margin:0!important;
+  font-size:15px!important;
+  line-height:1.6!important;
+  text-indent:12px;
+}
+@media(max-width:650px){
+  main.insurance-page .insurance-timeline>li>div{
+    padding:20px 18px;
+  }
+  main.insurance-page .insurance-timeline h3{
+    min-height:0;
+    font-size:19px!important;
+  }
+  main.insurance-page .insurance-timeline p{
+    font-size:15px!important;
+  }
+}
