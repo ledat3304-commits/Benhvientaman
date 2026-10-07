@@ -504,7 +504,6 @@ function HemorrhoidPage() {
       <section className="page-hero hemorrhoid-hero">
         <div className="container">
           <span className="eyebrow">HẬU MÔN – TRỰC TRÀNG</span>
-          <h1>BỆNH TRĨ: NHẬN BIẾT, ĐIỀU TRỊ VÀ CHĂM SÓC TẠI BỆNH VIỆN ĐA KHOA TÂM AN</h1>
           <p>Bệnh trĩ là tình trạng bệnh lý của đệm hậu môn, liên quan đến sự phì đại và sa xuống của các cấu trúc mạch máu, mô liên kết và tổ chức nâng đỡ.</p>
           <nav className="breadcrumbs" aria-label="Breadcrumb">
             <Link to="/">Trang chủ</Link><span>/</span><Link to="/benh-ly">Bệnh lý</Link><span>/</span><span>Bệnh trĩ</span>
