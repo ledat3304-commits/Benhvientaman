@@ -3585,10 +3585,10 @@ main.insurance-page .insurance-timeline span{
   line-height:1!important;
 }
 main.insurance-page .insurance-timeline h3{
-  margin:16px 0 12px;
+  margin:16px 0 8px;
   font-size:20px!important;
   line-height:1.35!important;
-  min-height:calc(1.35em * 3);
+  min-height:calc(1.35em * 2);
   letter-spacing:0!important;
 }
 main.insurance-page .insurance-timeline p{
