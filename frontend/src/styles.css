@@ -3526,3 +3526,50 @@ main.insurance-page .insurance-cta-actions{
   main.insurance-page .insurance-cta-section{padding:26px 20px}
   main.insurance-page .insurance-timeline h3{font-size:20px!important}
 }
+
+/* Căn lại tiêu đề và mô tả trong timeline quy trình BHYT */
+main.insurance-page .insurance-content{
+  max-width:1160px;
+}
+main.insurance-page .insurance-timeline,
+main.insurance-page .insurance-timeline li,
+main.insurance-page .insurance-timeline h3,
+main.insurance-page .insurance-timeline p{
+  text-align:left!important;
+}
+main.insurance-page .insurance-timeline h3{
+  min-height:calc(1.35em * 4);
+  margin-bottom:10px;
+  overflow-wrap:break-word;
+}
+main.insurance-page .insurance-timeline p{
+  text-indent:12px;
+}
+@media(max-width:1000px){
+  main.insurance-page .insurance-timeline h3{
+    min-height:0;
+  }
+}
+@media(max-width:650px){
+  main.insurance-page .insurance-timeline h3{
+    min-height:0;
+  }
+}
+
+/* Timeline desktop: 3 bước hàng trên, 2 bước hàng dưới */
+@media(min-width:1001px){
+  main.insurance-page .insurance-timeline{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  main.insurance-page .insurance-timeline h3{
+    min-height:calc(1.35em * 3);
+  }
+  main.insurance-page .insurance-timeline>li:after{
+    display:none;
+  }
+  main.insurance-page .insurance-timeline>li:nth-child(1):after,
+  main.insurance-page .insurance-timeline>li:nth-child(2):after,
+  main.insurance-page .insurance-timeline>li:nth-child(4):after{
+    display:block;
+  }
+}
