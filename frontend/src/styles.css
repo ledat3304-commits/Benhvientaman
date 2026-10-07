@@ -2768,6 +2768,17 @@ main.about-page .about-story p{
 .booking-review strong{color:var(--navy);font-size:14px;line-height:1.35;overflow-wrap:anywhere}
 @media(max-width:600px){.booking-review>div{grid-template-columns:1fr}.booking-wizard-actions{flex-wrap:wrap}.booking-wizard-actions .booking-skip-button{order:3;flex-basis:100%}}
 
+/* Mũi tên select trang đặt lịch cách viền phải đúng 2px */
+.booking-wizard-fields select{
+  appearance:none;
+  -webkit-appearance:none;
+  padding-right:34px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='m4 6 4 4 4-4' stroke='%231740AA' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 2px center;
+  background-size:16px 16px;
+}
+
 .admin-booking-request-list{display:grid;gap:18px}
 .admin-booking-request-card{padding:20px;border:1px solid #dbe5f7;border-radius:14px;background:#fff;box-shadow:0 10px 25px rgba(23,64,170,.06)}
 .admin-booking-request-header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.admin-booking-request-header h3{margin:5px 0 3px;color:var(--navy);font-size:20px}.admin-booking-request-header small{color:#7b89a5}.admin-request-code{color:#4f9414;font-size:12px;font-weight:800;letter-spacing:.08em}
