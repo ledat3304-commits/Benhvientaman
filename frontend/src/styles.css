@@ -2845,3 +2845,94 @@ main.about-page .about-story p{
 .admin-booking-request-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:18px 0;border-top:1px solid #e5ebf5}.admin-booking-request-details span{display:grid;gap:4px;padding:10px;border-bottom:1px solid #e5ebf5;color:#7b89a5;font-size:12px}.admin-booking-request-details strong{color:var(--ink);font-size:14px;line-height:1.4;overflow-wrap:anywhere}
 .admin-booking-request-convert{padding-top:15px;border-top:1px dashed #d5dfef}.admin-booking-request-convert summary{color:var(--navy);font-size:14px;font-weight:800;cursor:pointer}.admin-booking-request-convert .admin-form-row{margin-top:14px}.admin-request-action-row{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:15px}.admin-request-action-row .admin-small-button{display:inline-flex;align-items:center;min-height:42px;text-decoration:none}.admin-request-action-row .button-primary{border:1px solid var(--lime);background:var(--lime);color:var(--navy)}
 @media(max-width:650px){.admin-booking-request-header{display:grid}.admin-booking-request-header .admin-status-select{width:100%}.admin-booking-request-details{grid-template-columns:1fr}.admin-request-action-row{align-items:stretch;flex-direction:column}.admin-request-action-row>*{justify-content:center;width:100%}}
+
+/* Trang Chuyên khoa: đồng bộ typography và khoảng cách theo rule trang chủ */
+main.department-index-page,
+main.department-index-page *{
+  font-family:'Open Sans',Arial,sans-serif!important;
+}
+main.department-index-page h1,
+main.department-index-page h2,
+main.department-index-page h3,
+main.department-index-page h4,
+main.department-index-page h5,
+main.department-index-page h6{
+  text-transform:uppercase!important;
+}
+main.department-index-page .department-directory-intro{
+  margin-bottom:38px;
+}
+main.department-index-page .department-directory-intro .eyebrow,
+main.department-index-page .department-group-heading .eyebrow{
+  color:var(--navy)!important;
+  font-size:30px!important;
+  font-weight:700!important;
+  letter-spacing:.01em!important;
+  line-height:1.2!important;
+  text-transform:uppercase!important;
+}
+main.department-index-page .department-directory-intro h2{
+  font-size:var(--site-section-title-size)!important;
+  line-height:1.15!important;
+  letter-spacing:0!important;
+}
+main.department-index-page .department-directory-intro>div>p,
+main.department-index-page .department-group-heading>p{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main.department-index-page .department-group-heading{
+  margin-bottom:38px;
+}
+main.department-index-page .department-group-heading h3{
+  font-size:var(--site-section-subtitle-size)!important;
+  line-height:1.3!important;
+  letter-spacing:0!important;
+}
+main.department-index-page .department-directory-grid{
+  gap:20px;
+}
+main.department-index-page .department-directory-card h4{
+  font-size:20px!important;
+  line-height:1.35!important;
+  letter-spacing:0!important;
+}
+main.department-index-page .department-directory-card>p{
+  color:#000!important;
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main.department-index-page .department-directory-note{
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+main.department-index-page .department-directory-note strong{
+  font-size:20px!important;
+  line-height:1.35!important;
+}
+main.department-index-page .department-directory-note span,
+main.department-index-page .department-directory-note a{
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+@media(max-width:650px){
+  main.department-index-page .department-directory-intro .eyebrow,
+  main.department-index-page .department-group-heading .eyebrow{
+    font-size:30px!important;
+  }
+  main.department-index-page .department-directory-intro>div>p,
+  main.department-index-page .department-group-heading>p{
+    font-size:15px!important;
+  }
+  main.department-index-page .department-group-heading{
+    margin-bottom:28px;
+  }
+  main.department-index-page .department-directory-card h4{
+    font-size:20px!important;
+  }
+}
