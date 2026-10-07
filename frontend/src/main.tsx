@@ -130,7 +130,7 @@ const generalHospitalDepartments = [
 
 ];
 
-type DepartmentDirectoryItem = { id: string; title: string; icon: string; logo?: string; description: string } & ({ href: string } | { href?: never });
+type DepartmentDirectoryItem = { id: string; title: string; icon: string; logo?: string; image?: string; description: string } & ({ href: string } | { href?: never });
 type DepartmentGroup = { title: string; description: string; items: DepartmentDirectoryItem[] };
 
 const departmentGroups: DepartmentGroup[] = [
@@ -138,13 +138,13 @@ const departmentGroups: DepartmentGroup[] = [
     title: 'Lâm sàng',
     description: 'Các chuyên khoa trực tiếp thăm khám, điều trị và đồng hành cùng người bệnh trong suốt hành trình chăm sóc sức khỏe.',
     items: [
-      { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp', icon: '✚', logo: '/specialties/01_noi_tong_hop.png', description: 'Khám và điều trị các bệnh lý nội khoa, theo dõi sức khỏe toàn diện.' },
-      { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp', icon: '◇', logo: '/specialties/02_ngoai_tong_hop.png', description: 'Điều trị ngoại khoa với quy trình an toàn, phối hợp chuyên môn chặt chẽ.' },
-      { id: 'khoa-nhi', title: 'Khoa Nhi', icon: '♡', logo: '/specialties/03_nhi.png', description: 'Chăm sóc sức khỏe trẻ em trong không gian thân thiện, tận tâm.' },
-      { id: 'khoa-y-hoc-co-truyen', title: 'Y học cổ truyền & Phục hồi chức năng', icon: '✦', logo: '/specialties/04_yhoc_cotruyen.png', description: 'Kết hợp y học cổ truyền và phục hồi chức năng theo từng tình trạng.' },
+      { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp', icon: '✚', logo: '/specialties/01_noi_tong_hop.png', image: '/specialties/khoa-noi-tong-hop.png', description: 'Khám và điều trị các bệnh lý nội khoa, theo dõi sức khỏe toàn diện.' },
+      { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp', icon: '◇', logo: '/specialties/02_ngoai_tong_hop.png', image: '/specialties/khoa-ngoai-tong-hop.png', description: 'Điều trị ngoại khoa với quy trình an toàn, phối hợp chuyên môn chặt chẽ.' },
+      { id: 'khoa-nhi', title: 'Khoa Nhi', icon: '♡', logo: '/specialties/03_nhi.png', image: '/specialties/khoa-nhi.png', description: 'Chăm sóc sức khỏe trẻ em trong không gian thân thiện, tận tâm.' },
+      { id: 'khoa-y-hoc-co-truyen', title: 'Y học cổ truyền & Phục hồi chức năng', icon: '✦', logo: '/specialties/04_yhoc_cotruyen.png', image: '/specialties/khoa-yhct-phcn.png', description: 'Kết hợp y học cổ truyền và phục hồi chức năng theo từng tình trạng.' },
       { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu', icon: '◈', logo: '/specialties/05_than_loc_mau.png', description: 'Theo dõi, điều trị bệnh lý thận và thực hiện lọc máu theo chỉ định.' },
-      { id: 'khoa-kham-benh', title: 'Khoa Khám Bệnh', icon: '⌖', logo: '/specialties/06_kham_benh.png', description: 'Tiếp nhận, tư vấn và định hướng khám chữa bệnh phù hợp.' },
-      { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây Mê Hồi Sức', icon: '✧', logo: '/specialties/07_gay_me_hoi_suc.png', description: 'Đảm bảo an toàn trước, trong và sau phẫu thuật, thủ thuật.' },
+      { id: 'khoa-kham-benh', title: 'Khoa Khám Bệnh', icon: '⌖', logo: '/specialties/06_kham_benh.png', image: '/specialties/khoa-kham-benh.png', description: 'Tiếp nhận, tư vấn và định hướng khám chữa bệnh phù hợp.' },
+      { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây Mê Hồi Sức', icon: '✧', logo: '/specialties/07_gay_me_hoi_suc.png', image: '/specialties/khoa-gay-me-hoi-suc.png', description: 'Đảm bảo an toàn trước, trong và sau phẫu thuật, thủ thuật.' },
     ],
   },
   {
@@ -504,7 +504,7 @@ function DepartmentIndexPage() { return <main className="department-index-page">
 
 function isDepartmentHeading(line: string) { return line.length < 90 && (line === line.toUpperCase() || /^Gây (mê|tê)$/.test(line) || /^Bước \d+:/.test(line)); }
 
-function DepartmentPage() { const { slug } = useParams(); const department = generalHospitalDepartments.find((item) => item.id === slug); const article = departmentArticles[slug || '']; if (!department && !article) return <Navigate to="/benh-ly" replace />; const title = article?.title || department?.title || ''; const lines = article?.content.split(/\r?\n/).slice(1) || []; return <main className="department-detail-page"><PageHero label="Chuyên khoa" title={title} text="" backHome /><section className="section"><div className="container department-detail-layout"><article className="medical-article department-article">{lines.map((line, index) => line.startsWith('* ') ? <p className="department-bullet" key={`${line}-${index}`}>{line.slice(2)}</p> : isDepartmentHeading(line) ? <h2 key={`${line}-${index}`}>{line}</h2> : <p key={`${line}-${index}`}>{line}</p>)}<Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></article></div></section></main>; }
+function DepartmentPage() { const { slug } = useParams(); const department = generalHospitalDepartments.find((item) => item.id === slug); const article = departmentArticles[slug || '']; if (!department && !article) return <Navigate to="/benh-ly" replace />; const title = article?.title || department?.title || ''; const lines = article?.content.split(/\r?\n/).slice(1) || []; return <main className="department-detail-page"><PageHero label="Chuyên khoa" title={title} text="" backHome /><section className="section"><div className="container department-detail-layout"><article className="medical-article department-article">{department?.image ? <img className="department-detail-image" src={department.image} alt={`Hình ảnh ${department.title}`} /> : null}{lines.map((line, index) => line.startsWith('* ') ? <p className="department-bullet" key={`${line}-${index}`}>{line.slice(2)}</p> : isDepartmentHeading(line) ? <h2 key={`${line}-${index}`}>{line}</h2> : <p key={`${line}-${index}`}>{line}</p>)}<Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></article></div></section></main>; }
 
 function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<DiseasesPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
 
