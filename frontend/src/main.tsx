@@ -134,8 +134,8 @@ type DepartmentGroup = { title: string; description: string; items: DepartmentDi
 
 const departmentGroups: DepartmentGroup[] = [
   {
-    title: 'Lâm sàng',
-    description: 'Các chuyên khoa trực tiếp thăm khám, điều trị và đồng hành cùng người bệnh trong suốt hành trình chăm sóc sức khỏe.',
+    title: 'Lâm sàng - Cận lâm sàng',
+    description: 'Các chuyên khoa trực tiếp thăm khám, điều trị cùng hệ thống xét nghiệm, chẩn đoán hình ảnh và dược hỗ trợ bác sĩ đưa ra hướng xử trí chính xác, kịp thời.',
     items: [
       { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp', icon: '✚', logo: '/specialties/01_noi_tong_hop.png', image: '/specialties/khoa-noi-tong-hop.png', description: 'Khám và điều trị các bệnh lý nội khoa, theo dõi sức khỏe toàn diện.' },
       { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp', icon: '◇', logo: '/specialties/02_ngoai_tong_hop.png', image: '/specialties/khoa-ngoai-tong-hop.png', description: 'Điều trị ngoại khoa với quy trình an toàn, phối hợp chuyên môn chặt chẽ.' },
@@ -144,12 +144,6 @@ const departmentGroups: DepartmentGroup[] = [
       { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu', icon: '◈', logo: '/specialties/05_than_loc_mau.png', description: 'Theo dõi, điều trị bệnh lý thận và thực hiện lọc máu theo chỉ định.' },
       { id: 'khoa-kham-benh', title: 'Khoa Khám Bệnh', icon: '⌖', logo: '/specialties/06_kham_benh.png', image: '/specialties/khoa-kham-benh.png', description: 'Tiếp nhận, tư vấn và định hướng khám chữa bệnh phù hợp.' },
       { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây Mê Hồi Sức', icon: '✧', logo: '/specialties/07_gay_me_hoi_suc.png', image: '/specialties/khoa-gay-me-hoi-suc.png', description: 'Đảm bảo an toàn trước, trong và sau phẫu thuật, thủ thuật.' },
-    ],
-  },
-  {
-    title: 'Cận lâm sàng',
-    description: 'Hệ thống xét nghiệm, chẩn đoán hình ảnh và dược hỗ trợ bác sĩ đưa ra hướng xử trí chính xác, kịp thời.',
-    items: [
       { id: 'khoa-can-lam-sang', title: 'Cận lâm sàng - Chẩn đoán hình ảnh', icon: '⌁', logo: '/specialties/08_chan_doan_hinh_anh.png', description: 'Hỗ trợ phát hiện, đánh giá và theo dõi bệnh bằng kỹ thuật hiện đại.' },
       { id: 'khoa-xet-nghiem', title: 'Khoa Xét Nghiệm', icon: '▣', logo: '/specialties/09_xet_nghiem.png', description: 'Thực hiện các xét nghiệm phục vụ chẩn đoán và theo dõi điều trị.' },
       { id: 'khoa-duoc', title: 'Khoa Dược', icon: '＋', logo: '/specialties/10_duoc.png', description: 'Đảm bảo cung ứng và sử dụng thuốc an toàn, hợp lý, hiệu quả.' },
