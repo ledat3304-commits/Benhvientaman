@@ -108,13 +108,13 @@ const healthSystemFacilities = [
 
 const generalHospitalDepartments = [
 
-  { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp' },
+  { id: 'khoa-noi-tong-hop', title: 'Khoa Nội Tổng Hợp', image: '/specialties/khoa-noi-tong-hop.png' },
 
-  { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp' },
+  { id: 'khoa-ngoai-tong-hop', title: 'Khoa Ngoại Tổng Hợp', image: '/specialties/khoa-ngoai-tong-hop.png' },
 
-  { id: 'khoa-nhi', title: 'Khoa Nhi' },
+  { id: 'khoa-nhi', title: 'Khoa Nhi', image: '/specialties/khoa-nhi.png' },
 
-  { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y Học Cổ Truyền Và Phục Hồi Chức Năng' },
+  { id: 'khoa-y-hoc-co-truyen', title: 'Khoa Y Học Cổ Truyền Và Phục Hồi Chức Năng', image: '/specialties/khoa-yhct-phcn.png' },
 
   { id: 'khoa-than-loc-mau', title: 'Khoa Thận - Lọc Máu' },
 
@@ -122,11 +122,11 @@ const generalHospitalDepartments = [
 
   { id: 'khoa-xet-nghiem', title: 'Khoa Xét Nghiệm' },
 
-  { id: 'khoa-kham-benh', title: 'Khoa Khám Bệnh' },
+  { id: 'khoa-kham-benh', title: 'Khoa Khám Bệnh', image: '/specialties/khoa-kham-benh.png' },
 
   { id: 'khoa-can-lam-sang', title: 'Khoa Cận Lâm Sàng - Chẩn Đoán Hình Ảnh' },
 
-  { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây Mê Hồi Sức' },
+  { id: 'khoa-gay-me-hoi-suc', title: 'Khoa Gây Mê Hồi Sức', image: '/specialties/khoa-gay-me-hoi-suc.png' },
 
 ];
 
