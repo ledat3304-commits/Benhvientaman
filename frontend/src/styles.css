@@ -2395,14 +2395,14 @@ main .hero-slider.slide-banner-image{
   min-height:0;
   aspect-ratio:auto;
   overflow:hidden;
-  background-size:cover;
+  background-size:100% 100%;
   background-position:center center;
 }
 @media(max-width:650px){
   main .hero-slider.slide-banner-image{
     height:clamp(260px,70vw,380px);
     aspect-ratio:auto;
-    background-size:cover;
+    background-size:100% 100%;
     background-position:center center;
   }
 }
