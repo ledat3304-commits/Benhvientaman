@@ -2768,7 +2768,7 @@ main.about-page .about-story p{
 .booking-review strong{color:var(--navy);font-size:14px;line-height:1.35;overflow-wrap:anywhere}
 @media(max-width:600px){.booking-review>div{grid-template-columns:1fr}.booking-wizard-actions{flex-wrap:wrap}.booking-wizard-actions .booking-skip-button{order:3;flex-basis:100%}}
 
-/* Mũi tên select trang đặt lịch cách viền phải đúng 2px */
+/* Mũi tên select trang đặt lịch cách viền phải 7px */
 .booking-wizard-fields select{
   appearance:none;
   -webkit-appearance:none;
@@ -2796,6 +2796,47 @@ main.about-page .about-story p{
 .booking-wizard-page .booking-wizard-fields textarea::placeholder{
   color:#000!important;
   opacity:1;
+}
+
+/* Đồng bộ typography trang đặt lịch theo rule trang chủ */
+.booking-wizard-page h1,
+.booking-wizard-page h2,
+.booking-wizard-page h3,
+.booking-wizard-page h4,
+.booking-wizard-page h5,
+.booking-wizard-page h6{
+  text-transform:uppercase!important;
+}
+.booking-wizard-page .booking-wizard-heading h1,
+.booking-wizard-page .booking-summary-card h2,
+.booking-wizard-page .booking-wizard-success h1{
+  font-size:var(--site-section-title-size)!important;
+  line-height:1.15!important;
+  letter-spacing:0!important;
+}
+.booking-wizard-page .booking-wizard-heading p{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+.booking-wizard-page .booking-doctor-card small,
+.booking-wizard-page .booking-slot-heading small,
+.booking-wizard-page .booking-empty-state,
+.booking-wizard-page .booking-help-callout,
+.booking-wizard-page .booking-summary-note,
+.booking-wizard-page .booking-review span,
+.booking-wizard-page .booking-success-details span{
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+.booking-wizard-page .booking-summary-list span{
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+}
+@media(max-width:650px){
+  .booking-wizard-page .booking-wizard-heading p{font-size:15px!important}
 }
 
 .admin-booking-request-list{display:grid;gap:18px}
