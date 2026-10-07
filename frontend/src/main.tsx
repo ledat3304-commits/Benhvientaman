@@ -1,5 +1,4 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-
 import ReactDOM from 'react-dom/client';
 
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -427,7 +426,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 }
 
-function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link to="/" className="brand brand-light"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><p className="footer-intro">Đồng hành cùng bạn trên hành trình chăm sóc sức khỏe an toàn, chuyên nghiệp và nhân văn.</p><div className="social-row"><span>f</span><span>in</span><span>▶</span></div></div><div><h3>Khám phá</h3><Link to="/gioi-thieu">Về Tâm An</Link><Link to="/dat-lich">Đặt lịch trực tuyến</Link><Link to="/benh-ly">Chuyên mục bệnh lý</Link><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div><div><h3>Hỗ trợ người bệnh</h3><Link to="/faq">Câu hỏi thường gặp</Link><Link to="/bao-hiem">Bảo hiểm y tế</Link><Link to="/bao-hiem#bao-lanh">Bảo lãnh viện phí</Link><Link to="/lien-he">Liên hệ & cơ sở</Link></div><div><h3>Liên hệ</h3><a href="tel:0977335599" className="footer-hotline">0977 33 55 99</a><p>Hotline 24/7</p><a href="mailto:contact@benhvientaman.vn">contact@benhvientaman.vn</a><p>Lô 05-06-07 đường Trịnh Kiểm, P. Quảng Phú, TP. Thanh Hóa</p></div></div><div className="container footer-bottom"><span>© 2025 Bệnh viện Tâm An</span><span>Chính sách bảo mật · Điều khoản sử dụng</span></div></footer>; }
+function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link to="/" className="brand brand-light"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><p className="footer-intro">Đồng hành cùng bạn trên hành trình chăm sóc sức khỏe an toàn, chuyên nghiệp và nhân văn.</p><div className="social-row"><span>f</span><span>in</span><span>▶</span></div></div><div><h3>Khám phá</h3><Link to="/gioi-thieu">Về Tâm An</Link><Link to="/dat-lich">Đặt lịch trực tuyến</Link><Link to="/benh-ly">Chuyên mục bệnh lý</Link><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div><div><h3>Hỗ trợ người bệnh</h3><Link to="/faq">Câu hỏi thường gặp</Link><Link to="/bao-hiem">Bảo hiểm y tế</Link><Link to="/lien-he">Liên hệ & cơ sở</Link></div><div><h3>Liên hệ</h3><a href="tel:0977335599" className="footer-hotline">0977 33 55 99</a><p>Hotline 24/7</p><a href="mailto:contact@benhvientaman.vn">contact@benhvientaman.vn</a><p>Lô 05-06-07 đường Trịnh Kiểm, P. Quảng Phú, TP. Thanh Hóa</p></div></div><div className="container footer-bottom"><span>© 2025 Bệnh viện Tâm An</span><span>Chính sách bảo mật · Điều khoản sử dụng</span></div></footer>; }
 
 function SectionHeading({ eyebrow, title, text, light = false, eyebrowClassName = '' }: { eyebrow?: string; title: string; text?: string; light?: boolean; eyebrowClassName?: string }) { return <div className={light ? 'section-heading light' : 'section-heading'}>{eyebrow && <span className={`eyebrow${eyebrowClassName ? ` ${eyebrowClassName}` : ''}`}>{eyebrow}</span>}<h2>{title}</h2>{text && <p>{text}</p>}</div>; }
 
@@ -455,7 +454,7 @@ function EquipmentSection() { return <section className="section equipment-showc
 
 function PatientFeedbackSection() { return <section className="section feedback-section" style={{ backgroundColor: '#f9fafb', padding: '4rem 0' }}><div className="container feedback-grid" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}><div className="feedback-heading"><SectionHeading eyebrow="Góc nhìn người bệnh" title="PHẢN HỒI SAU ĐIỀU TRỊ" text="Lắng nghe những chia sẻ thực tế từ người bệnh đã từng thăm khám và điều trị tại Tâm An." /></div><div className="feedback-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}><article className="feedback-card" style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}><p>"Bác sĩ tư vấn rất nhiệt tình, cặn kẽ. Bệnh viện sạch sẽ và hiện đại. Tôi cảm thấy rất yên tâm khi điều trị trĩ tại đây."</p><strong style={{ display: 'block', marginTop: '1rem' }}>Anh Nguyễn Văn T.</strong><span style={{ fontSize: '0.9rem', color: '#666' }}>Bệnh nhân điều trị trĩ</span></article><article className="feedback-card" style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}><p>"Quy trình nhanh gọn, nhân viên thân thiện hướng dẫn chi tiết. Rất hài lòng về dịch vụ của Tâm An."</p><strong style={{ display: 'block', marginTop: '1rem' }}>Chị Lê Thị H.</strong><span style={{ fontSize: '0.9rem', color: '#666' }}>Khám tổng quát</span></article><article className="feedback-card" style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}><p>"Tuyệt vời, cơ sở vật chất mới, bác sĩ giỏi. Sau phẫu thuật tôi được chăm sóc rất chu đáo."</p><strong style={{ display: 'block', marginTop: '1rem' }}>Cô Trần M.</strong><span style={{ fontSize: '0.9rem', color: '#666' }}>Phẫu thuật tiêu hóa</span></article></div><div className="feedback-action" style={{ textAlign: 'center', marginTop: '2rem' }}><a href="#" target="_blank" rel="noreferrer" className="home-feedback-button">Xem thêm đánh giá & góp ý <span>→</span></a></div></div></section>; }
 
-function PageHero({ title, text, label, backHome = false }: { title: string; text?: string; label: string; backHome?: boolean }) { return <section className="page-hero"><div className="container"><span className="eyebrow">{label}</span><h1>{title}</h1>{text && <p>{text}</p>}<div className="breadcrumbs"><Link to="/gioi-thieu">Giới thiệu</Link><span>/</span><span>{title}</span></div>{backHome && <Link to="/gioi-thieu" className="button button-primary page-back-button"><span>←</span> Về trang chủ</Link>}</div></section>; }
+function PageHero({ title, text, label, backHome = false, breadcrumbHref = '/gioi-thieu', breadcrumbLabel = 'Giới thiệu', breadcrumbCurrent }: { title: string; text?: string; label: string; backHome?: boolean; breadcrumbHref?: string; breadcrumbLabel?: string; breadcrumbCurrent?: string }) { const currentBreadcrumb = breadcrumbCurrent || title; return <section className="page-hero"><div className="container"><span className="eyebrow">{label}</span><h1>{title}</h1>{text && <p>{text}</p>}<div className="breadcrumbs"><Link to={breadcrumbHref}>{breadcrumbLabel}</Link><span>/</span><span>{currentBreadcrumb}</span></div>{backHome && <Link to="/gioi-thieu" className="button button-primary page-back-button"><span>←</span> Về trang chủ</Link>}</div></section>; }
 
 
 
@@ -489,94 +488,121 @@ const faqs = [{ q: 'Tôi có cần đăng ký tài khoản để đặt lịch k
 function FAQPage() { const [open, setOpen] = useState(0); return <main><PageHero label="Hỗ trợ người bệnh" title="Giải đáp điều bạn đang băn khoăn" text="Tổng hợp những câu hỏi thường gặp trước khi đến khám tại Tâm An." /><section className="section"><div className="container faq-layout"><div><SectionHeading eyebrow="Câu hỏi thường gặp" title="FAQ" />{faqs.slice(0, 3).map((item, i) => <div className="faq-item" key={item.q}><button onClick={() => setOpen(open === i ? -1 : i)}><span>{item.q}</span><b>{open === i ? '−' : '+'}</b></button>{open === i && <p>{item.a}</p>}</div>)}</div><aside className="faq-contact"><Icon>?</Icon><h3>Chưa tìm thấy câu trả lời?</h3><p>Nhân viên Tâm An sẵn sàng hỗ trợ bạn.</p><a className="button button-light" href="tel:0977335599">Gọi 0977 33 55 99</a></aside></div></section><section className="section"><div className="container"><SectionHeading eyebrow="Câu hỏi khác" title="Bạn có thể cần biết" />{faqs.slice(3).map((item, i) => <div className="faq-item" key={item.q}><button onClick={() => setOpen(open === i + 3 ? -1 : i + 3)}><span>{item.q}</span><b>{open === i + 3 ? '−' : '+'}</b></button>{open === i + 3 && <p>{item.a}</p>}</div>)}</div></section></main>; }
 
 function InsurancePage() {
+  useEffect(() => {
+    const title = document.title;
+    const description = document.querySelector('meta[name="description"]');
+    const previousDescription = description?.getAttribute('content') || '';
+    document.title = 'Khám BHYT | Bệnh viện Đa khoa Tâm An';
+    description?.setAttribute('content', 'Dịch vụ khám BHYT tại Bệnh viện Đa khoa Tâm An: hướng dẫn giấy tờ, quyền lợi, quy trình khám và những lưu ý khi sử dụng bảo hiểm y tế.');
+    return () => {
+      document.title = title;
+      description?.setAttribute('content', previousDescription);
+    };
+  }, []);
+
   return (
     <main className="insurance-page">
-      <PageHero label="Hỗ trợ người bệnh" title="Bảo hiểm y tế & bảo lãnh viện phí" text="Thông tin quyền lợi BHYT, hồ sơ cần chuẩn bị và hướng dẫn liên hệ bộ phận bảo hiểm tại Tâm An." />
-      <section className="section soft-section" id="bao-hiem">
-        <div className="container insurance-grid">
-          <div className="insurance-copy">
-            <img className="insurance-banner" src="/hospital/bhyt-quyen-loi.jpg" alt="Thông tin dịch vụ khám bảo hiểm y tế tại Bệnh viện Đa khoa Tâm An" />
-            <span className="eyebrow">Thông tin thanh toán</span>
-            <h2>Bảo hiểm y tế</h2>
-            <p className="insurance-lead">Bệnh viện Đa khoa Tâm An triển khai dịch vụ khám, chữa bệnh Bảo hiểm y tế (BHYT) theo quy định hiện hành, tạo điều kiện để người tham gia BHYT tiếp cận các dịch vụ khám, chẩn đoán và điều trị trong phạm vi quyền lợi được hưởng.</p>
-            <p>Người bệnh có thể sử dụng thông tin BHYT theo các hình thức được cơ quan có thẩm quyền quy định và được nhân viên bệnh viện hướng dẫn trong quá trình tiếp đón, đăng ký khám.</p>
-            <p className="insurance-highlight"><strong>Lưu ý:</strong> Quyền lợi và mức thanh toán thực tế phụ thuộc đối tượng tham gia, mức hưởng, phạm vi chi trả và tình trạng khám chữa bệnh cụ thể.</p>
-            <ul className="plain-list">
-              <li>Kiểm tra thời hạn thẻ và nơi đăng ký khám chữa bệnh ban đầu</li>
-              <li>Mang CCCD/giấy tờ tùy thân, thẻ BHYT hoặc thông tin VNeID</li>
-              <li>Chuẩn bị giấy chuyển tuyến hoặc giấy hẹn khám lại nếu cần</li>
-              <li>Hỏi trước chi phí dịch vụ ngoài phạm vi BHYT</li>
-            </ul>
-            <p className="insurance-footnote">Thông tin trên mang tính hướng dẫn chung. Người bệnh nên liên hệ bộ phận tiếp đón để được kiểm tra quyền lợi theo quy định tại thời điểm sử dụng dịch vụ.</p>
-          </div>
-          <div id="bao-lanh" className="insurance-box">
-            <span>✦</span>
-            <h3>Bảo hiểm bảo lãnh viện phí</h3>
-            <p>Tâm An hỗ trợ tiếp nhận hồ sơ bảo lãnh theo danh sách đối tác. Bộ phận bảo hiểm sẽ hướng dẫn thủ tục và xác nhận quyền lợi trước khi sử dụng dịch vụ.</p>
-            <a href="tel:0919864929" className="text-link">Liên hệ bộ phận bảo hiểm →</a>
-          </div>
+      <PageHero
+        label="BẢO HIỂM Y TẾ"
+        title="DỊCH VỤ KHÁM BẢO HIỂM Y TẾ (BHYT) TẠI BỆNH VIỆN ĐA KHOA TÂM AN"
+        text="Bệnh viện Đa khoa Tâm An triển khai dịch vụ khám, chữa bệnh Bảo hiểm y tế (BHYT) theo quy định hiện hành, tạo điều kiện để người tham gia BHYT tiếp cận các dịch vụ khám, chẩn đoán và điều trị trong phạm vi quyền lợi được hưởng."
+        breadcrumbHref="/"
+        breadcrumbLabel="Trang chủ"
+        breadcrumbCurrent="Bảo hiểm y tế"
+      />
+      <section className="section soft-section insurance-main-section" id="bao-hiem">
+        <div className="container insurance-toc" aria-label="Nội dung chính">
+          <span>NỘI DUNG CHÍNH</span>
+          <a href="#kham-bhyt">Khám BHYT tại Tâm An</a>
+          <a href="#doi-tuong">Ai có thể sử dụng dịch vụ khám BHYT?</a>
+          <a href="#giay-to">Giấy tờ cần chuẩn bị</a>
+          <a href="#quyen-loi">Quyền lợi BHYT</a>
+          <a href="#quy-trinh">Quy trình khám BHYT</a>
+          <a href="#luu-y">Một số lưu ý</a>
         </div>
-        <div className="container insurance-article">
-          <article className="insurance-section-card">
-            <h2>Hướng dẫn tiếp nhận và sử dụng BHYT</h2>
-            <p>Khi đến khám, người bệnh được tiếp nhận và kiểm tra thông tin BHYT để xác định quyền lợi theo từng trường hợp. Tùy thuộc đối tượng tham gia, mức hưởng, phạm vi quyền lợi và hình thức khám chữa bệnh, chi phí khám và điều trị có thể được quỹ BHYT thanh toán theo quy định.</p>
-            <p>Phần chi phí ngoài phạm vi hưởng hoặc phần cùng chi trả (nếu có) được thực hiện theo quy định hiện hành.</p>
-          </article>
-          <article className="insurance-section-card">
-            <h2>Các hình thức khám BHYT</h2>
-            <p>Dịch vụ khám BHYT tại Tâm An dành cho người tham gia BHYT có nhu cầu khám và điều trị tại bệnh viện theo quy định. Tùy từng trường hợp, người bệnh có thể đến khám theo các hình thức:</p>
-            <ul className="plain-list">
+
+        <div className="container insurance-intro-grid">
+          <div className="insurance-intro-copy">
+            <p>Bệnh viện Đa khoa Tâm An triển khai dịch vụ khám, chữa bệnh Bảo hiểm y tế (BHYT) theo quy định hiện hành, tạo điều kiện để người tham gia BHYT tiếp cận các dịch vụ khám, chẩn đoán và điều trị trong phạm vi quyền lợi được hưởng.</p>
+            <p>Người bệnh có thể sử dụng thông tin BHYT theo các hình thức được cơ quan có thẩm quyền quy định và được nhân viên bệnh viện hướng dẫn trong quá trình tiếp đón, đăng ký khám.</p>
+          </div>
+          <img className="insurance-intro-image" src="/hospital/bhyt-quyen-loi.jpg" alt="Hình ảnh dịch vụ khám Bảo hiểm y tế tại Bệnh viện Đa khoa Tâm An" loading="lazy" />
+        </div>
+
+        <div className="container insurance-content">
+          <section id="kham-bhyt" className="insurance-content-section">
+            <h2>KHÁM BHYT TẠI TÂM AN – HỖ TRỢ TIẾP CẬN QUYỀN LỢI BẢO HIỂM Y TẾ</h2>
+            <p>Khi đến khám, người bệnh được tiếp nhận và kiểm tra thông tin BHYT để xác định quyền lợi theo từng trường hợp.</p>
+            <p>Tùy thuộc vào đối tượng tham gia, mức hưởng, phạm vi quyền lợi và hình thức khám chữa bệnh, chi phí khám và điều trị có thể được quỹ BHYT thanh toán theo quy định. Phần chi phí ngoài phạm vi hưởng hoặc phần cùng chi trả (nếu có) được thực hiện theo quy định hiện hành.</p>
+          </section>
+
+          <section id="doi-tuong" className="insurance-content-section">
+            <h2>AI CÓ THỂ SỬ DỤNG DỊCH VỤ KHÁM BHYT?</h2>
+            <p>Dịch vụ khám BHYT tại Tâm An dành cho người tham gia BHYT có nhu cầu khám và điều trị tại bệnh viện theo quy định.</p>
+            <p>Tùy từng trường hợp, người bệnh có thể đến khám theo các hình thức như:</p>
+            <ul className="insurance-checklist">
               <li>Khám chữa bệnh theo quy định tại cơ sở đăng ký khám chữa bệnh ban đầu.</li>
               <li>Khám theo giấy chuyển cơ sở khám chữa bệnh hợp lệ khi thuộc trường hợp cần chuyển.</li>
               <li>Khám lại theo giấy hẹn của cơ sở khám chữa bệnh.</li>
               <li>Khám trong trường hợp cấp cứu.</li>
               <li>Các trường hợp tự đến khám chữa bệnh được giải quyết quyền lợi BHYT theo quy định hiện hành.</li>
             </ul>
-          </article>
-          <article className="insurance-section-card">
-            <h2>Giấy tờ cần chuẩn bị</h2>
-            <p>Để quá trình tiếp nhận diễn ra thuận tiện, người bệnh nên chuẩn bị thông tin BHYT và giấy tờ tùy thân phù hợp. Có thể sử dụng:</p>
-            <ul className="plain-list">
+          </section>
+
+          <section id="giay-to" className="insurance-content-section">
+            <h2>GIẤY TỜ CẦN CHUẨN BỊ KHI KHÁM BHYT</h2>
+            <p>Để quá trình tiếp nhận diễn ra thuận tiện, người bệnh nên chuẩn bị thông tin BHYT và giấy tờ tùy thân phù hợp.</p>
+            <p>Có thể sử dụng:</p>
+            <ul className="insurance-checklist">
               <li>CCCD/Căn cước theo quy định.</li>
               <li>Tài khoản VNeID đã tích hợp thông tin BHYT.</li>
               <li>Thẻ BHYT điện tử hoặc thẻ BHYT giấy theo quy định.</li>
               <li>Giấy chuyển cơ sở khám chữa bệnh nếu thuộc trường hợp cần chuyển.</li>
               <li>Giấy hẹn khám lại nếu thuộc trường hợp khám lại.</li>
             </ul>
-            <p>Đối với trẻ em và một số trường hợp đặc biệt, giấy tờ cần xuất trình có thể khác nhau. Người bệnh có thể liên hệ bộ phận tiếp đón để được hướng dẫn cụ thể.</p>
-          </article>
-          <article className="insurance-section-card">
-            <h2>Quyền lợi BHYT</h2>
+            <p className="insurance-info-box">Đối với trẻ em và một số trường hợp đặc biệt, giấy tờ cần xuất trình có thể khác nhau. Người bệnh có thể liên hệ bộ phận tiếp đón để được hướng dẫn cụ thể.</p>
+          </section>
+
+          <section id="quyen-loi" className="insurance-content-section">
+            <h2>QUYỀN LỢI BHYT KHI KHÁM TẠI TÂM AN</h2>
             <p>Quyền lợi BHYT của mỗi người bệnh được xác định dựa trên đối tượng tham gia, mức hưởng BHYT, phạm vi chi trả và trường hợp khám chữa bệnh cụ thể.</p>
             <p>Trong phạm vi quyền lợi được hưởng, quỹ BHYT có thể thanh toán chi phí khám chữa bệnh theo quy định. Người bệnh có thể phát sinh phần cùng chi trả hoặc các khoản chi phí ngoài phạm vi thanh toán của quỹ BHYT tùy từng trường hợp.</p>
-            <p>Quyền lợi đối với trường hợp tự đến khám chữa bệnh, khám không đúng nơi đăng ký ban đầu hoặc thay đổi nơi khám chữa bệnh cần được xác định theo quy định tại thời điểm người bệnh sử dụng dịch vụ.</p>
-          </article>
-          <article className="insurance-section-card">
-            <h2>Quy trình khám BHYT tại Tâm An</h2>
-            <ol className="insurance-steps">
-              <li><strong>Tiếp đón:</strong> Người bệnh đến khu vực tiếp đón, cung cấp thông tin BHYT và giấy tờ cần thiết.</li>
-              <li><strong>Kiểm tra thông tin:</strong> Nhân viên tiếp đón kiểm tra thông tin và hướng dẫn thực hiện thủ tục.</li>
-              <li><strong>Thăm khám:</strong> Người bệnh được hướng dẫn đến phòng khám phù hợp; bác sĩ khai thác bệnh sử, thăm khám và đánh giá tình trạng.</li>
-              <li><strong>Chỉ định điều trị:</strong> Bác sĩ có thể chỉ định xét nghiệm, siêu âm, X-quang, chụp CT hoặc kỹ thuật khác theo chuyên môn.</li>
-              <li><strong>Hoàn tất:</strong> Người bệnh thanh toán phần chi phí thuộc trách nhiệm của mình và nhận thuốc, giấy tờ hoặc hướng dẫn điều trị tiếp theo.</li>
+            <p>Đặc biệt, quyền lợi BHYT đối với trường hợp tự đến khám chữa bệnh, khám không đúng nơi đăng ký ban đầu hoặc thay đổi nơi khám chữa bệnh cần được xác định theo quy định tại thời điểm người bệnh sử dụng dịch vụ.</p>
+          </section>
+
+          <section id="quy-trinh" className="insurance-content-section insurance-process-section">
+            <h2>QUY TRÌNH KHÁM BHYT TẠI BỆNH VIỆN ĐA KHOA TÂM AN</h2>
+            <ol className="insurance-timeline">
+              <li><div><span>01</span><h3>Đăng ký và xác thực thông tin BHYT</h3><p>Người bệnh đến khu vực tiếp đón, cung cấp thông tin BHYT và giấy tờ cần thiết. Nhân viên tiếp đón kiểm tra thông tin và hướng dẫn thực hiện thủ tục.</p></div></li>
+              <li><div><span>02</span><h3>Phân luồng và khám bác sĩ</h3><p>Người bệnh được hướng dẫn đến phòng khám phù hợp với tình trạng sức khỏe và nhu cầu thăm khám. Bác sĩ khai thác bệnh sử, thăm khám và đánh giá tình trạng người bệnh.</p></div></li>
+              <li><div><span>03</span><h3>Thực hiện cận lâm sàng khi cần thiết</h3><p>Tùy tình trạng bệnh, bác sĩ có thể chỉ định các dịch vụ phù hợp như xét nghiệm, siêu âm, X-quang, chụp CT hoặc các kỹ thuật khác theo chuyên môn.</p></div></li>
+              <li><div><span>04</span><h3>Tư vấn và điều trị</h3><p>Sau khi đánh giá kết quả khám và các thông tin liên quan, bác sĩ tư vấn hướng điều trị, kê đơn thuốc hoặc chỉ định điều trị tiếp theo khi cần.</p></div></li>
+              <li><div><span>05</span><h3>Hoàn tất thủ tục</h3><p>Người bệnh thực hiện thanh toán phần chi phí thuộc trách nhiệm của mình theo quy định và nhận thuốc, giấy tờ hoặc hướng dẫn điều trị tiếp theo.</p></div></li>
             </ol>
-          </article>
-          <article className="insurance-section-card">
-            <h2>Một số lưu ý khi khám BHYT</h2>
-            <ul className="plain-list">
+          </section>
+
+          <section id="luu-y" className="insurance-content-section">
+            <h2>MỘT SỐ LƯU Ý KHI KHÁM BHYT</h2>
+            <p>Để quá trình khám chữa bệnh diễn ra thuận tiện, người bệnh nên:</p>
+            <ul className="insurance-checklist">
               <li>Kiểm tra thông tin và giá trị sử dụng của BHYT trước khi đến khám.</li>
               <li>Mang theo CCCD/Căn cước hoặc sử dụng VNeID khi phù hợp.</li>
-              <li>Chuẩn bị giấy chuyển cơ sở khám chữa bệnh hoặc giấy hẹn khám lại nếu cần thiết.</li>
-              <li>Thông báo đầy đủ về tình trạng sức khỏe, thuốc đang sử dụng và tiền sử bệnh cho bác sĩ.</li>
+              <li>Chuẩn bị giấy chuyển cơ sở khám chữa bệnh hoặc giấy hẹn khám lại nếu thuộc trường hợp cần thiết.</li>
+              <li>Thông báo đầy đủ thông tin về tình trạng sức khỏe, thuốc đang sử dụng và tiền sử bệnh cho bác sĩ.</li>
               <li>Trao đổi với nhân viên y tế nếu gặp khó khăn trong việc xác thực hoặc tra cứu thông tin BHYT.</li>
-              <li>Chủ động hỏi về phạm vi thanh toán BHYT đối với các dịch vụ được chỉ định.</li>
+              <li>Chủ động hỏi về phạm vi thanh toán BHYT đối với các dịch vụ được chỉ định khi cần.</li>
             </ul>
-          </article>
-          <article className="insurance-section-card insurance-section-card--closing">
-            <h2>Tâm An đồng hành cùng người bệnh</h2>
+          </section>
+
+          <section className="insurance-cta-section">
+            <h2>KHÁM BHYT TẠI BỆNH VIỆN ĐA KHOA TÂM AN – ĐỒNG HÀNH CÙNG NGƯỜI BỆNH</h2>
             <p>Với quy trình tiếp nhận và hướng dẫn người bệnh theo quy định, Bệnh viện Đa khoa Tâm An cung cấp dịch vụ khám chữa bệnh BHYT, hỗ trợ người tham gia BHYT thực hiện thủ tục và tiếp cận các dịch vụ y tế phù hợp với quyền lợi được hưởng.</p>
             <p>Người bệnh có nhu cầu khám BHYT có thể liên hệ Bệnh viện Đa khoa Tâm An để được hướng dẫn cụ thể về thủ tục, quyền lợi và quy trình khám tại thời điểm sử dụng dịch vụ.</p>
-          </article>
+            <div className="insurance-cta-actions">
+              <Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link>
+              <a href="tel:0977335599" className="button button-outline">Liên hệ tư vấn <span>→</span></a>
+            </div>
+          </section>
         </div>
       </section>
     </main>

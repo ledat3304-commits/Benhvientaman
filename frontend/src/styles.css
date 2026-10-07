@@ -3181,3 +3181,269 @@ main.insurance-page .insurance-section-card--closing{
     font-size:15px!important;
   }
 }
+
+/* Trang nội dung chính thức Dịch vụ khám BHYT */
+main.insurance-page [id]{
+  scroll-margin-top:105px;
+}
+main.insurance-page .page-hero .eyebrow{
+  color:var(--navy)!important;
+  font-size:20px!important;
+  line-height:1.3!important;
+  letter-spacing:.08em!important;
+}
+main.insurance-page .page-hero h1{
+  max-width:980px;
+  color:var(--navy)!important;
+  font-size:var(--site-section-title-size)!important;
+  line-height:1.15!important;
+  letter-spacing:0!important;
+}
+main.insurance-page .page-hero p{
+  max-width:900px;
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main.insurance-page .insurance-main-section{
+  padding-top:64px;
+}
+main.insurance-page .insurance-toc{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px 18px;
+  margin-bottom:48px;
+  padding:18px 22px;
+  border:1px solid #dbe5f6;
+  border-left:4px solid var(--lime);
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 10px 24px rgba(23,64,170,.06);
+}
+main.insurance-page .insurance-toc span{
+  color:var(--navy);
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.06em;
+}
+main.insurance-page .insurance-toc a{
+  color:var(--navy);
+  font-size:13px;
+  font-weight:600;
+}
+main.insurance-page .insurance-toc a:hover,
+main.insurance-page .insurance-toc a:focus-visible{
+  color:#ba141a;
+  text-decoration:underline;
+}
+main.insurance-page .insurance-intro-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  align-items:center;
+  gap:56px;
+  margin-bottom:56px;
+}
+main.insurance-page .insurance-intro-copy p,
+main.insurance-page .insurance-content-section p,
+main.insurance-page .insurance-cta-section p{
+  color:#000!important;
+  font-size:var(--site-body-size)!important;
+  line-height:var(--site-body-line-height)!important;
+  text-align:justify!important;
+  text-justify:inter-word;
+}
+main.insurance-page .insurance-intro-copy p+p,
+main.insurance-page .insurance-content-section p+p,
+main.insurance-page .insurance-cta-section p+p{
+  margin-top:16px;
+}
+main.insurance-page .insurance-intro-image{
+  display:block;
+  width:100%;
+  aspect-ratio:3 / 2;
+  border-radius:18px;
+  object-fit:cover;
+  box-shadow:0 18px 38px rgba(23,64,170,.12);
+}
+main.insurance-page .insurance-content{
+  display:grid;
+  gap:24px;
+  max-width:980px;
+}
+main.insurance-page .insurance-content-section,
+main.insurance-page .insurance-cta-section{
+  padding:32px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 12px 28px rgba(23,64,170,.06);
+}
+main.insurance-page .insurance-content-section h2,
+main.insurance-page .insurance-cta-section h2{
+  margin:0 0 16px;
+  color:var(--navy);
+  font-size:var(--site-section-subtitle-size)!important;
+  line-height:1.3!important;
+  letter-spacing:0!important;
+}
+main.insurance-page .insurance-checklist{
+  display:grid;
+  gap:10px;
+  margin:18px 0 0;
+  padding:0;
+  list-style:none;
+}
+main.insurance-page .insurance-checklist li{
+  position:relative;
+  padding-left:28px;
+  color:#000;
+  font-size:var(--site-body-size);
+  line-height:var(--site-body-line-height);
+  text-align:justify;
+  text-justify:inter-word;
+}
+main.insurance-page .insurance-checklist li:before{
+  content:'✓';
+  position:absolute;
+  top:1px;
+  left:0;
+  color:var(--navy);
+  font-weight:800;
+}
+main.insurance-page .insurance-info-box{
+  margin-top:22px!important;
+  padding:16px 18px;
+  border-left:4px solid var(--lime);
+  border-radius:0 10px 10px 0;
+  background:#f4f8ff;
+}
+main.insurance-page .insurance-process-section{
+  overflow:hidden;
+}
+main.insurance-page .insurance-timeline{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:14px;
+  margin:26px 0 0;
+  padding:0;
+  list-style:none;
+}
+main.insurance-page .insurance-timeline>li{
+  position:relative;
+  margin:0;
+  padding:0;
+}
+main.insurance-page .insurance-timeline>li:not(:last-child):after{
+  content:'→';
+  position:absolute;
+  top:20px;
+  right:-13px;
+  z-index:1;
+  color:var(--lime);
+  font-size:20px;
+  font-weight:800;
+}
+main.insurance-page .insurance-timeline>li>div{
+  height:100%;
+  padding:20px 17px;
+  border:1px solid #dbe5f6;
+  border-radius:14px;
+  background:#f7faff;
+}
+main.insurance-page .insurance-timeline span{
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  margin-bottom:16px;
+  border-radius:13px;
+  color:var(--navy);
+  background:var(--lime);
+  font-size:15px;
+  font-weight:800;
+}
+main.insurance-page .insurance-timeline h3{
+  margin:0 0 10px;
+  color:var(--navy);
+  font-size:20px!important;
+  line-height:1.35!important;
+}
+main.insurance-page .insurance-timeline p{
+  color:#000!important;
+  font-size:var(--site-card-size)!important;
+  line-height:var(--site-card-line-height)!important;
+  text-align:left!important;
+}
+main.insurance-page .insurance-cta-section{
+  border:0;
+  color:#fff;
+  background:linear-gradient(115deg,var(--navy),#2858bd);
+}
+main.insurance-page .insurance-cta-section h2{
+  color:#fff!important;
+}
+main.insurance-page .insurance-cta-section p{
+  color:#fff!important;
+}
+main.insurance-page .insurance-cta-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:26px;
+}
+main.insurance-page .insurance-cta-actions .button-outline{
+  color:#fff;
+  border-color:rgba(255,255,255,.75);
+  background:transparent;
+}
+@media(max-width:1000px){
+  main.insurance-page .insurance-timeline{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  main.insurance-page .insurance-timeline>li:not(:last-child):after{
+    display:none;
+  }
+}
+@media(max-width:650px){
+  main.insurance-page .page-hero .eyebrow{font-size:17px!important}
+  main.insurance-page .page-hero h1{font-size:30px!important}
+  main.insurance-page .page-hero p{font-size:15px!important}
+  main.insurance-page .insurance-main-section{padding-top:42px}
+  main.insurance-page .insurance-toc{
+    display:grid;
+    gap:9px;
+    margin-bottom:35px;
+    padding:16px;
+  }
+  main.insurance-page .insurance-toc a,
+  main.insurance-page .insurance-toc span{font-size:15px}
+  main.insurance-page .insurance-intro-grid{
+    grid-template-columns:1fr;
+    gap:26px;
+    margin-bottom:35px;
+  }
+  main.insurance-page .insurance-intro-image{border-radius:14px}
+  main.insurance-page .insurance-content{gap:18px}
+  main.insurance-page .insurance-content-section,
+  main.insurance-page .insurance-cta-section{
+    padding:24px 20px;
+    border-radius:14px;
+  }
+  main.insurance-page .insurance-content-section h2,
+  main.insurance-page .insurance-cta-section h2{font-size:22px!important}
+  main.insurance-page .insurance-intro-copy p,
+  main.insurance-page .insurance-content-section p,
+  main.insurance-page .insurance-content-section li,
+  main.insurance-page .insurance-cta-section p{font-size:15px!important}
+  main.insurance-page .insurance-timeline{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  main.insurance-page .insurance-timeline>li>div{padding:18px 16px}
+  main.insurance-page .insurance-timeline h3{font-size:19px!important}
+  main.insurance-page .insurance-cta-actions{display:grid}
+  main.insurance-page .insurance-cta-actions .button{width:100%}
+}
