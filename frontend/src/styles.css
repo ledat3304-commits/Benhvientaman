@@ -3501,8 +3501,10 @@ main.insurance-page .insurance-timeline h3{
   line-height:1.35!important;
 }
 main.insurance-page .insurance-timeline p{
+  margin:10px 0 0;
   font-size:var(--site-card-size)!important;
   line-height:var(--site-card-line-height)!important;
+  text-indent:12px;
 }
 main.insurance-page .insurance-cta-actions{
   margin-top:28px;
