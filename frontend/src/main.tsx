@@ -448,7 +448,7 @@ function EquipmentSection() { return <section className="section equipment-showc
 
 function PatientFeedbackSection() { return <section className="section feedback-section"><div className="container feedback-grid"><div className="feedback-heading"><SectionHeading eyebrow="Góc nhìn người bệnh" title="PHẢN HỒI SAU ĐIỀU TRỊ" text="Lắng nghe những chia sẻ thực tế từ người bệnh đã từng thăm khám và điều trị tại Tâm An." /></div><div className="feedback-cards"><article className="feedback-card"><p>"Bác sĩ tư vấn rất nhiệt tình, cặn kẽ. Bệnh viện sạch sẽ và hiện đại. Tôi cảm thấy rất yên tâm khi điều trị trĩ tại đây."</p><strong>Anh Nguyễn Văn T.</strong><span>Bệnh nhân điều trị trĩ</span></article><article className="feedback-card"><p>"Quy trình nhanh gọn, nhân viên thân thiện hướng dẫn chi tiết. Rất hài lòng về dịch vụ của Tâm An."</p><strong>Chị Lê Thị H.</strong><span>Khám tổng quát</span></article><article className="feedback-card"><p>"Tuyệt vời, cơ sở vật chất mới, bác sĩ giỏi. Sau phẫu thuật tôi được chăm sóc rất chu đáo."</p><strong>Cô Trần M.</strong><span>Phẫu thuật tiêu hóa</span></article></div><div className="feedback-action"><a href="#" target="_blank" rel="noreferrer" className="home-feedback-button">Xem thêm đánh giá & góp ý <span>→</span></a></div></div></section>; }
 
-function PageHero({ title, text, label, backHome = false }: { title?: string; text?: string; label: string; backHome?: boolean; breadcrumbHref?: string; breadcrumbLabel?: string; breadcrumbCurrent?: string }) { return <div className="page-content-intro"><div className="container"><span className="eyebrow">{label}</span><h1>{title || label}</h1>{text && <p>{text}</p>}{backHome && <Link to="/gioi-thieu" className="page-content-back">← Về trang chủ</Link>}</div></div>; }
+function PageHero({ title, text, label, backHome = false }: { title?: string; text?: string; label?: string; backHome?: boolean; breadcrumbHref?: string; breadcrumbLabel?: string; breadcrumbCurrent?: string }) { return <div className="page-content-intro"><div className="container">{label && <span className="eyebrow">{label}</span>}<h1>{title || label}</h1>{text && <p>{text}</p>}{backHome && <Link to="/gioi-thieu" className="page-content-back">← Về trang chủ</Link>}</div></div>; }
 
 function HealthSystemSection() {
 
@@ -456,7 +456,7 @@ function HealthSystemSection() {
 
 }
 
-function AboutPage() { return <main className="about-page"><PageHero label="Về Tâm An" title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><LeadershipSection /><AboutStorySection /></main>; }
+function AboutPage() { return <main className="about-page"><PageHero title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><LeadershipSection /><AboutStorySection /></main>; }
 
 
 
