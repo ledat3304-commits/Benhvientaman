@@ -4415,3 +4415,104 @@ main>.page-content-intro+.aftercare-preview{
   main>.page-content-intro+.section{padding-top:36px!important}
   .hemorrhoid-section-heading h1{font-size:clamp(1.65rem,7vw,2.2rem)!important}
 }
+
+/* BHYT: quy chuẩn riêng cho intro, nội dung và khoảng cách trang */
+main.insurance-page .page-content-intro .eyebrow{
+  margin-bottom:12px;
+  color:var(--navy)!important;
+  font-size:20px!important;
+  line-height:1.3!important;
+  letter-spacing:.08em!important;
+}
+main.insurance-page .page-content-intro h1{
+  max-width:980px;
+  margin:0 0 12px;
+  color:var(--navy)!important;
+  font-size:36px!important;
+  line-height:1.2!important;
+  letter-spacing:0!important;
+}
+main.insurance-page .page-content-intro p{
+  max-width:900px;
+  color:#000!important;
+  font-size:16px!important;
+  line-height:1.6!important;
+}
+main.insurance-page .insurance-toc{
+  gap:12px 18px;
+  margin-bottom:42px;
+  padding:18px 22px;
+}
+main.insurance-page .insurance-toc span,
+main.insurance-page .insurance-toc a{
+  font-size:13px!important;
+  line-height:1.5!important;
+}
+main.insurance-page .insurance-intro-grid{
+  gap:64px;
+  margin-bottom:64px;
+}
+main.insurance-page .insurance-intro-copy p,
+main.insurance-page .insurance-content-section p,
+main.insurance-page .insurance-content-section li,
+main.insurance-page .insurance-cta-section p{
+  color:#000!important;
+  font-size:16px!important;
+  line-height:1.6!important;
+}
+main.insurance-page .insurance-content{
+  gap:28px;
+}
+main.insurance-page .insurance-content-section,
+main.insurance-page .insurance-cta-section{
+  padding:30px!important;
+}
+main.insurance-page .insurance-content-section h2,
+main.insurance-page .insurance-cta-section h2{
+  margin:0 0 20px;
+  font-size:36px!important;
+  line-height:1.2!important;
+}
+main.insurance-page .insurance-timeline>li>div{
+  padding:24px 22px;
+}
+main.insurance-page .insurance-timeline h3{
+  margin:16px 0 8px;
+  font-size:20px!important;
+  line-height:1.35!important;
+}
+main.insurance-page .insurance-timeline p{
+  margin:0!important;
+  color:#000!important;
+  font-size:15px!important;
+  line-height:1.6!important;
+  text-indent:0;
+}
+@media(max-width:650px){
+  main.insurance-page .page-content-intro .eyebrow{font-size:17px!important}
+  main.insurance-page .page-content-intro h1{font-size:30px!important}
+  main.insurance-page .page-content-intro p{font-size:15px!important}
+  main.insurance-page .insurance-toc{
+    gap:9px;
+    margin-bottom:35px;
+    padding:16px;
+  }
+  main.insurance-page .insurance-toc span,
+  main.insurance-page .insurance-toc a{font-size:15px!important}
+  main.insurance-page .insurance-intro-grid{
+    gap:32px;
+    margin-bottom:42px;
+  }
+  main.insurance-page .insurance-content{gap:20px}
+  main.insurance-page .insurance-content-section,
+  main.insurance-page .insurance-cta-section{padding:24px 20px!important}
+  main.insurance-page .insurance-content-section h2,
+  main.insurance-page .insurance-cta-section h2{font-size:30px!important}
+  main.insurance-page .insurance-intro-copy p,
+  main.insurance-page .insurance-content-section p,
+  main.insurance-page .insurance-content-section li,
+  main.insurance-page .insurance-cta-section p{font-size:15px!important}
+  main.insurance-page .insurance-timeline>li>div{padding:20px 18px}
+  main.insurance-page .insurance-timeline h3{font-size:19px!important}
+  main.insurance-page .insurance-timeline p{font-size:15px!important}
+}
