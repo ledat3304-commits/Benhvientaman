@@ -627,6 +627,160 @@ main .intro-copy .section-heading>.section-eyebrow-20{
 
 html,body,body *{font-family:var(--font-primary)!important}
 
+/* Cam nang: bo cuc, typography va khoang cach thong nhat */
+main.guide-page{
+  --guide-title-size:clamp(2.25rem,4vw,3rem);
+  --guide-section-title-size:clamp(1.75rem,3vw,2.25rem);
+  --guide-card-title-size:1.25rem;
+  --guide-body-size:1rem;
+  --guide-card-body-size:.875rem;
+  --guide-line-height:1.7;
+  --guide-section-space:4.5rem;
+}
+
+main.guide-page .page-hero{
+  padding:4rem 0 3.25rem;
+}
+
+main.guide-page .page-hero .eyebrow,
+main.guide-page .event-feature-content>.eyebrow,
+main.guide-page .cta-inline .eyebrow{
+  margin-bottom:1rem;
+  color:var(--teal)!important;
+  font-family:var(--font-primary)!important;
+  font-size:.8125rem!important;
+  font-weight:700!important;
+  letter-spacing:.12em!important;
+  line-height:1.4!important;
+  text-transform:uppercase!important;
+}
+
+main.guide-page .page-hero h1,
+main.guide-page .event-feature-content h2,
+main.guide-page .event-news-article h2,
+main.guide-page .cta-inline h2{
+  color:var(--navy)!important;
+  font-family:var(--font-primary)!important;
+  font-size:var(--guide-title-size)!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+  line-height:1.2!important;
+  text-transform:uppercase!important;
+}
+
+main.guide-page .page-hero h1{max-width:920px;margin:0 0 1rem}
+
+main.guide-page .page-hero p,
+main.guide-page .event-news-article p,
+main.guide-page .cta-inline p{
+  color:#263d68!important;
+  font-family:var(--font-primary)!important;
+  font-size:var(--guide-body-size)!important;
+  line-height:var(--guide-line-height)!important;
+}
+
+main.guide-page .page-hero p{max-width:760px;margin:0}
+
+main.guide-page>.section{
+  padding-top:var(--guide-section-space)!important;
+  padding-bottom:var(--guide-section-space)!important;
+}
+
+main.guide-page .event-feature-card{
+  margin-top:0;
+  border-radius:1rem;
+  box-shadow:0 12px 30px rgba(23,64,170,.1);
+}
+
+main.guide-page .event-feature-image{min-height:21rem}
+
+main.guide-page .event-feature-content{
+  gap:0;
+  padding:2rem;
+}
+
+main.guide-page .event-feature-content>.eyebrow{display:none}
+
+main.guide-page .event-feature-content h2,
+main.guide-page .event-news-article h2,
+main.guide-page .cta-inline h2{
+  font-size:var(--guide-section-title-size)!important;
+  margin:0 0 1rem;
+}
+
+main.guide-page .event-feature-content p,
+main.guide-page .event-feature-content small,
+main.guide-page .event-details-grid p{
+  color:#263d68!important;
+  font-family:var(--font-primary)!important;
+  font-size:var(--guide-card-body-size)!important;
+  line-height:var(--guide-line-height)!important;
+}
+
+main.guide-page .event-feature-content p{margin:0 0 1rem}
+main.guide-page .event-feature-content small{color:#60739a!important}
+
+main.guide-page .event-details-grid{
+  gap:1.25rem;
+  margin-top:1.5rem;
+}
+
+main.guide-page .event-details-grid article{
+  padding:1.75rem!important;
+  border:1px solid var(--line);
+  border-radius:.875rem;
+  background:#fff;
+}
+
+main.guide-page .event-details-grid article>span{
+  display:block;
+  margin-bottom:.75rem;
+  color:var(--teal);
+  font-size:.875rem;
+  font-weight:700;
+  letter-spacing:.08em;
+}
+
+main.guide-page .event-details-grid article h3{
+  margin:0 0 .75rem;
+  color:var(--navy)!important;
+  font-family:var(--font-primary)!important;
+  font-size:var(--guide-card-title-size)!important;
+  line-height:1.35!important;
+  text-transform:uppercase!important;
+}
+
+main.guide-page .event-news-article{
+  max-width:52rem;
+  margin:3rem auto 0;
+  padding-top:2rem;
+}
+
+main.guide-page .event-news-article p{margin-bottom:1rem}
+
+main.guide-page .source-link{
+  color:var(--teal);
+  font-size:.875rem;
+  font-weight:700;
+  line-height:1.5;
+}
+
+@media(max-width:768px){
+  main.guide-page{
+    --guide-title-size:clamp(1.75rem,7vw,2.25rem);
+    --guide-section-title-size:clamp(1.5rem,6vw,1.875rem);
+    --guide-section-space:3rem;
+  }
+
+  main.guide-page .page-hero{padding:2.75rem 0 2.25rem}
+  main.guide-page .page-hero h1{margin-bottom:.875rem}
+  main.guide-page .event-feature-image{min-height:0}
+  main.guide-page .event-feature-content{padding:1.5rem}
+  main.guide-page .event-details-grid{gap:.75rem;margin-top:1rem}
+  main.guide-page .event-details-grid article{padding:1.25rem!important}
+  main.guide-page .event-news-article{margin-top:2rem;padding-top:1.5rem}
+}
+
 /* Trang nội dung bệnh trĩ - giữ nguyên hệ thống Header/Footer và token thương hiệu hiện tại */
 .hemorrhoid-page{overflow:clip;color:#000;background:#fff}
 .hemorrhoid-page [id]{scroll-margin-top:24px}
@@ -4064,3 +4218,56 @@ main:not(.admin-dashboard-page) .package-card p{
 }
 
 html,body,body *{font-family:var(--font-primary)!important}
+
+/* Final overrides for the Cam nang page */
+main.guide-page .page-hero{
+  padding:4rem 0 3.25rem!important;
+}
+main.guide-page>.section{
+  padding-top:var(--guide-section-space)!important;
+  padding-bottom:var(--guide-section-space)!important;
+}
+main.guide-page .event-feature-card{
+  margin-top:0!important;
+}
+main.guide-page .event-feature-content{
+  padding:2rem!important;
+}
+main.guide-page .event-details-grid{
+  gap:1.25rem!important;
+  margin-top:1.5rem!important;
+}
+main.guide-page .event-news-article{
+  margin-top:3rem!important;
+  padding-top:2rem!important;
+}
+main.guide-page .page-hero h1{
+  font-size:var(--guide-title-size)!important;
+  line-height:1.2!important;
+  text-transform:uppercase!important;
+}
+main.guide-page .event-feature-content h2,
+main.guide-page .event-news-article h2,
+main.guide-page .cta-inline h2{
+  font-size:var(--guide-section-title-size)!important;
+  line-height:1.2!important;
+  text-transform:uppercase!important;
+}
+main.guide-page .event-feature-content p,
+main.guide-page .event-feature-content small,
+main.guide-page .event-details-grid p{
+  font-size:var(--guide-card-body-size)!important;
+  line-height:var(--guide-line-height)!important;
+}
+main.guide-page .event-details-grid article h3{
+  font-size:var(--guide-card-title-size)!important;
+  line-height:1.35!important;
+  text-transform:uppercase!important;
+}
+
+@media(max-width:768px){
+  main.guide-page .page-hero{padding:2.75rem 0 2.25rem!important}
+  main.guide-page .event-feature-content{padding:1.5rem!important}
+  main.guide-page .event-details-grid{gap:.75rem!important;margin-top:1rem!important}
+  main.guide-page .event-news-article{margin-top:2rem!important;padding-top:1.5rem!important}
+}
