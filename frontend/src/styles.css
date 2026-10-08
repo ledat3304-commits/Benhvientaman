@@ -4296,6 +4296,8 @@ main.guide-page .event-details-grid article h3{
 .home-insurance-content .eyebrow{
   margin-bottom:12px;
   color:var(--teal)!important;
+  font-size:30px!important;
+  line-height:1.2!important;
 }
 .home-insurance-content h2{
   margin:0 0 14px;
