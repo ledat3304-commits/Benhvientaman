@@ -4460,6 +4460,10 @@ main.insurance-page .insurance-cta-section p{
   font-size:16px!important;
   line-height:1.6!important;
 }
+main.insurance-page .insurance-cta-section p{
+  color:#fff!important;
+  font-weight:700!important;
+}
 main.insurance-page .insurance-content{
   gap:28px;
 }
