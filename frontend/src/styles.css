@@ -4520,3 +4520,8 @@ main.insurance-page .insurance-timeline p{
   main.insurance-page .insurance-timeline h3{font-size:19px!important}
   main.insurance-page .insurance-timeline p{font-size:15px!important}
 }
+
+/* Không dùng đường kẻ phân tách ở cuối footer */
+.footer-bottom{
+  border-top:0!important;
+}
