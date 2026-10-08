@@ -75,7 +75,6 @@ export function InsuranceSection() {
         <div className="home-insurance-card">
           <div className="home-insurance-content">
             <span className="eyebrow">Bảo hiểm y tế</span>
-            <h2>BẢO HIỂM Y TẾ</h2>
             <p>Hiểu rõ quyền lợi, thủ tục và quy trình sử dụng bảo hiểm y tế khi thăm khám tại Bệnh viện Tâm An.</p>
             <ul>
               <li>Hướng dẫn thủ tục BHYT rõ ràng, dễ thực hiện</li>
