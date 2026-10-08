@@ -4307,29 +4307,35 @@ main.guide-page .event-details-grid article h3{
 .home-insurance-content>p{
   max-width:560px;
   margin:0;
-  color:#536b91!important;
+  color:#000!important;
+  font-family:var(--font-primary)!important;
   font-size:16px!important;
-  line-height:1.7!important;
+  line-height:1.6!important;
 }
 .home-insurance-content ul{
   display:grid;
-  gap:9px;
-  margin:22px 0 26px;
+  gap:10px;
+  margin:20px 0 26px;
   padding:0;
-  color:#536b91;
-  font-size:14px;
-  line-height:1.55;
+  color:#000!important;
+  font-family:var(--font-primary)!important;
+  font-size:16px!important;
+  line-height:1.6!important;
   list-style:none;
 }
 .home-insurance-content li{
   position:relative;
   padding-left:24px;
+  color:#000!important;
+  font-family:var(--font-primary)!important;
+  font-size:16px!important;
+  line-height:1.6!important;
 }
 .home-insurance-content li:before{
   content:'✓';
   position:absolute;
   left:0;
-  color:var(--teal);
+  color:#000;
   font-weight:800;
 }
 .home-insurance-content .button{margin-top:auto}
@@ -4351,8 +4357,9 @@ main.guide-page .event-details-grid article h3{
 @media(max-width:650px){
   .home-insurance-content{padding:28px 24px}
   .home-insurance-content h2{font-size:clamp(1.75rem,8vw,2.35rem)!important}
-  .home-insurance-content>p{font-size:15px!important}
-  .home-insurance-content ul{margin:18px 0 22px;font-size:13px}
+  .home-insurance-content>p{font-size:16px!important}
+  .home-insurance-content ul{margin:20px 0 24px;font-size:16px!important}
+  .home-insurance-content li{font-size:16px!important}
   .home-insurance-content .button{width:100%}
   .home-insurance-image{min-height:0;aspect-ratio:16/9}
 }
