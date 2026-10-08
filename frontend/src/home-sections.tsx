@@ -68,6 +68,30 @@ export function TeamSection() {
   );
 }
 
+export function InsuranceSection() {
+  return (
+    <section className="section home-insurance-section" id="bao-hiem-y-te">
+      <div className="container">
+        <div className="home-insurance-card">
+          <div className="home-insurance-content">
+            <span className="eyebrow">Bảo hiểm y tế</span>
+            <h2>BẢO HIỂM Y TẾ</h2>
+            <p>Hiểu rõ quyền lợi, thủ tục và quy trình sử dụng bảo hiểm y tế khi thăm khám tại Bệnh viện Tâm An.</p>
+            <ul>
+              <li>Hướng dẫn thủ tục BHYT rõ ràng, dễ thực hiện</li>
+              <li>Thông tin quyền lợi và phạm vi hỗ trợ minh bạch</li>
+            </ul>
+            <Link to="/bao-hiem" className="button button-primary">Xem thông tin BHYT <span>→</span></Link>
+          </div>
+          <div className="home-insurance-image">
+            <img src="/hospital/bhyt-quyen-loi.jpg" alt="Quyền lợi bảo hiểm y tế tại Bệnh viện Tâm An" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function NewsEventsSection() {
   return (
     <section className="section home-news-section" id="tin-tuc-su-kien">

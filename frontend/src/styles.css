@@ -4272,3 +4272,87 @@ main.guide-page .event-details-grid article h3{
   main.guide-page .event-details-grid{gap:.75rem!important;margin-top:1rem!important}
   main.guide-page .event-news-article{margin-top:1.75rem!important;padding-top:1.25rem!important}
 }
+
+/* Trang chu: block thong tin Bao hiem y te truoc Tin tuc su kien */
+.home-insurance-section{
+  background:linear-gradient(180deg,#f5f8ff 0%,#fff 100%);
+}
+.home-insurance-card{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);
+  overflow:hidden;
+  border:1px solid #d8e4f7;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 16px 34px rgba(23,64,170,.09);
+}
+.home-insurance-content{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  padding:42px 46px;
+}
+.home-insurance-content .eyebrow{
+  margin-bottom:12px;
+  color:var(--teal)!important;
+}
+.home-insurance-content h2{
+  margin:0 0 14px;
+  color:var(--navy)!important;
+  font-size:clamp(2rem,3.5vw,3rem)!important;
+  line-height:1.15!important;
+  text-transform:uppercase;
+}
+.home-insurance-content>p{
+  max-width:560px;
+  margin:0;
+  color:#536b91!important;
+  font-size:16px!important;
+  line-height:1.7!important;
+}
+.home-insurance-content ul{
+  display:grid;
+  gap:9px;
+  margin:22px 0 26px;
+  padding:0;
+  color:#536b91;
+  font-size:14px;
+  line-height:1.55;
+  list-style:none;
+}
+.home-insurance-content li{
+  position:relative;
+  padding-left:24px;
+}
+.home-insurance-content li:before{
+  content:'✓';
+  position:absolute;
+  left:0;
+  color:var(--teal);
+  font-weight:800;
+}
+.home-insurance-content .button{margin-top:auto}
+.home-insurance-image{
+  min-height:340px;
+  background:#eaf1ff;
+}
+.home-insurance-image img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+@media(max-width:900px){
+  .home-insurance-card{grid-template-columns:1fr}
+  .home-insurance-image{order:-1;min-height:280px;aspect-ratio:16/8}
+}
+@media(max-width:650px){
+  .home-insurance-content{padding:28px 24px}
+  .home-insurance-content h2{font-size:clamp(1.75rem,8vw,2.35rem)!important}
+  .home-insurance-content>p{font-size:15px!important}
+  .home-insurance-content ul{margin:18px 0 22px;font-size:13px}
+  .home-insurance-content .button{width:100%}
+  .home-insurance-image{min-height:0;aspect-ratio:16/9}
+}
