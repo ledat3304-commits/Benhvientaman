@@ -635,7 +635,7 @@ main.guide-page{
   --guide-body-size:1rem;
   --guide-card-body-size:.875rem;
   --guide-line-height:1.7;
-  --guide-section-space:4.5rem;
+  --guide-section-space:4rem;
 }
 
 main.guide-page .page-hero{
@@ -769,7 +769,7 @@ main.guide-page .source-link{
   main.guide-page{
     --guide-title-size:clamp(1.75rem,7vw,2.25rem);
     --guide-section-title-size:clamp(1.5rem,6vw,1.875rem);
-    --guide-section-space:3rem;
+    --guide-section-space:2.75rem;
   }
 
   main.guide-page .page-hero{padding:2.75rem 0 2.25rem}
@@ -4221,7 +4221,7 @@ html,body,body *{font-family:var(--font-primary)!important}
 
 /* Final overrides for the Cam nang page */
 main.guide-page .page-hero{
-  padding:4rem 0 3.25rem!important;
+  padding:3rem 0 2rem!important;
 }
 main.guide-page>.section{
   padding-top:var(--guide-section-space)!important;
@@ -4231,15 +4231,15 @@ main.guide-page .event-feature-card{
   margin-top:0!important;
 }
 main.guide-page .event-feature-content{
-  padding:2rem!important;
+  padding:2rem 2.25rem!important;
 }
 main.guide-page .event-details-grid{
-  gap:1.25rem!important;
-  margin-top:1.5rem!important;
+  gap:1rem!important;
+  margin-top:1.25rem!important;
 }
 main.guide-page .event-news-article{
-  margin-top:3rem!important;
-  padding-top:2rem!important;
+  margin-top:2.5rem!important;
+  padding-top:1.5rem!important;
 }
 main.guide-page .page-hero h1{
   font-size:var(--guide-title-size)!important;
@@ -4266,8 +4266,9 @@ main.guide-page .event-details-grid article h3{
 }
 
 @media(max-width:768px){
-  main.guide-page .page-hero{padding:2.75rem 0 2.25rem!important}
-  main.guide-page .event-feature-content{padding:1.5rem!important}
+  main.guide-page .page-hero{padding:2rem 0 1.5rem!important}
+  main.guide-page>.section{padding-top:2.75rem!important;padding-bottom:2.75rem!important}
+  main.guide-page .event-feature-content{padding:1.25rem!important}
   main.guide-page .event-details-grid{gap:.75rem!important;margin-top:1rem!important}
-  main.guide-page .event-news-article{margin-top:2rem!important;padding-top:1.5rem!important}
+  main.guide-page .event-news-article{margin-top:1.75rem!important;padding-top:1.25rem!important}
 }
