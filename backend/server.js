@@ -9,6 +9,22 @@ const { Pool } = require('pg');
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+// Canonical list synchronized with frontend/src/main.tsx -> departmentGroups.
+// Keep this list limited to specialties rendered by /chuyen-khoa.
+const ACTIVE_SPECIALTY_NAMES = Object.freeze([
+  'Khoa Nội Tổng Hợp',
+  'Khoa Ngoại Tổng Hợp',
+  'Khoa Nhi',
+  'Y học cổ truyền & Phục hồi chức năng',
+  'Khoa Thận - Lọc Máu',
+  'Khoa Khám Bệnh',
+  'Khoa Gây Mê Hồi Sức',
+  'Cận lâm sàng - Chẩn đoán hình ảnh',
+  'Khoa Xét Nghiệm',
+  'Khoa Dược',
+  'Chuyên Khoa Hậu Môn - Trực Tràng'
+]);
+
 const allowedOrigins = String(process.env.FRONTEND_URLS || process.env.FRONTEND_URL || '')
   .split(',')
   .map((origin) => origin.trim().replace(/\/$/, ''))
@@ -481,8 +497,10 @@ app.get('/api/specialties', async (req, res) => {
     const result = await pool.query(`
       SELECT chuyenkhoaid AS id, tenchuyenkhoa AS name, mota AS description
         FROM chuyenkhoa
-       ORDER BY tenchuyenkhoa ASC
-    `);
+       WHERE COALESCE(hoatdong, true) = true
+         AND tenchuyenkhoa = ANY($1::text[])
+       ORDER BY array_position($1::text[], tenchuyenkhoa)
+    `, [ACTIVE_SPECIALTY_NAMES]);
     return res.json(result.rows);
   } catch (error) {
     console.error('Public specialties error:', error);
@@ -872,7 +890,14 @@ app.post('/api/booking-requests', async (req, res) => {
 
     let specialtyName = null;
     if (specialtyId) {
-      const result = await client.query('SELECT chuyenkhoaid, tenchuyenkhoa FROM chuyenkhoa WHERE chuyenkhoaid = $1', [specialtyId]);
+      const result = await client.query(
+        `SELECT chuyenkhoaid, tenchuyenkhoa
+           FROM chuyenkhoa
+          WHERE chuyenkhoaid = $1
+            AND COALESCE(hoatdong, true) = true
+            AND tenchuyenkhoa = ANY($2::text[])`,
+        [specialtyId, ACTIVE_SPECIALTY_NAMES]
+      );
       if (!result.rows[0]) {
         await client.query('ROLLBACK');
         return res.status(404).json({ success: false, message: 'Không tìm thấy chuyên khoa.' });
@@ -1646,7 +1671,14 @@ app.get('/api/admin/specialties', async (req, res) => {
   try {
     const admin = await requireRole(req, res, 'admin');
     if (!admin) return;
-    const result = await pool.query('SELECT * FROM chuyenkhoa ORDER BY tenchuyenkhoa ASC');
+    const result = await pool.query(
+      `SELECT *
+         FROM chuyenkhoa
+        WHERE COALESCE(hoatdong, true) = true
+          AND tenchuyenkhoa = ANY($1::text[])
+        ORDER BY array_position($1::text[], tenchuyenkhoa)`,
+      [ACTIVE_SPECIALTY_NAMES]
+    );
     return res.json({ success: true, specialties: result.rows });
   } catch (error) {
     console.error('Admin specialties error:', error);
@@ -1889,6 +1921,9 @@ app.post('/api/admin/specialties', async (req, res) => {
     if (!admin) return;
     const name = String(req.body?.name || '').trim();
     if (!name) return res.status(400).json({ success: false, message: 'Tên chuyên khoa là bắt buộc.' });
+    if (!ACTIVE_SPECIALTY_NAMES.includes(name)) {
+      return res.status(400).json({ success: false, message: 'Chỉ được sử dụng chuyên khoa đang có trên trang /chuyen-khoa.' });
+    }
     const result = await pool.query('INSERT INTO chuyenkhoa (tenchuyenkhoa, mota) VALUES ($1, $2) RETURNING *', [name, req.body?.description || null]);
     return res.status(201).json({ success: true, specialty: result.rows[0] });
   } catch (error) {
