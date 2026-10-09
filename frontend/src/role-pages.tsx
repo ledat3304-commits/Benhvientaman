@@ -477,7 +477,7 @@ type BookingSlot = { time: string; available: boolean };
 type BookingResult = { bookingCode?: string; requestCode?: string; appointment?: Record<string, any>; request?: Record<string, any>; message?: string };
 
 const BOOKING_SPECIALTY_NAMES = new Set(['Hậu môn – Trực tràng', 'Tiêu hóa', 'Tim mạch', 'Nội tổng quát']);
-const sanitizePhoneValue = (value: string) => value.replace(/\D/g, '');
+const sanitizePhoneValue = (value: string) => value.replace(/\D/g, '').slice(0, 10);
 
 export function BookingPageApi() {
   const session = readSession();
@@ -500,7 +500,7 @@ export function BookingPageApi() {
   const selectedDoctor = doctors.find((item) => String(item.bacsiid ?? item.id) === form.doctorId);
   const selectedService = services.find((item) => String(item.id ?? item.dichvuid) === form.serviceId);
   const phoneDigits = form.phone.replace(/\D/g, '');
-  const phoneValid = /^(0\d{8,10}|84\d{9})$/.test(phoneDigits);
+  const phoneValid = /^0\d{9}$/.test(phoneDigits);
   const formReady = Boolean(form.name.trim()) && phoneValid;
 
   useEffect(() => {
@@ -593,7 +593,8 @@ export function BookingPageApi() {
     if (phoneInput) {
       phoneInput.type = 'tel';
       phoneInput.inputMode = 'numeric';
-      phoneInput.pattern = '[0-9]*';
+      phoneInput.maxLength = 10;
+      phoneInput.pattern = '[0-9]{10}';
     }
   }, [step]);
 
