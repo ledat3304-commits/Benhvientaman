@@ -4538,12 +4538,9 @@ main.insurance-page .insurance-timeline p{
   }
 }
 
-/* Tiêu đề khoa ngắn gọn, giữ tên khoa trên một dòng */
-main.department-index-page .department-directory-card h4{
+/* Chỉ thu nhỏ tiêu đề của hai thẻ khoa được yêu cầu */
+main.department-index-page .department-directory-card:nth-child(2) h4,
+main.department-index-page .department-directory-card:nth-child(11) h4{
   font-size:16px!important;
   line-height:1.25!important;
-  letter-spacing:-.05em!important;
-  white-space:nowrap;
-  padding-right:4px;
-  padding-left:4px;
 }
