@@ -488,7 +488,6 @@ type BookingSlot = { time: string; available: boolean };
 
 type BookingResult = { bookingCode?: string; requestCode?: string; appointment?: Record<string, any>; request?: Record<string, any>; message?: string };
 
-const BOOKING_SPECIALTY_NAMES = new Set(['Hậu môn – Trực tràng', 'Tiêu hóa', 'Tim mạch', 'Nội tổng quát']);
 const sanitizePhoneValue = (value: string) => value.replace(/\D/g, '').slice(0, 10);
 
 export function BookingPageApi() {
@@ -522,9 +521,7 @@ export function BookingPageApi() {
       fetch(API_BASE + '/api/doctors').then((response) => response.json())
     ])
       .then(([specialtyData, serviceData, doctorData]) => {
-        const availableSpecialties = Array.isArray(specialtyData)
-          ? specialtyData.filter((item: BookingSpecialty) => BOOKING_SPECIALTY_NAMES.has(item.name))
-          : [];
+        const availableSpecialties = Array.isArray(specialtyData) ? specialtyData : [];
         const availableServices = Array.isArray(serviceData) ? serviceData : [];
         const availableDoctors = Array.isArray(doctorData) ? doctorData : [];
         setSpecialties(availableSpecialties);
