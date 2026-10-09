@@ -2834,6 +2834,11 @@ main:has(.hero-slider) > .app-section{
   background:#fff!important;
 }
 
+/* Ẩn phần thông tin từ hồ sơ thẩm định khỏi trang chủ */
+main:has(.hero-slider) > .hospital-evidence{
+  display:none;
+}
+
 /* Mục con menu tin tức */
 .site-header .nav-dropdown--news .nav-dropdown-menu a{
   font-size:12px!important;
