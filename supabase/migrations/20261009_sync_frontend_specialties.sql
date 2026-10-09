@@ -16,6 +16,15 @@ UPDATE chuyenkhoa SET tenchuyenkhoa = 'Cận lâm sàng - Chẩn đoán hình �
 UPDATE chuyenkhoa SET tenchuyenkhoa = 'Khoa Xét Nghiệm' WHERE chuyenkhoaid = 28;
 UPDATE chuyenkhoa SET tenchuyenkhoa = 'Y học cổ truyền & Phục hồi chức năng' WHERE chuyenkhoaid = 29;
 
+-- Đồng bộ sequence sau khi dữ liệu cũ đã được import bằng ID thủ công.
+-- Nếu không có bước này, bản ghi mới có thể cố dùng lại chuyenkhoaid = 1.
+SELECT setval(
+    pg_get_serial_sequence('chuyenkhoa', 'chuyenkhoaid'),
+    COALESCE(MAX(chuyenkhoaid), 1),
+    MAX(chuyenkhoaid) IS NOT NULL
+)
+FROM chuyenkhoa;
+
 -- Các mục mới trên frontend, thêm vào database hiện tại bằng ID mới.
 INSERT INTO chuyenkhoa (tenchuyenkhoa, mota, hoatdong)
 VALUES
