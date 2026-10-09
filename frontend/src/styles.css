@@ -4549,3 +4549,13 @@ main.department-index-page .department-directory-card:nth-child(11) h4{
 main.department-index-page .department-directory-note{
   display:none;
 }
+
+/* Đưa nút bỏ qua lên cùng hàng với trường đầu tiên ở bước 1 và 2 */
+.booking-wizard-fields{
+  position:relative;
+}
+.booking-wizard-fields .booking-wizard-actions .booking-skip-button{
+  position:absolute;
+  top:0;
+  right:0;
+}
