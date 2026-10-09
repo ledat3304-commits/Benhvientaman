@@ -3609,16 +3609,6 @@ main.insurance-page .insurance-timeline>li{
   margin:0;
   padding:0;
 }
-main.insurance-page .insurance-timeline>li:not(:last-child):after{
-  content:'→';
-  position:absolute;
-  top:20px;
-  right:-13px;
-  z-index:1;
-  color:var(--lime);
-  font-size:20px;
-  font-weight:800;
-}
 main.insurance-page .insurance-timeline>li>div{
   height:100%;
   padding:20px 17px;
@@ -3675,9 +3665,6 @@ main.insurance-page .insurance-cta-actions .button-outline{
 @media(max-width:1000px){
   main.insurance-page .insurance-timeline{
     grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-  main.insurance-page .insurance-timeline>li:not(:last-child):after{
-    display:none;
   }
 }
 @media(max-width:650px){
@@ -3836,14 +3823,6 @@ main.insurance-page .insurance-timeline p{
   }
   main.insurance-page .insurance-timeline h3{
     min-height:calc(1.35em * 3);
-  }
-  main.insurance-page .insurance-timeline>li:after{
-    display:none;
-  }
-  main.insurance-page .insurance-timeline>li:nth-child(1):after,
-  main.insurance-page .insurance-timeline>li:nth-child(2):after,
-  main.insurance-page .insurance-timeline>li:nth-child(4):after{
-    display:block;
   }
 }
 
