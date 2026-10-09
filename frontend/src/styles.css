@@ -4559,3 +4559,8 @@ main.department-index-page .department-directory-note{
   top:0;
   right:0;
 }
+
+/* Ẩn khung xem lại thông tin ở bước cuối */
+.booking-wizard-fields .booking-review{
+  display:none;
+}
