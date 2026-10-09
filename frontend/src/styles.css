@@ -4544,3 +4544,8 @@ main.department-index-page .department-directory-card:nth-child(11) h4{
   font-size:16px!important;
   line-height:1.25!important;
 }
+
+/* Ẩn khung tư vấn ở trang danh sách chuyên khoa */
+main.department-index-page .department-directory-note{
+  display:none;
+}
