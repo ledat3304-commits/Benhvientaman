@@ -4537,3 +4537,13 @@ main.insurance-page .insurance-timeline p{
     border-bottom:0!important;
   }
 }
+
+/* Tiêu đề khoa ngắn gọn, giữ tên khoa trên một dòng */
+main.department-index-page .department-directory-card h4{
+  font-size:16px!important;
+  line-height:1.25!important;
+  letter-spacing:-.05em!important;
+  white-space:nowrap;
+  padding-right:4px;
+  padding-left:4px;
+}
