@@ -402,7 +402,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             <Link className={(location.pathname.startsWith('/benh-ly') || location.pathname.startsWith('/khoa') || location.pathname.startsWith('/chuyen-khoa')) ? 'active' : ''} to="/chuyen-khoa">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
 
-            <div className={dropdownClass('news', 'nav-dropdown--news')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('news')} aria-expanded={mobileDropdown === 'news'} aria-haspopup="true">TIN TỨC SỰ KIỆN <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu"><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div></div>
+            <Link to="/cam-nang">TIN TỨC SỰ KIỆN</Link>
 
             <Link to="/lien-he">TUYỂN DỤNG</Link>
 
