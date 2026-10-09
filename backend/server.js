@@ -1152,6 +1152,27 @@ app.get('/api/admin/notifications', async (req, res) => {
   }
 });
 
+app.delete('/api/admin/notifications/:notificationId', async (req, res) => {
+  try {
+    const admin = await requireRole(req, res, 'admin');
+    if (!admin) return;
+    const notificationId = Number(req.params.notificationId);
+    if (!Number.isInteger(notificationId) || notificationId < 1) {
+      return res.status(400).json({ success: false, message: 'Mã thông báo không hợp lệ.' });
+    }
+
+    const result = await pool.query(
+      'DELETE FROM thongbao WHERE thongbaoid = $1 AND userid = $2 RETURNING thongbaoid',
+      [notificationId, admin.UserID || admin.userid]
+    );
+    if (!result.rows[0]) return res.status(404).json({ success: false, message: 'Không tìm thấy thông báo.' });
+    return res.json({ success: true, notificationId });
+  } catch (error) {
+    console.error('Delete admin notification error:', error);
+    return res.status(error.code === '42P01' ? 503 : 500).json({ success: false, message: 'Không thể xóa thông báo.' });
+  }
+});
+
 app.patch('/api/admin/notifications/:notificationId/read', async (req, res) => {
   try {
     const admin = await requireRole(req, res, 'admin');

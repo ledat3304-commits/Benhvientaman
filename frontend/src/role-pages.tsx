@@ -182,6 +182,17 @@ export function AdminDashboardPage() {
     }
   };
 
+  const deleteNotification = async (notificationId: string | number) => {
+    if (!window.confirm('Bạn có chắc muốn xóa thông báo này khỏi hộp thư?')) return;
+    try {
+      await adminFetch(`/api/admin/notifications/${notificationId}`, session, { method: 'DELETE' });
+      setNotifications((items) => items.filter((item) => String(getValue(item, 'thongbaoid', 'ThongBaoID')) !== String(notificationId)));
+      showActionMessage('Đã xóa thông báo khỏi hộp thư hệ thống.');
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : 'Không thể xóa thông báo.');
+    }
+  };
+
   const markAllAsRead = async () => {
     try {
       await adminFetch('/api/admin/notifications/read-all', session, { method: 'PATCH' });
@@ -347,7 +358,7 @@ export function AdminDashboardPage() {
         const isRead = Boolean(getValue(item, 'dadoc', 'DaDoc'));
         return <article className={isRead ? 'admin-notification-item' : 'admin-notification-item is-unread'} key={id}>
           <div><strong>{getValue(item, 'tieude', 'TieuDe') || 'Thông báo hệ thống'}</strong><p>{getValue(item, 'noidung', 'NoiDung')}</p><small>{formatAdminDate(getValue(item, 'ngaytao', 'NgayTao'))}</small></div>
-          {!isRead && <button type="button" onClick={() => markAsRead(id)}>Đánh dấu đã đọc</button>}
+          <div className="admin-notification-actions">{!isRead && <button type="button" onClick={() => markAsRead(id)}>Đánh dấu đã đọc</button>}<button className="admin-notification-delete" type="button" onClick={() => deleteNotification(id)}>Xóa</button></div>
         </article>;
       })}
     </div>

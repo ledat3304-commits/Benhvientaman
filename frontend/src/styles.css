@@ -4588,3 +4588,7 @@ main.department-index-page .department-directory-note{
 .booking-wizard-success .booking-success-details{
   background:#fbfdff;
 }
+
+.admin-notification-actions{display:flex;align-items:center;gap:12px;flex:0 0 auto}
+.admin-notification-actions .admin-notification-delete{color:#b75050}
+@media(max-width:700px){.admin-notification-actions{justify-content:flex-end;margin-top:12px}.admin-notification-actions button{margin-top:0!important}}
