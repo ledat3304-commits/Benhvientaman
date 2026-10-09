@@ -3,7 +3,7 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 const API_BASE = (
   import.meta.env.VITE_API_URL ||
   import.meta.env.VITE_API_BASE_URL ||
-  'http://localhost:8000'
+  (import.meta.env.DEV ? 'http://localhost:8000' : 'https://benhvientaman.onrender.com')
 ).replace(/\/$/, '');
 
 const STORAGE_KEY = 'bta_session';
@@ -424,6 +424,7 @@ function LegacyBookingPageApi() {
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
+    if (submitting) return;
     setSubmitting(true);
     setMessage('');
     try {
@@ -630,6 +631,7 @@ export function BookingPageApi() {
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
+    if (submitting) return;
     setMessage('');
     if (!form.name.trim()) return setMessage('Vui lòng nhập họ và tên.');
     if (!phoneValid) return setMessage('Vui lòng nhập số điện thoại hợp lệ.');

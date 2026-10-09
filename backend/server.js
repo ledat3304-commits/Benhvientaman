@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: process.env.DOTENV_CONFIG_PATH || path.join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
@@ -16,7 +17,8 @@ const allowedOrigins = String(process.env.FRONTEND_URLS || process.env.FRONTEND_
 app.use(cors({
   origin: (origin, callback) => {
     // Requests without an Origin header include local health checks and server-to-server calls.
-    if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin.replace(/\/$/, ''))) {
+    const isProduction = String(process.env.NODE_ENV || '').toLowerCase() === 'production';
+    if (!origin || allowedOrigins.includes(origin.replace(/\/$/, '')) || (!isProduction && allowedOrigins.length === 0)) {
       return callback(null, true);
     }
 
@@ -316,7 +318,15 @@ function getWeekdayFromIsoDate(date) {
 }
 
 function getTodayIsoDate() {
-  return new Date().toISOString().slice(0, 10);
+  const timeZone = process.env.APP_TIMEZONE || 'Asia/Ho_Chi_Minh';
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.filter((part) => part.type !== 'literal').map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
 }
 
 function clockToMinutes(value) {
@@ -334,9 +344,7 @@ function minutesToClock(value) {
 
 function isValidPhone(value) {
   const phone = String(value || '').trim();
-  if (!/^[0-9+().\s-]+$/.test(phone)) return false;
-  const digits = phone.replace(/\D/g, '');
-  return (phone.startsWith('+84') && digits.length === 11) || (phone.startsWith('0') && digits.length >= 9 && digits.length <= 11);
+  return /^0\d{9}$/.test(phone);
 }
 
 function isValidEmail(value) {
@@ -404,7 +412,7 @@ function displayRequestValue(value, fallback = 'Chưa cung cấp') {
   return value === undefined || value === null || String(value).trim() === '' ? fallback : String(value);
 }
 
-async function notifyAdmins(queryable, title, content) {
+async function notifyAdmins(queryable, title, content, appointmentId = null) {
   const admins = await queryable.query(
     `SELECT userid
        FROM nguoidung
@@ -412,10 +420,20 @@ async function notifyAdmins(queryable, title, content) {
         AND COALESCE(hoatdong, true) = true`
   );
   for (const admin of admins.rows) {
+    if (appointmentId) {
+      const existing = await queryable.query(
+        `SELECT 1
+           FROM thongbao
+          WHERE userid = $1 AND lichkhamid = $2 AND loai = 'NEW_APPOINTMENT'
+          LIMIT 1`,
+        [admin.userid, appointmentId]
+      );
+      if (existing.rows[0]) continue;
+    }
     await queryable.query(
-      `INSERT INTO thongbao (userid, loai, tieude, noidung)
-       VALUES ($1, 'NEW_BOOKING_REQUEST', $2, $3)`,
-      [admin.userid, title, content]
+      `INSERT INTO thongbao (userid, lichkhamid, loai, tieude, noidung)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [admin.userid, appointmentId, appointmentId ? 'NEW_APPOINTMENT' : 'NEW_BOOKING_REQUEST', title, content]
     );
   }
 }
@@ -423,9 +441,28 @@ async function notifyAdmins(queryable, title, content) {
 app.get('/api/health', async (req, res) => {
   try {
     await pool.query('SELECT 1');
+    const requiredTables = ['nguoidung', 'benhnhan', 'bacsi', 'chuyenkhoa', 'danhmucdichvu', 'lichlamviec', 'lichkham', 'chitietdichvukham', 'thongbao', 'auth_tokens', 'yeucaudatlich'];
+    const schemaResult = await pool.query(
+      `SELECT table_name
+         FROM information_schema.tables
+        WHERE table_schema = 'public' AND table_name = ANY($1::text[])`,
+      [requiredTables]
+    );
+    const existingTables = new Set(schemaResult.rows.map((row) => row.table_name));
+    const missingTables = requiredTables.filter((tableName) => !existingTables.has(tableName));
+    if (missingTables.length > 0) {
+      return res.status(503).json({
+        status: 'error',
+        database: 'connected',
+        schema: 'incomplete',
+        missingTables,
+        timestamp: new Date().toISOString()
+      });
+    }
     return res.json({
       status: 'ok',
       database: 'connected',
+      schema: 'ready',
       timestamp: new Date().toISOString()
     });
   } catch (error) {
@@ -752,6 +789,13 @@ app.post('/api/appointments', async (req, res) => {
        VALUES ($1, $2, $3, 'ChoXacNhan', $4, NOW(), $5, $6)
        RETURNING *`,
       [doctorId, patientId, appointmentTime, reason, reason, doctorResult.rows[0].phidatlich || 0]
+    );
+
+    await notifyAdmins(
+      client,
+      'Có lịch khám mới',
+      `Người bệnh: ${displayRequestValue(name)} | SĐT: ${displayRequestValue(phone)} | Email: ${displayRequestValue(email)} | Bác sĩ ID: ${doctorId} | Thời gian: ${appointmentTime} | Lý do: ${displayRequestValue(reason)}`,
+      appointmentResult.rows[0].lichkhamid
     );
 
     if (selectedService) {

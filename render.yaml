@@ -8,8 +8,6 @@ services:
     buildCommand: npm install
     startCommand: npm start
     envVars:
-      - key: PORT
-        value: 8000
       - key: NODE_ENV
         value: production
       - key: FRONTEND_URL
