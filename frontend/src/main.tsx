@@ -720,8 +720,8 @@ function InsurancePage() {
             <p>Với quy trình tiếp nhận và hướng dẫn người bệnh theo quy định, Bệnh viện Đa khoa Tâm An cung cấp dịch vụ khám chữa bệnh BHYT, hỗ trợ người tham gia BHYT thực hiện thủ tục và tiếp cận các dịch vụ y tế phù hợp với quyền lợi được hưởng.</p>
             <p>Người bệnh có nhu cầu khám BHYT có thể liên hệ Bệnh viện Đa khoa Tâm An để được hướng dẫn cụ thể về thủ tục, quyền lợi và quy trình khám tại thời điểm sử dụng dịch vụ.</p>
             <div className="insurance-cta-actions">
-              <Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link>
-              <a href="tel:0977335599" className="button button-outline">Liên hệ tư vấn <span>→</span></a>
+              <Link to="/dat-lich" className="button button-primary">Đặt lịch khám</Link>
+              <a href="tel:0977335599" className="button button-outline">Liên hệ tư vấn</a>
             </div>
           </section>
         </div>
