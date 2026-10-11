@@ -4635,3 +4635,9 @@ main.hemorrhoid-page .hemorrhoid-image-card figcaption{
     font-size:var(--font-size-body-mobile)!important;
   }
 }
+
+/* An cac tieu de phu duoc yeu cau an tren khu vuc Benh ly */
+main.hemorrhoid-page .hemorrhoid-section-heading .eyebrow,
+main .article-aside .aside-card h3{
+  display:none!important;
+}
