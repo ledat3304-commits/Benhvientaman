@@ -4641,3 +4641,8 @@ main.hemorrhoid-page .hemorrhoid-section-heading .eyebrow,
 main .article-aside .aside-card h3{
   display:none!important;
 }
+
+main.hemorrhoid-page .hemorrhoid-subheading span{
+  font-size:30px!important;
+  line-height:1.2!important;
+}
