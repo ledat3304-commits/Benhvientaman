@@ -4571,3 +4571,67 @@ main.department-index-page .department-directory-note{
 .admin-notification-actions{display:flex;align-items:center;gap:12px;flex:0 0 auto}
 .admin-notification-actions .admin-notification-delete{color:#b75050}
 @media(max-width:700px){.admin-notification-actions{justify-content:flex-end;margin-top:12px}.admin-notification-actions button{margin-top:0!important}}
+
+/* Dong bo typography trang Benh ly voi he thong font cua trang chu */
+main.hemorrhoid-page .hemorrhoid-section-heading .eyebrow{
+  font-size:30px!important;
+  line-height:1.2!important;
+}
+main.hemorrhoid-page .hemorrhoid-section-heading h1{
+  font-size:var(--font-size-page-title)!important;
+  line-height:var(--line-height-heading)!important;
+}
+main.hemorrhoid-page .hemorrhoid-section-heading h2{
+  font-size:var(--font-size-section-title)!important;
+  line-height:var(--line-height-heading)!important;
+}
+main.hemorrhoid-page .hemorrhoid-section-heading>p,
+main.hemorrhoid-page .hemorrhoid-copy>p,
+main.hemorrhoid-page .hemorrhoid-risk-layout>div>p,
+main.hemorrhoid-page .hemorrhoid-care-grid>div>p,
+main.hemorrhoid-page .hemorrhoid-closing,
+main.hemorrhoid-page .hemorrhoid-checklist li,
+main.hemorrhoid-page .hemorrhoid-warning{
+  font-size:var(--font-size-body)!important;
+  line-height:var(--line-height-body)!important;
+}
+main.hemorrhoid-page .hemorrhoid-type-card h3,
+main.hemorrhoid-page .hemorrhoid-symptom-card h3,
+main.hemorrhoid-page .hemorrhoid-treatment-card h3{
+  font-size:var(--font-size-card-title)!important;
+  line-height:var(--line-height-card-title)!important;
+}
+main.hemorrhoid-page .hemorrhoid-subheading h3{
+  font-size:var(--site-section-subtitle-size)!important;
+  line-height:1.3!important;
+}
+main.hemorrhoid-page .hemorrhoid-type-card p,
+main.hemorrhoid-page .hemorrhoid-grade-grid p,
+main.hemorrhoid-page .hemorrhoid-symptom-card p,
+main.hemorrhoid-page .hemorrhoid-treatment-card p,
+main.hemorrhoid-page .hemorrhoid-treatment-card li,
+main.hemorrhoid-page .hemorrhoid-image-card figcaption{
+  font-size:var(--font-size-card-body)!important;
+  line-height:var(--line-height-body)!important;
+}
+
+@media(max-width:768px){
+  main.hemorrhoid-page .hemorrhoid-section-heading .eyebrow{
+    font-size:17px!important;
+  }
+  main.hemorrhoid-page .hemorrhoid-section-heading h1{
+    font-size:var(--font-size-page-title-mobile)!important;
+  }
+  main.hemorrhoid-page .hemorrhoid-section-heading h2{
+    font-size:clamp(1.65rem,7vw,2.2rem)!important;
+  }
+  main.hemorrhoid-page .hemorrhoid-section-heading>p,
+  main.hemorrhoid-page .hemorrhoid-copy>p,
+  main.hemorrhoid-page .hemorrhoid-risk-layout>div>p,
+  main.hemorrhoid-page .hemorrhoid-care-grid>div>p,
+  main.hemorrhoid-page .hemorrhoid-closing,
+  main.hemorrhoid-page .hemorrhoid-checklist li,
+  main.hemorrhoid-page .hemorrhoid-warning{
+    font-size:var(--font-size-body-mobile)!important;
+  }
+}
