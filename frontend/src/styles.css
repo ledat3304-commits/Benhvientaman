@@ -4670,3 +4670,8 @@ main.hemorrhoid-page .hemorrhoid-subheading h3{
     font-size:clamp(1.25rem,5vw,1.75rem)!important;
   }
 }
+
+main.hemorrhoid-page #yeu-to-nguy-co .hemorrhoid-section-heading h2{
+  font-size:30px!important;
+  line-height:1.2!important;
+}
