@@ -4645,4 +4645,28 @@ main .article-aside .aside-card h3{
 main.hemorrhoid-page .hemorrhoid-subheading span{
   font-size:30px!important;
   line-height:1.2!important;
+  letter-spacing:0!important;
+}
+main.hemorrhoid-page .hemorrhoid-subheading{
+  display:flex!important;
+  align-items:baseline;
+  justify-content:flex-start;
+  gap:48px;
+  flex-wrap:nowrap;
+}
+main.hemorrhoid-page .hemorrhoid-subheading h3{
+  font-size:30px!important;
+  line-height:1.2!important;
+  letter-spacing:0!important;
+  white-space:nowrap;
+}
+
+@media(max-width:768px){
+  main.hemorrhoid-page .hemorrhoid-subheading{
+    gap:16px;
+  }
+  main.hemorrhoid-page .hemorrhoid-subheading span,
+  main.hemorrhoid-page .hemorrhoid-subheading h3{
+    font-size:clamp(1.25rem,5vw,1.75rem)!important;
+  }
 }
