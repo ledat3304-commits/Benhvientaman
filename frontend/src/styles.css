@@ -4705,6 +4705,20 @@ main.treatment-methods-page .treatment-methods-grid .method-card-body{
 main.treatment-methods-page .treatment-methods-grid .method-card-body p{
   margin-bottom:0;
 }
+
+/* Ẩn ảnh trên trang phương pháp điều trị trĩ nhưng giữ nguyên khung để thay ảnh sau này. */
+main.treatment-methods-page .hemorrhoid-image-card img,
+main.treatment-methods-page .hemorrhoid-treatment-image img,
+main.treatment-methods-page .treatment-methods-grid .method-card img{
+  visibility:hidden;
+}
+
+main.treatment-methods-page .hemorrhoid-image-card,
+main.treatment-methods-page .hemorrhoid-treatment-image,
+main.treatment-methods-page .treatment-methods-grid .method-card img{
+  background:#e8f1f1;
+}
+
 @media(max-width:1024px){
   main.treatment-methods-page .treatment-methods-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
