@@ -460,7 +460,7 @@ function HealthSystemSection() {
 
 }
 
-function AboutPage() { return <main className="about-page"><PageHero title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><LeadershipSection /><AboutStorySection /></main>; }
+function AboutPage() { return <main className="about-page"><PageHero title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><LeadershipContentSection /><AboutStorySection /></main>; }
 
 
 
@@ -849,3 +849,46 @@ function EquipmentSectionNew() {
 function AboutStorySection() { return <section id="about-story" className="section about-story-section"><div className="container about-story"><h2>HỆ THỐNG Y TẾ TÂM AN THANH HÓA: HÀNH TRÌNH 18 NĂM KHẲNG ĐỊNH VỊ THẾ CHUYÊN KHOA ĐẦU NGÀNH</h2><p className="about-story-lead">Trong bản đồ y tế miền Trung, <strong>Hệ thống Y tế Tâm An</strong> (Thanh Hóa) là một cái tên bảo chứng cho chất lượng, sự tận tâm và giải pháp điều trị chuyên sâu. Được thành lập từ <strong>năm 2008</strong>, trải qua gần hai thập kỷ hình thành và phát triển, Tâm An đã vươn mình mạnh mẽ, trở thành bệnh viện chuyên khoa đầu tiên và duy nhất tại Việt Nam tập trung sâu vào lĩnh vực khám, điều trị các bệnh lý vùng <strong>Hậu môn – Trực tràng và bệnh Trĩ</strong>.</p><p>Với triết lý hoạt động lấy người bệnh làm trung tâm, Hệ thống Y tế Tâm An không chỉ là nơi chữa lành bệnh tật mà còn là điểm tựa tinh thần an tâm cho hàng vạn bệnh nhân trên cả nước.</p><h3>1. Tầm nhìn chiến lược và hệ thống cơ sở hạ tầng vượt trội</h3><p>Nhằm đáp ứng nhu cầu khám chữa bệnh ngày càng cao của người dân, Hệ thống Y tế Tâm An đã và đang xây dựng một hệ sinh thái y tế toàn diện với 3 cơ sở mũi nhọn tại Thành phố Thanh Hóa:</p><div className="about-facility-grid"><article><h4>Bệnh viện Tâm An <span>(Trụ sở chính)</span></h4><p>Tọa lạc tại số <strong>257 Nguyễn Trãi, Phường Tân Sơn, TP. Thanh Hóa</strong> (nằm ngay cạnh Bến xe phía Tây). Đây là “trái tim” của hệ thống, hoạt động theo mô hình “Bệnh viện khách sạn” khép kín. Nơi đây sở hữu không gian xanh, sạch, đẹp, mang lại cảm giác thư thái và bảo mật sự riêng tư cho người bệnh.</p></article><article><h4>Phòng khám Đa khoa Tâm An</h4><p>Đặt tại số <strong>04 Phan Huy Ích, Phường Hạc Thành, TP. Thanh Hóa</strong>. Phòng khám giữ vai trò vệ tinh, đáp ứng nhu cầu khám đa khoa toàn diện từ Nội khoa, Nhi khoa, Sản phụ khoa cho đến Cơ xương khớp, Tai mũi họng.</p></article><article><h4>Bệnh viện Đa khoa Tâm An</h4><p>Đang được triển khai tại <strong>Lô 05-06-07 đường Trịnh Kiểm, Phường Quảng Phú, TP. Thanh Hóa</strong>. Với quy mô lên tới <strong>250 giường bệnh</strong> cùng trang thiết bị thế hệ mới, cơ sở này dự kiến đưa vào hoạt động năm 2026.</p></article></div><h3>2. Đội ngũ chuyên gia đầu ngành – nơi hội tụ của những người thầy thuốc ưu tú</h3><p>Yếu tố cốt lõi làm nên thương hiệu Tâm An chính là nguồn nhân lực chất lượng cao. Bệnh viện được chèo lái bởi <strong>BS. CKII Lê Văn Cơ</strong> (Chủ đầu tư kiêm Giám đốc bệnh viện) cùng Ban giám đốc gồm BS. Lê Văn Quỳnh và Bà Mai Thị Hồng Hải.</p><ul><li><strong>Tiến sĩ Lê Xuân Huệ</strong> – Cố vấn chuyên môn danh tiếng, trực tiếp định hướng các phác đồ điều trị tiên tiến.</li><li><strong>Giáo sư Nguyễn Mạnh Nhâm</strong> – Chủ tịch Hội Hậu môn Trực tràng Việt Nam, chuyên gia đầu ngành trực tiếp hợp tác và chuyển giao công nghệ.</li><li>Cùng các bác sĩ chủ chốt như <strong>BS. Bùi Duy Thành</strong> (Trưởng khoa Ngoại - Gây mê hồi sức) và <strong>BS. Mai Văn Chiến</strong> (Trưởng Phòng khám Đa khoa), cùng đội ngũ điều dưỡng tận tâm, chuyên nghiệp.</li></ul><h3>3. Dịch vụ y tế mũi nhọn và công nghệ điều trị tiên tiến</h3><ul><li><strong>Chuyên khoa sâu Hậu môn – Trực tràng:</strong> Điều trị các cấp độ bệnh trĩ, rò hậu môn, nứt kẽ hậu môn, áp-xe và hẹp hậu môn. Bệnh viện ứng dụng các phương pháp phẫu thuật hiện đại như <strong>phương pháp Longo</strong>, giúp bảo tồn cấu trúc hậu môn và rút ngắn thời gian nằm viện.</li><li><strong>Tầm soát và Nội soi tiêu hóa:</strong> Hệ thống máy nội soi mềm hiện đại giúp phát hiện sớm polyp, tổn thương niêm mạc và tầm soát nguy cơ ung thư đại trực tràng từ giai đoạn khởi phát.</li><li><strong>Khám Đa khoa tổng quát:</strong> Cung cấp dịch vụ xét nghiệm, siêu âm, điện tim và tầm soát sức khỏe toàn diện cho cá nhân, tổ chức, doanh nghiệp.</li></ul><h3>4. Dịch vụ tận tâm, thời gian linh hoạt</h3><ul><li><strong>Thời gian mở cửa:</strong> Từ <strong>07:00 – 17:00</strong> tất cả các ngày trong tuần.</li><li><strong>Dịch vụ khách hàng:</strong> Quy trình thủ tục tối giản, nhanh gọn, hạn chế thời gian chờ đợi. Đội ngũ hotline luôn hỗ trợ tư vấn trực tuyến và đặt lịch hẹn trước.</li></ul><h3>5. Thông tin liên hệ chính thức</h3><div className="about-contact"><p><strong>Hotline hỗ trợ 24/7:</strong> <a href="tel:0977335599">0977 33 55 99</a> · <a href="tel:0919864929">0919 864 929</a> · <a href="tel:0977335599">0977 33 55 99</a></p><p><strong>Fanpage chính thức:</strong> <a href="https://www.facebook.com/bvtrita/" target="_blank" rel="noreferrer">Facebook Bệnh viện Tâm An</a></p></div><p className="about-story-slogan"><em>Bệnh viện Tâm An Thanh Hóa – Trao tâm đức, nhận an vui!</em></p></div></section>; }
 
 function AfterCarePreview() { return <section className="section aftercare-preview soft-section"><div className="container aftercare-preview-grid"><div><span className="eyebrow">ĐỒNG HÀNH SAU ĐIỀU TRỊ</span><h2>CHĂM SÓC HẬU PHẪU</h2><p>Hướng dẫn chăm sóc tại nhà và những dấu hiệu cần liên hệ sau phẫu thuật.</p></div><Link to="/cham-soc-hau-phau#aftercare-guide" className="button button-primary">Xem hướng dẫn <span>→</span></Link></div></section>; }
+
+function LeadershipContentSection() {
+  const specialtyGroups = [
+    { title: 'Ngoại tiêu hóa và Hậu môn – Trực tràng', doctors: ['BS.CKII. Lê Văn Cơ: Chuyên khoa Trĩ – Hậu môn – Trực tràng.', 'BS.CKI. Lê Thái Cương: Chuyên khoa Trĩ – Hậu môn – Trực tràng.'] },
+    { title: 'Ngoại tiết niệu', doctors: ['BS.CKII. Nguyễn Bá Hiệp: Chuyên khoa Ngoại tiết niệu.'] },
+    { title: 'Khoa Gây mê hồi sức', doctors: ['TS.BS. Lê Xuân Huệ: Chuyên sâu về Gây mê hồi sức và giảm đau sau phẫu thuật.', 'BS.CKI. Lê Phú Vũ: Khám chữa bệnh Nội khoa và Gây mê hồi sức.', 'ThS.BS. Nguyễn Duy Khánh: Chuyên gia đào tạo chuyên sâu về Đau.', 'BS. Vũ Văn Tiến: Chuyên gia đào tạo chuyên sâu về Đau.'] },
+    { title: 'Khoa Nội', doctors: ['BS.CKI. Mai Văn Chiến: Chuyên khoa Nội, Nội tiết; thực hiện các kỹ thuật X-quang và điện tim theo phạm vi chuyên môn.'] },
+    { title: 'Nhi khoa', doctors: ['ThS.BS. Nguyễn Thanh Sơn: Khám chữa bệnh nội nhi.', 'BS.CKI. Nhữ Mạnh Hào: Khám bệnh, chữa bệnh Gây mê hồi sức; Hồi sức Nhi khoa cơ bản.'] },
+    { title: 'Thận – Lọc máu', doctors: ['BS.CKI. Lê Viết Thành: Khám chữa bệnh chuyên ngành Nhi khoa và Thận – Lọc máu.'] },
+    { title: 'Y học cổ truyền, Phục hồi chức năng và Lão khoa', doctors: ['BS. Lê Văn Dũng: Khám chữa bệnh đa khoa, Phục hồi chức năng và Lão khoa.', 'ThS.BS. Lê Thị Hiền: Khám chữa bệnh bằng Y học cổ truyền và Phục hồi chức năng.'] },
+    { title: 'Nội soi tiêu hóa', doctors: ['BS.CKI. Cao Văn Thanh: Chuyên khoa Nội soi tiêu hóa.'] },
+  ];
+
+  return (
+    <section id="lanh-dao" className="section leadership-section leadership-content-section">
+      <div className="container leadership-content">
+        <div className="leadership-content-intro">
+          <span className="eyebrow">Tổ chức & chuyên môn</span>
+          <h2>ĐỘI NGŨ CHUYÊN GIA, BÁC SĨ TẠI BỆNH VIỆN ĐA KHOA TÂM AN</h2>
+          <p>Bệnh viện Đa khoa Tâm An quy tụ đội ngũ chuyên gia, bác sĩ và nhân viên y tế thuộc nhiều lĩnh vực chuyên môn, đáp ứng nhu cầu khám, chẩn đoán, điều trị và chăm sóc sức khỏe. Với sự tham gia của các tiến sĩ, thạc sĩ và bác sĩ chuyên khoa, bệnh viện chú trọng phối hợp chuyên môn giữa các lĩnh vực nhằm đánh giá toàn diện tình trạng người bệnh và tư vấn hướng điều trị phù hợp.</p>
+          <p>Bên cạnh năng lực chuyên môn, đội ngũ y tế luôn đề cao tinh thần trách nhiệm, sự tận tâm và thái độ tôn trọng người bệnh, hướng đến nâng cao chất lượng dịch vụ y tế.</p>
+        </div>
+
+        <div className="leadership-panel">
+          <div className="leadership-panel-heading"><span>01</span><div><h3>BAN GIÁM ĐỐC BỆNH VIỆN ĐA KHOA TÂM AN</h3><p>Ban Giám đốc phụ trách công tác quản lý, điều hành và định hướng phát triển bệnh viện, hướng đến nâng cao chất lượng chuyên môn, hoàn thiện quy trình hoạt động và cải thiện trải nghiệm khám chữa bệnh.</p></div></div>
+          <div className="leadership-person-grid"><article><strong>BS.CKII. Lê Văn Cơ</strong><span>Chủ tịch Hội đồng quản trị, Giám đốc Bệnh viện Đa khoa Tâm An.</span></article><article><strong>TS.BS. Lê Xuân Huệ</strong><span>Phó Chủ tịch Hội đồng quản trị, Cố vấn chuyên môn.</span></article><article><strong>CN. Mai Thị Hồng Hải</strong><span>Phó Chủ tịch Hội đồng quản trị, Giám đốc Tài chính.</span></article><article><strong>BS.CKI. Lê Thái Cương</strong><span>Phó Chủ tịch Hội đồng quản trị, Giám đốc Bệnh viện Tâm An.</span></article></div>
+        </div>
+
+        <div className="leadership-panel leadership-panel--soft">
+          <div className="leadership-panel-heading"><span>02</span><div><h3>BAN CỐ VẤN CHUYÊN MÔN</h3><p>Ban Cố vấn chuyên môn tham gia tư vấn, định hướng và hỗ trợ các hoạt động chuyên môn trong lĩnh vực phụ trách, góp phần hoàn thiện công tác khám chữa bệnh tại bệnh viện.</p></div></div>
+          <div className="leadership-advisor-grid"><article><strong>TS.BS. Lê Xuân Huệ</strong><span>Chuyên khoa Ngoại tiêu hóa.</span></article><article><strong>TS. Mai Văn Quang</strong><span>Lĩnh vực Nội khoa và Dinh dưỡng.</span></article></div>
+        </div>
+
+        <div className="leadership-specialties">
+          <div className="leadership-panel-heading"><span>03</span><div><h3>ĐỘI NGŨ BÁC SĨ THEO CHUYÊN KHOA</h3><p>Đội ngũ chuyên môn phối hợp theo từng lĩnh vực để hỗ trợ người bệnh từ thăm khám, chẩn đoán đến điều trị và chăm sóc.</p></div></div>
+          <div className="leadership-specialty-grid">{specialtyGroups.map((group) => <article key={group.title}><h4>{group.title}</h4><ul>{group.doctors.map((doctor) => <li key={doctor}>{doctor}</li>)}</ul></article>)}</div>
+        </div>
+
+        <div className="leadership-direction"><span className="eyebrow">Định hướng chăm sóc sức khỏe tại Tâm An</span><p>Tại Bệnh viện Đa khoa Tâm An, sự hài lòng và quyền lợi của người bệnh luôn được chú trọng trong quá trình cung cấp dịch vụ y tế. Bệnh viện hướng đến xây dựng môi trường khám chữa bệnh thân thiện, minh bạch và chu đáo, nơi người bệnh được lắng nghe, giải đáp thắc mắc và hướng dẫn cụ thể trong quá trình chăm sóc sức khỏe. Đây cũng là nền tảng để Tâm An không ngừng hoàn thiện chất lượng phục vụ, củng cố niềm tin và đồng hành cùng người bệnh trên hành trình bảo vệ sức khỏe lâu dài.</p></div>
+      </div>
+    </section>
+  );
+}
