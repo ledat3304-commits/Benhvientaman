@@ -404,7 +404,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className={`nav-dropdown-toggle${location.pathname.startsWith('/phuong-phap-dieu-tri-tri') ? ' active' : ''}`} onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to={item === 'Phẫu Thuật Điều Trị Bệnh Trĩ Triệt Để (Các Phương Pháp)' ? '/phuong-phap-dieu-tri-tri' : '/dat-lich'} key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group"><span className="nav-menu-group-title">HỖ TRỢ NGƯỜI BỆNH</span><Link to="/bao-hiem">Khám Bảo hiểm y tế</Link></div></div></div>
 
-            <Link className={(location.pathname.startsWith('/benh-ly') || location.pathname.startsWith('/khoa') || location.pathname.startsWith('/chuyen-khoa')) ? 'active' : ''} to="/chuyen-khoa">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
+            <Link className={(location.pathname.startsWith('/benh-ly') || location.pathname.startsWith('/khoa') || location.pathname.startsWith('/chuyen-khoa')) ? 'active' : ''} to="/chuyen-khoa">CHUYÊN KHOA</Link><Link className={location.pathname.startsWith('/doi-ngu-bac-si') ? 'active' : ''} to="/doi-ngu-bac-si">ĐỘI NGŨ BÁC SĨ</Link>
 
             <Link to="/cam-nang">TIN TỨC SỰ KIỆN</Link>
 
@@ -440,7 +440,7 @@ const slides = [
 
   { tag: 'Dịch vụ tận tâm', title: 'Một hành trình\nkhỏe mạnh hơn', text: 'Không gian hiện đại, quy trình minh bạch, chăm sóc trọn vẹn.', cta: 'Về Tâm An', link: '/gioi-thieu', className: 'slide-three' },
 
-  { tag: 'Tổ chức & chuyên môn', title: 'Ban lãnh đạo và\nphụ trách chuyên môn', text: 'Đội ngũ lãnh đạo và phụ trách chuyên môn đồng hành cùng định hướng chăm sóc chất lượng tại Tâm An.', cta: 'Xem đội ngũ', link: '/gioi-thieu#lanh-dao', className: 'slide-four' },
+  { tag: 'Tổ chức & chuyên môn', title: 'Ban lãnh đạo và\nphụ trách chuyên môn', text: 'Đội ngũ lãnh đạo và phụ trách chuyên môn đồng hành cùng định hướng chăm sóc chất lượng tại Tâm An.', cta: 'Xem đội ngũ', link: '/doi-ngu-bac-si', className: 'slide-four' },
 
   { tag: 'Vị trí thuận tiện', title: 'Bản đồ cơ sở chính', text: 'Xem vị trí và hướng dẫn đường đến Bệnh viện Tâm An.', cta: 'Xem chi tiết', link: '/lien-he', className: 'slide-six' },
 
@@ -460,7 +460,9 @@ function HealthSystemSection() {
 
 }
 
-function AboutPage() { return <main className="about-page"><PageHero title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><LeadershipContentSection /><AboutStorySection /></main>; }
+function AboutPage() { return <main className="about-page"><PageHero title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><AboutStorySection /></main>; }
+
+function DoctorsTeamPage() { return <main className="about-page doctors-team-page"><PageHero label="Đội ngũ chuyên môn" title="ĐỘI NGŨ CHUYÊN GIA, BÁC SĨ TẠI BỆNH VIỆN ĐA KHOA TÂM AN" text="Đội ngũ chuyên gia, bác sĩ và nhân viên y tế đồng hành cùng người bệnh trong quá trình khám, chẩn đoán, điều trị và chăm sóc sức khỏe." /><LeadershipContentSection /></main>; }
 
 
 
@@ -826,7 +828,7 @@ function isDepartmentHeading(line: string) { return line.length < 90 && (line ==
 
 function DepartmentPage() { const { slug } = useParams(); const department = generalHospitalDepartments.find((item) => item.id === slug); const article = departmentArticles[slug || '']; if (!department && !article) return <Navigate to="/benh-ly" replace />; const title = article?.title || department?.title || ''; const lines = article?.content.split(/\r?\n/).slice(1) || []; return <main className="department-detail-page"><PageHero label="Chuyên khoa" title={title} text="" backHome /><section className="section"><div className="container department-detail-layout"><article className="medical-article department-article">{department?.image ? <img className="department-detail-image" src={department.image} alt={`Hình ảnh ${department.title}`} /> : null}{lines.map((line, index) => line.startsWith('* ') ? <p className="department-bullet" key={`${line}-${index}`}>{line.slice(2)}</p> : isDepartmentHeading(line) ? <h2 key={`${line}-${index}`}>{line}</h2> : <p key={`${line}-${index}`}>{line}</p>)}<Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></article></div></section></main>; }
 
-function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<HemorrhoidPage />} /><Route path="/phuong-phap-dieu-tri-tri" element={<TreatmentMethodsPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
+function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/doi-ngu-bac-si" element={<DoctorsTeamPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<HemorrhoidPage />} /><Route path="/phuong-phap-dieu-tri-tri" element={<TreatmentMethodsPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
 function EquipmentSectionNew() {

@@ -58,7 +58,7 @@ export function TeamSection() {
             <h2>Những người đồng hành cùng sức khỏe của bạn</h2>
             <p>Đội ngũ quản lý và chuyên môn phối hợp chặt chẽ, đặt sự an toàn và an tâm của người bệnh làm trọng tâm.</p>
           </div>
-          <Link to="/gioi-thieu#lanh-dao" className="button button-primary">Xem đội ngũ <span>→</span></Link>
+          <Link to="/doi-ngu-bac-si" className="button button-primary">Xem đội ngũ <span>→</span></Link>
         </div>
         <div className="home-team-banner-wrap">
           <img className="home-team-banner" src="/hospital/leadership-team-banner.png" alt="Ban lãnh đạo Bệnh viện Đa khoa Tâm An" />
