@@ -602,8 +602,8 @@ function TreatmentMethodsPage() {
     const previousTitle = document.title;
     const description = document.querySelector('meta[name="description"]');
     const previousDescription = description?.getAttribute('content') || '';
-    document.title = 'Các phương pháp điều trị trĩ | Bệnh viện Đa khoa Tâm An';
-    description?.setAttribute('content', 'Tổng quan các phương pháp điều trị trĩ tại Bệnh viện Đa khoa Tâm An: điều trị nội khoa, thủ thuật ít xâm lấn và phẫu thuật theo từng tình trạng.');
+    document.title = 'Các phương pháp điều trị bệnh trĩ và những lưu ý quan trọng | Bệnh viện Đa khoa Tâm An';
+    description?.setAttribute('content', 'Các phương pháp điều trị bệnh trĩ và những lưu ý quan trọng tại Bệnh viện Đa khoa Tâm An, từ thăm khám, nội soi chẩn đoán đến điều trị nội khoa, thủ thuật và ngoại khoa.');
     return () => {
       document.title = previousTitle;
       description?.setAttribute('content', previousDescription);
@@ -611,20 +611,24 @@ function TreatmentMethodsPage() {
   }, []);
 
   const surgicalMethods = [
-    { title: 'Cắt trĩ kinh điển', label: 'Milligan–Morgan / Ferguson', image: '/methods/milligan-morgan.jpg', text: 'Cắt từng búi trĩ riêng biệt và bảo tồn cầu niêm mạc giữa các búi. Phương pháp thường được cân nhắc ở trĩ độ III–IV, trĩ hỗn hợp hoặc sa nhiều.' },
-    { title: 'Phương pháp Longo', label: 'PPH – khâu treo niêm mạc', image: '/methods/longo.jpg', text: 'Khâu treo niêm mạc giúp kéo búi trĩ lên và giảm tưới máu. Có thể hồi phục nhanh hơn ở người bệnh phù hợp; không phải lựa chọn cho mọi trường hợp.' },
-    { title: 'HCPT / Laser', label: 'Năng lượng cao tần hoặc tia laser', image: '/methods/laser.jpg', text: 'Sử dụng năng lượng theo chỉ định để xử lý mạch máu và búi trĩ. Hiệu quả, nguy cơ tái phát và thời gian hồi phục phụ thuộc từng tình trạng.' },
-    { title: 'Thủ thuật ít xâm lấn', label: 'Thắt vòng cao su, tiêm xơ, quang đông', image: '/medical/nghet-bui-tri.jpg', text: 'Thường được cân nhắc cho trĩ nội độ I–II và một số trường hợp đầu độ III. Có thể cần lặp lại và không phù hợp với búi trĩ lớn hoặc sa nặng.' },
+    { title: 'Phẫu thuật Whitehead', label: 'Kinh điển – 1882', image: '/hospital/surgery-slide.png', text: 'Phương pháp kinh điển áp dụng cho trĩ vòng nhưng có nhiều biến chứng nên đã được cải tiến.' },
+    { title: 'Phẫu thuật Toupet', label: 'Cải tiến từ Whitehead – 1967', image: '/hospital/surgery-slide.png', text: 'Phương pháp cải tiến từ Whitehead, dùng để điều trị trĩ vòng độ III, IV.' },
+    { title: 'Milligan–Morgan / Ferguson', label: 'Cắt trĩ kinh điển', image: '/methods/milligan-morgan.jpg', text: 'Cắt bỏ từng búi trĩ riêng lẻ, thắt gốc búi trĩ và để hở hoặc khâu vết thương nền búi trĩ theo kỹ thuật.' },
+    { title: 'Phẫu thuật Longo', label: 'Stapler – 1998', image: '/methods/longo.jpg', text: 'Sử dụng máy khâu vòng (Stapler) theo chỉ định của bác sĩ.' },
+    { title: 'HCPT', label: 'Điện cao tần – 2000', image: '/methods/laser.jpg', text: 'Dùng xung điện từ trường làm đông đặc búi trĩ theo chỉ định.' },
+    { title: 'Phẫu thuật bằng Laser', label: 'Năng lượng Laser', image: '/methods/laser.jpg', text: 'Ứng dụng năng lượng Laser trong điều trị bệnh trĩ theo tình trạng cụ thể.' },
+    { title: 'Phẫu thuật Doppler (THD)', label: 'Triệt mạch dưới hướng dẫn Doppler', image: '/hospital/surgery-slide.png', text: 'Một trong các kỹ thuật ngoại khoa được bác sĩ cân nhắc tùy đặc điểm bệnh.' },
+    { title: 'Các phương pháp khác', label: 'Theo chỉ định chuyên khoa', image: '/hospital/surgery-slide.png', text: 'Bác sĩ sẽ tư vấn phương pháp phù hợp sau khi đánh giá đầy đủ người bệnh.' },
   ];
 
   return (
     <main className="hemorrhoid-page treatment-methods-page">
-      <PageHero label="Chuyên khoa Hậu môn – Trực tràng" title="CÁC PHƯƠNG PHÁP ĐIỀU TRỊ TRĨ" text="Mỗi phương pháp có chỉ định, ưu điểm và giới hạn riêng. Bác sĩ sẽ đánh giá tình trạng cụ thể trước khi tư vấn hướng điều trị phù hợp." />
+      <PageHero label="Chuyên khoa Hậu môn – Trực tràng" title="CÁC PHƯƠNG PHÁP ĐIỀU TRỊ BỆNH TRĨ VÀ NHỮNG LƯU Ý QUAN TRỌNG TẠI BỆNH VIỆN ĐA KHOA TÂM AN" text="Bệnh trĩ và các bệnh lý hậu môn trực tràng được thăm khám, chẩn đoán và tư vấn phương pháp điều trị phù hợp tại Bệnh viện Đa khoa Tâm An." />
       <nav className="hemorrhoid-toc" aria-label="Nội dung trang phương pháp điều trị trĩ">
         <div className="container">
           <strong>NỘI DUNG CHÍNH</strong>
           <a href="#tong-quan">Tổng quan</a>
-          <a href="#noi-khoa">Điều trị nội khoa</a>
+          <a href="#noi-khoa">Mức độ và bệnh lý kèm theo</a>
           <a href="#thu-thuat">Thủ thuật</a>
           <a href="#phau-thuat">Phẫu thuật</a>
           <a href="#luu-y">Lưu ý sau điều trị</a>
@@ -633,9 +637,9 @@ function TreatmentMethodsPage() {
 
       <section id="tong-quan" className="section hemorrhoid-section hemorrhoid-section--soft">
         <div className="container">
-          <div className="hemorrhoid-section-heading"><span className="eyebrow">Đánh giá trước điều trị</span><h2>KHÔNG CÓ MỘT PHƯƠNG PHÁP PHÙ HỢP CHO TẤT CẢ</h2><p>Hướng điều trị phụ thuộc vào loại trĩ, mức độ sa, triệu chứng, bệnh lý đi kèm và tình trạng sức khỏe của từng người bệnh.</p></div>
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Thăm khám và chẩn đoán</span><h2>ĐÁNH GIÁ TOÀN DIỆN TRƯỚC KHI ĐIỀU TRỊ</h2><p>Tại Trung tâm Hậu môn trực tràng Bệnh viện Đa khoa Tâm An, người bệnh được thăm khám tổng quát và nội soi chẩn đoán vùng hậu môn trực tràng.</p></div>
           <div className="hemorrhoid-evaluation-grid">
-            <div className="hemorrhoid-copy"><div className="hemorrhoid-callout">Điều trị trĩ cần được cá thể hóa sau khi bác sĩ thăm khám và đánh giá đầy đủ, không nên tự lựa chọn phương pháp chỉ dựa trên quảng cáo hoặc mức độ sa búi trĩ.</div><p>Người bệnh có thể được tư vấn điều trị bảo tồn, thủ thuật ít xâm lấn hoặc phẫu thuật. Mục tiêu là kiểm soát triệu chứng, xử lý nguyên nhân phù hợp và hỗ trợ hồi phục an toàn.</p></div>
+            <div className="hemorrhoid-copy"><div className="hemorrhoid-callout">Căn cứ vào mức độ bệnh, các bệnh lý kèm theo và kết quả xét nghiệm cận lâm sàng, bác sĩ mới đưa ra phương pháp điều trị phù hợp.</div><p>Bệnh viện đánh giá các dạng trĩ như trĩ nội, trĩ ngoại, trĩ hỗn hợp, trĩ vòng và các bệnh lý hậu môn trực tràng có thể đi kèm trước khi lựa chọn hướng điều trị.</p></div>
             <figure className="hemorrhoid-image-card"><img src="/hospital/hero-banner-desktop.png" alt="Bác sĩ Tâm An tư vấn phương pháp điều trị trĩ" loading="lazy" /><figcaption>Bác sĩ thăm khám và tư vấn hướng điều trị theo từng tình trạng.</figcaption></figure>
           </div>
         </div>
@@ -643,29 +647,29 @@ function TreatmentMethodsPage() {
 
       <section id="noi-khoa" className="section hemorrhoid-section">
         <div className="container">
-          <div className="hemorrhoid-section-heading"><span className="eyebrow">Phương pháp bảo tồn</span><h2>1. ĐIỀU TRỊ NỘI KHOA VÀ THAY ĐỔI LỐI SỐNG</h2><p>Thường được cân nhắc ở người bệnh có triệu chứng nhẹ hoặc một số trường hợp trĩ nội mức độ sớm.</p></div>
-          <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">01</div><div><h3>Kiểm soát triệu chứng và hạn chế tái phát</h3><p>Người bệnh được hướng dẫn điều chỉnh thói quen đại tiện, chế độ ăn uống và vận động. Thuốc chỉ sử dụng theo chỉ định của bác sĩ khi cần thiết.</p><ul><li>Tăng cường chất xơ trong chế độ ăn.</li><li>Uống đủ nước tùy nhu cầu và tình trạng sức khỏe.</li><li>Hạn chế rặn, không ngồi lâu khi đại tiện.</li><li>Tăng cường vận động phù hợp.</li><li>Dùng thuốc đúng hướng dẫn và tái khám khi được hẹn.</li></ul></div></article>
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Căn cứ lựa chọn phương pháp</span><h2>ĐÁNH GIÁ MỨC ĐỘ BỆNH VÀ BỆNH LÝ KÈM THEO</h2><p>Trước khi điều trị, bác sĩ sẽ xem xét tổng thể tình trạng người bệnh, không chỉ dựa vào triệu chứng của búi trĩ.</p></div>
+          <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">01</div><div><h3>Các yếu tố được đánh giá</h3><p><strong>Căn cứ vào mức độ bệnh:</strong> trĩ nội, trĩ ngoại, trĩ hỗn hợp, trĩ vòng,...</p><p><strong>Các bệnh lý kèm theo:</strong> bệnh lý tim mạch, tiểu đường, polyp hậu môn trực tràng, u trực tràng, áp xe hậu môn trực tràng, rò hậu môn, ung thư trực tràng hậu môn và các bệnh lý liên quan khác.</p><p><strong>Kết quả xét nghiệm cận lâm sàng:</strong> trong đó có các vấn đề về máu và các kết quả cần thiết khác theo chỉ định.</p><p>Căn cứ vào các kết quả thăm khám trên, bác sĩ sẽ tư vấn phương pháp điều trị phù hợp như nội khoa, thủ thuật hoặc ngoại khoa.</p></div></article>
         </div>
       </section>
 
       <section id="thu-thuat" className="section hemorrhoid-section hemorrhoid-section--soft">
         <div className="container">
-          <div className="hemorrhoid-section-heading"><span className="eyebrow">Can thiệp ít xâm lấn</span><h2>2. CÁC THỦ THUẬT ĐIỀU TRỊ TRĨ</h2><p>Một số trường hợp trĩ nội có thể được điều trị bằng thủ thuật tại chỗ, giúp giảm nguồn máu nuôi và làm búi trĩ thoái triển.</p></div>
-          <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">02</div><div><h3>Thắt vòng cao su, tiêm xơ hoặc quang đông hồng ngoại</h3><p>Thắt vòng cao su thường được áp dụng cho một số trường hợp trĩ nội phù hợp. Bác sĩ đặt vòng vào vị trí thích hợp trên búi trĩ; việc lựa chọn thủ thuật phụ thuộc vào đặc điểm búi trĩ, mức độ sa và triệu chứng của từng người bệnh.</p><div className="medical-note">Thủ thuật chỉ được thực hiện sau khi bác sĩ đánh giá và chỉ định. Người bệnh cần theo dõi các dấu hiệu bất thường theo hướng dẫn sau can thiệp.</div></div></article>
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Các phương pháp đã được biết đến</span><h2>2. THỦ THUẬT ĐIỀU TRỊ BỆNH TRĨ</h2><p>Bệnh viện đã đánh giá các phương pháp điều trị hiện có và lựa chọn kỹ thuật phù hợp với chuyên môn, chỉ định và an toàn người bệnh.</p></div>
+          <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">02</div><div><h3>Thắt trĩ bằng vòng cao su, tiêm xơ và áp nitơ lạnh</h3><p><strong>Thắt trĩ bằng vòng cao su:</strong> theo phương pháp của Baron (1963), là phương pháp đã có từ lâu. Theo nội dung chuyên môn của Bệnh viện, phương pháp này có thể gây đau và không triệt để; hiện nay Bệnh viện không áp dụng.</p><p><strong>Tiêm xơ:</strong> tiêm trực tiếp vào gốc búi trĩ để làm xơ hóa, teo búi trĩ. Bệnh viện không áp dụng vì lo ngại về nguồn gốc thuốc tiêm xơ và nguy cơ biến chứng chít hẹp hậu môn khi sử dụng thuốc không rõ nguồn gốc.</p><p><strong>Áp nitơ lạnh:</strong> làm tắc mạch và teo búi trĩ, tuy nhiên tỷ lệ tái phát được ghi nhận là tương đối cao.</p><div className="medical-note">Việc lựa chọn hoặc không lựa chọn thủ thuật cần được giải thích cụ thể sau khi bác sĩ thăm khám và đánh giá từng trường hợp.</div></div></article>
         </div>
       </section>
 
       <section id="phau-thuat" className="section hemorrhoid-section">
         <div className="container">
-          <div className="hemorrhoid-section-heading"><span className="eyebrow">Điều trị ngoại khoa</span><h2>3. PHẪU THUẬT ĐIỀU TRỊ TRĨ</h2><p>Phẫu thuật có thể được cân nhắc khi trĩ ở mức độ nặng, sa nhiều, trĩ hỗn hợp hoặc khi các phương pháp khác không còn phù hợp.</p></div>
-          <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">03</div><div><h3>Lựa chọn kỹ thuật theo đặc điểm bệnh</h3><p>Một số kỹ thuật thường được nhắc đến gồm cắt trĩ theo Milligan–Morgan, Ferguson, phẫu thuật Longo hoặc các kỹ thuật khâu treo – triệt mạch trĩ. Mỗi phương pháp có chỉ định, ưu điểm và giới hạn riêng.</p><p>Bác sĩ sẽ cân nhắc dựa trên đặc điểm bệnh, mức độ sa, triệu chứng, bệnh lý đi kèm và điều kiện thực tế của người bệnh.</p></div></article>
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Điều trị ngoại khoa</span><h2>3. PHẪU THUẬT ĐIỀU TRỊ BỆNH TRĨ</h2><p>Bệnh viện đã triển khai và áp dụng tất cả các phương pháp điều trị bệnh trĩ hiện đại và tốt nhất hiện nay trên thế giới theo tình trạng bệnh, chỉ định chuyên môn và điều kiện sức khỏe của người bệnh.</p></div>
+          <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">03</div><div><h3>Các kỹ thuật ngoại khoa</h3><p>Phẫu thuật Whitehead (1882) là phương pháp kinh điển áp dụng cho trĩ vòng nhưng có nhiều biến chứng nên đã được cải tiến. Phẫu thuật Toupet (1967) là phương pháp cải tiến từ Whitehead, dùng để điều trị trĩ vòng độ III, IV.</p><p>Các phương pháp khác gồm Milligan–Morgan (1937), Ferguson (1986), Longo (1998) sử dụng máy khâu vòng Stapler, điện cao tần HCPT (2000), phẫu thuật bằng Laser, phẫu thuật Doppler (THD) và nhiều phương pháp khác.</p><p>Mỗi phương pháp có chỉ định, ưu điểm, giới hạn và nguy cơ riêng. Bác sĩ sẽ tư vấn sau khi đánh giá đầy đủ.</p></div></article>
           <div className="treatment-methods-grid">{surgicalMethods.map((method) => <article className="method-card" key={method.title}><img src={method.image} alt={`Minh họa ${method.title}`} loading="lazy" /><div className="method-card-body"><span>{method.label}</span><h3>{method.title}</h3><p>{method.text}</p></div></article>)}</div>
         </div>
       </section>
 
       <section id="luu-y" className="section hemorrhoid-section hemorrhoid-section--soft">
         <div className="container">
-          <div className="hemorrhoid-care-grid"><div><div className="hemorrhoid-section-heading"><span className="eyebrow">Đồng hành sau điều trị</span><h2>LƯU Ý ĐỂ HỖ TRỢ HỒI PHỤC</h2></div><ul className="hemorrhoid-checklist"><li><span aria-hidden="true">✓</span>Ăn uống cân đối, tăng thực phẩm giàu chất xơ và uống đủ nước.</li><li><span aria-hidden="true">✓</span>Không rặn hoặc ngồi lâu khi đại tiện; vận động theo hướng dẫn.</li><li><span aria-hidden="true">✓</span>Vệ sinh vùng hậu môn nhẹ nhàng, dùng thuốc đúng chỉ định.</li><li><span aria-hidden="true">✓</span>Tái khám theo lịch hẹn và báo ngay khi đau tăng, sốt hoặc chảy máu nhiều.</li></ul></div><div className="hemorrhoid-warning"><strong>Nội dung chỉ có tính tham khảo, không thay thế thăm khám và tư vấn trực tiếp. Hãy đi khám khi chảy máu tái diễn, đau nhiều, búi trĩ sa không tự co lên hoặc xuất hiện dấu hiệu bất thường.</strong></div></div>
+          <div className="hemorrhoid-care-grid"><div><div className="hemorrhoid-section-heading"><span className="eyebrow">Lưu ý quan trọng</span><h2>ƯU ĐÃI VÀ THEO DÕI SAU PHẪU THUẬT</h2></div><p>Đến phẫu thuật bệnh trĩ và các bệnh lý hậu môn trực tràng tại Bệnh viện Đa khoa Tâm An được ưu đãi giảm phí và miễn phí theo chính sách của Bệnh viện.</p><p>Riêng bệnh trĩ sau phẫu thuật được miễn phí trong vòng 5 năm; từ năm thứ 6 đến năm thứ 10, chi phí là 1 triệu đồng theo nội dung chương trình.</p><ul className="hemorrhoid-checklist"><li><span aria-hidden="true">✓</span>Ăn uống cân đối, tăng thực phẩm giàu chất xơ và uống đủ nước.</li><li><span aria-hidden="true">✓</span>Không rặn hoặc ngồi lâu khi đại tiện; vận động theo hướng dẫn.</li><li><span aria-hidden="true">✓</span>Tái khám theo lịch hẹn và báo ngay khi đau tăng, sốt hoặc chảy máu nhiều.</li></ul></div><div className="hemorrhoid-warning"><strong>Chính sách ưu đãi và chi phí cần được xác nhận trực tiếp với Bệnh viện tại thời điểm đăng ký, tùy chương trình và điều kiện áp dụng. Nội dung trang không thay thế thăm khám và tư vấn y khoa.</strong></div></div>
           <div className="hemorrhoid-final-actions"><Link to="/dat-lich" className="button button-primary">Đặt lịch tư vấn <span>→</span></Link><a href="tel:0977335599" className="button button-outline">Liên hệ tư vấn <span>↗</span></a></div>
         </div>
       </section>
