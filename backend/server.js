@@ -870,7 +870,6 @@ app.post('/api/booking-requests', async (req, res) => {
     const preferredTime = optionalClock(body.preferredTime ?? body.time ?? body.GioMongMuon);
     const reason = String(body.reason || body.Symptoms || body.LyDoKham || '').trim() || null;
     const note = String(body.note || body.notes || body.GhiChu || '').trim() || null;
-    const preferredDoctorGender = String(body.preferredDoctorGender || body.doctorGender || '').trim() || null;
 
     if (phone && !/^\d+$/.test(phone)) {
       return res.status(400).json({ success: false, message: 'Số điện thoại chỉ được chứa chữ số.' });
@@ -878,7 +877,7 @@ app.post('/api/booking-requests', async (req, res) => {
     if (!name || name.length > 100 || !isValidPhone(phone)) {
       return res.status(400).json({ success: false, message: 'Vui lòng nhập họ tên và số điện thoại hợp lệ.' });
     }
-    if (!isValidEmail(email) || Number.isNaN(specialtyId) || Number.isNaN(serviceId) || Number.isNaN(doctorId) || Number.isNaN(preferredDate) || Number.isNaN(preferredTime) || (preferredDoctorGender && !['Nam', 'Nữ', 'Không yêu cầu'].includes(preferredDoctorGender))) {
+    if (!isValidEmail(email) || Number.isNaN(specialtyId) || Number.isNaN(serviceId) || Number.isNaN(doctorId) || Number.isNaN(preferredDate) || Number.isNaN(preferredTime)) {
       return res.status(400).json({ success: false, message: 'Thông tin phiếu yêu cầu chưa hợp lệ.' });
     }
     if (preferredDate && preferredDate < getTodayIsoDate()) {
@@ -958,15 +957,14 @@ app.post('/api/booking-requests', async (req, res) => {
     const inserted = await client.query(
       `INSERT INTO yeucaudatlich
         (userid, hoten, sodienthoai, email, chuyenkhoaid, dichvuid, bacsiid, ngaymongmuon, giomongmuon, lydokham, ghichu,
-         phibacsitaithoidiem, phidichvutaithoidiem, tongtamtinh, gioitinhbacsimongmuon)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+         phibacsitaithoidiem, phidichvutaithoidiem, tongtamtinh)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
        RETURNING *`,
-      [requesterId, name, phone, email, specialtyId, serviceId, doctorId, preferredDate, preferredTime, reason, note, doctorFee, serviceFee, estimatedTotal, preferredDoctorGender]
+      [requesterId, name, phone, email, specialtyId, serviceId, doctorId, preferredDate, preferredTime, reason, note, doctorFee, serviceFee, estimatedTotal]
     );
     const requestRow = normalizeDbRow(inserted.rows[0]);
     const requestCode = normalizeRequestCode(requestRow.YeuCauID, requestRow.ngaytao);
     const notificationContent = [
-      `Preferred doctor gender: ${displayRequestValue(preferredDoctorGender, 'Not requested')}`,
       `Doctor fee: ${displayRequestValue(doctorFee, 'Not provided')}`,
       `Service fee: ${displayRequestValue(serviceFee, 'Not provided')}`,
       `Estimated total: ${displayRequestValue(estimatedTotal, '0')}`,

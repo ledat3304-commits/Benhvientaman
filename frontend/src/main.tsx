@@ -11,8 +11,6 @@ import { departmentArticles } from './department-content';
 
 import { InsuranceSection, NewsEventsSection, ServicePackagesSection, TeamSection } from './home-sections';
 
-import { SpecialtyBookingPage, SpecialtyHeader, SpecialtyLandingPage } from './specialty-components';
-
 
 
 const API_BASE = (
@@ -417,8 +415,6 @@ function Layout({ children }: { children: React.ReactNode }) {
         </div>
 
       </header>
-
-      <SpecialtyHeader />
 
       {children}<ChatWidget /><BackToTop /><Footer />
 
@@ -832,7 +828,7 @@ function isDepartmentHeading(line: string) { return line.length < 90 && (line ==
 
 function DepartmentPage() { const { slug } = useParams(); const department = generalHospitalDepartments.find((item) => item.id === slug); const article = departmentArticles[slug || '']; if (!department && !article) return <Navigate to="/benh-ly" replace />; const title = article?.title || department?.title || ''; const lines = article?.content.split(/\r?\n/).slice(1) || []; return <main className="department-detail-page"><PageHero label="Chuyên khoa" title={title} text="" backHome /><section className="section"><div className="container department-detail-layout"><article className="medical-article department-article">{department?.image ? <img className="department-detail-image" src={department.image} alt={`Hình ảnh ${department.title}`} /> : null}{lines.map((line, index) => line.startsWith('* ') ? <p className="department-bullet" key={`${line}-${index}`}>{line.slice(2)}</p> : isDepartmentHeading(line) ? <h2 key={`${line}-${index}`}>{line}</h2> : <p key={`${line}-${index}`}>{line}</p>)}<Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></article></div></section></main>; }
 
-function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<SpecialtyLandingPage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/doi-ngu-bac-si" element={<DoctorsTeamPage />} /><Route path="/dat-lich" element={<SpecialtyBookingPage />} /><Route path="/benh-ly" element={<HemorrhoidPage />} /><Route path="/phuong-phap-dieu-tri-tri" element={<TreatmentMethodsPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<Navigate to="/" replace />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
+function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/doi-ngu-bac-si" element={<DoctorsTeamPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<HemorrhoidPage />} /><Route path="/phuong-phap-dieu-tri-tri" element={<TreatmentMethodsPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<Navigate to="/" replace />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
 function EquipmentSectionNew() {
