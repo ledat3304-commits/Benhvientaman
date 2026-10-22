@@ -206,7 +206,7 @@ const healthSystemProfiles = [
     tone: 'general',
     kicker: 'Đa khoa toàn diện',
     title: 'Bệnh Viện Đa Khoa Tâm An',
-    summary: 'Cơ sở đa khoa quy mô lớn, kết nối nhiều chuyên khoa để phục vụ nhu cầu điều trị và chăm sóc toàn diện.',
+    summary: 'Tọa lạc tại Lô 05-06-07 đường Trịnh Kiểm, Phường Quảng Phú, TP. Thanh Hóa, Bệnh viện Đa khoa Tâm An đã chính thức đi vào hoạt động. Sở hữu quy mô lên tới 250 giường bệnh cùng hệ thống trang thiết bị tiên tiến, bệnh viện hiện đang tiếp nhận và cung cấp các dịch vụ chăm sóc sức khỏe chất lượng cao.',
     address: 'Lô 05-06-07 đường Trịnh Kiểm, P. Quảng Phú, TP. Thanh Hóa',
     status: '',
     details: [
