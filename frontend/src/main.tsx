@@ -402,7 +402,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             </div>
 
-            <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className="nav-dropdown-toggle" onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to="/dat-lich" key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group"><span className="nav-menu-group-title">HỖ TRỢ NGƯỜI BỆNH</span><Link to="/bao-hiem">Khám Bảo hiểm y tế</Link></div></div></div>
+            <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className={`nav-dropdown-toggle${location.pathname.startsWith('/phuong-phap-dieu-tri-tri') ? ' active' : ''}`} onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to={item === 'Phẫu Thuật Điều Trị Bệnh Trĩ Triệt Để (Các Phương Pháp)' ? '/phuong-phap-dieu-tri-tri' : '/dat-lich'} key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group"><span className="nav-menu-group-title">HỖ TRỢ NGƯỜI BỆNH</span><Link to="/bao-hiem">Khám Bảo hiểm y tế</Link></div></div></div>
 
             <Link className={(location.pathname.startsWith('/benh-ly') || location.pathname.startsWith('/khoa') || location.pathname.startsWith('/chuyen-khoa')) ? 'active' : ''} to="/chuyen-khoa">CHUYÊN KHOA</Link><Link to="/gioi-thieu#lanh-dao">ĐỘI NGŨ BÁC SĨ</Link>
 
@@ -424,7 +424,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 }
 
-function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link to="/" className="brand brand-light"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><p className="footer-intro">Đồng hành cùng bạn trên hành trình chăm sóc sức khỏe an toàn, chuyên nghiệp và nhân văn.</p><div className="social-row"><span>f</span><span>in</span><span>▶</span></div></div><div><h3>Khám phá</h3><Link to="/gioi-thieu">Về Tâm An</Link><Link to="/dat-lich">Đặt lịch trực tuyến</Link><Link to="/benh-ly">Chuyên mục bệnh lý</Link><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div><div><h3>Hỗ trợ người bệnh</h3><Link to="/faq">Câu hỏi thường gặp</Link><Link to="/bao-hiem">Bảo hiểm y tế</Link><Link to="/lien-he">Liên hệ & cơ sở</Link></div><div><h3>Liên hệ</h3><a href="tel:0977335599" className="footer-hotline">0977 33 55 99</a><p>Hotline 24/7</p><a href="mailto:contact@benhvientaman.vn">contact@benhvientaman.vn</a><p>Lô 05-06-07 đường Trịnh Kiểm, P. Quảng Phú, TP. Thanh Hóa</p></div></div><div className="container footer-bottom"><span>© 2025 Bệnh viện Tâm An</span><span>Chính sách bảo mật · Điều khoản sử dụng</span></div></footer>; }
+function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link to="/" className="brand brand-light"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /></Link><p className="footer-intro">Đồng hành cùng bạn trên hành trình chăm sóc sức khỏe an toàn, chuyên nghiệp và nhân văn.</p><div className="social-row"><span>f</span><span>in</span><span>▶</span></div></div><div><h3>Khám phá</h3><Link to="/gioi-thieu">Về Tâm An</Link><Link to="/dat-lich">Đặt lịch trực tuyến</Link><Link to="/benh-ly">Chuyên mục bệnh lý</Link><Link to="/phuong-phap-dieu-tri-tri">Các phương pháp điều trị trĩ</Link><Link to="/cam-nang">Hội nghị sự kiện Hậu môn trực tràng</Link></div><div><h3>Hỗ trợ người bệnh</h3><Link to="/faq">Câu hỏi thường gặp</Link><Link to="/bao-hiem">Bảo hiểm y tế</Link><Link to="/lien-he">Liên hệ & cơ sở</Link></div><div><h3>Liên hệ</h3><a href="tel:0977335599" className="footer-hotline">0977 33 55 99</a><p>Hotline 24/7</p><a href="mailto:contact@benhvientaman.vn">contact@benhvientaman.vn</a><p>Lô 05-06-07 đường Trịnh Kiểm, P. Quảng Phú, TP. Thanh Hóa</p></div></div><div className="container footer-bottom"><span>© 2025 Bệnh viện Tâm An</span><span>Chính sách bảo mật · Điều khoản sử dụng</span></div></footer>; }
 
 function SectionHeading({ eyebrow, title, text, light = false, eyebrowClassName = '' }: { eyebrow?: string; title?: string; text?: string; light?: boolean; eyebrowClassName?: string }) { return <div className={light ? 'section-heading light' : 'section-heading'}>{eyebrow && <span className={`eyebrow${eyebrowClassName ? ` ${eyebrowClassName}` : ''}`}>{eyebrow}</span>}{title && <h2>{title}</h2>}{text && <p>{text}</p>}</div>; }
 
@@ -597,6 +597,82 @@ function HemorrhoidPage() {
   );
 }
 
+function TreatmentMethodsPage() {
+  useEffect(() => {
+    const previousTitle = document.title;
+    const description = document.querySelector('meta[name="description"]');
+    const previousDescription = description?.getAttribute('content') || '';
+    document.title = 'Các phương pháp điều trị trĩ | Bệnh viện Đa khoa Tâm An';
+    description?.setAttribute('content', 'Tổng quan các phương pháp điều trị trĩ tại Bệnh viện Đa khoa Tâm An: điều trị nội khoa, thủ thuật ít xâm lấn và phẫu thuật theo từng tình trạng.');
+    return () => {
+      document.title = previousTitle;
+      description?.setAttribute('content', previousDescription);
+    };
+  }, []);
+
+  const surgicalMethods = [
+    { title: 'Cắt trĩ kinh điển', label: 'Milligan–Morgan / Ferguson', image: '/methods/milligan-morgan.jpg', text: 'Cắt từng búi trĩ riêng biệt và bảo tồn cầu niêm mạc giữa các búi. Phương pháp thường được cân nhắc ở trĩ độ III–IV, trĩ hỗn hợp hoặc sa nhiều.' },
+    { title: 'Phương pháp Longo', label: 'PPH – khâu treo niêm mạc', image: '/methods/longo.jpg', text: 'Khâu treo niêm mạc giúp kéo búi trĩ lên và giảm tưới máu. Có thể hồi phục nhanh hơn ở người bệnh phù hợp; không phải lựa chọn cho mọi trường hợp.' },
+    { title: 'HCPT / Laser', label: 'Năng lượng cao tần hoặc tia laser', image: '/methods/laser.jpg', text: 'Sử dụng năng lượng theo chỉ định để xử lý mạch máu và búi trĩ. Hiệu quả, nguy cơ tái phát và thời gian hồi phục phụ thuộc từng tình trạng.' },
+    { title: 'Thủ thuật ít xâm lấn', label: 'Thắt vòng cao su, tiêm xơ, quang đông', image: '/medical/nghet-bui-tri.jpg', text: 'Thường được cân nhắc cho trĩ nội độ I–II và một số trường hợp đầu độ III. Có thể cần lặp lại và không phù hợp với búi trĩ lớn hoặc sa nặng.' },
+  ];
+
+  return (
+    <main className="hemorrhoid-page treatment-methods-page">
+      <PageHero label="Chuyên khoa Hậu môn – Trực tràng" title="CÁC PHƯƠNG PHÁP ĐIỀU TRỊ TRĨ" text="Mỗi phương pháp có chỉ định, ưu điểm và giới hạn riêng. Bác sĩ sẽ đánh giá tình trạng cụ thể trước khi tư vấn hướng điều trị phù hợp." />
+      <nav className="hemorrhoid-toc" aria-label="Nội dung trang phương pháp điều trị trĩ">
+        <div className="container">
+          <strong>NỘI DUNG CHÍNH</strong>
+          <a href="#tong-quan">Tổng quan</a>
+          <a href="#noi-khoa">Điều trị nội khoa</a>
+          <a href="#thu-thuat">Thủ thuật</a>
+          <a href="#phau-thuat">Phẫu thuật</a>
+          <a href="#luu-y">Lưu ý sau điều trị</a>
+        </div>
+      </nav>
+
+      <section id="tong-quan" className="section hemorrhoid-section hemorrhoid-section--soft">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Đánh giá trước điều trị</span><h2>KHÔNG CÓ MỘT PHƯƠNG PHÁP PHÙ HỢP CHO TẤT CẢ</h2><p>Hướng điều trị phụ thuộc vào loại trĩ, mức độ sa, triệu chứng, bệnh lý đi kèm và tình trạng sức khỏe của từng người bệnh.</p></div>
+          <div className="hemorrhoid-evaluation-grid">
+            <div className="hemorrhoid-copy"><div className="hemorrhoid-callout">Điều trị trĩ cần được cá thể hóa sau khi bác sĩ thăm khám và đánh giá đầy đủ, không nên tự lựa chọn phương pháp chỉ dựa trên quảng cáo hoặc mức độ sa búi trĩ.</div><p>Người bệnh có thể được tư vấn điều trị bảo tồn, thủ thuật ít xâm lấn hoặc phẫu thuật. Mục tiêu là kiểm soát triệu chứng, xử lý nguyên nhân phù hợp và hỗ trợ hồi phục an toàn.</p></div>
+            <figure className="hemorrhoid-image-card"><img src="/hospital/hero-banner-desktop.png" alt="Bác sĩ Tâm An tư vấn phương pháp điều trị trĩ" loading="lazy" /><figcaption>Bác sĩ thăm khám và tư vấn hướng điều trị theo từng tình trạng.</figcaption></figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="noi-khoa" className="section hemorrhoid-section">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Phương pháp bảo tồn</span><h2>1. ĐIỀU TRỊ NỘI KHOA VÀ THAY ĐỔI LỐI SỐNG</h2><p>Thường được cân nhắc ở người bệnh có triệu chứng nhẹ hoặc một số trường hợp trĩ nội mức độ sớm.</p></div>
+          <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">01</div><div><h3>Kiểm soát triệu chứng và hạn chế tái phát</h3><p>Người bệnh được hướng dẫn điều chỉnh thói quen đại tiện, chế độ ăn uống và vận động. Thuốc chỉ sử dụng theo chỉ định của bác sĩ khi cần thiết.</p><ul><li>Tăng cường chất xơ trong chế độ ăn.</li><li>Uống đủ nước tùy nhu cầu và tình trạng sức khỏe.</li><li>Hạn chế rặn, không ngồi lâu khi đại tiện.</li><li>Tăng cường vận động phù hợp.</li><li>Dùng thuốc đúng hướng dẫn và tái khám khi được hẹn.</li></ul></div></article>
+        </div>
+      </section>
+
+      <section id="thu-thuat" className="section hemorrhoid-section hemorrhoid-section--soft">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Can thiệp ít xâm lấn</span><h2>2. CÁC THỦ THUẬT ĐIỀU TRỊ TRĨ</h2><p>Một số trường hợp trĩ nội có thể được điều trị bằng thủ thuật tại chỗ, giúp giảm nguồn máu nuôi và làm búi trĩ thoái triển.</p></div>
+          <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">02</div><div><h3>Thắt vòng cao su, tiêm xơ hoặc quang đông hồng ngoại</h3><p>Thắt vòng cao su thường được áp dụng cho một số trường hợp trĩ nội phù hợp. Bác sĩ đặt vòng vào vị trí thích hợp trên búi trĩ; việc lựa chọn thủ thuật phụ thuộc vào đặc điểm búi trĩ, mức độ sa và triệu chứng của từng người bệnh.</p><div className="medical-note">Thủ thuật chỉ được thực hiện sau khi bác sĩ đánh giá và chỉ định. Người bệnh cần theo dõi các dấu hiệu bất thường theo hướng dẫn sau can thiệp.</div></div></article>
+        </div>
+      </section>
+
+      <section id="phau-thuat" className="section hemorrhoid-section">
+        <div className="container">
+          <div className="hemorrhoid-section-heading"><span className="eyebrow">Điều trị ngoại khoa</span><h2>3. PHẪU THUẬT ĐIỀU TRỊ TRĨ</h2><p>Phẫu thuật có thể được cân nhắc khi trĩ ở mức độ nặng, sa nhiều, trĩ hỗn hợp hoặc khi các phương pháp khác không còn phù hợp.</p></div>
+          <article className="hemorrhoid-treatment-card"><div className="hemorrhoid-treatment-number">03</div><div><h3>Lựa chọn kỹ thuật theo đặc điểm bệnh</h3><p>Một số kỹ thuật thường được nhắc đến gồm cắt trĩ theo Milligan–Morgan, Ferguson, phẫu thuật Longo hoặc các kỹ thuật khâu treo – triệt mạch trĩ. Mỗi phương pháp có chỉ định, ưu điểm và giới hạn riêng.</p><p>Bác sĩ sẽ cân nhắc dựa trên đặc điểm bệnh, mức độ sa, triệu chứng, bệnh lý đi kèm và điều kiện thực tế của người bệnh.</p></div></article>
+          <div className="treatment-methods-grid">{surgicalMethods.map((method) => <article className="method-card" key={method.title}><img src={method.image} alt={`Minh họa ${method.title}`} loading="lazy" /><div className="method-card-body"><span>{method.label}</span><h3>{method.title}</h3><p>{method.text}</p></div></article>)}</div>
+        </div>
+      </section>
+
+      <section id="luu-y" className="section hemorrhoid-section hemorrhoid-section--soft">
+        <div className="container">
+          <div className="hemorrhoid-care-grid"><div><div className="hemorrhoid-section-heading"><span className="eyebrow">Đồng hành sau điều trị</span><h2>LƯU Ý ĐỂ HỖ TRỢ HỒI PHỤC</h2></div><ul className="hemorrhoid-checklist"><li><span aria-hidden="true">✓</span>Ăn uống cân đối, tăng thực phẩm giàu chất xơ và uống đủ nước.</li><li><span aria-hidden="true">✓</span>Không rặn hoặc ngồi lâu khi đại tiện; vận động theo hướng dẫn.</li><li><span aria-hidden="true">✓</span>Vệ sinh vùng hậu môn nhẹ nhàng, dùng thuốc đúng chỉ định.</li><li><span aria-hidden="true">✓</span>Tái khám theo lịch hẹn và báo ngay khi đau tăng, sốt hoặc chảy máu nhiều.</li></ul></div><div className="hemorrhoid-warning"><strong>Nội dung chỉ có tính tham khảo, không thay thế thăm khám và tư vấn trực tiếp. Hãy đi khám khi chảy máu tái diễn, đau nhiều, búi trĩ sa không tự co lên hoặc xuất hiện dấu hiệu bất thường.</strong></div></div>
+          <div className="hemorrhoid-final-actions"><Link to="/dat-lich" className="button button-primary">Đặt lịch tư vấn <span>→</span></Link><a href="tel:0977335599" className="button button-outline">Liên hệ tư vấn <span>↗</span></a></div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function DiseaseDetail() { const { slug } = useParams(); const item = diseaseData[slug || 'benh-tri'] || diseaseData['benh-tri']; return <main><PageHero label="Góc chuyên gia / Bệnh lý" title={item.title} text={item.intro} /><section className="section"><div className="container article-layout"><article className="medical-article"><p className="lead">{item.intro}</p><h2>Dấu hiệu nhận biết</h2><ul>{item.signs.map((x) => <li key={x}>{x}</li>)}</ul><h2>Nguyên nhân thường gặp</h2><ul>{item.causes.map((x) => <li key={x}>{x}</li>)}</ul><div className="warning-box"><strong>Khi nào nên đi khám?</strong><p>{item.consult}</p></div><p>Thông tin trên chỉ giúp bạn tham khảo ban đầu. Bác sĩ sẽ thăm khám trực tiếp và có thể chỉ định cận lâm sàng để đưa ra hướng điều trị phù hợp.</p><Link to="/dat-lich" className="button button-primary">Đặt lịch tư vấn <span>→</span></Link></article><aside className="article-aside"><div className="aside-card"><Icon>✚</Icon><h3>Chuyên khoa Hậu môn – Trực tràng</h3><p>Khám riêng tư, tư vấn rõ ràng, điều trị theo từng tình trạng.</p><Link to="/dat-lich" className="text-link">Đặt lịch ngay →</Link></div></aside></div></section></main>; }
 
 
@@ -746,7 +822,7 @@ function isDepartmentHeading(line: string) { return line.length < 90 && (line ==
 
 function DepartmentPage() { const { slug } = useParams(); const department = generalHospitalDepartments.find((item) => item.id === slug); const article = departmentArticles[slug || '']; if (!department && !article) return <Navigate to="/benh-ly" replace />; const title = article?.title || department?.title || ''; const lines = article?.content.split(/\r?\n/).slice(1) || []; return <main className="department-detail-page"><PageHero label="Chuyên khoa" title={title} text="" backHome /><section className="section"><div className="container department-detail-layout"><article className="medical-article department-article">{department?.image ? <img className="department-detail-image" src={department.image} alt={`Hình ảnh ${department.title}`} /> : null}{lines.map((line, index) => line.startsWith('* ') ? <p className="department-bullet" key={`${line}-${index}`}>{line.slice(2)}</p> : isDepartmentHeading(line) ? <h2 key={`${line}-${index}`}>{line}</h2> : <p key={`${line}-${index}`}>{line}</p>)}<Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></article></div></section></main>; }
 
-function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<HemorrhoidPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
+function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<HemorrhoidPage />} /><Route path="/phuong-phap-dieu-tri-tri" element={<TreatmentMethodsPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<FAQPage />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
 function EquipmentSectionNew() {
