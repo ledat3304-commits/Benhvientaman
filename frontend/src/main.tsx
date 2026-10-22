@@ -460,7 +460,7 @@ function HealthSystemSection() {
 
 }
 
-function AboutPage() { return <main className="about-page"><HealthSystemSection /><AboutStorySection /></main>; }
+function AboutPage() { return <main className="about-page"><AboutStorySection /></main>; }
 
 function DoctorsTeamPage() { return <main className="about-page doctors-team-page"><LeadershipContentSection /></main>; }
 
