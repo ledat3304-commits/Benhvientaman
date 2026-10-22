@@ -378,7 +378,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
         <div className="container header-inner">
 
-          <Link to="/" className="brand" aria-label="Bệnh viện Đa khoa Tâm An"><img className="brand-logo" src="/logo.jpg" alt="Tâm An Hospital" /><strong className="brand-name">BỆNH VIỆN ĐA KHOA TÂM AN</strong></Link>
+          <Link to="/" className="brand" aria-label="Bệnh viện Tâm An"><img className="brand-logo" src="/logo.jpg" alt="Bệnh viện Tâm An" /><strong className="brand-name">BỆNH VIỆN TÂM AN</strong></Link>
 
           <button type="button" className="menu-toggle" onClick={() => setOpen(!open)} aria-label="Mở menu" aria-expanded={open}>☰</button>
 
