@@ -462,7 +462,7 @@ function HealthSystemSection() {
 
 function AboutPage() { return <main className="about-page"><PageHero title="Hệ thống Y tế Tâm An Thanh Hóa" text="Hành trình 18 năm khẳng định vị thế chuyên khoa đầu ngành." /><AboutStorySection /></main>; }
 
-function DoctorsTeamPage() { return <main className="about-page doctors-team-page"><PageHero label="Đội ngũ chuyên môn" title="ĐỘI NGŨ CHUYÊN GIA, BÁC SĨ TẠI BỆNH VIỆN ĐA KHOA TÂM AN" text="Đội ngũ chuyên gia, bác sĩ và nhân viên y tế đồng hành cùng người bệnh trong quá trình khám, chẩn đoán, điều trị và chăm sóc sức khỏe." /><LeadershipContentSection /></main>; }
+function DoctorsTeamPage() { return <main className="about-page doctors-team-page"><LeadershipContentSection /></main>; }
 
 
 
