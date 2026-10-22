@@ -45,6 +45,51 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
   .hero-copy{max-width:760px}
 }
 
+/* Chuyên khoa Hậu môn - Trực tràng: landing page và booking flow */
+.utility-bar,
+.site-header{display:none!important}
+.specialty-header{position:relative;z-index:50;background:#fff;border-bottom:1px solid #dce9e6;box-shadow:0 5px 18px rgba(16,70,78,.06)}
+.specialty-header-inner,.specialty-container{width:min(1180px,calc(100% - 40px));margin:0 auto}
+.specialty-header-inner{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.specialty-brand{display:flex;align-items:center;gap:12px;color:#0d4150;text-decoration:none;flex:none}
+.specialty-brand img{width:52px;height:52px;border-radius:50%;object-fit:cover}
+.specialty-brand span{display:flex;flex-direction:column;gap:3px}
+.specialty-brand strong{font-size:18px;letter-spacing:.14em;line-height:1}
+.specialty-brand small{font-size:10px;color:#477078;letter-spacing:.04em}
+.specialty-nav{display:flex;align-items:center;gap:4px}
+.specialty-nav>a,.specialty-nav-group>button{display:inline-flex;align-items:center;gap:7px;padding:31px 12px;border:0;background:none;color:#254f59;font:700 12px/1.2 var(--font-primary,Arial,sans-serif);letter-spacing:.03em;text-decoration:none;cursor:pointer;white-space:nowrap}
+.specialty-nav>a:hover,.specialty-nav>a.is-active,.specialty-nav-group>button:hover{color:#098a89}
+.specialty-nav-group{position:relative}
+.specialty-nav-group>button span{font-size:13px;transition:transform .2s}
+.specialty-nav-group.is-open>button span{transform:rotate(180deg)}
+.specialty-dropdown{position:absolute;top:calc(100% - 8px);left:0;min-width:220px;padding:10px;border:1px solid #dce9e6;border-radius:12px;background:#fff;box-shadow:0 16px 36px rgba(16,70,78,.14);opacity:0;visibility:hidden;transform:translateY(8px);transition:.2s}
+.specialty-nav-group:hover .specialty-dropdown,.specialty-nav-group.is-open .specialty-dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.specialty-dropdown a{display:block;padding:10px 12px;border-radius:8px;color:#254f59;font-size:13px;font-weight:600;text-decoration:none}
+.specialty-dropdown a:hover{background:#edf8f5;color:#078b86}
+.specialty-nav-cta{border-radius:999px!important;padding:12px 18px!important;color:#fff!important;background:#0b8986!important;margin-left:8px}
+.specialty-menu-toggle{display:none;border:0;background:none;padding:8px}
+.specialty-menu-toggle span{display:block;width:23px;height:2px;margin:5px;background:#0b8986}
+.specialty-hero{position:relative;overflow:hidden;color:#fff;background:linear-gradient(90deg,rgba(7,54,66,.96) 0%,rgba(10,91,94,.86) 50%,rgba(7,54,66,.28) 100%),url('/hospital/hero-banner-desktop.png') center/cover no-repeat}
+.specialty-hero:after{content:'';position:absolute;right:-140px;bottom:-180px;width:520px;height:520px;border:1px solid rgba(205,237,220,.25);border-radius:50%;box-shadow:0 0 0 42px rgba(205,237,220,.05),0 0 0 84px rgba(205,237,220,.04)}
+.specialty-hero-content{position:relative;z-index:1;min-height:590px;display:flex;align-items:center;justify-content:space-between;gap:60px;padding:80px 0}
+.specialty-hero-copy{max-width:700px}
+.specialty-kicker{display:inline-block;color:#a8dc9e;font-size:12px;font-weight:800;letter-spacing:.14em}
+.specialty-hero h1{max-width:680px;margin:18px 0 18px;color:#fff;font-size:clamp(2.7rem,5.8vw,5.2rem);line-height:1.05;letter-spacing:-.04em;text-transform:none}
+.specialty-hero-copy>p{max-width:600px;margin:0;color:#e1f2ed;font-size:20px;line-height:1.6}
+.specialty-hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.specialty-button,.specialty-submit{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:8px;padding:14px 20px;font-size:13px;font-weight:800;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.specialty-button:hover,.specialty-submit:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.16)}
+.specialty-button--primary{color:#fff;background:#e39a55}.specialty-button--light{color:#145461;background:#fff}
+.specialty-icon{width:20px;height:20px;flex:none}.specialty-button .specialty-icon,.specialty-service-card a .specialty-icon,.specialty-submit .specialty-icon{width:16px;height:16px}
+.specialty-hero-trust{display:flex;flex-wrap:wrap;gap:20px;margin-top:30px;color:#d9efe8;font-size:12px;font-weight:700}
+.specialty-hero-card{width:255px;flex:none;padding:30px;border:1px solid rgba(255,255,255,.35);border-radius:18px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px)}
+.specialty-hero-card>span{font-size:10px;font-weight:800;letter-spacing:.12em;color:#b7e3a8}.specialty-hero-card strong{display:block;margin:34px 0 8px;color:#fff;font:700 70px/1 Georgia,serif}.specialty-hero-card p{color:#edf8f5;font-size:14px;line-height:1.6}.specialty-hero-card a{display:inline-flex;align-items:center;gap:8px;color:#fff;font-size:12px;font-weight:800;text-decoration:none}
+.specialty-services{padding:100px 0;background:#f7fbfa}.specialty-section-heading{max-width:680px;margin-bottom:38px}.specialty-section-heading>span{color:#168c85;font-size:11px;font-weight:800;letter-spacing:.15em}.specialty-section-heading h2{margin:12px 0;color:#0d4150;font-size:clamp(2rem,4vw,3.2rem);line-height:1.12;letter-spacing:-.03em;text-transform:none}.specialty-section-heading p{margin:0;color:#4d6b70;font-size:16px;line-height:1.7}
+.specialty-service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.specialty-service-card{min-height:310px;padding:25px;border:1px solid #dcebe6;border-radius:16px;background:#fff;box-shadow:0 10px 25px rgba(16,70,78,.05);transition:transform .2s,box-shadow .2s}.specialty-service-card:hover{transform:translateY(-5px);box-shadow:0 16px 34px rgba(16,70,78,.12)}.specialty-service-top{display:flex;align-items:flex-start;justify-content:space-between}.specialty-service-top>span{color:#89a9a3;font-size:12px;font-weight:800}.specialty-icon-wrap{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;color:#098a89;background:#e9f6f1}.specialty-service-card h3{margin:26px 0 12px;color:#0d4150;font-size:18px;line-height:1.35}.specialty-service-card p{margin:0;color:#5f787b;font-size:14px;line-height:1.65}.specialty-service-card a{display:inline-flex;align-items:center;gap:7px;margin-top:22px;color:#098a89;font-size:12px;font-weight:800;text-decoration:none}
+.specialty-booking{padding:100px 0;background:#0d4c57;color:#fff}.specialty-booking-layout{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:70px;align-items:start}.specialty-booking-copy h2{max-width:470px;margin:14px 0;color:#fff;font-size:clamp(2rem,4vw,3.2rem);line-height:1.12;letter-spacing:-.03em;text-transform:none}.specialty-booking-copy>p{max-width:440px;color:#d0e6df;font-size:16px;line-height:1.7}.specialty-privacy-note{display:flex;align-items:flex-start;gap:12px;margin-top:35px;padding:15px;border:1px solid rgba(255,255,255,.18);border-radius:10px}.specialty-privacy-note .specialty-icon{color:#a8dc9e}.specialty-privacy-note span{display:flex;flex-direction:column;gap:4px}.specialty-privacy-note strong{font-size:13px}.specialty-privacy-note small{color:#b8d4cd;font-size:12px}.specialty-booking-form{padding:30px;border-radius:16px;background:#fff;color:#123f49;box-shadow:0 20px 40px rgba(3,36,42,.22)}.specialty-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.specialty-booking-form label,.specialty-gender-fieldset{display:block;margin-bottom:17px;color:#355d64;font-size:12px;font-weight:800}.specialty-booking-form input,.specialty-booking-form textarea{display:block;width:100%;box-sizing:border-box;margin-top:8px;padding:13px 14px;border:1px solid #d7e6e3;border-radius:8px;outline:none;color:#123f49;background:#fbfdfc;font:500 14px/1.45 inherit}.specialty-booking-form input:focus,.specialty-booking-form textarea:focus{border-color:#14928c;box-shadow:0 0 0 3px rgba(20,146,140,.12)}.specialty-gender-fieldset{padding:0;border:0}.specialty-gender-fieldset legend{margin-bottom:9px}.specialty-radio-group{display:flex;flex-wrap:wrap;gap:10px}.specialty-radio-group label{display:inline-flex;align-items:center;gap:7px;margin:0;padding:9px 12px;border:1px solid #d7e6e3;border-radius:999px;cursor:pointer;font-weight:700}.specialty-radio-group input{width:auto;margin:0;accent-color:#0b8986}.specialty-form-message{margin:4px 0 14px;padding:11px 13px;border-radius:8px;font-size:13px;line-height:1.5}.specialty-form-message.is-success{color:#21664c;background:#e7f7ed}.specialty-form-message.is-error{color:#a23a3a;background:#fff0f0}.specialty-submit{width:100%;color:#fff;background:#0b8986}.specialty-submit:disabled{opacity:.65;cursor:wait}.specialty-commitment{margin:15px 0 0;text-align:center;color:#668188;font-size:11px;line-height:1.5}.specialty-booking--compact{padding:65px 0}.specialty-booking--compact .specialty-booking-layout{grid-template-columns:1fr}.specialty-booking--compact .specialty-booking-copy{display:none}.specialty-booking-page{background:#f5faf8;min-height:calc(100vh - 82px)}.specialty-booking-page .specialty-booking{padding:90px 0}.specialty-booking-help{padding:18px 0;color:#41666b;background:#e7f3ef}.specialty-booking-help .specialty-container{display:flex;align-items:center;justify-content:center;gap:10px}.specialty-booking-help p{margin:0;font-size:14px}.specialty-booking-help a{color:#0b8986;font-weight:800}
+@media(max-width:1050px){.specialty-nav>a,.specialty-nav-group>button{padding-left:8px;padding-right:8px;font-size:11px}.specialty-brand small{display:none}.specialty-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.specialty-header-inner{min-height:72px}.specialty-menu-toggle{display:block}.specialty-nav{position:absolute;top:100%;left:0;right:0;display:none;align-items:stretch;flex-direction:column;padding:10px 20px 18px;border-top:1px solid #e2eeeb;background:#fff;box-shadow:0 14px 25px rgba(16,70,78,.12)}.specialty-nav.is-open{display:flex}.specialty-nav>a,.specialty-nav-group>button{justify-content:space-between;padding:13px 0}.specialty-nav-cta{margin:8px 0 0!important;text-align:center}.specialty-dropdown{position:static;display:none;min-width:0;padding:2px 0 7px;border:0;border-radius:0;box-shadow:none;opacity:1;visibility:visible;transform:none}.specialty-nav-group.is-open .specialty-dropdown{display:block}.specialty-dropdown a{padding:9px 12px}.specialty-hero-content{min-height:640px;display:block;padding:70px 0 55px}.specialty-hero h1{font-size:clamp(2.6rem,12vw,4rem)}.specialty-hero-copy>p{font-size:17px}.specialty-hero-card{display:none}.specialty-hero-trust{gap:10px 15px}.specialty-services,.specialty-booking{padding:65px 0}.specialty-container,.specialty-header-inner{width:min(100% - 32px,1180px)}.specialty-service-grid{grid-template-columns:1fr}.specialty-booking-layout{grid-template-columns:1fr;gap:28px}.specialty-form-grid{grid-template-columns:1fr}.specialty-booking-form{padding:22px 18px}.specialty-booking-copy h2{font-size:2.25rem}.specialty-radio-group{gap:7px}.specialty-radio-group label{font-size:11px;padding:8px 10px}}
+
 /* Main navigation matching the reference layout */
 .utility-bar{display:none}
 .site-header{position:sticky;top:0;z-index:20;background:#29a5a5;border-bottom:0;backdrop-filter:none}
@@ -4915,3 +4960,10 @@ main.about-page .leadership-direction p{
     font-size:var(--font-size-card-title)!important;
   }
 }
+
+/* Keep the new inline SVG icons independent from the legacy .specialty-icon rule. */
+.specialty-service-card .specialty-icon,
+.specialty-button .specialty-icon,
+.specialty-submit .specialty-icon,
+.specialty-privacy-note .specialty-icon,
+.specialty-booking-help .specialty-icon{display:block;width:20px;height:20px;margin:0;color:inherit;background:none;border-radius:0;font-size:inherit}
