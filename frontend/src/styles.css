@@ -4674,6 +4674,10 @@ main.hemorrhoid-page #yeu-to-nguy-co .hemorrhoid-section-heading h2{
   line-height:var(--line-height-heading)!important;
 }
 
+main.hemorrhoid-page .hemorrhoid-symptom-card--compact-title h3{
+  font-size:calc(var(--font-size-card-title) * .8)!important;
+}
+
 /* Trang riêng: Các phương pháp điều trị trĩ */
 main.treatment-methods-page .page-content-intro{
   padding-bottom:34px;

@@ -547,7 +547,7 @@ function HemorrhoidPage() {
       <section id="dau-hieu" className="section hemorrhoid-section hemorrhoid-section--soft">
         <div className="container">
           <div className="hemorrhoid-section-heading"><span className="eyebrow">Nhận biết sớm</span><h2>DẤU HIỆU NGƯỜI BỆNH KHÔNG NÊN BỎ QUA</h2><p>Triệu chứng của bệnh trĩ có thể khác nhau tùy từng trường hợp. Một số biểu hiện thường gặp gồm:</p></div>
-          <div className="hemorrhoid-symptom-grid">{hemorrhoidSymptoms.map((item) => <article className="hemorrhoid-symptom-card" key={item.title}><span className="hemorrhoid-icon" aria-hidden="true">{item.icon}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}</div>
+          <div className="hemorrhoid-symptom-grid">{hemorrhoidSymptoms.map((item) => <article className={`hemorrhoid-symptom-card${item.title === 'Chảy máu khi đại tiện:' || item.title === 'Đau, rát hoặc khó chịu:' ? ' hemorrhoid-symptom-card--compact-title' : ''}`} key={item.title}><span className="hemorrhoid-icon" aria-hidden="true">{item.icon}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}</div>
         </div>
       </section>
 
