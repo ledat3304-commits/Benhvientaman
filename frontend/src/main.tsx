@@ -820,13 +820,50 @@ function RegisterPage() { const [message, setMessage] = useState(''); const [for
 
 function PatientPage() { const session = readSession(); if (!session) return <Navigate to="/login" replace />; return <main><PageHero label="Khu vực cá nhân" title={`Xin chào, ${session.user?.HoTen || 'bạn'}`} text="Theo dõi lịch khám và thông tin sức khỏe của bạn tại Tâm An." /><section className="section"><div className="container dashboard-card"><h2>Lịch khám của bạn</h2><p>Bạn có thể đặt lịch mới hoặc liên hệ hotline để được hỗ trợ quản lý lịch hẹn.</p><Link to="/dat-lich" className="button button-primary">Đặt lịch mới <span>→</span></Link></div></section></main>; }
 
+function FocusedSpecialtyPage() {
+  const featured = diseaseData['benh-tri'];
+  const related = Object.entries(diseaseData).filter(([slug]) => slug !== 'benh-tri');
+  const introParagraphs = featured.intro.split(/\n+/).filter(Boolean);
+
+  return <main className="focused-specialty-page">
+    <section className="section focused-specialty-hero">
+      <div className="container focused-specialty-hero-grid">
+        <div>
+          <span className="eyebrow">Chuyên khoa Hậu môn – Trực tràng</span>
+          <h1>BỆNH LÝ HẬU MÔN – TRỰC TRÀNG</h1>
+          <p>Tìm hiểu các bệnh lý hậu môn – trực tràng thường gặp, dấu hiệu nhận biết, phương pháp chẩn đoán, điều trị và hướng dẫn chăm sóc sức khỏe tại Bệnh viện Đa khoa Tâm An.</p>
+          <div className="focused-specialty-actions"><Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link><a href="tel:0977335599" className="button button-outline">Liên hệ tư vấn <span>↗</span></a></div>
+        </div>
+        <div className="focused-specialty-hero-card"><span>Trọng tâm nội dung</span><strong>Bệnh trĩ và các bệnh lý hậu môn – trực tràng liên quan</strong><p>Nội dung được trình bày dựa trên dữ liệu bệnh lý hiện có của dự án, giúp người bệnh chủ động nhận biết dấu hiệu và lựa chọn thời điểm thăm khám phù hợp.</p></div>
+      </div>
+    </section>
+
+    <section className="section focused-specialty-feature">
+      <div className="container focused-specialty-feature-grid">
+        <article>
+          <span className="eyebrow">Nội dung nổi bật</span>
+          <h2>BỆNH TRĨ: NHẬN BIẾT, ĐIỀU TRỊ VÀ CHĂM SÓC</h2>
+          {introParagraphs.slice(0, 2).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          <ul className="focused-specialty-checklist">{featured.signs.map((sign) => <li key={sign}><span aria-hidden="true">✓</span>{sign}</li>)}</ul>
+          <div className="focused-specialty-actions"><Link to="/benh-ly" className="button button-primary">Tìm hiểu về bệnh trĩ <span>→</span></Link><Link to="/phuong-phap-dieu-tri-tri" className="button button-outline">Xem phương pháp điều trị <span>→</span></Link></div>
+        </article>
+        <figure className="focused-specialty-image"><img src="/hospital/hero-banner-desktop.png" alt="Bác sĩ tư vấn bệnh lý Hậu môn – Trực tràng tại Bệnh viện Tâm An" loading="lazy" /><figcaption>Thăm khám và tư vấn theo từng tình trạng người bệnh.</figcaption></figure>
+      </div>
+    </section>
+
+    {related.length > 0 ? <section className="section focused-specialty-related"><div className="container"><div className="focused-specialty-section-heading"><span className="eyebrow">Nội dung liên quan</span><h2>CÁC BỆNH LÝ HẬU MÔN – TRỰC TRÀNG</h2><p>Tham khảo các bệnh lý đã có dữ liệu nội dung trong dự án.</p></div><div className="focused-specialty-related-grid">{related.map(([slug, item]) => <Link className="focused-specialty-related-card" to={`/benh-ly/${slug}`} key={slug}><h3>{item.title}</h3><p>{item.intro.split(/\n+/)[0]}</p><span>Xem thông tin <b>→</b></span></Link>)}</div></div></section> : null}
+
+    <section className="section focused-specialty-cta"><div className="container"><div><span className="eyebrow">Chủ động chăm sóc sức khỏe</span><h2>Khi xuất hiện dấu hiệu bất thường, hãy chủ động thăm khám.</h2><p>Đội ngũ y tế sẽ hướng dẫn người bệnh thực hiện các bước tiếp nhận và thăm khám phù hợp.</p></div><Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></div></section>
+  </main>;
+}
+
 function DepartmentIndexPage() { const departmentItems = departmentGroups.flatMap((group) => group.items); return <main className="department-index-page"><section className="section department-directory"><div className="container"><div className="department-directory-intro"><div><span className="eyebrow">Hệ thống chuyên môn</span><h2>Chăm sóc toàn diện theo từng nhu cầu</h2><p>Tâm An xây dựng hệ thống chuyên khoa phối hợp liên tục, từ thăm khám ban đầu đến chẩn đoán, điều trị và phục hồi.</p></div><Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></div><div className="department-group-list"><div className="department-directory-grid">{departmentItems.map((department, index) => <Link className="department-directory-card" to={department.href || `/khoa/${department.id}`} key={department.id}><div className="department-card-top"><span className="department-card-icon">{'logo' in department ? <img className="department-card-logo" src={department.logo} alt="" aria-hidden="true" /> : department.icon}</span><span className="department-card-number">{String(index + 1).padStart(2, '0')}</span></div><h4>{department.id === 'goc-chuyen-gia' ? <>Chuyên Khoa Hậu Môn<br />- Trực Tràng</> : department.id === 'khoa-can-lam-sang' ? <>Cận lâm sàng -<br />Chẩn đoán hình ảnh</> : department.title}</h4><p>{department.description}</p><span className="department-card-link">Xem chi tiết <b>→</b></span></Link>)}</div></div><div className="department-directory-note"><strong>Cần được tư vấn chuyên khoa?</strong><span>Đội ngũ Tâm An sẵn sàng hỗ trợ bạn lựa chọn bước thăm khám phù hợp.</span><a href="tel:0977335599">Gọi 0977 33 55 99</a></div></div></section></main>; }
 
 function isDepartmentHeading(line: string) { return line.length < 90 && (line === line.toUpperCase() || /^Gây (mê|tê)$/.test(line) || /^Bước \d+:/.test(line)); }
 
 function DepartmentPage() { const { slug } = useParams(); const department = generalHospitalDepartments.find((item) => item.id === slug); const article = departmentArticles[slug || '']; if (!department && !article) return <Navigate to="/benh-ly" replace />; const title = article?.title || department?.title || ''; const lines = article?.content.split(/\r?\n/).slice(1) || []; return <main className="department-detail-page"><PageHero label="Chuyên khoa" title={title} text="" backHome /><section className="section"><div className="container department-detail-layout"><article className="medical-article department-article">{department?.image ? <img className="department-detail-image" src={department.image} alt={`Hình ảnh ${department.title}`} /> : null}{lines.map((line, index) => line.startsWith('* ') ? <p className="department-bullet" key={`${line}-${index}`}>{line.slice(2)}</p> : isDepartmentHeading(line) ? <h2 key={`${line}-${index}`}>{line}</h2> : <p key={`${line}-${index}`}>{line}</p>)}<Link to="/dat-lich" className="button button-primary">Đặt lịch khám <span>→</span></Link></article></div></section></main>; }
 
-function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/doi-ngu-bac-si" element={<DoctorsTeamPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<HemorrhoidPage />} /><Route path="/phuong-phap-dieu-tri-tri" element={<TreatmentMethodsPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<DepartmentIndexPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<Navigate to="/" replace />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
+function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<HomePage />} /><Route path="/gioi-thieu" element={<AboutPage />} /><Route path="/doi-ngu-bac-si" element={<DoctorsTeamPage />} /><Route path="/dat-lich" element={<BookingPage />} /><Route path="/benh-ly" element={<HemorrhoidPage />} /><Route path="/phuong-phap-dieu-tri-tri" element={<TreatmentMethodsPage />} /><Route path="/benh-ly/:slug" element={<DiseaseDetail />} /><Route path="/khoa" element={<DepartmentIndexPage />} /><Route path="/chuyen-khoa" element={<FocusedSpecialtyPage />} /><Route path="/khoa/:slug" element={<DepartmentPage />} /><Route path="/cham-soc-hau-phau" element={<AfterCarePage />} /><Route path="/cam-nang" element={<GuidePage />} /><Route path="/faq" element={<Navigate to="/" replace />} /><Route path="/bao-hiem" element={<InsurancePage />} /><Route path="/lien-he" element={<ContactPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="/patient" element={<PatientPage />} /><Route path="/admin" element={<AdminDashboardPage />} /><Route path="/doctors" element={<Navigate to="/gioi-thieu" replace />} /><Route path="/services" element={<Navigate to="/dat-lich" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes></Layout></BrowserRouter>; }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
 function EquipmentSectionNew() {

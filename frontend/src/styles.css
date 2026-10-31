@@ -45,6 +45,51 @@ body{font-synthesis:none;text-rendering:optimizeLegibility}
   .hero-copy{max-width:760px}
 }
 
+/* Trang /chuyen-khoa: nội dung trọng tâm Hậu môn – Trực tràng */
+.focused-specialty-page{background:#f7fafc;color:var(--navy)}
+.focused-specialty-hero{padding-top:72px;background:linear-gradient(135deg,#eef5ff 0%,#f7fafc 58%,#f1fbf5 100%)}
+.focused-specialty-hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);align-items:center;gap:48px}
+.focused-specialty-hero h1{max-width:760px;margin:14px 0 18px;color:var(--navy);font-size:clamp(2rem,4vw,3.6rem);line-height:1.12}
+.focused-specialty-hero p{max-width:700px;margin:0;color:#536b91;font-size:16px;line-height:1.8}
+.focused-specialty-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.focused-specialty-hero-card{padding:30px;border:1px solid #dce7f3;border-radius:20px;background:#fff;box-shadow:0 18px 42px rgba(23,64,170,.1)}
+.focused-specialty-hero-card span{display:block;margin-bottom:12px;color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.focused-specialty-hero-card strong{display:block;color:var(--navy);font-size:24px;line-height:1.35}
+.focused-specialty-hero-card p{margin-top:16px;font-size:14px}
+.focused-specialty-feature{background:#fff}
+.focused-specialty-feature-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);align-items:start;gap:54px}
+.focused-specialty-feature h2,.focused-specialty-section-heading h2,.focused-specialty-cta h2{margin:10px 0 18px;color:var(--navy);font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.2}
+.focused-specialty-feature p{color:#536b91;line-height:1.8}
+.focused-specialty-checklist{display:grid;gap:12px;margin:24px 0 0;padding:0;list-style:none}
+.focused-specialty-checklist li{display:flex;gap:10px;align-items:flex-start;color:#334d70;line-height:1.6}
+.focused-specialty-checklist li span{display:grid;flex:0 0 24px;place-items:center;width:24px;height:24px;border-radius:50%;color:#557611;background:#eaf5bc;font-weight:800}
+.focused-specialty-image{margin:0;overflow:hidden;border-radius:18px;background:#edf3fa;box-shadow:0 14px 30px rgba(23,64,170,.1)}
+.focused-specialty-image img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.focused-specialty-image figcaption{padding:12px 16px;color:#627395;font-size:12px;line-height:1.5}
+.focused-specialty-related{background:#f7fafc}
+.focused-specialty-section-heading{max-width:730px;margin-bottom:28px}
+.focused-specialty-section-heading p{margin:0;color:#627395;line-height:1.7}
+.focused-specialty-related-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.focused-specialty-related-card{display:flex;min-height:190px;flex-direction:column;padding:24px;border:1px solid #e1eaf3;border-radius:14px;background:#fff;box-shadow:0 8px 22px rgba(23,64,170,.06);transition:transform .2s,box-shadow .2s}
+.focused-specialty-related-card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(23,64,170,.12)}
+.focused-specialty-related-card h3{margin:0;color:var(--navy);font-size:20px}
+.focused-specialty-related-card p{flex:1;margin:12px 0;color:#627395;font-size:14px;line-height:1.7}
+.focused-specialty-related-card span{color:#bd171d;font-size:13px;font-weight:700}
+.focused-specialty-related-card b{font-size:17px;font-weight:400}
+.focused-specialty-cta{background:#eef5ff}
+.focused-specialty-cta>.container{display:flex;align-items:center;justify-content:space-between;gap:32px;padding-top:42px;padding-bottom:42px}
+.focused-specialty-cta h2{max-width:700px;margin-bottom:12px}
+.focused-specialty-cta p{max-width:700px;margin:0;color:#536b91;line-height:1.8}
+@media(max-width:760px){
+  .focused-specialty-hero{padding-top:48px}
+  .focused-specialty-hero-grid,.focused-specialty-feature-grid{grid-template-columns:1fr;gap:30px}
+  .focused-specialty-hero h1{font-size:clamp(1.9rem,9vw,2.8rem)}
+  .focused-specialty-hero-card{padding:22px}
+  .focused-specialty-related-grid{grid-template-columns:1fr}
+  .focused-specialty-cta>.container{display:block}
+  .focused-specialty-cta .button{margin-top:22px}
+}
+
 /* Main navigation matching the reference layout */
 .utility-bar{display:none}
 .site-header{position:sticky;top:0;z-index:20;background:#29a5a5;border-bottom:0;backdrop-filter:none}
