@@ -4574,8 +4574,8 @@ main.department-index-page .department-directory-note{
 
 /* Dong bo typography trang Benh ly voi he thong font cua trang chu */
 main.hemorrhoid-page .hemorrhoid-section-heading .eyebrow{
-  font-size:30px!important;
-  line-height:1.2!important;
+  font-size:.8125rem!important;
+  line-height:1.4!important;
 }
 main.hemorrhoid-page .hemorrhoid-section-heading h1{
   font-size:var(--font-size-page-title)!important;
@@ -4617,7 +4617,7 @@ main.hemorrhoid-page .hemorrhoid-image-card figcaption{
 
 @media(max-width:768px){
   main.hemorrhoid-page .hemorrhoid-section-heading .eyebrow{
-    font-size:17px!important;
+    font-size:.8125rem!important;
   }
   main.hemorrhoid-page .hemorrhoid-section-heading h1{
     font-size:var(--font-size-page-title-mobile)!important;
@@ -4643,37 +4643,35 @@ main .article-aside .aside-card h3{
 }
 
 main.hemorrhoid-page .hemorrhoid-subheading span{
-  font-size:30px!important;
-  line-height:1.2!important;
-  letter-spacing:0!important;
+  font-size:var(--font-size-card-body)!important;
+  line-height:var(--line-height-body)!important;
+  letter-spacing:.08em!important;
 }
 main.hemorrhoid-page .hemorrhoid-subheading{
   display:flex!important;
   align-items:baseline;
-  justify-content:flex-start;
-  gap:48px;
-  flex-wrap:nowrap;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
 }
 main.hemorrhoid-page .hemorrhoid-subheading h3{
-  font-size:30px!important;
-  line-height:1.2!important;
+  font-size:var(--site-section-subtitle-size)!important;
+  line-height:var(--line-height-heading)!important;
   letter-spacing:0!important;
-  white-space:nowrap;
+  white-space:normal;
 }
 
 @media(max-width:768px){
   main.hemorrhoid-page .hemorrhoid-subheading{
     gap:16px;
   }
-  main.hemorrhoid-page .hemorrhoid-subheading span,
-  main.hemorrhoid-page .hemorrhoid-subheading h3{
-    font-size:clamp(1.25rem,5vw,1.75rem)!important;
-  }
+  main.hemorrhoid-page .hemorrhoid-subheading span{font-size:var(--font-size-card-body)!important}
+  main.hemorrhoid-page .hemorrhoid-subheading h3{font-size:var(--font-size-card-title)!important}
 }
 
 main.hemorrhoid-page #yeu-to-nguy-co .hemorrhoid-section-heading h2{
-  font-size:34px!important;
-  line-height:1.2!important;
+  font-size:var(--font-size-section-title)!important;
+  line-height:var(--line-height-heading)!important;
 }
 
 /* Trang riêng: Các phương pháp điều trị trĩ */
