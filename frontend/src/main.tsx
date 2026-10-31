@@ -51,11 +51,11 @@ const doctors = [
 
 const locations = [
 
-  { title: 'Cơ sở Nguyễn Trãi', address: '257 Nguyễn Trãi, P. Hạc Thành, tỉnh Thanh Hóa', phone: '0977 33 55 99' },
+  { title: 'Bệnh viện Tâm An', address: '257 Nguyễn Trãi, P. Hạc Thành, tỉnh Thanh Hóa', phone: '0977 33 55 99' },
 
   { title: 'Phòng khám Đa khoa Tâm An', address: '04 Phan Huy Ích, P. Hạc Thành, tỉnh Thanh Hóa', phone: '0919 864 929' },
 
-  { title: 'Cơ sở Trịnh Kiểm', address: '05–06 đường Trịnh Kiểm, P. Quảng Phú, tỉnh Thanh Hóa', phone: '0977 33 55 99' },
+  { title: 'Bệnh viện đa khoa Tâm An', address: '05–06 đường Trịnh Kiểm, P. Quảng Phú, tỉnh Thanh Hóa', phone: '0977 33 55 99' },
 
 ];
 
