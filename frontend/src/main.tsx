@@ -83,8 +83,6 @@ const servicePackageGroups = [
 
       'Chẩn Đoán Và Điều Trị Ung Thư Đại Trực Tràng - Hậu Môn',
 
-      'Phẫu Thuật Điều Trị Bệnh Trĩ Triệt Để (Các Phương Pháp)',
-
       'Phẫu Thuật Điều Trị Rò Hậu Môn Các Thể',
 
       'Phẫu Thuật Điều Trị Áp Xe Hậu Môn',
