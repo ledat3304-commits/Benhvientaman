@@ -2072,7 +2072,7 @@ main .home-consult-button:hover{
 }
 
 /* Quy chuan co chu trang Lien he theo trang chu */
-main.contact-page>.page-hero{display:none!important}
+main.contact-page>.page-content-intro{display:none!important}
 main.contact-page .page-hero .eyebrow,
 main.contact-page .contact-hotline .eyebrow,
 main.contact-page .section-heading>.eyebrow{
