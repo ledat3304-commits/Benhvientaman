@@ -492,7 +492,7 @@ const sanitizePhoneValue = (value: string) => value.replace(/\D/g, '').slice(0, 
 
 export function BookingPageApi() {
   const session = readSession();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
   const [specialties, setSpecialties] = useState<BookingSpecialty[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [allDoctors, setAllDoctors] = useState<Doctor[]>([]);
@@ -512,7 +512,7 @@ export function BookingPageApi() {
   const selectedService = services.find((item) => String(item.id ?? item.dichvuid) === form.serviceId);
   const phoneDigits = form.phone.replace(/\D/g, '');
   const phoneValid = /^0\d{9}$/.test(phoneDigits);
-  const formReady = Boolean(form.name.trim()) && phoneValid;
+  const formReady = Boolean(form.name.trim() && form.date && form.time) && phoneValid;
 
   useEffect(() => {
     Promise.all([
@@ -651,7 +651,7 @@ export function BookingPageApi() {
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.success) {
         if (response.status === 409) {
-          setStep(2);
+          setStep(3);
           setMessage('Khung giờ vừa được người khác đặt. Vui lòng chọn khung giờ khác.');
           return;
         }
@@ -667,14 +667,14 @@ export function BookingPageApi() {
 
   const resetBooking = () => {
     setResult(null);
-    setStep(1);
+    setStep(3);
     setMessage('');
     setForm({ specialtyId: '', doctorId: '', serviceId: '', date: '', time: '', name: '', phone: '', email: '', reason: '', note: '' });
   };
 
   if (result) {
     const isDirectAppointment = Boolean(result.bookingCode && result.appointment);
-    return <main className="booking-wizard-page"><section className="booking-wizard-success"><div className="success-check">✓</div><span className="eyebrow">Bệnh viện Đa khoa Tâm An</span><h1>{isDirectAppointment ? 'Đặt lịch thành công' : 'Yêu cầu đã được tiếp nhận'}</h1><p>{isDirectAppointment ? 'Mã lịch hẹn: ' : 'Mã yêu cầu: '}<strong>{result.bookingCode || result.requestCode}</strong></p><p className="form-success">{isDirectAppointment ? 'Lịch khám đã được ghi nhận. Bệnh viện sẽ gửi thông tin xác nhận.' : 'Bệnh viện đã nhận thông tin. Nhân viên sẽ liên hệ qua số điện thoại bạn cung cấp để xác nhận chuyên khoa, bác sĩ và thời gian khám.'}</p><div className="booking-success-details"><span>Họ tên<strong>{form.name || 'Chưa cung cấp'}</strong></span><span>Số điện thoại<strong>{form.phone || 'Chưa cung cấp'}</strong></span><span>Email<strong>{form.email || 'Chưa cung cấp'}</strong></span><span>Chuyên khoa<strong>{selectedSpecialty?.name || 'Chưa chọn'}</strong></span><span>Dịch vụ<strong>{selectedService?.name || selectedService?.tendichvu || 'Chưa chọn'}</strong></span><span>Bác sĩ<strong>{selectedDoctor?.name || selectedDoctor?.hoten || 'Cần bệnh viện tư vấn'}</strong></span><span>Ngày khám<strong>{form.date || 'Chưa chọn'}</strong></span><span>Giờ khám<strong>{form.time || 'Chưa chọn'}</strong></span></div><div className="booking-success-actions"><a className="button button-primary" href="/">Về trang chủ</a><button className="button button-outline" type="button" onClick={resetBooking}>Đặt lịch khác</button></div></section></main>;
+    return <main className="booking-wizard-page"><section className="booking-wizard-success"><div className="success-check">✓</div><span className="eyebrow">Bệnh viện Đa khoa Tâm An</span><h1>{isDirectAppointment ? 'Đặt lịch thành công' : 'Yêu cầu đã được tiếp nhận'}</h1><p>{isDirectAppointment ? 'Mã lịch hẹn: ' : 'Mã yêu cầu: '}<strong>{result.bookingCode || result.requestCode}</strong></p><p className="form-success">{isDirectAppointment ? 'Lịch khám đã được ghi nhận. Bệnh viện sẽ gửi thông tin xác nhận.' : 'Bệnh viện đã nhận thông tin. Nhân viên sẽ liên hệ qua số điện thoại bạn cung cấp để xác nhận lịch khám.'}</p><div className="booking-success-details"><span>Họ tên<strong>{form.name || 'Chưa cung cấp'}</strong></span><span>Số điện thoại<strong>{form.phone || 'Chưa cung cấp'}</strong></span><span>Lý do khám / triệu chứng<strong>{form.reason || 'Chưa cung cấp'}</strong></span><span>Ngày khám<strong>{form.date || 'Chưa chọn'}</strong></span><span>Giờ mong muốn<strong>{form.time || 'Chưa chọn'}</strong></span><span>Ghi chú<strong>{form.note || 'Chưa cung cấp'}</strong></span></div><div className="booking-success-actions"><a className="button button-primary" href="/">Về trang chủ</a><button className="button button-outline" type="button" onClick={resetBooking}>Đặt lịch khác</button></div></section></main>;
   }
 
   return (
@@ -684,8 +684,8 @@ export function BookingPageApi() {
           <section className="booking-wizard-card">
             <div className="booking-wizard-heading">
               <span className="eyebrow">Đặt lịch trực tuyến</span>
-              <h1>Gửi yêu cầu khám<br /><em>theo cách thuận tiện nhất</em></h1>
-              <p>Bạn có thể chọn đủ lịch khám hoặc chỉ để lại thông tin để bệnh viện tư vấn.</p>
+              <h1>Gửi thông tin khám<br /><em>nhanh chóng, thuận tiện</em></h1>
+              <p>Vui lòng cung cấp thông tin để bệnh viện liên hệ xác nhận lịch khám.</p>
             </div>
 
             <div className="booking-stepper" aria-label="Các bước đặt lịch">
@@ -762,11 +762,15 @@ export function BookingPageApi() {
 
             {step === 3 ? (
               <form className="booking-wizard-fields" onSubmit={submit}>
+                <label>Ngày khám *<input required type="date" min={today} value={form.date} onChange={(event) => update('date', event.target.value)} /></label>
+                <div className="booking-slot-panel">
+                  <div className="booking-slot-heading"><strong>Khung giờ</strong></div>
+                  <label className="booking-manual-time">Giờ mong muốn *<input required type="time" step="1800" value={form.time} onChange={(event) => update('time', event.target.value)} /></label>
+                </div>
                 <div className="booking-wizard-row">
                   <label>Họ và tên *<input required value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="Nhập họ và tên" /></label>
                   <label>Số điện thoại *<input required value={form.phone} onChange={(event) => update('phone', event.target.value)} placeholder="Nhập số điện thoại" /></label>
                 </div>
-                <label>Email <span className="booking-optional">Không bắt buộc</span><input type="email" value={form.email} onChange={(event) => update('email', event.target.value)} placeholder="example@email.com" /></label>
                 <label>Lý do khám / triệu chứng <span className="booking-optional">Không bắt buộc</span><textarea value={form.reason} onChange={(event) => update('reason', event.target.value)} placeholder="Mô tả ngắn lý do thăm khám" /></label>
                 <label>Ghi chú <span className="booking-optional">Không bắt buộc</span><textarea value={form.note} onChange={(event) => update('note', event.target.value)} placeholder="Ví dụ: Mong bệnh viện gọi lại buổi chiều" /></label>
                 <div className="booking-wizard-actions">

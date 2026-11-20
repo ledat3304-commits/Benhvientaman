@@ -3123,6 +3123,24 @@ main.about-page .about-story p{
   text-align:justify!important;
   text-justify:inter-word;
 }
+
+/* Trang đặt lịch chỉ hiển thị các thông tin bệnh nhân cần cung cấp */
+main.booking-wizard-page .booking-wizard-layout{
+  display:block;
+  max-width:760px;
+  margin:0 auto;
+}
+main.booking-wizard-page .booking-stepper,
+main.booking-wizard-page .booking-summary-card{
+  display:none!important;
+}
+main.booking-wizard-page .booking-wizard-fields .booking-wizard-actions .button-outline{
+  display:none;
+}
+main.booking-wizard-page .booking-wizard-fields .booking-wizard-actions{
+  justify-content:flex-end;
+}
+
 .booking-wizard-page .booking-doctor-card small,
 .booking-wizard-page .booking-slot-heading small,
 .booking-wizard-page .booking-empty-state,
@@ -4767,6 +4785,93 @@ main.treatment-methods-page .treatment-methods-grid .method-card img{
 }
 
 /* Nội dung đội ngũ chuyên gia tại trang Giới thiệu */
+/* Đồng bộ font chữ, kích thước và khoảng cách trang chi tiết bệnh lý với trang chủ */
+main.disease-detail-page{
+  font-family:var(--font-primary)!important;
+}
+main.disease-detail-page .page-content-intro{
+  padding:30px 0 0;
+}
+main.disease-detail-page .page-content-intro h1{
+  margin:0 0 10px;
+  font-family:var(--font-primary)!important;
+  font-size:var(--font-size-page-title)!important;
+  line-height:var(--line-height-heading)!important;
+  letter-spacing:0!important;
+}
+main.disease-detail-page .page-content-intro p{
+  max-width:800px;
+  margin:0;
+  font-size:var(--font-size-body)!important;
+  line-height:var(--line-height-body)!important;
+}
+main.disease-detail-page>.section{
+  padding:var(--section-spacing) 0!important;
+}
+main.disease-detail-page .article-layout{
+  gap:var(--card-gap);
+  align-items:start;
+}
+main.disease-detail-page .medical-article,
+main.disease-detail-page .medical-article p,
+main.disease-detail-page .medical-article li{
+  font-family:var(--font-primary)!important;
+  font-size:var(--font-size-body)!important;
+  line-height:var(--line-height-body)!important;
+}
+main.disease-detail-page .medical-article .lead{
+  margin:0 0 28px;
+  color:#4f7077;
+}
+main.disease-detail-page .medical-article>h2{
+  margin:36px 0 20px;
+  font-family:var(--font-primary)!important;
+  font-size:var(--font-size-section-title)!important;
+  line-height:var(--line-height-heading)!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+}
+main.disease-detail-page .medical-article ul{
+  margin:0 0 26px;
+}
+main.disease-detail-page .medical-article li{
+  margin:10px 0;
+  padding-left:24px;
+}
+main.disease-detail-page .warning-box{
+  margin:28px 0;
+  padding:var(--card-padding);
+}
+main.disease-detail-page .warning-box p{
+  margin:6px 0 0;
+}
+main.disease-detail-page .article-aside .aside-card{
+  padding:var(--card-padding);
+}
+@media(max-width:650px){
+  main.disease-detail-page .page-content-intro{
+    padding:22px 0 0;
+  }
+  main.disease-detail-page .page-content-intro h1{
+    font-size:var(--font-size-page-title-mobile)!important;
+  }
+  main.disease-detail-page .page-content-intro p,
+  main.disease-detail-page .medical-article,
+  main.disease-detail-page .medical-article p,
+  main.disease-detail-page .medical-article li{
+    font-size:var(--font-size-body-mobile)!important;
+  }
+  main.disease-detail-page>.section{
+    padding:var(--section-spacing-mobile) 0!important;
+  }
+  main.disease-detail-page .medical-article>h2{
+    font-size:clamp(1.65rem,7vw,2.2rem)!important;
+  }
+  main.disease-detail-page .warning-box{
+    padding:var(--card-padding-mobile);
+  }
+}
+
 main.about-page .leadership-content-section{
   padding:var(--section-spacing) 0!important;
   background:linear-gradient(180deg,#f7fbfc 0%,#eef7f5 100%);
