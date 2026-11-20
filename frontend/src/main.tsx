@@ -55,7 +55,7 @@ const locations = [
 
   { title: 'Phòng khám Đa khoa Tâm An', address: '04 Phan Huy Ích, P. Hạc Thành, tỉnh Thanh Hóa', phone: '0919 864 929' },
 
-  { title: 'Bệnh viện đa khoa Tâm An', address: '05–06 đường Trịnh Kiểm, P. Quảng Phú, tỉnh Thanh Hóa', phone: '0977 33 55 99' },
+  { title: 'Bệnh viện Đa khoa Tâm An', address: '05–06 đường Trịnh Kiểm, P. Quảng Phú, tỉnh Thanh Hóa', phone: '0977 33 55 99' },
 
 ];
 
