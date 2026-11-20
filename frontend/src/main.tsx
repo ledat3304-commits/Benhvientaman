@@ -97,6 +97,16 @@ const servicePackageGroups = [
 
 ];
 
+const anorectalDiseaseMenu = [
+  { label: 'Bệnh trĩ', slug: 'benh-tri' },
+  { label: 'Rò hậu môn', slug: 'ro-hau-mon' },
+  { label: 'Ngứa hậu môn', slug: 'ngua-hau-mon' },
+  { label: 'Đau rát hậu môn', slug: 'dau-rat-hau-mon' },
+  { label: 'Nứt kẽ hậu môn', slug: 'nut-ke-hau-mon' },
+  { label: 'Áp xe hậu môn', slug: 'ap-xe-hau-mon' },
+  { label: 'Hẹp hậu môn', slug: 'hep-hau-mon' },
+];
+
 const healthSystemFacilities = [
 
   { id: 'phong-kham-da-khoa', number: '1.', title: 'Phòng Khám Đa Khoa Tâm An' },
@@ -400,9 +410,9 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             </div>
 
-            <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className={`nav-dropdown-toggle${location.pathname.startsWith('/phuong-phap-dieu-tri-tri') ? ' active' : ''}`} onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to={item === 'Phẫu Thuật Điều Trị Bệnh Trĩ Triệt Để (Các Phương Pháp)' ? '/phuong-phap-dieu-tri-tri' : '/dat-lich'} key={item}>{item}</Link>)}</div>)}<div className="nav-menu-group"><span className="nav-menu-group-title">HỖ TRỢ NGƯỜI BỆNH</span><Link to="/bao-hiem">Khám Bảo hiểm y tế</Link></div></div></div>
+            <div className={dropdownClass('services', 'nav-dropdown--services')}><button type="button" className={`nav-dropdown-toggle${location.pathname.startsWith('/phuong-phap-dieu-tri-tri') ? ' active' : ''}`} onClick={toggleMobileDropdown('services')} aria-expanded={mobileDropdown === 'services'} aria-haspopup="true">GÓI DỊCH VỤ <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{servicePackageGroups.map((group) => <div className="nav-menu-group" key={group.title}><span className="nav-menu-group-title">{group.title}</span>{group.items.map((item) => <Link to={item === 'Phẫu Thuật Điều Trị Bệnh Trĩ Triệt Để (Các Phương Pháp)' ? '/phuong-phap-dieu-tri-tri' : '/dat-lich'} key={item}>{item}</Link>)}</div>)}</div></div>
 
-            <Link className={(location.pathname.startsWith('/benh-ly') || location.pathname.startsWith('/khoa') || location.pathname.startsWith('/chuyen-khoa')) ? 'active' : ''} to="/chuyen-khoa">CHUYÊN KHOA</Link><Link className={location.pathname.startsWith('/doi-ngu-bac-si') ? 'active' : ''} to="/doi-ngu-bac-si">ĐỘI NGŨ BÁC SĨ</Link>
+            <div className={dropdownClass('specialties', 'nav-dropdown--specialties')}><button type="button" className={`nav-dropdown-toggle${(location.pathname.startsWith('/benh-ly') || location.pathname === '/chuyen-khoa') ? ' active' : ''}`} onClick={toggleMobileDropdown('specialties')} aria-expanded={mobileDropdown === 'specialties'} aria-haspopup="true">BỆNH HẬU MÔN TRỰC TRÀNG <span className="nav-chevron">▼</span></button><div className="nav-dropdown-menu">{anorectalDiseaseMenu.map((item) => <Link to={`/benh-ly/${item.slug}`} key={item.slug}>{item.label}</Link>)}</div></div><Link className={location.pathname.startsWith('/doi-ngu-bac-si') ? 'active' : ''} to="/doi-ngu-bac-si">ĐỘI NGŨ BÁC SĨ</Link>
 
             <Link to="/cam-nang">TIN TỨC SỰ KIỆN</Link>
 
